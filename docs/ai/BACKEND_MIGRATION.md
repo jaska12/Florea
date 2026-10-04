@@ -92,11 +92,11 @@ Unique index keeps its shape: `productType` + `productLocation` + `productTitle`
 
 | Enum | Values |
 |---|---|
-| `ProductType` (was `PropertyType`: APARTMENT, VILLA, HOUSE) | BOUQUET, FLOWER, PLANT, GIFT_BOX, SWEET, TOY, OTHER |
-| `ProductStatus` | HOLD, ACTIVE, SOLD, DELETE (unchanged values) |
+| `ProductType` (was `PropertyType`: APARTMENT, VILLA, HOUSE) | BOUQUET, FLOWER_BOX, PLANT, GIFT_BOX, SWEET, TOY |
+| `ProductStatus` (was `PropertyStatus`: HOLD, ACTIVE, SOLD, DELETE) | ACTIVE, SOLD, DELETE |
 | `ProductLocation` | SEOUL, BUSAN, INCHEON, DAEGU, GYEONGJU, GWANGJU, CHONJU, DAEJON, JEJU (unchanged values) |
-| `ProductOccasion` (new) | BIRTHDAY, WEDDING, ANNIVERSARY, LOVE, CONGRATS, SYMPATHY, OTHER |
-| `ProductSize` (new) | SMALL, MEDIUM, LARGE, DELUXE |
+| `ProductOccasion` (new) | BIRTHDAY, WEDDING, ANNIVERSARY, LOVE, CONGRATS, SYMPATHY |
+| `ProductSize` (new) | SMALL, MEDIUM, LARGE |
 | `LikeGroup`, `ViewGroup`, `CommentGroup`, `NotificationGroup` | `PROPERTY` → `PRODUCT` |
 
 ### Not changed yet (TODO)

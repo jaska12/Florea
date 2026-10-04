@@ -2,19 +2,17 @@ import { registerEnumType } from '@nestjs/graphql';
 
 export enum ProductType {
     BOUQUET = 'BOUQUET',
-    FLOWER = 'FLOWER',
+    FLOWER_BOX = 'FLOWER_BOX',
     PLANT = 'PLANT',
     GIFT_BOX = 'GIFT_BOX',
     SWEET = 'SWEET',
     TOY = 'TOY',
-    OTHER = 'OTHER',
 }
 registerEnumType(ProductType, {
     name: 'ProductType',
 });
 
 export enum ProductStatus {
-    HOLD = 'HOLD',
     ACTIVE = 'ACTIVE',
     SOLD = 'SOLD',
     DELETE = 'DELETE',
@@ -45,7 +43,6 @@ export enum ProductOccasion {
     LOVE = 'LOVE',
     CONGRATS = 'CONGRATS',
     SYMPATHY = 'SYMPATHY',
-    OTHER = 'OTHER',
 }
 registerEnumType(ProductOccasion, {
     name: 'ProductOccasion',
@@ -55,7 +52,6 @@ export enum ProductSize {
     SMALL = 'SMALL',
     MEDIUM = 'MEDIUM',
     LARGE = 'LARGE',
-    DELUXE = 'DELUXE',
 }
 registerEnumType(ProductSize, {
     name: 'ProductSize',

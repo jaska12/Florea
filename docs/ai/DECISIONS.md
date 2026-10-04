@@ -87,3 +87,10 @@ Important decisions made during the Nestar → Florea migration session, with th
 - **Status:** confirmed by the project owner on 2026-10-05.
 - **Rejected:** renaming `AGENT` to `SELLER` now (touches guards, client and every role check for no functional gain).
 
+## 15. Product enum values revised to the owner's migration plan
+
+- **Decision:** `ProductType`: BOUQUET, FLOWER_BOX, PLANT, GIFT_BOX, SWEET, TOY. `ProductOccasion`: BIRTHDAY, WEDDING, ANNIVERSARY, LOVE, CONGRATS, SYMPATHY. `ProductSize`: SMALL, MEDIUM, LARGE. `ProductStatus`: ACTIVE, SOLD, DELETE. This replaces the values in decision 14 (`FLOWER` → `FLOWER_BOX`; `OTHER`, `DELUXE` and `HOLD` removed).
+- **Reason:** the project owner's "Full Property To Product Backend Migration Plan" lists these values.
+- **Not done from that plan, with reason:**
+  - Migration script from `properties` to `products`: the `Florea` database was new, `properties` held 0 documents and was dropped, so there is nothing to copy.
+  - `notifications.propertyId` → `productId`: the code has no `propertyId`; the notification schema uses a generic `notificationRefId`.

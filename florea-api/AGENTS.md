@@ -31,10 +31,10 @@ Use those files as the source of truth for AI Agent related migration history, a
 - Product ownership continues to use `MemberType.AGENT` unless a later migration explicitly changes it.
 - Product fields follow `Florea-ERD.pdf`: `productType`, `productStatus`, `productLocation`, `productAddress`, `productTitle`, `productPrice`, `productOccasion`, `productSize`, `productStock`, `productImages`, `productDesc`, `productSameDay`, `productGiftWrap`, plus the counters `productViews`, `productLikes`, `productComments`, `productRank`.
 - Product enum values are:
-  - `ProductType`: `BOUQUET`, `FLOWER`, `PLANT`, `GIFT_BOX`, `SWEET`, `TOY`, `OTHER`
-  - `ProductOccasion`: `BIRTHDAY`, `WEDDING`, `ANNIVERSARY`, `LOVE`, `CONGRATS`, `SYMPATHY`, `OTHER`
-  - `ProductSize`: `SMALL`, `MEDIUM`, `LARGE`, `DELUXE`
-  - `ProductStatus`: `HOLD`, `ACTIVE`, `SOLD`, `DELETE` (same values as the current `PropertyStatus`)
+  - `ProductType`: `BOUQUET`, `FLOWER_BOX`, `PLANT`, `GIFT_BOX`, `SWEET`, `TOY`
+  - `ProductOccasion`: `BIRTHDAY`, `WEDDING`, `ANNIVERSARY`, `LOVE`, `CONGRATS`, `SYMPATHY`
+  - `ProductSize`: `SMALL`, `MEDIUM`, `LARGE`
+  - `ProductStatus`: `ACTIVE`, `SOLD`, `DELETE`
   - `ProductLocation`: keep the current location values until a later migration explicitly changes them.
 
 ## Workflow
@@ -64,4 +64,4 @@ npx nest build florea-batch
 npx eslint "{src,apps,libs,test}/**/*.ts"
 ```
 
-The lint baseline is 3346 problems inherited from Nestar. A change must not increase it.
+The lint baseline is 3342 problems inherited from Nestar. A change must not increase it.

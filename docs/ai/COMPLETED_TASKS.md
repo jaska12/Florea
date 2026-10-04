@@ -18,6 +18,7 @@ In the order they were done. State as of 2026-10-05, `main` at `5f5405e`.
 - [x] 12. Backend member module: `memberProperties` → `memberProducts`
 - [x] 13. Backend product module: property → product
 - [x] 14. Align database collections with the ERD
+- [x] 15. Revise product enum values to the owner's migration plan
 
 ## 1. Recommend migration steps
 
@@ -178,3 +179,9 @@ In the order they were done. State as of 2026-10-05, `main` at `5f5405e`.
 - Dev `Florea` database: dropped two empty leftover collections (`properties`, `board-articles`), both created automatically by the old code and containing 0 documents.
 - Result after starting the API: `boardArticles`, `comments`, `follows`, `likes`, `members`, `products`, `views`.
 - Typecheck `florea-api`: no errors. Build `florea-api`: compiled successfully. `/graphql` returned 200.
+
+## 15. Revise product enum values to the owner's migration plan
+
+- File: `apps/florea-api/src/libs/enums/product.enum.ts` (plus `florea-api/AGENTS.md` and these docs).
+- Values: see `DECISIONS.md` 15.
+- Everything else in the plan was already done in tasks 12 to 14.
