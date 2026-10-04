@@ -42,7 +42,6 @@ Order follows the dependencies:
 - Does `productLocation` keep the Korean city list or change?
 - What are the Florea board article categories?
 - Notifications: generic `notificationRefId` (current code) or `productId` / `articleId` (ERD)?
-- Is the collection `board-articles` renamed to `boardArticles`, as the ERD name suggests?
 - What are the new client route names for `/property` and `/agent`?
 - Should the 3364 backend lint problems be auto-fixed in one separate formatting commit?
 - Should the client get an ESLint config?

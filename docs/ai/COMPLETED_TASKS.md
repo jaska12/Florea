@@ -17,6 +17,7 @@ In the order they were done. State as of 2026-10-05, `main` at `5f5405e`.
 - [x] 11. Restructure agent guidelines and add skills
 - [x] 12. Backend member module: `memberProperties` → `memberProducts`
 - [x] 13. Backend product module: property → product
+- [x] 14. Align database collections with the ERD
 
 ## 1. Recommend migration steps
 
@@ -170,3 +171,10 @@ In the order they were done. State as of 2026-10-05, `main` at `5f5405e`.
 | Flow test on the dev database | passed: signup, create, read, filter, like, favorites, visited, update, agent list, comment |
 
 - Test data left in the dev database: member `floreatest`, one test product, one like, one view, one comment.
+
+## 14. Align database collections with the ERD
+
+- File: `apps/florea-api/src/schemas/BoardArticle.model.ts` (collection `board-articles` → `boardArticles`).
+- Dev `Florea` database: dropped two empty leftover collections (`properties`, `board-articles`), both created automatically by the old code and containing 0 documents.
+- Result after starting the API: `boardArticles`, `comments`, `follows`, `likes`, `members`, `products`, `views`.
+- Typecheck `florea-api`: no errors. Build `florea-api`: compiled successfully. `/graphql` returned 200.

@@ -50,7 +50,7 @@ const BoardArticleSchema = new Schema(
             ref: 'Member',
         },
     },
-    { timestamps: true, collection: 'board-articles' },
+    { timestamps: true, collection: 'boardArticles' },
 );
 
 export default BoardArticleSchema;

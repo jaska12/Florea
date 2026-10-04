@@ -67,8 +67,11 @@ Not renamed: `MemberType.AGENT` (decision 14 in `DECISIONS.md`), so `getAgents`,
 | Before | After |
 |---|---|
 | `properties` | `products` |
+| `board-articles` | `boardArticles` (matches the ERD) |
 
-Unchanged: `members`, `board-articles`, `comments`, `follows`, `likes`, `views`, `notices`, `notifications`.
+Unchanged: `members`, `comments`, `follows`, `likes`, `views`, `notices`, `notifications`.
+
+Collections that exist in the dev `Florea` database (created by Mongoose when the API starts): `boardArticles`, `comments`, `follows`, `likes`, `members`, `products`, `views`. `notices` and `notifications` have schemas but no module registers them yet, so they are not created.
 
 ### `products` schema
 
@@ -100,7 +103,6 @@ Unique index keeps its shape: `productType` + `productLocation` + `productTitle`
 
 - `BoardArticleCategory`: still FREE, RECOMMEND, NEWS, HUMOR. Florea values not decided.
 - `Notification.model.ts`: the code uses a generic `notificationRefId`; the ERD shows `productId` and `articleId`. There is no notification service yet. TODO: decide which shape to keep.
-- Collection name `board-articles` vs the ERD name `boardArticles`.
 
 ## GraphQL / API changes
 
