@@ -15,6 +15,7 @@ In the order they were done. State as of 2026-10-05, `main` at `5f5405e`.
 - [x] 9. Switch the backend to a Florea database (project owner)
 - [x] 10. Fix stale agent guideline files
 - [x] 11. Restructure agent guidelines and add skills
+- [x] 12. Backend member module: `memberProperties` → `memberProducts`
 
 ## 1. Recommend migration steps
 
@@ -124,3 +125,24 @@ In the order they were done. State as of 2026-10-05, `main` at `5f5405e`.
   - the six migration docs moved from `docs/` to `docs/ai/`
 - Product enum values written into `florea-api/AGENTS.md` (see `DECISIONS.md` 14).
 - Lint / typecheck / build: not applicable (documentation only).
+
+## 12. Backend member module: `memberProperties` → `memberProducts`
+
+- First domain change. `MemberType` and all other member fields are unchanged.
+- Files:
+  - `apps/florea-api/src/schemas/Member.model.ts`
+  - `apps/florea-api/src/libs/dto/member/member.ts`
+  - `apps/florea-api/src/components/property/property.service.ts` (counter key only)
+  - `apps/florea-batch/src/batch.service.ts` (rank formula reads the new field)
+- Results:
+
+| Check | Result |
+|---|---|
+| Typecheck `florea-api` | no errors |
+| Typecheck `florea-batch` | no errors |
+| Build `florea-api` | compiled successfully |
+| Build `florea-batch` | compiled successfully |
+| Lint (without `--fix`) | 3364 problems, same as the baseline |
+| GraphQL schema | `Member` type exposes `memberProducts`, no `memberProperties` |
+
+- Known effect: the client still queries `memberProperties`, so client queries that select it fail until the client member types and queries are migrated.

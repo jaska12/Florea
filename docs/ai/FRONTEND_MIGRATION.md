@@ -71,4 +71,5 @@ These must change together with the backend, because the client calls the same o
 - **Two lockfiles:** both `yarn.lock` and `package-lock.json` exist. TODO: pick one package manager.
 - **SEO description:** `pages/_document.tsx` still says "Buy and sell properties anywhere anytime in South Korea" (in English, Russian and Korean). Only the site name was changed.
 - **Env file:** no `.env` file exists in `florea-client/`. TODO: create it with the API and WebSocket URLs before running the client.
+- **Out of sync with the backend:** the backend `Member` type now has `memberProducts`; the client types and queries still use `memberProperties`, so those queries fail until the client is migrated.
 - **No ESLint setup.** TODO: decide whether to add one.

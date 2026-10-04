@@ -10,13 +10,12 @@ Use the `backend-migration` skill (`florea-api/skills/backend-migration/SKILL.md
 
 Order follows the dependencies:
 
-1. Enums and config
-2. Member (`memberProperties` → `memberProducts`; `MemberType` stays unchanged)
-3. Property → Product (schema, DTOs, resolver, service, collection)
-4. Like, View and Comment group enums (`PROPERTY` → `PRODUCT`)
-5. Board articles (categories)
-6. Notices and notifications (`productId`)
-7. Batch app (top products, top agents)
+1. ~~Member (`memberProperties` → `memberProducts`)~~ done
+2. Property → Product (schema, DTOs, enums, config sorts, resolver, service, collection) **← next**
+3. Like, View and Comment group enums (`PROPERTY` → `PRODUCT`)
+4. Board articles (categories)
+5. Notices and notifications (`productId`)
+6. Batch app (top products, top agents)
 
 **Verify before each module:** the previous module builds, typechecks, and its operations work in the GraphQL playground. Commit each module separately.
 

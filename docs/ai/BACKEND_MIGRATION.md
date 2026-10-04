@@ -56,7 +56,7 @@ Turn the Nestar backend into the Florea backend in small, verifiable steps:
 
 ## Collections, schemas and enums
 
-**Nothing has changed yet.** The code still has the Nestar schemas and enums.
+One change so far: `members.memberProperties` was renamed to `memberProducts` (schema, DTO, counter updates, batch rank formula). Everything else still has the Nestar schemas and enums.
 
 Current collections in code: `members`, `properties`, `board-articles`, `comments`, `follows`, `likes`, `views`, `notices`, `notifications`.
 
@@ -83,7 +83,7 @@ TODO:
 
 ## GraphQL / API changes
 
-**None yet.** All operations are unchanged from Nestar, including the property and agent operations (`createProperty`, `getProperty`, `getProperties`, `getAgentProperties`, `getAgents`, `likeTargetProperty`, `getFavorites`, `getVisited`, and the admin variants).
+The `Member` type now exposes `memberProducts` instead of `memberProperties`. All operations are otherwise unchanged from Nestar, including the property and agent operations (`createProperty`, `getProperty`, `getProperties`, `getAgentProperties`, `getAgents`, `likeTargetProperty`, `getFavorites`, `getVisited`, and the admin variants).
 
 ## What stayed unchanged
 

@@ -13,13 +13,12 @@ description: Continue the Nestar to Florea backend migration one module at a tim
 
 ## Module order
 
-1. Enums and config
-2. Member (`memberProperties` → `memberProducts`; `MemberType` stays unchanged)
-3. Property → Product (schema, DTOs, enums, resolver, service, collection)
-4. Like, View and Comment group enums (`PROPERTY` → `PRODUCT`)
-5. Board articles
-6. Notices and notifications (`propertyId` → `productId`)
-7. Batch app (top products, top agents)
+1. Member (`memberProperties` → `memberProducts`; `MemberType` stays unchanged)
+2. Property → Product (schema, DTOs, enums, config sorts, resolver, service, collection)
+3. Like, View and Comment group enums (`PROPERTY` → `PRODUCT`)
+4. Board articles
+5. Notices and notifications (`propertyId` → `productId`)
+6. Batch app (top products, top agents)
 
 ## Steps for one module
 

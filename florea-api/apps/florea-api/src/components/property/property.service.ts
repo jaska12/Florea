@@ -31,7 +31,7 @@ export class PropertyService {
             const result = await this.propertyModel.create(input);
             await this.memberService.memberStatsEditor({
                 _id: shapeIntoMongoObjectId(result.memberId),
-                targetKey: 'memberProperties',
+                targetKey: 'memberProducts',
                 modifier: 1,
             });
             return result;
@@ -102,7 +102,7 @@ export class PropertyService {
         if (soldAt || deletedAt) {
             await this.memberService.memberStatsEditor({
                 _id: shapeIntoMongoObjectId(memberId),
-                targetKey: 'memberProperties',
+                targetKey: 'memberProducts',
                 modifier: -1,
             });
         }
@@ -286,7 +286,7 @@ export class PropertyService {
         if (soldAt || deletedAt) {
             await this.memberService.memberStatsEditor({
                 _id: result.memberId,
-                targetKey: 'memberProperties',
+                targetKey: 'memberProducts',
                 modifier: -1,
             });
         }
