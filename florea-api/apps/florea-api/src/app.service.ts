@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
 
 @Injectable()
-export class NestarBatchService {
+export class AppService {
   getHello(): string {
-    return 'Welcome to Nestar BATCH Server!';
+    return 'Welcome to Florea API Server!';
   }
 }
