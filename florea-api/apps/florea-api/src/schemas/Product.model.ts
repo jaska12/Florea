@@ -1,91 +1,93 @@
 import { Schema } from 'mongoose';
-import { PropertyLocation, PropertyStatus, PropertyType } from '../libs/enums/property.enum';
+import { ProductLocation, ProductOccasion, ProductSize, ProductStatus, ProductType } from '../libs/enums/product.enum';
 
-const PropertySchema = new Schema(
+const ProductSchema = new Schema(
     {
-        propertyType: {
+        productType: {
             type: String,
-            enum: PropertyType,
+            enum: ProductType,
             required: true,
         },
 
-        propertyStatus: {
+        productStatus: {
             type: String,
-            enum: PropertyStatus,
-            default: PropertyStatus.ACTIVE,
+            enum: ProductStatus,
+            default: ProductStatus.ACTIVE,
         },
 
-        propertyLocation: {
+        productLocation: {
             type: String,
-            enum: PropertyLocation,
+            enum: ProductLocation,
             required: true,
         },
 
-        propertyAddress: {
-            type: String,
-            required: true,
-        },
-
-        propertyTitle: {
+        productAddress: {
             type: String,
             required: true,
         },
 
-        propertyPrice: {
+        productTitle: {
+            type: String,
+            required: true,
+        },
+
+        productPrice: {
             type: Number,
             required: true,
         },
 
-        propertySquare: {
+        productOccasion: {
+            type: String,
+            enum: ProductOccasion,
+            required: true,
+        },
+
+        productSize: {
+            type: String,
+            enum: ProductSize,
+            required: true,
+        },
+
+        productStock: {
             type: Number,
             required: true,
         },
 
-        propertyBeds: {
-            type: Number,
-            required: true,
-        },
-
-        propertyRooms: {
-            type: Number,
-            required: true,
-        },
-
-        propertyLikes: {
+        productLikes: {
             type: Number,
             default: 0,
         },
 
-        propertyViews: {
+        productViews: {
             type: Number,
             default: 0,
         },
 
-        propertyComments: {
+        productComments: {
             type: Number,
             default: 0,
         },
 
-        propertyRank: {
+        productRank: {
             type: Number,
             default: 0,
         },
 
-        propertyImages: {
+        productImages: {
             type: [String],
             required: true,
         },
 
-        propertyDesc: {
+        productDesc: {
             type: String,
         },
 
-        propertyBarter: {
+        productSameDay: {
             type: Boolean,
             default: false,
         },
 
-        propertyRent: {
+        productGiftWrap: {
             type: Boolean,
             default: false,
         },
@@ -103,17 +105,13 @@ const PropertySchema = new Schema(
         deletedAt: {
             type: Date,
         },
-
-        constructedAt: {
-            type: Date,
-        },
     },
-    { timestamps: true, collection: 'properties' },
+    { timestamps: true, collection: 'products' },
 );
 
-PropertySchema.index(
-    { propertyType: 1, propertyLocation: 1, propertyTitle: 1, propertyPrice: 1 },
+ProductSchema.index(
+    { productType: 1, productLocation: 1, productTitle: 1, productPrice: 1 },
     { unique: true },
 );
 
-export default PropertySchema;
+export default ProductSchema;

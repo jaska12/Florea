@@ -11,11 +11,9 @@ Use the `backend-migration` skill (`florea-api/skills/backend-migration/SKILL.md
 Order follows the dependencies:
 
 1. ~~Member (`memberProperties` → `memberProducts`)~~ done
-2. Property → Product (schema, DTOs, enums, config sorts, resolver, service, collection) **← next**
-3. Like, View and Comment group enums (`PROPERTY` → `PRODUCT`)
-4. Board articles (categories)
-5. Notices and notifications (`productId`)
-6. Batch app (top products, top agents)
+2. ~~Property → Product, group enums, batch app~~ done
+3. Board articles (categories) **← next, needs the category values**
+4. Notices and notifications (keep `notificationRefId` or switch to the ERD's `productId` / `articleId`)
 
 **Verify before each module:** the previous module builds, typechecks, and its operations work in the GraphQL playground. Commit each module separately.
 
@@ -37,11 +35,13 @@ Order follows the dependencies:
 
 ## Blockers
 
-- None at the moment.
+- **Board article categories:** the Florea values are not decided (current: FREE, RECOMMEND, NEWS, HUMOR).
 
 ## Open questions
 
 - Does `productLocation` keep the Korean city list or change?
+- What are the Florea board article categories?
+- Notifications: generic `notificationRefId` (current code) or `productId` / `articleId` (ERD)?
 - Is the collection `board-articles` renamed to `boardArticles`, as the ERD name suggests?
 - What are the new client route names for `/property` and `/agent`?
 - Should the 3364 backend lint problems be auto-fixed in one separate formatting commit?
@@ -55,4 +55,5 @@ Order follows the dependencies:
 - Client `next build` (TODO: not run)
 - Client in the browser against the Florea API (TODO)
 - Batch app at runtime (TODO: built, but not started)
+- Admin product operations (TODO: no admin account in the dev database)
 - `MONGO_PROD` value (TODO: not checked)

@@ -1,6 +1,6 @@
 # Backend Migration: Nestar → Florea
 
-State as of 2026-10-05, branch `main` at commit `5f5405e`.
+State as of 2026-10-05, after the product module migration (branch `feat/backend-product-migration`).
 
 ## Original project (Nestar)
 
@@ -15,7 +15,7 @@ Nestar is a real estate platform backend.
 
 ## New project (Florea)
 
-Florea is an online gift & flower marketplace. It keeps the Nestar architecture (monorepo, GraphQL, MongoDB, JWT, WebSocket chat) and changes the domain from real estate to products sold by sellers.
+Florea is an online gift & flower marketplace. It keeps the Nestar architecture (monorepo, GraphQL, MongoDB, JWT, WebSocket chat) and changes the domain from real estate to products sold by agents.
 
 The target data model is `Florea-ERD.pdf` in the repo root.
 
@@ -25,74 +25,110 @@ Turn the Nestar backend into the Florea backend in small, verifiable steps:
 
 1. Import Nestar as an untouched baseline. **Done.**
 2. Rename project and app identifiers, with no logic change. **Done.**
-3. Migrate the domain (property → product and related changes), one module at a time. **TODO.**
+3. Migrate the domain, one module at a time. **In progress:** member and product done; board articles and notices/notifications remain.
 
 ## Naming changes
 
-### Done
+### Project and app identifiers
 
 | Before | After |
 |---|---|
 | `apps/nestar-api` | `apps/florea-api` |
 | `apps/nestar-batch` | `apps/florea-batch` |
-| package name `nestar` | `florea` (`package.json`, `package-lock.json`) |
+| package name `nestar` | `florea` |
 | `nest-cli.json` projects `nestar-api`, `nestar-batch` | `florea-api`, `florea-batch` |
 | build output `dist/apps/nestar-*` | `dist/apps/florea-*` |
-| scripts `start:dev:batch`, `start:prod`, `start:prod:batch`, `test:e2e` | point at the `florea-*` paths |
-| batch imports `apps/nestar-api/src/...` | `apps/florea-api/src/...` |
-| `nestar-batch.{controller,controller.spec,module,service}.ts` | `florea-batch.*` |
-| classes `NestarBatchController`, `NestarBatchService`, `NestarBatchModule` | `FloreaBatch*` |
-| `Welcome to Nestar API Server!` | `Welcome to Florea API Server!` |
-| `Welcome to Nestar BATCH Server!` | `Welcome to Florea BATCH Server!` |
+| classes `NestarBatch*` | `FloreaBatch*` |
+| `Welcome to Nestar ... Server!` | `Welcome to Florea ... Server!` |
 
-### Planned, not done
+### Domain
 
-| Before | After | Status |
-|---|---|---|
-| property (module, schema, DTOs, enums, resolvers) | product | TODO |
-| `MemberType.AGENT` | seller-type role | TODO (exact enum value not decided) |
-| collection `properties` | `products` | TODO |
-| `getAgents`, `getAgentProperties` and other operation names | TODO | TODO |
+| Before | After |
+|---|---|
+| `components/property/` | `components/product/` |
+| `libs/dto/property/` | `libs/dto/product/` |
+| `libs/enums/property.enum.ts` | `libs/enums/product.enum.ts` |
+| `schemas/Property.model.ts` | `schemas/Product.model.ts` |
+| `uploads/property/` | `uploads/product/` |
+| `PropertyModule`, `PropertyService`, `PropertyResolver` | `ProductModule`, `ProductService`, `ProductResolver` |
+| `Property`, `Properties`, `PropertyInput`, `PropertyUpdate` | `Product`, `Products`, `ProductInput`, `ProductUpdate` |
+| `PropertiesInquiry`, `AgentPropertiesInquiry`, `AllPropertiesInquiry` | `ProductsInquiry`, `AgentProductsInquiry`, `AllProductsInquiry` |
+| `availablePropertySorts` | `availableProductSorts` |
+| `memberProperties` | `memberProducts` |
+| `getFavoriteProperties`, `getVisitedProperties` | `getFavoriteProducts`, `getVisitedProducts` |
+| `batchTopProperties`, `BATCH_TOP_PROPERTIES` | `batchTopProducts`, `BATCH_TOP_PRODUCTS` |
+
+Not renamed: `MemberType.AGENT` (decision 14 in `DECISIONS.md`), so `getAgents`, `getAgentProducts`, `availableAgentSorts` and `batchTopAgents` keep "agent".
 
 ## Collections, schemas and enums
 
-One change so far: `members.memberProperties` was renamed to `memberProducts` (schema, DTO, counter updates, batch rank formula). Everything else still has the Nestar schemas and enums.
+### Collections
 
-Current collections in code: `members`, `properties`, `board-articles`, `comments`, `follows`, `likes`, `views`, `notices`, `notifications`.
+| Before | After |
+|---|---|
+| `properties` | `products` |
 
-Current enums that will need to change:
+Unchanged: `members`, `board-articles`, `comments`, `follows`, `likes`, `views`, `notices`, `notifications`.
 
-- `MemberType`: `USER`, `AGENT`, `ADMIN`
-- `PropertyType`: `APARTMENT`, `VILLA`, `HOUSE`
-- `PropertyStatus`: `HOLD`, `ACTIVE`, `SOLD`, `DELETE`
-- `PropertyLocation`: `SEOUL`, `BUSAN`, `INCHEON`, `DAEGU`, `GYEONGJU`, `GWANGJU`, `CHONJU`, `DAEJON`, `JEJU`
+### `products` schema
 
-### Target from `Florea-ERD.pdf`
+| Change | Fields |
+|---|---|
+| Renamed `property*` → `product*` | Type, Status, Location, Address, Title, Price, Likes, Views, Comments, Rank, Images, Desc |
+| Removed | `propertySquare`, `propertyBeds`, `propertyRooms`, `propertyBarter`, `propertyRent`, `constructedAt` |
+| Added | `productOccasion` (required), `productSize` (required), `productStock` (number, required, min 0 in the input), `productSameDay` (boolean, default false), `productGiftWrap` (boolean, default false) |
+| Unchanged | `memberId`, `soldAt`, `deletedAt`, timestamps |
 
-Collections: `members`, `products`, `views`, `likes`, `follows`, `comments`, `boardArticles`, `notices`, `notifications`.
+Unique index keeps its shape: `productType` + `productLocation` + `productTitle` + `productPrice`.
 
-`products` fields: `productType`, `productStatus`, `productLocation`, `productAddress`, `productTitle`, `productPrice`, `productOccasion`, `productSize`, `productStock`, `productViews`, `productLikes`, `productComments`, `productRank`, `productImages`, `productDesc`, `productSameDay`, `productGiftWrap`, `memberId`, `soldAt`, `deletedAt`, `createdAt`, `updatedAt`.
+### `members` schema
 
-`members` has `memberProducts` (in place of the property counter). `notifications` has `productId` (in place of the property reference).
+- `memberProperties` → `memberProducts`.
 
-TODO:
+### Enums
 
-- Enum values for `productType`, `productStatus`, `productLocation`, `productOccasion`, `productSize` (the ERD shows only that they are enums)
-- Whether the ERD name `boardArticles` means the collection is renamed from `board-articles`
-- Exact field-by-field diff between `Property.model.ts` and the `products` table
+| Enum | Values |
+|---|---|
+| `ProductType` (was `PropertyType`: APARTMENT, VILLA, HOUSE) | BOUQUET, FLOWER, PLANT, GIFT_BOX, SWEET, TOY, OTHER |
+| `ProductStatus` | HOLD, ACTIVE, SOLD, DELETE (unchanged values) |
+| `ProductLocation` | SEOUL, BUSAN, INCHEON, DAEGU, GYEONGJU, GWANGJU, CHONJU, DAEJON, JEJU (unchanged values) |
+| `ProductOccasion` (new) | BIRTHDAY, WEDDING, ANNIVERSARY, LOVE, CONGRATS, SYMPATHY, OTHER |
+| `ProductSize` (new) | SMALL, MEDIUM, LARGE, DELUXE |
+| `LikeGroup`, `ViewGroup`, `CommentGroup`, `NotificationGroup` | `PROPERTY` → `PRODUCT` |
+
+### Not changed yet (TODO)
+
+- `BoardArticleCategory`: still FREE, RECOMMEND, NEWS, HUMOR. Florea values not decided.
+- `Notification.model.ts`: the code uses a generic `notificationRefId`; the ERD shows `productId` and `articleId`. There is no notification service yet. TODO: decide which shape to keep.
+- Collection name `board-articles` vs the ERD name `boardArticles`.
 
 ## GraphQL / API changes
 
-The `Member` type now exposes `memberProducts` instead of `memberProperties`. All operations are otherwise unchanged from Nestar, including the property and agent operations (`createProperty`, `getProperty`, `getProperties`, `getAgentProperties`, `getAgents`, `likeTargetProperty`, `getFavorites`, `getVisited`, and the admin variants).
+| Before | After |
+|---|---|
+| `createProperty`, `getProperty`, `updateProperty` | `createProduct`, `getProduct`, `updateProduct` |
+| `getProperties`, `getAgentProperties` | `getProducts`, `getAgentProducts` |
+| `likeTargetProperty` | `likeTargetProduct` |
+| `getAllPropertiesByAdmin`, `updatePropertyByAdmin`, `removePropertyByAdmin` | `getAllProductsByAdmin`, `updateProductByAdmin`, `removeProductByAdmin` |
+| `getFavorites`, `getVisited` | same names, now return `Products` |
+| argument `propertyId` | `productId` |
+
+Search input `PISearch`:
+
+- Removed: `roomsList`, `bedsList`, `squaresRange`
+- Added: `occasionList`, `sizeList`
+- Kept: `memberId`, `locationList`, `typeList`, `pricesRange`, `periodsRange`, `text`, `options`
+- `options` now accepts `productSameDay`, `productGiftWrap`
+
+`Member` type: `memberProperties` → `memberProducts`.
 
 ## What stayed unchanged
 
-- All resolvers, services, DTOs, guards and decorators
-- All Mongoose schemas and collection names
-- All GraphQL operation names and types
-- The WebSocket gateway behavior
+- Business logic in the services: status transitions, `soldAt` / `deletedAt`, the member product counter, like and view flow, rank formulas
+- Roles: `AGENT` creates and updates products, `ADMIN` manages them
+- `MemberType`, auth, guards, decorators, socket gateway, follow, board article, comment logic
 - Env variable names: `PORT_API`, `PORT_BATCH`, `MONGO_DEV`, `MONGO_PROD`, `SECRET_TOKEN`
-- Batch job logic
+- `productStock` is only a stored field. No rule was added for it (for example, no automatic `SOLD` at zero), because the ERD has no order system.
 
 ## Current status
 
@@ -102,14 +138,19 @@ The `Member` type now exposes `memberProducts` instead of `memberProperties`. Al
 | Typecheck `florea-batch` | no errors |
 | Build `florea-api` | compiled successfully |
 | Build `florea-batch` | compiled successfully |
-| Lint (without `--fix`) | 3364 problems (3343 errors, 21 warnings), identical before and after the rename |
-| Smoke run | server started, `/graphql` returned 200, `/` returned `Welcome to Florea API Server!` |
-| Smoke run on the `Florea` database | `MongoDB is connected into development db`, `/graphql` returned 200 |
+| Lint (without `--fix`) | 3346 problems (3325 errors, 21 warnings); baseline was 3364 |
+| Leftover `propert` in `apps/` | none |
+| GraphQL schema | 9 product operations, no property operations |
+| Flow test on the dev `Florea` database | passed (see below) |
 | Unit / e2e tests | TODO (not run) |
+| Batch app at runtime | TODO (built, not started) |
+
+Flow test, run against the running API: signup as `AGENT` → `createProduct` → old enum value `APARTMENT` rejected → `getProduct` (view counted) → `getProducts` filtered by occasion, size and options → `likeTargetProduct` → `getFavorites` → `getVisited` → `updateProduct` → `getAgentProducts` → `createComment` with group `PRODUCT`. Final counters: views 1, likes 1, comments 1, `memberProducts` 1.
 
 ## Known issues
 
-- **Lint:** 3364 problems inherited from the Nestar code; 3152 are auto-fixable formatting. Not fixed, to keep the rename diff readable.
-- **`.env`:** local and untracked. `MONGO_DEV` now points at a separate `Florea` database (changed by the project owner); the API starts and connects to it. `MONGO_PROD` is TODO (not checked).
-- **Empty database:** the `Florea` database is new, so it has no members or other data yet.
-- **Uploads:** `uploads/member`, `uploads/property`, `uploads/article` exist as empty folders. The `property` upload target is still named after the old domain.
+- **Test data:** the flow test left one member (`floreatest`), one product (`Test Rose Bouquet ...`), one like, one view and one comment in the dev `Florea` database. Delete them in Compass if not wanted.
+- **Client out of sync:** the client still calls the property operations and fields, so it does not work against this backend until the frontend migration.
+- **Lint:** 3346 problems inherited from the Nestar code, mostly auto-fixable formatting. Not fixed.
+- **`MONGO_PROD`:** TODO (not checked).
+- **Admin operations** (`getAllProductsByAdmin`, `updateProductByAdmin`, `removeProductByAdmin`): compiled and present in the schema, but not exercised in the flow test (no admin account). TODO.

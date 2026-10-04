@@ -16,6 +16,7 @@ In the order they were done. State as of 2026-10-05, `main` at `5f5405e`.
 - [x] 10. Fix stale agent guideline files
 - [x] 11. Restructure agent guidelines and add skills
 - [x] 12. Backend member module: `memberProperties` → `memberProducts`
+- [x] 13. Backend product module: property → product
 
 ## 1. Recommend migration steps
 
@@ -146,3 +147,26 @@ In the order they were done. State as of 2026-10-05, `main` at `5f5405e`.
 | GraphQL schema | `Member` type exposes `memberProducts`, no `memberProperties` |
 
 - Known effect: the client still queries `memberProperties`, so client queries that select it fail until the client member types and queries are migrated.
+
+## 13. Backend product module: property → product
+
+- Includes the like/view/comment/notification group enums and the batch app, because they compile together with the product service.
+- Files (23 changed):
+  - moved: `components/property/*` → `components/product/*`, `libs/dto/property/*` → `libs/dto/product/*`, `libs/enums/property.enum.ts` → `product.enum.ts`, `schemas/Property.model.ts` → `Product.model.ts`, `uploads/property/` → `uploads/product/`
+  - edited: `components/like/like.service.ts`, `components/view/view.service.ts`, `components/comment/comment.service.ts`, `comment.module.ts`, `components.module.ts`, `libs/config.ts`, `libs/enums/{like,view,comment,notification}.enum.ts`
+  - batch: `batch.module.ts`, `batch.service.ts`, `batch.controller.ts`, `lib/config.ts`
+- What changed: see `BACKEND_MIGRATION.md` (fields, enums, operations, search filter).
+- Not done from the plan: `Notification.model.ts` has no `propertyId` (it uses a generic `notificationRefId`), so nothing was renamed there.
+- Results:
+
+| Check | Result |
+|---|---|
+| Typecheck `florea-api` | no errors |
+| Typecheck `florea-batch` | no errors |
+| Build `florea-api` | compiled successfully |
+| Build `florea-batch` | compiled successfully |
+| Lint (without `--fix`) | 3346 problems (baseline 3364) |
+| Leftover `propert` in `apps/` | none |
+| Flow test on the dev database | passed: signup, create, read, filter, like, favorites, visited, update, agent list, comment |
+
+- Test data left in the dev database: member `floreatest`, one test product, one like, one view, one comment.

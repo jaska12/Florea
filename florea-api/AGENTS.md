@@ -19,6 +19,7 @@ Use those files as the source of truth for AI Agent related migration history, a
 - Backend apps are `florea-api` and `florea-batch`.
 - Keep the existing NestJS resolver/service/module pattern based on MVC and DI.
 - Keep DTOs and enums under `apps/florea-api/src/libs`, and schemas under `apps/florea-api/src/schemas`.
+- The catalog module is `product` (`components/product`, `libs/dto/product`, `libs/enums/product.enum.ts`, `schemas/Product.model.ts`).
 - Keep shared modules reusable: auth, member, like, view, comment, follow, board article, socket.
 - API is GraphQL (Apollo), database is MongoDB (Mongoose), auth is JWT.
 
@@ -63,4 +64,4 @@ npx nest build florea-batch
 npx eslint "{src,apps,libs,test}/**/*.ts"
 ```
 
-The lint baseline is 3364 problems inherited from Nestar. A change must not increase it.
+The lint baseline is 3346 problems inherited from Nestar. A change must not increase it.
