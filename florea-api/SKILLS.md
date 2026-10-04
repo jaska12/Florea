@@ -20,4 +20,4 @@
 
 ### 5. Automated Background Tasks (Batch Server)
 - Schedule cron jobs using NestJS Schedule (`@Cron()`).
-- Execute background rank calculations and database rollbacks in `apps/nestar-batch`.
+- Execute background rank calculations and database rollbacks in `apps/florea-batch`.

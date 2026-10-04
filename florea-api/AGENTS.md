@@ -1,7 +1,7 @@
 # Florea API - AI Agent Guidelines
 
 ## 🚀 Project Overview
-Florea API is a NestJS monorepo backend application powering the Florea real estate & community platform. It utilizes MongoDB (Mongoose), GraphQL (Apollo), and WebSockets for real-time features.
+Florea API is a NestJS monorepo backend application powering Florea, an online gift & flower marketplace and community platform. It utilizes MongoDB (Mongoose), GraphQL (Apollo), and WebSockets for real-time features.
 
 ## 🏗️ Architecture & Structure
 - **Framework**: NestJS (Monorepo architecture)
@@ -10,7 +10,7 @@ Florea API is a NestJS monorepo backend application powering the Florea real est
 - **Authentication**: JWT token-based auth (`AuthService`, `@nestjs/jwt`)
 
 ## 📜 Key Coding Standards & Conventions
-1. **Component Organization**: Modules are located inside `apps/nestar-api/src/components/` (e.g., `member`, `property`, `board-article`, `comment`, `like`, `follow`, `view`).
+1. **Component Organization**: Modules are located inside `apps/florea-api/src/components/` (e.g., `member`, `property`, `board-article`, `comment`, `like`, `follow`, `view`).
 2. **GraphQL DTOs**: Input types, args, and update DTOs belong in `src/libs/dto/`.
 3. **Mongoose Schemas**: Define schemas with `@Schema()` and `@Prop()` in `src/schemas/`.
 4. **WebSocket Integration**: Manage real-time chat and online tracking in `src/socket/socket.gateway.ts`.

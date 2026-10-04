@@ -1,7 +1,7 @@
 # Florea Client - AI Agent Guidelines
 
 ## 🚀 Project Overview
-Florea Client is a Next.js (React & TypeScript) frontend application providing a UI for the Florea real estate platform.
+Florea Client is a Next.js (React & TypeScript) frontend application providing a UI for Florea, an online gift & flower marketplace.
 
 ## 🏗️ Tech Stack & Conventions
 - **Framework**: Next.js (Pages Router)
