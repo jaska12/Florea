@@ -79,3 +79,11 @@ Important decisions made during the Nestar → Florea migration session, with th
 - **Decision:** each migration step is a separate task with its own verification, and larger steps start with a written plan.
 - **Reason:** small steps are easy to check and to undo.
 - **Rejected:** one large "convert the whole project" task.
+
+## 14. Agent guidelines follow the instructor's structure, with proposed enum values
+
+- **Decision:** `AGENTS.md`, `SKILLS.md` and `skills/<name>/SKILL.md` follow the instructor's Petoria layout. `MemberType` stays `USER`, `AGENT`, `ADMIN`; product ownership uses `AGENT`. Product enum values in `florea-api/AGENTS.md`: `ProductType` (`BOUQUET`, `FLOWER`, `PLANT`, `GIFT_BOX`, `SWEET`, `TOY`, `OTHER`), `ProductOccasion` (`BIRTHDAY`, `WEDDING`, `ANNIVERSARY`, `LOVE`, `CONGRATS`, `SYMPATHY`, `OTHER`), `ProductSize` (`SMALL`, `MEDIUM`, `LARGE`, `DELUXE`), `ProductStatus` (same as the current `PropertyStatus`), `ProductLocation` (current values kept for now).
+- **Reason:** the type, occasion and size values come from the project owner's first ER model; keeping `MemberType` unchanged follows the instructor's approach and avoids touching auth and role guards.
+- **Status:** confirmed by the project owner on 2026-10-05.
+- **Rejected:** renaming `AGENT` to `SELLER` now (touches guards, client and every role check for no functional gain).
+

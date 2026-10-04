@@ -14,6 +14,7 @@ In the order they were done. State as of 2026-10-05, `main` at `5f5405e`.
 - [x] 8. Write migration docs (this folder)
 - [x] 9. Switch the backend to a Florea database (project owner)
 - [x] 10. Fix stale agent guideline files
+- [x] 11. Restructure agent guidelines and add skills
 
 ## 1. Recommend migration steps
 
@@ -98,7 +99,7 @@ In the order they were done. State as of 2026-10-05, `main` at `5f5405e`.
 
 ## 8. Write migration docs
 
-- Files: `docs/BACKEND_MIGRATION.md`, `docs/FRONTEND_MIGRATION.md`, `docs/DECISIONS.md`, `docs/COMPLETED_TASKS.md`, `docs/NEXT_STEPS.md`, `docs/PROMPTS.md`.
+- Files: `docs/ai/BACKEND_MIGRATION.md`, `docs/ai/FRONTEND_MIGRATION.md`, `docs/ai/DECISIONS.md`, `docs/ai/COMPLETED_TASKS.md`, `docs/ai/NEXT_STEPS.md`, `docs/ai/PROMPTS.md` (first written in `docs/`, moved to `docs/ai/` in task 11).
 - No source code changed.
 
 ## 9. Switch the backend to a Florea database (project owner)
@@ -111,4 +112,15 @@ In the order they were done. State as of 2026-10-05, `main` at `5f5405e`.
 - `florea-api/AGENTS.md`: description changed from "real estate & community platform" to online gift & flower marketplace; module path `apps/nestar-api/...` → `apps/florea-api/...`.
 - `florea-api/SKILLS.md`: `apps/nestar-batch` → `apps/florea-batch`.
 - `florea-client/AGENTS.md`: description changed from "real estate platform" to online gift & flower marketplace.
+- Lint / typecheck / build: not applicable (documentation only).
+
+## 11. Restructure agent guidelines and add skills
+
+- Modeled on the instructor's Petoria setup (Read First, Project Shape, Domain Rules, Workflow, Validation).
+- Files:
+  - `florea-api/AGENTS.md` (rewritten), `florea-api/SKILLS.md` (rewritten as a skill table)
+  - `florea-api/skills/backend-migration/SKILL.md`, `florea-api/skills/product-logic/SKILL.md` (new)
+  - `florea-client/AGENTS.md` (rewritten in the same shape)
+  - the six migration docs moved from `docs/` to `docs/ai/`
+- Product enum values written into `florea-api/AGENTS.md` (see `DECISIONS.md` 14).
 - Lint / typecheck / build: not applicable (documentation only).
