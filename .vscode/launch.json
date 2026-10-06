@@ -1,0 +1,31 @@
+{
+	"version": "0.2.0",
+	"configurations": [
+		{
+			"name": "Debug Florea API",
+			"type": "node",
+			"request": "launch",
+			"runtimeExecutable": "npm",
+			"runtimeArgs": ["run", "start:debug"],
+			"cwd": "${workspaceFolder}/florea-api",
+			"console": "integratedTerminal",
+			"restart": true,
+			"autoAttachChildProcesses": true,
+			"sourceMaps": true,
+			"skipFiles": ["<node_internals>/**"]
+		},
+		{
+			"name": "Debug Florea Batch",
+			"type": "node",
+			"request": "launch",
+			"runtimeExecutable": "npm",
+			"runtimeArgs": ["run", "start:debug:batch"],
+			"cwd": "${workspaceFolder}/florea-api",
+			"console": "integratedTerminal",
+			"restart": true,
+			"autoAttachChildProcesses": true,
+			"sourceMaps": true,
+			"skipFiles": ["<node_internals>/**"]
+		}
+	]
+}

@@ -54,9 +54,12 @@ Use these checks for backend work:
 ```bash
 npx tsc -p apps/florea-api/tsconfig.app.json --noEmit
 npx tsc -p apps/florea-batch/tsconfig.app.json --noEmit
-npx nest build florea-api
-npx nest build florea-batch
+npm run build
 ```
+
+`npm run build` builds both `florea-api` and `florea-batch`.
+
+To debug with breakpoints in VS Code, open the repo root and run the `Debug Florea API` (or `Debug Florea Batch`) configuration from `../.vscode/launch.json`. It runs `npm run start:debug`.
 
 `npm run lint` runs ESLint with `--fix`, so use it only when file rewriting is acceptable. To check without rewriting files:
 

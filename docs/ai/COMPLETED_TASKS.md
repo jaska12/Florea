@@ -19,6 +19,7 @@ In the order they were done. State as of 2026-10-05, `main` at `5f5405e`.
 - [x] 13. Backend product module: property → product
 - [x] 14. Align database collections with the ERD
 - [x] 15. Revise product enum values to the owner's migration plan
+- [x] 16. VS Code debug configuration and build script
 
 ## 1. Recommend migration steps
 
@@ -185,3 +186,14 @@ In the order they were done. State as of 2026-10-05, `main` at `5f5405e`.
 - File: `apps/florea-api/src/libs/enums/product.enum.ts` (plus `florea-api/AGENTS.md` and these docs).
 - Values: see `DECISIONS.md` 15.
 - Everything else in the plan was already done in tasks 12 to 14.
+
+## 16. VS Code debug configuration and build script
+
+- Modeled on the instructor's Petoria setup.
+- Files:
+  - `.vscode/launch.json` (new, repo root): `Debug Florea API` and `Debug Florea Batch`, both run from `florea-api/`
+  - `florea-api/package.json`: `build` now builds both apps; new `start:debug:batch`
+  - `florea-api/AGENTS.md`: validation section
+- Not copied from the instructor's scripts: `migrate:products` (no data to migrate) and the `NODE_ENV=production` prefix in `start:prod` (that syntax does not run in the Windows shell used here).
+- Results: `npm run build` compiled both apps; `npm run start:debug` printed `Debugger listening`, connected to MongoDB, started the application, and `/graphql` returned 200.
+- Not verified: stopping on a breakpoint inside VS Code (needs the editor's debugger UI).
