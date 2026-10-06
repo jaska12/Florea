@@ -5,7 +5,11 @@ export default function Document() {
 		<Html lang="en">
 			<Head>
 				<meta name="robots" content="index,follow" />
-				<link rel="icon" type="image/png" href="/img/logo/favicon.svg" />
+				<link rel="icon" type="image/svg+xml" href="/img/logo/florea/favicon.svg" />
+				<link rel="icon" type="image/png" sizes="32x32" href="/img/logo/florea/favicon-32.png" />
+				<link rel="shortcut icon" href="/favicon.ico" />
+				<link rel="apple-touch-icon" href="/img/logo/florea/apple-touch-icon.png" />
+				<link rel="manifest" href="/manifest.json" />
 
 				{/* SEO */}
 				<meta name="keyword" content={'florea, florea.uz, devex mern, mern nestjs fullstack'} />

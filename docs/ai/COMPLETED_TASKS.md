@@ -25,6 +25,7 @@ In the order they were done. State as of 2026-10-05, `main` at `5f5405e`.
 - [x] 19. Frontend product migration (data layer, components, pages, routes)
 - [x] 20. Frontend AGENTS.md aligned with the owner's version; Yarn as the only package manager
 - [x] 21. Frontend design skills
+- [x] 22. Florea logo, favicon and app icons
 
 ## 1. Recommend migration steps
 
@@ -267,3 +268,18 @@ In the order they were done. State as of 2026-10-05, `main` at `5f5405e`.
   - `florea-client/skills/admin-panel/SKILL.md` (new): design changes on the admin pages
   - `florea-client/SKILLS.md`: both added to the table
 - No source code changed. Lint / typecheck / build: not applicable.
+
+## 22. Florea logo, favicon and app icons
+
+- The logo was designed by the project owner and delivered as `florea-logo.zip`; its 15 files were extracted to `florea-client/public/img/logo/florea/`. No logo was drawn or changed.
+- Files:
+  - `libs/components/Top.tsx`, `libs/components/Footer.tsx`: `logoWhite.svg` → `florea/florea-logo-on-dark.svg`, `alt="Florea"`
+  - `libs/components/layout/LayoutAdmin.tsx`, `pages/account/join.tsx`, `pages/community/index.tsx`, `pages/community/detail.tsx`: `logoText.svg` → `florea/florea-mark.svg`, `alt="Florea"`
+  - `pages/_document.tsx`: favicon (svg, 32px png, ico), apple touch icon and manifest links
+  - `public/favicon.ico`: replaced with the Florea one
+  - `public/manifest.json` (new): app name and the 192 / 512 icons
+  - `scss/pc/main.scss`, `scss/mobile/main.scss`: footer logo keeps its 128x52 box, with `object-fit: contain` so the new logo is not stretched
+  - removed: `public/img/logo/logoWhite.svg`, `logoText.svg`, `favicon.svg` (the Nestar files)
+- Difference from the request: `logoText.svg` was not a wide dark logo but a 40x40 round badge shown in square boxes (40, 80 and 90 px). The wide `florea-logo.svg` would be squashed there, so the flower mark is used in those four places to keep the sizes and layout. `florea-logo.svg` (for light backgrounds) is available but not used yet.
+- Results: `yarn tsc --noEmit` no errors; `yarn build` succeeded (73 pages); served build returned 200 for all logo, icon and manifest files; the pages reference the new files with `alt="Florea"`.
+- Not verified: how the logo looks in the browser (contrast on the navbar and footer, crop inside the round community avatar).

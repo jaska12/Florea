@@ -49,13 +49,14 @@ Not renamed: the agent pages and components (`pages/agent`, `AgentCard`, `TopAge
 | Add / edit product form | Occasion and Size selects, Stock number input, Gift wrap and Same day selects instead of Rooms, Bed, Square, Barter, Rent |
 | Branding (earlier step) | package name, page titles, footer, join page, community title, SEO keywords and site name, mobile placeholders |
 | Locales | key `Rooms` replaced by `Occasion` in `en`, `kr`, `ru` |
+| Logo and icons | Florea logo in the navbar and footer, flower mark in the admin sidebar, join page and community pages, new favicon, apple touch icon and web manifest (`public/img/logo/florea/`) |
 
 ## What stayed unchanged
 
 - Project architecture, Apollo setup, layouts, hooks, auth, chat
 - Agent, community, member, mypage (except product parts), CS and admin user pages
 - SCSS rules (only file and class names changed)
-- Logo and favicon files, `CHANGELOG.md`
+- `CHANGELOG.md`
 
 ## Current status
 
