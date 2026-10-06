@@ -81,7 +81,7 @@ export class ProductService {
     }
 
     public async updateProduct(memberId: ObjectId, input: ProductUpdate): Promise<Product> {
-        let { productStatus, soldAt, deletedAt } = input;
+        const { productStatus } = input;
         const search: T = {
             _id: input._id,
             memberId: memberId,
@@ -99,7 +99,7 @@ export class ProductService {
 
         if (!result) throw new InternalServerErrorException(Message.UPDATE_FAILED);
 
-        if (soldAt || deletedAt) {
+        if (input.soldAt || input.deletedAt) {
             await this.memberService.memberStatsEditor({
                 _id: shapeIntoMongoObjectId(memberId),
                 targetKey: 'memberProducts',
@@ -264,7 +264,7 @@ export class ProductService {
     }
 
     public async updateProductByAdmin(input: ProductUpdate): Promise<Product> {
-        let { productStatus, soldAt, deletedAt } = input;
+        const { productStatus } = input;
         const search: T = {
             _id: input._id,
             productStatus: ProductStatus.ACTIVE,
@@ -281,7 +281,7 @@ export class ProductService {
 
         if (!result) throw new InternalServerErrorException(Message.UPDATE_FAILED);
 
-        if (soldAt || deletedAt) {
+        if (input.soldAt || input.deletedAt) {
             await this.memberService.memberStatsEditor({
                 _id: result.memberId,
                 targetKey: 'memberProducts',

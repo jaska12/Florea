@@ -140,10 +140,11 @@ Search input `PISearch`:
 | Typecheck `florea-batch` | no errors |
 | Build `florea-api` | compiled successfully |
 | Build `florea-batch` | compiled successfully |
-| Lint (without `--fix`) | 3346 problems (3325 errors, 21 warnings); baseline was 3364 |
+| Lint (without `--fix`) | 3336 problems (3315 errors, 21 warnings); baseline was 3364 |
 | Leftover `propert` in `apps/` | none |
 | GraphQL schema | 9 product operations, no property operations |
 | Flow test on the dev `Florea` database | passed (see below) |
+| Full operation test (51 checks) | all passed: member, product, article, comment, follow, uploader, websocket, admin operations, role rejections |
 | Unit / e2e tests | TODO (not run) |
 | Batch app at runtime | TODO (built, not started) |
 
@@ -151,8 +152,7 @@ Flow test, run against the running API: signup as `AGENT` â†’ `createProduct` â†
 
 ## Known issues
 
-- **Test data:** the flow test left one member (`floreatest`), one product (`Test Rose Bouquet ...`), one like, one view and one comment in the dev `Florea` database. Delete them in Compass if not wanted.
+- **Test data:** the tests left records in the dev `Florea` database: members `floreatest` (AGENT), `floreauser` (USER), `floreaadm` (ADMIN) and a few generated `u...` users, several test products (`Test ...`, `Counter test ...`), plus likes, views, comments. Delete them in Compass if not wanted.
 - **Client out of sync:** the client still calls the property operations and fields, so it does not work against this backend until the frontend migration.
 - **Lint:** 3346 problems inherited from the Nestar code, mostly auto-fixable formatting. Not fixed.
 - **`MONGO_PROD`:** TODO (not checked).
-- **Admin operations** (`getAllProductsByAdmin`, `updateProductByAdmin`, `removeProductByAdmin`): compiled and present in the schema, but not exercised in the flow test (no admin account). TODO.

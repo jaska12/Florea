@@ -67,4 +67,4 @@ To debug with breakpoints in VS Code, open the repo root and run the `Debug Flor
 npx eslint "{src,apps,libs,test}/**/*.ts"
 ```
 
-The lint baseline is 3342 problems inherited from Nestar. A change must not increase it.
+The lint baseline is 3336 problems inherited from Nestar. A change must not increase it.

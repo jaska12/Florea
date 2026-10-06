@@ -20,6 +20,7 @@ In the order they were done. State as of 2026-10-05, `main` at `5f5405e`.
 - [x] 14. Align database collections with the ERD
 - [x] 15. Revise product enum values to the owner's migration plan
 - [x] 16. VS Code debug configuration and build script
+- [x] 17. Full API operation test and product counter fix
 
 ## 1. Recommend migration steps
 
@@ -197,3 +198,13 @@ In the order they were done. State as of 2026-10-05, `main` at `5f5405e`.
 - Not copied from the instructor's scripts: `migrate:products` (no data to migrate) and the `NODE_ENV=production` prefix in `start:prod` (that syntax does not run in the Windows shell used here).
 - Results: `npm run build` compiled both apps; `npm run start:debug` printed `Debugger listening`, connected to MongoDB, started the application, and `/graphql` returned 200.
 - Not verified: stopping on a breakpoint inside VS Code (needs the editor's debugger UI).
+
+## 17. Full API operation test and product counter fix
+
+- Ran every operation from the instructor's Postman collection against the running API on the dev `Florea` database: member (signup, login, checkAuth, checkAuthRoles, updateMember, getMember, getAgents, likeTargetMember, admin list/update), product (create, get, update, list with all filters, agent list, like, favorites, visited, admin list/update/remove), article, comment, follow, image uploaders and the WebSocket chat. Also checked that wrong passwords, missing tokens and wrong roles are rejected.
+- Result: 51 checks, 51 passed.
+- Bug found by the test: `memberProducts` was not decreased when a product became `SOLD` or `DELETE`. `updateProduct` and `updateProductByAdmin` read `soldAt` / `deletedAt` before setting them, so the check was always false. Inherited from Nestar.
+- Files:
+  - `apps/florea-api/src/components/product/product.service.ts` (the check now reads `input.soldAt` / `input.deletedAt`, as the board article service already does)
+  - `florea-api/.gitignore` (uploaded files are ignored, the `uploads/*` folders stay)
+- Results after the fix: typecheck no errors, both apps build, lint 3336 problems, counter test passed (create +1, SOLD by agent -1, DELETE by admin -1, plain update 0), full test 51 of 51 passed again.

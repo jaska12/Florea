@@ -54,5 +54,4 @@ Order follows the dependencies:
 - Client `next build` (TODO: not run)
 - Client in the browser against the Florea API (TODO)
 - Batch app at runtime (TODO: built, but not started)
-- Admin product operations (TODO: no admin account in the dev database)
 - `MONGO_PROD` value (TODO: not checked)
