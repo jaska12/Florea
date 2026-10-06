@@ -21,6 +21,7 @@ In the order they were done. State as of 2026-10-05, `main` at `5f5405e`.
 - [x] 15. Revise product enum values to the owner's migration plan
 - [x] 16. VS Code debug configuration and build script
 - [x] 17. Full API operation test and product counter fix
+- [x] 18. Frontend agent guidelines, skills and env file
 
 ## 1. Recommend migration steps
 
@@ -208,3 +209,12 @@ In the order they were done. State as of 2026-10-05, `main` at `5f5405e`.
   - `apps/florea-api/src/components/product/product.service.ts` (the check now reads `input.soldAt` / `input.deletedAt`, as the board article service already does)
   - `florea-api/.gitignore` (uploaded files are ignored, the `uploads/*` folders stay)
 - Results after the fix: typecheck no errors, both apps build, lint 3336 problems, counter test passed (create +1, SOLD by agent -1, DELETE by admin -1, plain update 0), full test 51 of 51 passed again.
+
+## 18. Frontend agent guidelines, skills and env file
+
+- Modeled on the instructor's Petoria frontend `AGENTS.md` (Rules, Backend Context, Workflow).
+- Files:
+  - `florea-client/AGENTS.md` (rewritten), `florea-client/SKILLS.md` (rewritten as a skill table)
+  - `florea-client/skills/frontend-migration/SKILL.md`, `florea-client/skills/product-ui/SKILL.md` (new)
+  - `florea-client/.env.development` (new, local only, ignored by git): API, GraphQL and WebSocket URLs for `localhost:3007`
+- No client source code changed. Lint / typecheck / build: not applicable.

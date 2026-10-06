@@ -25,7 +25,7 @@ Order follows the dependencies:
 4. Routes
 5. SCSS, images, i18n text, SEO description, logos
 
-**Verify first:** the matching backend module is finished, because the client calls the same operation names. Create the client `.env` file with the API and WebSocket URLs.
+**Verify first:** the matching backend module is finished, because the client calls the same operation names. Use the `frontend-migration` skill (`florea-client/skills/frontend-migration/SKILL.md`), then review with `product-ui`.
 
 ### 3. Final sweep
 

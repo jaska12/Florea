@@ -70,6 +70,6 @@ These must change together with the backend, because the client calls the same o
 - **Install:** `yarn install` failed with a network error in this session. `npm ci` fails on a peer-dependency conflict; `npm ci --legacy-peer-deps` works.
 - **Two lockfiles:** both `yarn.lock` and `package-lock.json` exist. TODO: pick one package manager.
 - **SEO description:** `pages/_document.tsx` still says "Buy and sell properties anywhere anytime in South Korea" (in English, Russian and Korean). Only the site name was changed.
-- **Env file:** no `.env` file exists in `florea-client/`. TODO: create it with the API and WebSocket URLs before running the client.
+- **Env file:** `.env.development` exists locally (ignored by git) and points at `localhost:3007`.
 - **Out of sync with the backend:** the backend now exposes product operations, types and fields (`createProduct`, `getProducts`, `Product`, `memberProducts`, ...). The client still uses the property ones, so it does not work against the current backend until it is migrated. The upload target folder is now `uploads/product`.
 - **No ESLint setup.** TODO: decide whether to add one.
