@@ -24,6 +24,7 @@ In the order they were done. State as of 2026-10-05, `main` at `5f5405e`.
 - [x] 18. Frontend agent guidelines, skills and env file
 - [x] 19. Frontend product migration (data layer, components, pages, routes)
 - [x] 20. Frontend AGENTS.md aligned with the owner's version; Yarn as the only package manager
+- [x] 21. Frontend design skills
 
 ## 1. Recommend migration steps
 
@@ -257,3 +258,12 @@ In the order they were done. State as of 2026-10-05, `main` at `5f5405e`.
 | `yarn tsc --noEmit` | no errors |
 | `yarn build` | succeeded, 73 static pages |
 | Installed versions vs. `package.json` | next 14.2.0, react 18.2.0, @apollo/client 3.14.1, @mui/material 5.18.0, graphql 15.10.3 (all within the declared ranges) |
+
+## 21. Frontend design skills
+
+- Modeled on the instructor's Petoria frontend skills.
+- Files:
+  - `florea-client/skills/user-project/SKILL.md` (new): design changes on the user-facing pages
+  - `florea-client/skills/admin-panel/SKILL.md` (new): design changes on the admin pages
+  - `florea-client/SKILLS.md`: both added to the table
+- No source code changed. Lint / typecheck / build: not applicable.

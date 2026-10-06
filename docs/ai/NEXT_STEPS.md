@@ -23,7 +23,9 @@ Order follows the dependencies:
 - Click through: sign up, log in, add a product (as `AGENT`), product list with filters, product detail, like, comment, favorites, recently visited, my products, admin product list, chat.
 - Test accounts in the dev database: `floreatest` (AGENT), `floreauser` (USER), `floreaadm` (ADMIN).
 
-### 2a. Client content and assets
+### 2a. Client design and content
+
+Use the `user-project` skill for the user-facing pages and `admin-panel` for the admin pages, one page per task.
 
 1. Product type images for the header filter (`public/img/banner/types/`).
 2. Icons on the cards (bed, room, expand) and the sample photos in `public/img/product/`.
