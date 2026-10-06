@@ -22,6 +22,7 @@ In the order they were done. State as of 2026-10-05, `main` at `5f5405e`.
 - [x] 16. VS Code debug configuration and build script
 - [x] 17. Full API operation test and product counter fix
 - [x] 18. Frontend agent guidelines, skills and env file
+- [x] 19. Frontend product migration (data layer, components, pages, routes)
 
 ## 1. Recommend migration steps
 
@@ -218,3 +219,23 @@ In the order they were done. State as of 2026-10-05, `main` at `5f5405e`.
   - `florea-client/skills/frontend-migration/SKILL.md`, `florea-client/skills/product-ui/SKILL.md` (new)
   - `florea-client/.env.development` (new, local only, ignored by git): API, GraphQL and WebSocket URLs for `localhost:3007`
 - No client source code changed. Lint / typecheck / build: not applicable.
+
+## 19. Frontend product migration (data layer, components, pages, routes)
+
+- The existing Nestar client was adapted in place, the same way the backend was.
+- Files (88 changed, 35 of them renamed):
+  - renamed folders and files: `pages/property` → `pages/product`, `pages/_admin/properties` → `products`, `libs/components/property` → `product`, `libs/components/admin/properties` → `products`, `libs/types/property` → `product`, `libs/enums/property.enum.ts` → `product.enum.ts`, the `*Property*` components, the matching SCSS files, `public/img/property` → `product`
+  - data layer: `libs/enums/product.enum.ts`, `libs/types/product/*`, `libs/config.ts`, `apollo/user/*`, `apollo/admin/*`
+  - hand-edited components: `ProductBigCard`, `PopularProductCard`, `TopProductCard`, `TrendProductCard`, `product/ProductCard`, `homepage/HeaderFilter`, `product/Filter`, `mypage/AddNewProduct`, `pages/product/detail.tsx`, `pages/product/index.tsx`
+  - text: `LayoutBasic` page descriptions, plural labels, locale key `Rooms` → `Occasion`
+- What changed: see `FRONTEND_MIGRATION.md`.
+- Results:
+
+| Check | Result |
+|---|---|
+| Typecheck (`tsc --noEmit`) | no errors |
+| GraphQL documents vs. the running backend schema | 35 of 35 valid |
+| `next build` | succeeded, 73 static pages |
+| Pages from `next start` | 10 main pages returned 200, old `/property` returns 404 |
+| Lint | not runnable (no ESLint config) |
+| Browser click-through | TODO (not done) |

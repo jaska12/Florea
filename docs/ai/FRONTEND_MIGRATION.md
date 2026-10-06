@@ -1,75 +1,81 @@
 # Frontend Migration: Nestar → Florea
 
-State as of 2026-10-05, branch `main` at commit `5f5405e`.
+State as of 2026-10-06, branch `develop`, after the product domain migration of the client.
 
 ## Migration goal
 
-Turn the Nestar Next.js client (`florea-client/`) into the Florea client: an online gift & flower marketplace UI that talks to the Florea GraphQL API.
+Turn the Nestar Next.js client (`florea-client/`) into the Florea client: an online gift & flower marketplace UI that talks to the Florea GraphQL API. The existing client is adapted in place; it is not rewritten.
 
-Only the first layer is done: **branding and package name**. No page, route, component, type, query or mutation has been migrated to the product domain yet.
+Done so far: branding, and the full property → product migration of the data layer, components, pages and routes. Remaining: marketing text, images and icons (see Known issues).
 
 ## Renamed pages, components and routes
 
-**None yet.**
+| Before | After |
+|---|---|
+| `pages/property/index.tsx`, `detail.tsx` | `pages/product/index.tsx`, `detail.tsx` |
+| `pages/_admin/properties/index.tsx` | `pages/_admin/products/index.tsx` |
+| route `/property`, `/property/detail` | `/product`, `/product/detail` (`/property` now returns 404) |
+| route `/_admin/properties` | `/_admin/products` |
+| `libs/components/property/` (`Filter`, `PropertyCard`, `Review`) | `libs/components/product/` (`Filter`, `ProductCard`, `Review`) |
+| `libs/components/admin/properties/PropertyList.tsx` | `libs/components/admin/products/ProductList.tsx` |
+| `PropertyBigCard`, `PopularProperties`, `PopularPropertyCard`, `TopProperties`, `TopPropertyCard`, `TrendProperties`, `TrendPropertyCard` | same names with `Product` / `Products` |
+| `MemberProperties`, `MyProperties`, `AddNewProperty`, `mypage/PropertyCard` | `MemberProducts`, `MyProducts`, `AddNewProduct`, `mypage/ProductCard` |
+| `scss/pc/property/`, `memberProperties.scss`, `addNewProperty.scss`, `myProperties.scss` | `scss/pc/product/`, `memberProducts.scss`, `addNewProduct.scss`, `myProducts.scss` |
+| `public/img/property/`, `public/img/banner/properties.png` | `public/img/product/`, `public/img/banner/products.png` |
+| mypage category `myProperties` | `myProducts` |
 
-TODO: these still carry the old domain names and will need renaming in the domain step.
+CSS class names, handler names and state names were renamed the same way (`property-...` → `product-...`, `likePropertyHandler` → `likeProductHandler`).
 
-- Pages: `pages/property/index.tsx`, `pages/property/detail.tsx`, `pages/agent/index.tsx`, `pages/agent/detail.tsx`, `pages/_admin/properties/index.tsx`
-- Components: `libs/components/property/*`, `libs/components/agent/ReviewCard.tsx`, `libs/components/common/AgentCard.tsx`, `libs/components/common/PropertyBigCard.tsx`, `libs/components/homepage/{Popular,Top,Trend}Properties.tsx` and their cards, `libs/components/homepage/TopAgents.tsx`, `TopAgentCard.tsx`, `libs/components/member/MemberProperties.tsx`, `libs/components/mypage/{AddNewProperty,MyProperties,PropertyCard}.tsx`, `libs/components/admin/properties/PropertyList.tsx`
-- Styles: `scss/pc/property/*`, `scss/pc/agent/*`, `scss/pc/member/memberProperties.scss`, `scss/pc/mypage/{addNewProperty,myProperties}.scss`
-- Images: `public/img/property/*`, `public/img/banner/properties.png`, `public/img/banner/agents.webp`, `public/img/profile/agent.png`
-
-The new route names are not decided. TODO.
+Not renamed: the agent pages and components (`pages/agent`, `AgentCard`, `TopAgents`), because `MemberType.AGENT` is unchanged.
 
 ## Updated types, queries and mutations
 
-**None yet.**
+- `libs/enums/product.enum.ts`: `ProductType` (BOUQUET, FLOWER_BOX, PLANT, GIFT_BOX, SWEET, TOY), new `ProductOccasion` and `ProductSize`, `ProductStatus`, `ProductLocation`. The like, view and comment group enums use `PRODUCT`.
+- `libs/types/product/`: `Product`, `Products`, `ProductInput`, `ProductUpdate`, `ProductsInquiry`, `AgentProductsInquiry`, `AllProductsInquiry`.
+  - Removed: `propertySquare`, `propertyBeds`, `propertyRooms`, `propertyBarter`, `propertyRent`, `constructedAt`, and the search fields `roomsList`, `bedsList`, `squaresRange`.
+  - Added: `productOccasion`, `productSize`, `productStock`, `productSameDay`, `productGiftWrap`, and the search fields `occasionList`, `sizeList`.
+- `libs/types/member`: `memberProperties` → `memberProducts`.
+- `apollo/user/query.ts`, `apollo/user/mutation.ts`, `apollo/admin/query.ts`, `apollo/admin/mutation.ts`: all 35 documents use the product operations and fields (`GET_PRODUCTS`, `CREATE_PRODUCT`, `LIKE_TARGET_PRODUCT`, `GET_ALL_PRODUCTS_BY_ADMIN`, ...).
+- `libs/config.ts`: `availableOptions` is `productSameDay`, `productGiftWrap`; `propertyYears` and `propertySquare` replaced by `productPrices`.
 
-TODO:
+## UI changes
 
-- `libs/enums/property.enum.ts`
-- `libs/types/property/{property,property.input,property.update}.ts`
-- `apollo/user/query.ts`, `apollo/user/mutation.ts`, `apollo/admin/query.ts`, `apollo/admin/mutation.ts`
-
-These must change together with the backend, because the client calls the same operation names.
-
-## UI text and branding changes (done)
-
-| File | Change |
+| Place | Change |
 |---|---|
-| `package.json`, `package-lock.json` | package name `nestar-next` → `florea-next` |
-| `libs/components/layout/LayoutBasic.tsx`, `LayoutFull.tsx`, `LayoutHome.tsx` | `<title>` and `meta title`: Nestar → Florea |
-| `libs/components/Footer.tsx` | copyright text: Nestar → Florea (2 places) |
-| `pages/account/join.tsx` | brand name next to the logo |
-| `pages/community/index.tsx` | `Nestar Community` → `Florea Community` |
-| `pages/_document.tsx` | SEO keywords and site name: `nestar`, `nestar.uz` → `florea`, `florea.uz` |
-| `MemberFollowers`, `MemberFollowings`, `MemberProperties`, `MyFavorites`, `MyProperties`, `RecentlyVisited` | mobile placeholder text `NESTAR ... MOBILE` → `FLOREA ... MOBILE` |
-| `.gitignore` | comment text |
+| Product cards (big, popular, top, trend, list) | show occasion, size and stock instead of beds, rooms and square metres; "Same day" / "Gift wrap" instead of "Rent" / "Barter" |
+| Product detail page | option boxes and details table show Occasion, Size, Stock, Listed year and options; the "Floor Plans" block was removed |
+| Homepage header filter | third box is Occasion (was Rooms); advanced filter has Size, Options (same day, gift wrap) and Price; "Year Built" and "square meter" were removed |
+| Product list filter | Occasion checkboxes and Size buttons instead of Rooms and Bedrooms; options are same day and gift wrap; "Square meter" was removed |
+| Add / edit product form | Occasion and Size selects, Stock number input, Gift wrap and Same day selects instead of Rooms, Bed, Square, Barter, Rent |
+| Branding (earlier step) | package name, page titles, footer, join page, community title, SEO keywords and site name, mobile placeholders |
+| Locales | key `Rooms` replaced by `Occasion` in `en`, `kr`, `ru` |
 
 ## What stayed unchanged
 
-- All routes and page files
-- All Apollo queries and mutations
-- All types and enums
-- Component logic
-- Logo and favicon files in `public/img/logo/` (artwork, may still show the old brand; TODO: check and replace)
-- `CHANGELOG.md` (its `nestar-next` links are real links to the upstream repo history)
-- i18n locale files (TODO: review wording in the domain step)
+- Project architecture, Apollo setup, layouts, hooks, auth, chat
+- Agent, community, member, mypage (except product parts), CS and admin user pages
+- SCSS rules (only file and class names changed)
+- Logo and favicon files, `CHANGELOG.md`
 
 ## Current status
 
 | Check | Result |
 |---|---|
 | Typecheck (`tsc --noEmit`) | no errors |
-| Lint | not runnable: the client has no ESLint config, `next lint` only opens an interactive setup |
-| Build (`next build`) | TODO (not run) |
-| Run in browser | TODO (not verified) |
+| GraphQL documents validated against the running backend schema | 35 of 35 valid |
+| Production build (`next build`) | succeeded, 73 static pages generated |
+| Pages served by `next start` | `/`, `/product`, `/product/detail`, `/agent`, `/community`, `/mypage`, `/_admin/products`, `/account/join`, `/cs`, `/about` returned 200 |
+| Lint | not runnable: no ESLint config |
+| Manual check in a browser (click-through, forms, chat) | TODO (not done) |
 
 ## Known issues
 
-- **Install:** `yarn install` failed with a network error in this session. `npm ci` fails on a peer-dependency conflict; `npm ci --legacy-peer-deps` works.
-- **Two lockfiles:** both `yarn.lock` and `package-lock.json` exist. TODO: pick one package manager.
-- **SEO description:** `pages/_document.tsx` still says "Buy and sell properties anywhere anytime in South Korea" (in English, Russian and Korean). Only the site name was changed.
+- **Not checked in a browser.** Build and server-rendered pages work, but creating a product, filtering, liking and chatting through the UI were not clicked through.
+- **Product type images are missing.** The header filter shows `/img/banner/types/<type>.webp`; only the old apartment, villa and house images exist. TODO: add `bouquet.webp`, `flower_box.webp`, `plant.webp`, `gift_box.webp`, `sweet.webp`, `toy.webp`.
+- **Old icons and photos.** Cards still use `bed.svg`, `room.svg`, `expand.svg` next to occasion, size and stock, and the sample photos in `public/img/product/` are real-estate photos. `floorPlan.png` is no longer used.
+- **Real-estate marketing text remains** in `libs/components/cs/Faq.tsx`, `pages/about/index.tsx`, `libs/components/Footer.tsx` ("Product for Rent"), `libs/components/mypage/Article.tsx`, the SEO description in `pages/_document.tsx`, and the `kr` / `ru` translations (for example "Product type" is still translated as "property type").
+- **Prices are shown with `$`** while the price filter steps go up to 2,000,000. TODO: decide the currency.
+- **Apollo warnings during build:** `useQuery` `onCompleted` is deprecated in the installed Apollo Client. Inherited from Nestar, not changed.
+- **Install:** `npm ci` needs `--legacy-peer-deps`; both `yarn.lock` and `package-lock.json` exist.
 - **Env file:** `.env.development` exists locally (ignored by git) and points at `localhost:3007`.
-- **Out of sync with the backend:** the backend now exposes product operations, types and fields (`createProduct`, `getProducts`, `Product`, `memberProducts`, ...). The client still uses the property ones, so it does not work against the current backend until it is migrated. The upload target folder is now `uploads/product`.
 - **No ESLint setup.** TODO: decide whether to add one.

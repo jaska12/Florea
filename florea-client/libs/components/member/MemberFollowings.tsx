@@ -23,7 +23,7 @@ const MemberFollowings = (props: MemberFollowingsProps) => {
 	const device = useDeviceDetect();
 	const router = useRouter();
 	const [total, setTotal] = useState<number>(0);
-	const category: any = router.query?.category ?? 'properties';
+	const category: any = router.query?.category ?? 'products';
 	const [followInquiry, setFollowInquiry] = useState<FollowInquiry>(
 		initialInput || { page: 1, limit: 5, search: { followerId: '' } },
 	);

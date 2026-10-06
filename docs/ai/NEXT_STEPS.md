@@ -17,15 +17,18 @@ Order follows the dependencies:
 
 **Verify before each module:** the previous module builds, typechecks, and its operations work in the GraphQL playground. Commit each module separately.
 
-### 2. Client domain migration, in the same order
+### 2. Check the client in a browser **← next**
 
-1. `libs/enums/`, `libs/types/`
-2. `apollo/` queries and mutations
-3. Components and pages (`property` → product)
-4. Routes
-5. SCSS, images, i18n text, SEO description, logos
+- Start the backend (`npm run start:dev` in `florea-api`) and the client (`npm run dev` in `florea-client`).
+- Click through: sign up, log in, add a product (as `AGENT`), product list with filters, product detail, like, comment, favorites, recently visited, my products, admin product list, chat.
+- Test accounts in the dev database: `floreatest` (AGENT), `floreauser` (USER), `floreaadm` (ADMIN).
 
-**Verify first:** the matching backend module is finished, because the client calls the same operation names. Use the `frontend-migration` skill (`florea-client/skills/frontend-migration/SKILL.md`), then review with `product-ui`.
+### 2a. Client content and assets
+
+1. Product type images for the header filter (`public/img/banner/types/`).
+2. Icons on the cards (bed, room, expand) and the sample photos in `public/img/product/`.
+3. Real-estate text: FAQ, about page, footer, mypage article sample, SEO description, `kr` / `ru` translations.
+4. Currency symbol.
 
 ### 3. Final sweep
 
@@ -42,7 +45,7 @@ Order follows the dependencies:
 - Does `productLocation` keep the Korean city list or change?
 - What are the Florea board article categories?
 - Notifications: generic `notificationRefId` (current code) or `productId` / `articleId` (ERD)?
-- What are the new client route names for `/property` and `/agent`?
+- Which currency does Florea show (prices currently use `$`)?
 - Should the 3364 backend lint problems be auto-fixed in one separate formatting commit?
 - Should the client get an ESLint config?
 - Which package manager does the client use (both `yarn.lock` and `package-lock.json` exist)?
@@ -51,7 +54,6 @@ Order follows the dependencies:
 ## Not verified yet
 
 - Backend unit and e2e tests (TODO: not run)
-- Client `next build` (TODO: not run)
-- Client in the browser against the Florea API (TODO)
+- Client click-through in a browser (TODO)
 - Batch app at runtime (TODO: built, but not started)
 - `MONGO_PROD` value (TODO: not checked)

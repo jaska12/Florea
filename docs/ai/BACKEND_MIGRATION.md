@@ -153,6 +153,5 @@ Flow test, run against the running API: signup as `AGENT` â†’ `createProduct` â†
 ## Known issues
 
 - **Test data:** the tests left records in the dev `Florea` database: members `floreatest` (AGENT), `floreauser` (USER), `floreaadm` (ADMIN) and a few generated `u...` users, several test products (`Test ...`, `Counter test ...`), plus likes, views, comments. Delete them in Compass if not wanted.
-- **Client out of sync:** the client still calls the property operations and fields, so it does not work against this backend until the frontend migration.
 - **Lint:** 3346 problems inherited from the Nestar code, mostly auto-fixable formatting. Not fixed.
 - **`MONGO_PROD`:** TODO (not checked).
