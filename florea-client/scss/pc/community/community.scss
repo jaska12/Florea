@@ -28,6 +28,10 @@
 							height: 80px;
 							border-radius: 50%;
 							object-fit: cover;
+							@include florea-logo-motion;
+							&:hover {
+								@include florea-logo-lift($logo-glow-on-light);
+							}
 						}
 						.community-name {
 							.name {

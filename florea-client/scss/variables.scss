@@ -3,3 +3,31 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
 $font: 'Poppins', sans-serif;
+
+/** FLOREA LOGO HOVER **/
+
+$logo-ease: cubic-bezier(0.22, 1, 0.36, 1);
+$logo-glow-on-dark: rgba(244, 169, 196, 0.3);
+$logo-glow-on-light: rgba(180, 35, 95, 0.2);
+
+// resting state: put on the logo image
+@mixin florea-logo-motion($origin: center) {
+	transform-origin: $origin;
+	transition: transform 360ms $logo-ease, filter 360ms $logo-ease;
+	will-change: transform, filter;
+
+	@media (prefers-reduced-motion: reduce) {
+		transition: none;
+	}
+}
+
+// hover / focus state: slight lift, slight scale, soft glow
+@mixin florea-logo-lift($glow: $logo-glow-on-dark) {
+	transform: translateY(-2px) scale(1.03);
+	filter: drop-shadow(0 6px 14px $glow);
+
+	@media (prefers-reduced-motion: reduce) {
+		transform: none;
+		filter: none;
+	}
+}

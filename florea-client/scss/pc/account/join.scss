@@ -28,6 +28,10 @@
            img {
              width: 40px;
              height: 40px;
+             @include florea-logo-motion;
+             &:hover {
+               @include florea-logo-lift($logo-glow-on-light);
+             }
            }
            span {
              margin-left: 10px;

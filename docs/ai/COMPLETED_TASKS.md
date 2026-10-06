@@ -26,6 +26,7 @@ In the order they were done. State as of 2026-10-05, `main` at `5f5405e`.
 - [x] 20. Frontend AGENTS.md aligned with the owner's version; Yarn as the only package manager
 - [x] 21. Frontend design skills
 - [x] 22. Florea logo, favicon and app icons
+- [x] 23. Logo hover animation
 
 ## 1. Recommend migration steps
 
@@ -283,3 +284,20 @@ In the order they were done. State as of 2026-10-05, `main` at `5f5405e`.
 - Difference from the request: `logoText.svg` was not a wide dark logo but a 40x40 round badge shown in square boxes (40, 80 and 90 px). The wide `florea-logo.svg` would be squashed there, so the flower mark is used in those four places to keep the sizes and layout. `florea-logo.svg` (for light backgrounds) is available but not used yet.
 - Results: `yarn tsc --noEmit` no errors; `yarn build` succeeded (73 pages); served build returned 200 for all logo, icon and manifest files; the pages reference the new files with `alt="Florea"`.
 - Not verified: how the logo looks in the browser (contrast on the navbar and footer, crop inside the round community avatar).
+
+## 23. Logo hover animation
+
+- CSS only. No component, GraphQL, routing or backend change.
+- Files:
+  - `scss/variables.scss`: two shared mixins, `florea-logo-motion` (resting state: transition, transform-origin, will-change) and `florea-logo-lift` (hover state)
+  - `scss/pc/main.scss`: header logo (`.logo-box img`, on link hover and keyboard focus) and footer logo (`.footer-box .logo`)
+  - `scss/pc/admin/admin.scss`: admin sidebar logo
+  - `scss/pc/account/join.scss`: join page logo
+  - `scss/pc/community/community.scss`, `scss/pc/community/detail.scss`: community logo
+- Motion: lift 2px, scale 1.03, soft rose `drop-shadow` glow, 360 ms ease-out curve. No rotation or bounce. Uses `transform` and `filter` only, so the layout does not move.
+- Reduced motion: under `prefers-reduced-motion: reduce` the transition, transform and glow are all switched off.
+- Differences from the plan:
+  - the join, admin and community logos are `florea-mark.svg`, not `florea-logo.svg` (see task 22)
+  - not added to the mobile stylesheet: hover does not apply on touch screens
+- Results: `yarn tsc --noEmit` no errors; `yarn build` succeeded; the compiled CSS contains the 6 hover rules and the reduced-motion overrides for every placement.
+- Not verified: how the animation looks in a browser (TODO: check with `yarn dev`).

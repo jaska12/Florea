@@ -24,6 +24,10 @@
       img {
         width: 90px;
         height: 90px;
+        @include florea-logo-motion;
+        &:hover {
+          @include florea-logo-lift($logo-glow-on-light);
+        }
       }
     }
     .user {

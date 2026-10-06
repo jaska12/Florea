@@ -68,6 +68,11 @@ body::-webkit-scrollbar {
 						img {
 							width: 150px;
 							cursor: pointer;
+							@include florea-logo-motion(left center);
+						}
+						a:hover img,
+						a:focus-visible img {
+							@include florea-logo-lift;
 						}
 					}
 					.router-box {
@@ -674,6 +679,10 @@ body::-webkit-scrollbar {
 							object-fit: contain;
 							object-position: left center;
 							cursor: pointer;
+							@include florea-logo-motion(left center);
+							&:hover {
+								@include florea-logo-lift;
+							}
 						}
 						span {
 							color: #bebdbd;
