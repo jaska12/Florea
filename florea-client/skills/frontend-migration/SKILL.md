@@ -10,7 +10,7 @@ description: Continue the nestar-next to florea-next frontend migration one phas
 1. Read `AGENTS.md` and the files it lists under "Backend Context".
 2. Open `../docs/ai/NEXT_STEPS.md` and pick the first unfinished frontend phase. Do not skip ahead.
 3. Make sure the backend answers at http://localhost:3007/graphql. Its schema is the source of truth for names and fields.
-4. Run `npx tsc --noEmit` and note the result before changing anything.
+4. Run `yarn tsc --noEmit` and note the result before changing anything.
 
 ## Phase order
 
@@ -31,8 +31,8 @@ description: Continue the nestar-next to florea-next frontend migration one phas
 
 ## After the phase
 
-1. Run `npx tsc --noEmit`.
-2. Start the app with `npm run dev` and open the pages touched by the phase.
+1. Run `yarn tsc --noEmit`.
+2. Start the app with `yarn dev` and open the pages touched by the phase.
 3. Search the phase's files for leftovers of the old name.
 4. Update `../docs/ai/COMPLETED_TASKS.md` and `../docs/ai/FRONTEND_MIGRATION.md`, and remove the finished item from `../docs/ai/NEXT_STEPS.md`.
 5. Report: files changed, typecheck result, pages checked, and anything left as TODO.
@@ -42,4 +42,5 @@ description: Continue the nestar-next to florea-next frontend migration one phas
 - Do not change the backend (`../florea-api`) in a frontend task.
 - Do not rewrite a page from scratch when an edit is enough.
 - Do not add libraries or a lint setup unless asked.
+- Do not use npm or pnpm; this project uses Yarn.
 - Do not commit `.env*` files.

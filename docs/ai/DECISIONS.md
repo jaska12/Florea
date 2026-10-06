@@ -94,3 +94,10 @@ Important decisions made during the Nestar → Florea migration session, with th
 - **Not done from that plan, with reason:**
   - Migration script from `properties` to `products`: the `Florea` database was new, `properties` held 0 documents and was dropped, so there is nothing to copy.
   - `notifications.propertyId` → `productId`: the code has no `propertyId`; the notification schema uses a generic `notificationRefId`.
+
+## 16. The frontend uses Yarn only
+
+- **Decision:** all frontend commands use Yarn; `package-lock.json` was deleted and `yarn.lock` regenerated. This replaces decision 10 (installing with `npm ci --legacy-peer-deps`), which was a workaround for a network failure.
+- **Reason:** the project owner's `AGENTS.md` says "Use Yarn for all frontend commands. Do not use npm or pnpm", following the instructor's setup. Two lockfiles from two package managers drift apart, which is what had happened to the old `yarn.lock`.
+- **Rejected:** keeping both lockfiles (the rule and the repo would contradict each other).
+

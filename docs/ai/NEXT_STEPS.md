@@ -19,7 +19,7 @@ Order follows the dependencies:
 
 ### 2. Check the client in a browser **← next**
 
-- Start the backend (`npm run start:dev` in `florea-api`) and the client (`npm run dev` in `florea-client`).
+- Start the backend (`npm run start:dev` in `florea-api`) and the client (`yarn dev` in `florea-client`).
 - Click through: sign up, log in, add a product (as `AGENT`), product list with filters, product detail, like, comment, favorites, recently visited, my products, admin product list, chat.
 - Test accounts in the dev database: `floreatest` (AGENT), `floreauser` (USER), `floreaadm` (ADMIN).
 
@@ -48,7 +48,6 @@ Order follows the dependencies:
 - Which currency does Florea show (prices currently use `$`)?
 - Should the 3364 backend lint problems be auto-fixed in one separate formatting commit?
 - Should the client get an ESLint config?
-- Which package manager does the client use (both `yarn.lock` and `package-lock.json` exist)?
 - Was the Nestar repo, which tracks `.env`, ever pushed publicly? If yes, the Mongo password and `SECRET_TOKEN` should be rotated.
 
 ## Not verified yet

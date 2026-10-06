@@ -61,9 +61,9 @@ Not renamed: the agent pages and components (`pages/agent`, `AgentCard`, `TopAge
 
 | Check | Result |
 |---|---|
-| Typecheck (`tsc --noEmit`) | no errors |
+| Typecheck (`yarn tsc --noEmit`) | no errors |
 | GraphQL documents validated against the running backend schema | 35 of 35 valid |
-| Production build (`next build`) | succeeded, 73 static pages generated |
+| Production build (`yarn build`) | succeeded, 73 static pages generated |
 | Pages served by `next start` | `/`, `/product`, `/product/detail`, `/agent`, `/community`, `/mypage`, `/_admin/products`, `/account/join`, `/cs`, `/about` returned 200 |
 | Lint | not runnable: no ESLint config |
 | Manual check in a browser (click-through, forms, chat) | TODO (not done) |
@@ -76,6 +76,6 @@ Not renamed: the agent pages and components (`pages/agent`, `AgentCard`, `TopAge
 - **Real-estate marketing text remains** in `libs/components/cs/Faq.tsx`, `pages/about/index.tsx`, `libs/components/Footer.tsx` ("Product for Rent"), `libs/components/mypage/Article.tsx`, the SEO description in `pages/_document.tsx`, and the `kr` / `ru` translations (for example "Product type" is still translated as "property type").
 - **Prices are shown with `$`** while the price filter steps go up to 2,000,000. TODO: decide the currency.
 - **Apollo warnings during build:** `useQuery` `onCompleted` is deprecated in the installed Apollo Client. Inherited from Nestar, not changed.
-- **Install:** `npm ci` needs `--legacy-peer-deps`; both `yarn.lock` and `package-lock.json` exist.
+- **Package manager:** Yarn only (`yarn`, `yarn dev`, `yarn build`). `package-lock.json` was removed and `yarn.lock` regenerated. Yarn prints peer-dependency warnings during install; they do not stop it.
 - **Env file:** `.env.development` exists locally (ignored by git) and points at `localhost:3007`.
 - **No ESLint setup.** TODO: decide whether to add one.

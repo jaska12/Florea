@@ -33,4 +33,4 @@ This skill reviews; it does not rewrite. Report findings first, and fix only wha
 
 For each finding give: file and line, what does not match, and the smallest fix. Group findings as **Broken** (request fails or page crashes), **Mismatch** (type or name differs) and **Leftover** (old-domain text).
 
-Finish with the result of `npx tsc --noEmit`.
+Finish with the result of `yarn tsc --noEmit`.
