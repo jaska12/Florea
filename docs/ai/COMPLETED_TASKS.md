@@ -27,6 +27,7 @@ In the order they were done. State as of 2026-10-05, `main` at `5f5405e`.
 - [x] 21. Frontend design skills
 - [x] 22. Florea logo, favicon and app icons
 - [x] 23. Logo hover animation
+- [x] 24. Homepage three.js carousel images
 
 ## 1. Recommend migration steps
 
@@ -301,3 +302,15 @@ In the order they were done. State as of 2026-10-05, `main` at `5f5405e`.
   - not added to the mobile stylesheet: hover does not apply on touch screens
 - Results: `yarn tsc --noEmit` no errors; `yarn build` succeeded; the compiled CSS contains the 6 hover rules and the reduced-motion overrides for every placement.
 - Not verified: how the animation looks in a browser (TODO: check with `yarn dev`).
+
+## 24. Homepage three.js carousel images
+
+- The `threeJSContainer` carousel on the homepage (`libs/components/common/FiberContainer.tsx`, used by `LayoutHome`) showed eight real-estate photos from `public/img/fiber/`.
+- Files:
+  - `florea-client/public/img/fiber/img1.jpg` … `img8.jpg`: replaced with flower bouquet and gift box photos (5 bouquets, 3 gift boxes, alternating on each carousel page)
+  - `florea-client/public/img/fiber/CREDITS.md` (new): photographer and source link for each photo
+- Source and license: Unsplash, each photo page checked and showing "Free to use under the Unsplash License"; none is an Unsplash+ photo.
+- Same file names, same pixel sizes and same format (progressive JPEG) as the files they replace, so `FiberContainer.tsx` and `ScrollControls.tsx` were not changed.
+- `img2.jpg` (8192x4610) is slightly upscaled: its source photo is 6720x4480. The folder is now about 9 MB (was about 5.9 MB).
+- Results: `yarn tsc --noEmit` no errors; sizes and format verified for all eight files.
+- Not verified: how the carousel looks in a browser.
