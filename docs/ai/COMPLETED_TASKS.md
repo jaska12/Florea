@@ -28,6 +28,7 @@ In the order they were done. State as of 2026-10-05, `main` at `5f5405e`.
 - [x] 22. Florea logo, favicon and app icons
 - [x] 23. Logo hover animation
 - [x] 24. Homepage three.js carousel images
+- [x] 25. Homepage search box: category, occasion and size only
 
 ## 1. Recommend migration steps
 
@@ -314,3 +315,20 @@ In the order they were done. State as of 2026-10-05, `main` at `5f5405e`.
 - `img2.jpg` (8192x4610) is slightly upscaled: its source photo is 6720x4480. The folder is now about 9 MB (was about 5.9 MB).
 - Results: `yarn tsc --noEmit` no errors; sizes and format verified for all eight files.
 - Not verified: how the carousel looks in a browser.
+
+## 25. Homepage search box: category, occasion and size only
+
+- The `search-box` under the three.js carousel on the homepage (`libs/components/homepage/HeaderFilter.tsx`).
+- Kept: three dropdowns, Category (`typeList`), Occasion (`occasionList`) and Size (`sizeList`), plus the search button, which opens `/product` with the chosen filters.
+- Removed: the Location dropdown, the Advanced button and its modal (text search, options, price range).
+- Added: the heading "Find your perfect Florea flowers & gifts" above the box.
+- Files:
+  - `libs/components/homepage/HeaderFilter.tsx`
+  - `scss/pc/main.scss`: `.search-title` added; `.filter-rooms` renamed to `.filter-options` (wraps and centers so six labels fit); `.filter-location`, `.filter-type`, `.advanced-filter` and `.advanced-filter-modal` styles deleted (about 330 lines)
+  - `libs/config.ts`: unused `productPrices` removed
+  - `public/locales/{en,kr,ru}/common.json`: keys for the heading, `Category` and `Size`
+- Menu labels are shown as "Flower Box", "Gift Box" and so on; the values sent to the backend are unchanged (`FLOWER_BOX`, `GIFT_BOX`).
+- The category menu is a text list now. The old menu used one image per type, and no images exist for the Florea types.
+- The product list page (`/product`) still has its full filter, including location and price.
+- Results: `yarn tsc --noEmit` no errors; `yarn build` succeeded; the served homepage contains the heading, exactly the three dropdowns with their options, and none of the removed elements.
+- Not verified: the look and the dropdown behaviour in a browser.

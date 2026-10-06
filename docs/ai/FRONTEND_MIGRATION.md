@@ -44,7 +44,7 @@ Not renamed: the agent pages and components (`pages/agent`, `AgentCard`, `TopAge
 |---|---|
 | Product cards (big, popular, top, trend, list) | show occasion, size and stock instead of beds, rooms and square metres; "Same day" / "Gift wrap" instead of "Rent" / "Barter" |
 | Product detail page | option boxes and details table show Occasion, Size, Stock, Listed year and options; the "Floor Plans" block was removed |
-| Homepage header filter | third box is Occasion (was Rooms); advanced filter has Size, Options (same day, gift wrap) and Price; "Year Built" and "square meter" were removed |
+| Homepage search box | heading "Find your perfect Florea flowers & gifts" and three dropdowns only: Category, Occasion, Size. Location and the advanced filter modal were removed |
 | Product list filter | Occasion checkboxes and Size buttons instead of Rooms and Bedrooms; options are same day and gift wrap; "Square meter" was removed |
 | Add / edit product form | Occasion and Size selects, Stock number input, Gift wrap and Same day selects instead of Rooms, Bed, Square, Barter, Rent |
 | Branding (earlier step) | package name, page titles, footer, join page, community title, SEO keywords and site name, mobile placeholders |
@@ -72,7 +72,7 @@ Not renamed: the agent pages and components (`pages/agent`, `AgentCard`, `TopAge
 ## Known issues
 
 - **Not checked in a browser.** Build and server-rendered pages work, but creating a product, filtering, liking and chatting through the UI were not clicked through.
-- **Product type images are missing.** The header filter shows `/img/banner/types/<type>.webp`; only the old apartment, villa and house images exist. TODO: add `bouquet.webp`, `flower_box.webp`, `plant.webp`, `gift_box.webp`, `sweet.webp`, `toy.webp`.
+- **Unused old images:** `public/img/banner/types/` (apartment, villa, house) and `public/img/banner/cities/` are no longer used by the homepage search box. TODO: delete them or replace them when a design needs them.
 - **Old icons and photos.** Cards still use `bed.svg`, `room.svg`, `expand.svg` next to occasion, size and stock, and the sample photos in `public/img/product/` are real-estate photos. `floorPlan.png` is no longer used.
 - **Real-estate marketing text remains** in `libs/components/cs/Faq.tsx`, `pages/about/index.tsx`, `libs/components/Footer.tsx` ("Product for Rent"), `libs/components/mypage/Article.tsx`, the SEO description in `pages/_document.tsx`, and the `kr` / `ru` translations (for example "Product type" is still translated as "property type").
 - **Prices are shown with `$`** while the price filter steps go up to 2,000,000. TODO: decide the currency.
