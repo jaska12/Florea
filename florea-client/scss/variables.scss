@@ -28,6 +28,176 @@ $florea-gold: #f2b134;
 	}
 }
 
+/** PRODUCT CARD **/
+
+// Photo on top, then title, occasion and size tags, and a footer with price, views and likes.
+// The element that includes this sets its own width.
+@mixin florea-product-card {
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	border-radius: 22px;
+	background: #ffffff;
+	border: 1px solid rgba($florea-rose, 0.1);
+	box-shadow: 0 6px 18px rgba(74, 22, 48, 0.06);
+	box-sizing: border-box;
+	overflow: hidden;
+	transition:
+		transform 360ms $logo-ease,
+		box-shadow 360ms $logo-ease,
+		border-color 360ms $logo-ease;
+	&:hover {
+		transform: translateY(-6px);
+		border-color: rgba($florea-rose, 0.22);
+		box-shadow: 0 20px 40px rgba($florea-rose, 0.16);
+		.card-photo {
+			transform: scale(1.06);
+		}
+	}
+	.card-img {
+		position: relative;
+		width: 100%;
+		height: 220px;
+		overflow: hidden;
+		cursor: pointer;
+		// shown while the photo loads, and when a product has no photo
+		background: linear-gradient(135deg, #fcf1f5 0%, $florea-petal 100%);
+		.card-photo {
+			position: absolute;
+			inset: 0;
+			background-size: cover;
+			background-position: center;
+			transition: transform 700ms $logo-ease;
+		}
+		// a faint shade at the bottom edge, so the photo sits into the card
+		&::after {
+			content: '';
+			position: absolute;
+			inset: 0;
+			background: linear-gradient(180deg, rgba(74, 22, 48, 0) 62%, rgba(74, 22, 48, 0.12) 100%);
+			pointer-events: none;
+		}
+	}
+	.info {
+		padding: 18px 20px 16px;
+		display: flex;
+		flex-direction: column;
+		box-sizing: border-box;
+		.title {
+			overflow: hidden;
+			color: #2b1420;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+			font-family: $font;
+			font-size: 16px;
+			font-style: normal;
+			font-weight: 600;
+			line-height: 22px;
+			letter-spacing: 0.1px;
+			text-transform: capitalize;
+			cursor: pointer;
+			transition: color 240ms $logo-ease;
+			&:hover {
+				color: $florea-rose;
+			}
+		}
+		.tags {
+			margin-top: 10px;
+			display: flex;
+			flex-direction: row;
+			flex-wrap: wrap;
+			gap: 8px;
+			.tag {
+				padding: 4px 12px;
+				border-radius: 999px;
+				background: rgba($florea-petal, 0.45);
+				border: 1px solid rgba($florea-rose, 0.12);
+				color: $florea-wine;
+				font-family: $font;
+				font-size: 12px;
+				font-style: normal;
+				font-weight: 500;
+				line-height: 18px;
+				letter-spacing: 0.2px;
+				text-transform: capitalize;
+			}
+		}
+		.bott {
+			margin-top: 16px;
+			padding-top: 14px;
+			display: flex;
+			flex-direction: row;
+			justify-content: space-between;
+			align-items: center;
+			border-top: 1px solid rgba($florea-rose, 0.1);
+			.price {
+				margin: 0;
+				color: $florea-rose;
+				font-family: $font;
+				font-size: 18px;
+				font-style: normal;
+				font-weight: 700;
+				line-height: 28px;
+				letter-spacing: 0.1px;
+			}
+			.view-like-box {
+				display: flex;
+				flex-direction: row;
+				align-items: center;
+				gap: 5px;
+				.view-icon {
+					width: 18px;
+					height: 18px;
+					color: #a58c97;
+				}
+				.view-cnt {
+					color: #7c6470;
+					font-family: $font;
+					font-size: 13px;
+					font-style: normal;
+					font-weight: 500;
+					line-height: normal;
+				}
+				.like-btn {
+					margin-left: 8px;
+					padding: 0;
+					width: 28px;
+					height: 28px;
+					color: #a58c97;
+					transition:
+						color 240ms $logo-ease,
+						background-color 240ms $logo-ease;
+					svg {
+						width: 18px;
+						height: 18px;
+					}
+					&:hover {
+						background: rgba($florea-petal, 0.5);
+						color: $florea-rose;
+					}
+					&.liked {
+						color: $florea-rose;
+					}
+				}
+			}
+		}
+	}
+	@media (prefers-reduced-motion: reduce) {
+		transition: none;
+		.card-photo,
+		.title,
+		.like-btn {
+			transition: none;
+		}
+		&:hover {
+			transform: none;
+			.card-photo {
+				transform: none;
+			}
+		}
+	}
+}
+
 /** FLOREA LOGO HOVER **/
 
 $logo-ease: cubic-bezier(0.22, 1, 0.36, 1);
