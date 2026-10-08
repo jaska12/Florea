@@ -1,7 +1,5 @@
 import React from 'react';
 import Link from 'next/link';
-import useDeviceDetect from '../../hooks/useDeviceDetect';
-import { Box } from '@mui/material';
 import Moment from 'react-moment';
 import { BoardArticle } from '../../types/board-article/board-article';
 
@@ -13,43 +11,36 @@ interface CommunityCardProps {
 
 const CommunityCard = (props: CommunityCardProps) => {
 	const { vertical, article, index } = props;
-	const device = useDeviceDetect();
 	const articleImage = article?.articleImage
 		? `${process.env.REACT_APP_API_URL}/${article?.articleImage}`
 		: '/img/event.svg';
+	const articleHref = `/community/detail?articleCategory=${article?.articleCategory}&id=${article?._id}`;
 
-	if (device === 'mobile') {
-		return <div>COMMUNITY CARD (MOBILE)</div>;
+	// vertical: a photo card in the news grid; otherwise a compact row in the side list
+	if (vertical) {
+		return (
+			<Link className={'community-card'} href={articleHref}>
+				<span className={'community-photo'} style={{ backgroundImage: `url(${articleImage})` }}>
+					<span className={'community-rank'}>{index + 1}</span>
+				</span>
+				<strong className={'community-title'}>{article?.articleTitle}</strong>
+				<span className={'community-date'}>
+					<Moment format="DD.MM.YY">{article?.createdAt}</Moment>
+				</span>
+			</Link>
+		);
 	} else {
-		if (vertical) {
-			return (
-				<Link href={`/community/detail?articleCategory=${article?.articleCategory}&id=${article?._id}`}>
-					<Box component={'div'} className={'vertical-card'}>
-						<div className={'community-img'} style={{ backgroundImage: `url(${articleImage})` }}>
-							<div>{index + 1}</div>
-						</div>
-						<strong>{article?.articleTitle}</strong>
-						<span>Free Board</span>
-					</Box>
-				</Link>
-			);
-		} else {
-			return (
-				<>
-					<Link href={`/community/detail?articleCategory=${article?.articleCategory}&id=${article?._id}`}>
-						<Box component={'div'} className="horizontal-card">
-							<img src={articleImage} alt="" />
-							<div>
-								<strong>{article.articleTitle}</strong>
-								<span>
-									<Moment format="DD.MM.YY">{article?.createdAt}</Moment>
-								</span>
-							</div>
-						</Box>
-					</Link>
-				</>
-			);
-		}
+		return (
+			<Link className={'community-row'} href={articleHref}>
+				<img src={articleImage} alt="" />
+				<span className={'community-row-text'}>
+					<strong className={'community-title'}>{article.articleTitle}</strong>
+					<span className={'community-date'}>
+						<Moment format="DD.MM.YY">{article?.createdAt}</Moment>
+					</span>
+				</span>
+			</Link>
+		);
 	}
 };
 

@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
-import { Stack, Box } from '@mui/material';
-import useDeviceDetect from '../../hooks/useDeviceDetect';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Autoplay, Navigation, Pagination } from 'swiper';
+import { Navigation } from 'swiper';
 import WestIcon from '@mui/icons-material/West';
 import EastIcon from '@mui/icons-material/East';
-import PopularProductCard from './PopularProductCard';
+import HomeProductCard from './HomeProductCard';
+import SectionHeader from './SectionHeader';
 import { Product } from '../../types/product/product';
 import Link from 'next/link';
 import { ProductsInquiry } from '../../types/product/product.input';
@@ -19,7 +18,6 @@ interface PopularProductsProps {
 
 const PopularProducts = (props: PopularProductsProps) => {
 	const { initialInput } = props;
-	const device = useDeviceDetect();
 	const [popularProducts, setPopularProducts] = useState<Product[]>([]);
 
 	/** APOLLO REQUESTS **/
@@ -41,83 +39,45 @@ const PopularProducts = (props: PopularProductsProps) => {
 
 	if (!popularProducts) return null;
 
-	if (device === 'mobile') {
-		return (
-			<Stack className={'popular-products'}>
-				<Stack className={'container'}>
-					<Stack className={'info-box'}>
-						<span>Popular products</span>
-					</Stack>
-					<Stack className={'card-box'}>
-						<Swiper
-							className={'popular-product-swiper'}
-							slidesPerView={'auto'}
-							centeredSlides={true}
-							spaceBetween={25}
-							modules={[Autoplay]}
-						>
-							{popularProducts.map((product: Product) => {
-								return (
-									<SwiperSlide key={product._id} className={'popular-product-slide'}>
-										<PopularProductCard product={product} />
-									</SwiperSlide>
-								);
-							})}
-						</Swiper>
-					</Stack>
-				</Stack>
-			</Stack>
-		);
-	} else {
-		return (
-			<Stack className={'popular-products'}>
-				<Stack className={'container'}>
-					<Stack className={'info-box'}>
-						<Box component={'div'} className={'left'}>
-							<span>Popular products</span>
-							<p>Popularity is based on views</p>
-						</Box>
-						<Box component={'div'} className={'right'}>
-							<div className={'more-box'}>
-								<Link href={'/product'}>
-									<span>See All Categories</span>
-								</Link>
-								<img src="/img/icons/rightup.svg" alt="" />
-							</div>
-						</Box>
-					</Stack>
-					<Stack className={'card-box'}>
-						<Swiper
-							className={'popular-product-swiper'}
-							slidesPerView={'auto'}
-							spaceBetween={25}
-							modules={[Autoplay, Navigation, Pagination]}
-							navigation={{
-								nextEl: '.swiper-popular-next',
-								prevEl: '.swiper-popular-prev',
-							}}
-							pagination={{
-								el: '.swiper-popular-pagination',
-							}}
-						>
-							{popularProducts.map((product: Product) => {
-								return (
-									<SwiperSlide key={product._id} className={'popular-product-slide'}>
-										<PopularProductCard product={product} />
-									</SwiperSlide>
-								);
-							})}
-						</Swiper>
-					</Stack>
-					<Stack className={'pagination-box'}>
-						<WestIcon className={'swiper-popular-prev'} />
-						<div className={'swiper-popular-pagination'}></div>
-						<EastIcon className={'swiper-popular-next'} />
-					</Stack>
-				</Stack>
-			</Stack>
-		);
-	}
+	return (
+		<section className={'home-section home-popular tinted'}>
+			<div className={'home-shell'}>
+				<SectionHeader title={'Popular products'} subtitle={'The products people have looked at the most.'}>
+					<Link className={'text-link'} href={'/product'}>
+						See all products
+					</Link>
+					<button type={'button'} className={'nav-btn swiper-popular-prev'} aria-label={'Previous popular products'}>
+						<WestIcon />
+					</button>
+					<button type={'button'} className={'nav-btn swiper-popular-next'} aria-label={'Next popular products'}>
+						<EastIcon />
+					</button>
+				</SectionHeader>
+				{popularProducts.length === 0 ? (
+					<div className={'empty-state'}>No popular products yet.</div>
+				) : (
+					<Swiper
+						className={'product-swiper'}
+						slidesPerView={'auto'}
+						spaceBetween={24}
+						modules={[Navigation]}
+						navigation={{
+							nextEl: '.swiper-popular-next',
+							prevEl: '.swiper-popular-prev',
+						}}
+					>
+						{popularProducts.map((product: Product) => {
+							return (
+								<SwiperSlide key={product._id} className={'product-slide'}>
+									<HomeProductCard product={product} />
+								</SwiperSlide>
+							);
+						})}
+					</Swiper>
+				)}
+			</div>
+		</section>
+	);
 };
 
 PopularProducts.defaultProps = {

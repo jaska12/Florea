@@ -1,6 +1,5 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Stack, Box } from '@mui/material';
-import useDeviceDetect from '../../hooks/useDeviceDetect';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { ProductOccasion, ProductSize, ProductType } from '../../enums/product.enum';
 import { ProductsInquiry } from '../../types/product/product.input';
@@ -47,7 +46,6 @@ const optionVariants: Variants = {
 
 const HeaderFilter = (props: HeaderFilterProps) => {
 	const { initialInput } = props;
-	const device = useDeviceDetect();
 	const { t, i18n } = useTranslation('common');
 	const [searchFilter, setSearchFilter] = useState<ProductsInquiry>(initialInput);
 	const selectRef: any = useRef();
@@ -232,87 +230,80 @@ const HeaderFilter = (props: HeaderFilterProps) => {
 		{ key: 'size', open: openSize, ref: sizeRef, options: productSize, selected: selectedSize, select: productSizeSelectHandler },
 	];
 
-	if (device === 'mobile') {
-		return <div>HEADER FILTER MOBILE</div>;
-	} else {
-		return (
-			// reducedMotion="user": people who ask for less motion get fades only, no movement
-			<MotionConfig reducedMotion="user">
-				<motion.h2 className={'search-title'} variants={revealVariants} initial="hidden" animate="visible" custom={0}>
-					{t('Find your perfect Florea flowers & gifts')}
-				</motion.h2>
-				<motion.div
-					className={'search-box'}
-					variants={revealVariants}
-					initial="hidden"
-					animate="visible"
-					custom={0.12}
-				>
-					<Stack className={'select-box'} ref={selectRef}>
-						{filters.map((filter) => (
-							<motion.div
-								className={`box ${filter.open ? 'on' : ''} ${filter.selected ? 'selected' : ''}`}
-								onClick={filter.toggle}
-								whileHover={{ y: -1 }}
-								whileTap={{ scale: 0.985 }}
-								transition={{ duration: 0.24, ease: EASE }}
-								key={filter.key}
-							>
-								<span>{filter.selected ? formatLabel(filter.selected) : filter.placeholder}</span>
-								<motion.i
-									className={'chevron'}
-									animate={{ rotate: filter.open ? 180 : 0 }}
-									transition={{ duration: 0.32, ease: EASE }}
-								>
-									<ExpandMoreIcon />
-								</motion.i>
-							</motion.div>
-						))}
-					</Stack>
-					<Stack className={'search-box-other'}>
+	return (
+		// reducedMotion="user": people who ask for less motion get fades only, no movement
+		<MotionConfig reducedMotion="user">
+			<motion.div
+				className={'search-box'}
+				variants={revealVariants}
+				initial="hidden"
+				animate="visible"
+				custom={0.2}
+			>
+				<Stack className={'select-box'} ref={selectRef}>
+					{filters.map((filter) => (
 						<motion.div
-							className={'search-btn'}
-							onClick={pushSearchHandler}
-							whileHover={{ scale: 1.05 }}
-							whileTap={{ scale: 0.96 }}
+							className={`box ${filter.open ? 'on' : ''} ${filter.selected ? 'selected' : ''}`}
+							onClick={filter.toggle}
+							whileHover={{ y: -1 }}
+							whileTap={{ scale: 0.985 }}
 							transition={{ duration: 0.24, ease: EASE }}
+							key={filter.key}
 						>
-							<img src="/img/icons/search_white.svg" alt="" />
+							<span>{filter.selected ? formatLabel(filter.selected) : filter.placeholder}</span>
+							<motion.i
+								className={'chevron'}
+								animate={{ rotate: filter.open ? 180 : 0 }}
+								transition={{ duration: 0.32, ease: EASE }}
+							>
+								<ExpandMoreIcon />
+							</motion.i>
 						</motion.div>
-					</Stack>
+					))}
+				</Stack>
+				<Stack className={'search-box-other'}>
+					<motion.div
+						className={'search-btn'}
+						onClick={pushSearchHandler}
+						whileHover={{ scale: 1.05 }}
+						whileTap={{ scale: 0.96 }}
+						transition={{ duration: 0.24, ease: EASE }}
+					>
+						<img src="/img/icons/search_white.svg" alt="" />
+					</motion.div>
+				</Stack>
 
-					{/*MENU */}
-					<AnimatePresence>
-						{menus.map(
-							(menu) =>
-								menu.open && (
-									<motion.div
-										className={'filter-options on'}
-										ref={menu.ref}
-										variants={panelVariants}
-										initial="hidden"
-										animate="visible"
-										exit="exit"
-										key={menu.key}
-									>
-										{menu.options.map((option: string) => (
-											<motion.span
-												className={menu.selected === option ? 'active' : ''}
-												onClick={() => menu.select(option)}
-												variants={optionVariants}
-												key={option}
-											>
-												{formatLabel(option)}
-											</motion.span>
-										))}
-									</motion.div>
-								),
-						)}
-					</AnimatePresence>
-				</motion.div>
-			</MotionConfig>
-		);
-	}
+				{/*MENU */}
+				<AnimatePresence>
+					{menus.map(
+						(menu) =>
+							menu.open && (
+								<motion.div
+									className={'filter-options on'}
+									ref={menu.ref}
+									variants={panelVariants}
+									initial="hidden"
+									animate="visible"
+									exit="exit"
+									key={menu.key}
+								>
+									{menu.options.map((option: string) => (
+										<motion.span
+											className={menu.selected === option ? 'active' : ''}
+											onClick={() => menu.select(option)}
+											variants={optionVariants}
+											key={option}
+										>
+											{formatLabel(option)}
+										</motion.span>
+									))}
+								</motion.div>
+							),
+					)}
+				</AnimatePresence>
+			</motion.div>
+		</MotionConfig>
+	);
 };
 
 HeaderFilter.defaultProps = {

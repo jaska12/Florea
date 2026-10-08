@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
-import useDeviceDetect from '../../hooks/useDeviceDetect';
-import { Stack, Typography } from '@mui/material';
 import CommunityCard from './CommunityCard';
+import SectionHeader from './SectionHeader';
 import { BoardArticle } from '../../types/board-article/board-article';
 import { useQuery } from '@apollo/client';
 import { GET_BOARD_ARTICLES } from '../../../apollo/user/query';
@@ -10,7 +9,6 @@ import { BoardArticleCategory } from '../../enums/board-article.enum';
 import { T } from '../../types/common';
 
 const CommunityBoards = () => {
-	const device = useDeviceDetect();
 	const [searchCommunity, setSearchCommunity] = useState({
 		page: 1,
 		sort: 'articleViews',
@@ -48,47 +46,49 @@ const CommunityBoards = () => {
 		},
 	});
 
-	if (device === 'mobile') {
-		return <div>COMMUNITY BOARDS (MOBILE)</div>;
-	} else {
-		return (
-			<Stack className={'community-board'}>
-				<Stack className={'container'}>
-					<Stack>
-						<Typography variant={'h1'}>COMMUNITY BOARD HIGHLIGHTS</Typography>
-					</Stack>
-					<Stack className="community-main">
-						<Stack className={'community-left'}>
-							<Stack className={'content-top'}>
-								<Link href={'/community?articleCategory=NEWS'}>
-									<span>News</span>
-								</Link>
-								<img src="/img/icons/arrowBig.svg" alt="" />
-							</Stack>
-							<Stack className={'card-wrap'}>
-								{newsArticles.map((article, index) => {
+	const news = newsArticles ?? [];
+	const free = freeArticles ?? [];
+	const isEmpty = news.length === 0 && free.length === 0;
+
+	return (
+		<section className={'home-section home-community'}>
+			<div className={'home-shell'}>
+				<SectionHeader title={'From the community'} subtitle={'News and conversations from Florea members.'}>
+					<Link className={'text-link'} href={'/community'}>
+						Open the community
+					</Link>
+				</SectionHeader>
+				{isEmpty ? (
+					<div className={'empty-state'}>
+						No articles yet. <Link href={'/community'}>Visit the community</Link> to read or write the first one.
+					</div>
+				) : (
+					<div className={'community-layout'}>
+						<div className={'community-column'}>
+							<Link className={'community-column-title'} href={'/community?articleCategory=NEWS'}>
+								News
+							</Link>
+							<div className={'community-grid'}>
+								{news.map((article, index) => {
 									return <CommunityCard vertical={true} article={article} index={index} key={article?._id} />;
 								})}
-							</Stack>
-						</Stack>
-						<Stack className={'community-right'}>
-							<Stack className={'content-top'}>
-								<Link href={'/community?articleCategory=FREE'}>
-									<span>Free</span>
-								</Link>
-								<img src="/img/icons/arrowBig.svg" alt="" />
-							</Stack>
-							<Stack className={'card-wrap vertical'}>
-								{freeArticles.map((article, index) => {
+							</div>
+						</div>
+						<div className={'community-column side'}>
+							<Link className={'community-column-title'} href={'/community?articleCategory=FREE'}>
+								Free board
+							</Link>
+							<div className={'community-list'}>
+								{free.map((article, index) => {
 									return <CommunityCard vertical={false} article={article} index={index} key={article?._id} />;
 								})}
-							</Stack>
-						</Stack>
-					</Stack>
-				</Stack>
-			</Stack>
-		);
-	}
+							</div>
+						</div>
+					</div>
+				)}
+			</div>
+		</section>
+	);
 };
 
 export default CommunityBoards;

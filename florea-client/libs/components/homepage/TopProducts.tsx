@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
-import { Stack, Box } from '@mui/material';
-import useDeviceDetect from '../../hooks/useDeviceDetect';
 import WestIcon from '@mui/icons-material/West';
 import EastIcon from '@mui/icons-material/East';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Autoplay, Navigation, Pagination } from 'swiper';
-import TopProductCard from './TopProductCard';
+import { Navigation } from 'swiper';
+import HomeProductCard from './HomeProductCard';
+import SectionHeader from './SectionHeader';
 import { ProductsInquiry } from '../../types/product/product.input';
 import { Product } from '../../types/product/product';
 import { useMutation, useQuery } from '@apollo/client';
@@ -23,7 +22,6 @@ interface TopProductsProps {
 
 const TopProducts = (props: TopProductsProps) => {
 	const { initialInput } = props;
-	const device = useDeviceDetect();
 	const [topProducts, setTopProducts] = useState<Product[]>([]);
 	const user = useReactiveVar(userVar);
 
@@ -62,77 +60,44 @@ const TopProducts = (props: TopProductsProps) => {
 		}
 	};
 
-	if (device === 'mobile') {
-		return (
-			<Stack className={'top-products'}>
-				<Stack className={'container'}>
-					<Stack className={'info-box'}>
-						<span>Top products</span>
-					</Stack>
-					<Stack className={'card-box'}>
-						<Swiper
-							className={'top-product-swiper'}
-							slidesPerView={'auto'}
-							centeredSlides={true}
-							spaceBetween={15}
-							modules={[Autoplay]}
-						>
-							{topProducts.map((product: Product) => {
-								return (
-									<SwiperSlide className={'top-product-slide'} key={product?._id}>
-										<TopProductCard product={product} likeProductHandler={likeProductHandler} />
-									</SwiperSlide>
-								);
-							})}
-						</Swiper>
-					</Stack>
-				</Stack>
-			</Stack>
-		);
-	} else {
-		return (
-			<Stack className={'top-products'}>
-				<Stack className={'container'}>
-					<Stack className={'info-box'}>
-						<Box component={'div'} className={'left'}>
-							<span>Top products</span>
-							<p>Check out our Top Products</p>
-						</Box>
-						<Box component={'div'} className={'right'}>
-							<div className={'pagination-box'}>
-								<WestIcon className={'swiper-top-prev'} />
-								<div className={'swiper-top-pagination'}></div>
-								<EastIcon className={'swiper-top-next'} />
-							</div>
-						</Box>
-					</Stack>
-					<Stack className={'card-box'}>
-						<Swiper
-							className={'top-product-swiper'}
-							slidesPerView={'auto'}
-							spaceBetween={15}
-							modules={[Autoplay, Navigation, Pagination]}
-							navigation={{
-								nextEl: '.swiper-top-next',
-								prevEl: '.swiper-top-prev',
-							}}
-							pagination={{
-								el: '.swiper-top-pagination',
-							}}
-						>
-							{topProducts.map((product: Product) => {
-								return (
-									<SwiperSlide className={'top-product-slide'} key={product?._id}>
-										<TopProductCard product={product} likeProductHandler={likeProductHandler} />
-									</SwiperSlide>
-								);
-							})}
-						</Swiper>
-					</Stack>
-				</Stack>
-			</Stack>
-		);
-	}
+	if (!topProducts) return null;
+
+	return (
+		<section className={'home-section home-top'}>
+			<div className={'home-shell'}>
+				<SectionHeader title={'Top products'} subtitle={'Ranked by likes and views together.'}>
+					<button type={'button'} className={'nav-btn swiper-top-prev'} aria-label={'Previous top products'}>
+						<WestIcon />
+					</button>
+					<button type={'button'} className={'nav-btn swiper-top-next'} aria-label={'Next top products'}>
+						<EastIcon />
+					</button>
+				</SectionHeader>
+				{topProducts.length === 0 ? (
+					<div className={'empty-state'}>No top products yet.</div>
+				) : (
+					<Swiper
+						className={'product-swiper'}
+						slidesPerView={'auto'}
+						spaceBetween={24}
+						modules={[Navigation]}
+						navigation={{
+							nextEl: '.swiper-top-next',
+							prevEl: '.swiper-top-prev',
+						}}
+					>
+						{topProducts.map((product: Product) => {
+							return (
+								<SwiperSlide className={'product-slide'} key={product?._id}>
+									<HomeProductCard product={product} likeProductHandler={likeProductHandler} />
+								</SwiperSlide>
+							);
+						})}
+					</Swiper>
+				)}
+			</div>
+		</section>
+	);
 };
 
 TopProducts.defaultProps = {

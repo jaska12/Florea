@@ -4,6 +4,11 @@
 
 $font: 'Poppins', sans-serif;
 
+// Display face for headings. It echoes the serif wordmark in the Florea logo.
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap');
+
+$font-display: 'Playfair Display', 'Times New Roman', serif;
+
 /** FLOREA BRAND **/
 
 $florea-wine: #7a1f45;
@@ -12,6 +17,10 @@ $florea-pink: #e0568d;
 $florea-blush: #f4a9c4;
 $florea-petal: #f3c6d6;
 $florea-gold: #f2b134;
+$florea-ink: #2b1420; // text on light surfaces
+$florea-muted: #7c6470; // secondary text
+$florea-mist: #fdf6f8; // tinted section background
+$florea-line: rgba(180, 35, 95, 0.12); // hairlines and card borders
 
 /** GLASS **/
 

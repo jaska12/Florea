@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
-import { Stack, Box } from '@mui/material';
-import useDeviceDetect from '../../hooks/useDeviceDetect';
 import WestIcon from '@mui/icons-material/West';
 import EastIcon from '@mui/icons-material/East';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Autoplay, Navigation, Pagination } from 'swiper';
+import { Navigation } from 'swiper';
 import { Product } from '../../types/product/product';
 import { ProductsInquiry } from '../../types/product/product.input';
-import TrendProductCard from './TrendProductCard';
+import HomeProductCard from './HomeProductCard';
+import SectionHeader from './SectionHeader';
 import { useMutation, useQuery } from '@apollo/client';
 import { GET_PRODUCTS } from '../../../apollo/user/query';
 import { LIKE_TARGET_PRODUCT } from '../../../apollo/user/mutation';
@@ -23,7 +22,6 @@ interface TrendProductsProps {
 
 const TrendProducts = (props: TrendProductsProps) => {
 	const { initialInput } = props;
-	const device = useDeviceDetect();
 	const [trendProducts, setTrendProducts] = useState<Product[]>([]);
 	const user = useReactiveVar(userVar);
 
@@ -65,89 +63,42 @@ const TrendProducts = (props: TrendProductsProps) => {
 	if (trendProducts) console.log('trendProducts:', trendProducts);
 	if (!trendProducts) return null;
 
-	if (device === 'mobile') {
-		return (
-			<Stack className={'trend-products'}>
-				<Stack className={'container'}>
-					<Stack className={'info-box'}>
-						<span>Trend Products</span>
-					</Stack>
-					<Stack className={'card-box'}>
-						{trendProducts.length === 0 ? (
-							<Box component={'div'} className={'empty-list'}>
-								Trends Empty
-							</Box>
-						) : (
-							<Swiper
-								className={'trend-product-swiper'}
-								slidesPerView={'auto'}
-								centeredSlides={true}
-								spaceBetween={15}
-								modules={[Autoplay]}
-							>
-								{trendProducts.map((product: Product) => {
-									return (
-										<SwiperSlide key={product._id} className={'trend-product-slide'}>
-											<TrendProductCard product={product} likeProductHandler={likeProductHandler} />
-										</SwiperSlide>
-									);
-								})}
-							</Swiper>
-						)}
-					</Stack>
-				</Stack>
-			</Stack>
-		);
-	} else {
-		return (
-			<Stack className={'trend-products'}>
-				<Stack className={'container'}>
-					<Stack className={'info-box'}>
-						<Box component={'div'} className={'left'}>
-							<span>Trend Products</span>
-							<p>Trend is based on likes</p>
-						</Box>
-						<Box component={'div'} className={'right'}>
-							<div className={'pagination-box'}>
-								<WestIcon className={'swiper-trend-prev'} />
-								<div className={'swiper-trend-pagination'}></div>
-								<EastIcon className={'swiper-trend-next'} />
-							</div>
-						</Box>
-					</Stack>
-					<Stack className={'card-box'}>
-						{trendProducts.length === 0 ? (
-							<Box component={'div'} className={'empty-list'}>
-								Trends Empty
-							</Box>
-						) : (
-							<Swiper
-								className={'trend-product-swiper'}
-								slidesPerView={'auto'}
-								spaceBetween={15}
-								modules={[Autoplay, Navigation, Pagination]}
-								navigation={{
-									nextEl: '.swiper-trend-next',
-									prevEl: '.swiper-trend-prev',
-								}}
-								pagination={{
-									el: '.swiper-trend-pagination',
-								}}
-							>
-								{trendProducts.map((product: Product) => {
-									return (
-										<SwiperSlide key={product._id} className={'trend-product-slide'}>
-											<TrendProductCard product={product} likeProductHandler={likeProductHandler} />
-										</SwiperSlide>
-									);
-								})}
-							</Swiper>
-						)}
-					</Stack>
-				</Stack>
-			</Stack>
-		);
-	}
+	return (
+		<section className={'home-section home-trend'}>
+			<div className={'home-shell'}>
+				<SectionHeader title={'Trending products'} subtitle={'The products people have liked the most.'}>
+					<button type={'button'} className={'nav-btn swiper-trend-prev'} aria-label={'Previous trending products'}>
+						<WestIcon />
+					</button>
+					<button type={'button'} className={'nav-btn swiper-trend-next'} aria-label={'Next trending products'}>
+						<EastIcon />
+					</button>
+				</SectionHeader>
+				{trendProducts.length === 0 ? (
+					<div className={'empty-state'}>No trending products yet.</div>
+				) : (
+					<Swiper
+						className={'product-swiper'}
+						slidesPerView={'auto'}
+						spaceBetween={24}
+						modules={[Navigation]}
+						navigation={{
+							nextEl: '.swiper-trend-next',
+							prevEl: '.swiper-trend-prev',
+						}}
+					>
+						{trendProducts.map((product: Product) => {
+							return (
+								<SwiperSlide key={product._id} className={'product-slide'}>
+									<HomeProductCard product={product} likeProductHandler={likeProductHandler} />
+								</SwiperSlide>
+							);
+						})}
+					</Swiper>
+				)}
+			</div>
+		</section>
+	);
 };
 
 TrendProducts.defaultProps = {
