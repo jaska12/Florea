@@ -29,6 +29,8 @@ In the order they were done. State as of 2026-10-05, `main` at `5f5405e`.
 - [x] 23. Logo hover animation
 - [x] 24. Homepage three.js carousel images
 - [x] 25. Homepage search box: category, occasion and size only
+- [x] 26. Community skills, glass search box and trend card (recorded after the fact)
+- [x] 27. Homepage redesign
 
 ## 1. Recommend migration steps
 
@@ -332,3 +334,46 @@ In the order they were done. State as of 2026-10-05, `main` at `5f5405e`.
 - The product list page (`/product`) still has its full filter, including location and price.
 - Results: `yarn tsc --noEmit` no errors; `yarn build` succeeded; the served homepage contains the heading, exactly the three dropdowns with their options, and none of the removed elements.
 - Not verified: the look and the dropdown behaviour in a browser.
+
+## 26. Work done while `docs/ai/` was missing from disk
+
+`docs/ai/` was deleted from the working tree on 2026-10-07 (not by a commit) and restored with `git restore docs/ai` on 2026-10-08. These steps were committed in between and are recorded here after the fact:
+
+- `fffc259`, `fcd0508`: eight community agent skills installed in `.agents/skills` and `.claude/skills` (listed in the two `SKILLS.md` files).
+- `408d2be`: homepage search box restyled as a glass bar; `framer-motion` added.
+- `93d3fe9`: trend product card redesigned; shared `florea-product-card` mixin.
+
+## 27. Homepage redesign
+
+- Commit: `d798db1`.
+- Scope: the homepage UI layer only. GraphQL queries, Apollo logic, routing, auth, data mapping, like/view logic and search behaviour are unchanged. Navbar and footer (shared components) were not touched.
+- Design references read: `emil-design-eng` and `redesign-existing-projects` (installed), `impeccable`, `frontend-design` and `ui-ux-pro-max` (read with `npx skills use`, not installed; their scripts were not run).
+- New page order: hero → shop by category → trending products → popular products → three.js gallery (desktop only) → brand band → top products → top agents → community.
+- Files:
+  - new components in `libs/components/homepage/`: `HomeHero`, `SectionHeader`, `CategoryTiles`, `HomeProductCard`, `BrandBand`
+  - rewritten presentation, same queries and handlers: `TrendProducts`, `PopularProducts`, `TopProducts`, `TopAgents`, `TopAgentCard`, `CommunityBoards`, `CommunityCard`, `HeaderFilter` (heading moved to the hero, one layout for every device)
+  - removed: `TrendProductCard`, `PopularProductCard`, `TopProductCard` (replaced by `HomeProductCard`), `Advertisement` (the apartment video)
+  - `pages/index.tsx`: new order, one layout for every device, debug line `HELLO: {group}` removed, `Events` no longer rendered
+  - `libs/components/layout/LayoutHome.tsx`: renders `HomeHero` on desktop and mobile
+  - `scss/home/home.scss` (new, loaded from `pages/_app.tsx`): all homepage styles, responsive, not scoped to `#pc-wrap` / `#mobile-wrap`
+  - removed old homepage styles: `scss/pc/homepage/homepage.scss` (852 lines), `.header-main` in `scss/pc/main.scss`, five homepage blocks in `scss/mobile/main.scss`
+  - `scss/variables.scss`: display font (Playfair Display) and four colour tokens
+  - `public/img/home/`: hero photo and six category photos, with `CREDITS.md` (Unsplash License, each page checked)
+  - `public/locales/{en,kr,ru}/common.json`: hero text
+- Decisions taken on the owner's approval of the plan (its recommended options): the three.js carousel moved out of the hero into its own band; the Events section is hidden; a serif display font was added; navbar and footer were left alone.
+- Results:
+
+| Check | Result |
+|---|---|
+| `yarn tsc --noEmit` | no errors |
+| `yarn build` | succeeded, 73 static pages |
+| Browser (headless Edge, backend running), desktop 1600px | all sections render with API data; no bed/room/area icons, no video, no debug text, no horizontal scroll |
+| Category tile | opens `/product?input=…typeList:["FLOWER_BOX"]` |
+| Occasion shortcut | opens `/product?input=…occasionList:["WEDDING"]` |
+| Search box | Gift Box → Love → Small → `/product?input=…` with all three lists |
+| Like while logged out | the existing handler's alert appears ("Something went wrong!"), as before |
+| Product card title and photo | open `/product/detail?id=…` |
+| Agent card | opens `/agent/detail?agentId=…` |
+| Phone 390px (phone user agent) and tablet 834px | sections lay out correctly; see the known issues for the navbar |
+
+- Not verified: liking while logged in through the UI, the feel of the animation timing, Safari.

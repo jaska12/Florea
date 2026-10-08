@@ -71,6 +71,15 @@ Not renamed: the agent pages and components (`pages/agent`, `AgentCard`, `TopAge
 
 ## Known issues
 
+- **Homepage (after the redesign):**
+  - The dev server shows a red overlay, "Invalid message type!", whenever the backend is running. `apollo/client.ts` opens a WebSocket link to the chat gateway but never uses its `LoggingWebSocket` class, and `Chat.tsx` does not use the socket. Inherited from Nestar; not fixed.
+  - On tablets the shared navbar is still fixed-width and crowds its items. The homepage sections themselves adapt.
+  - Product cards show a blush placeholder because the test products have no real photos.
+  - `libs/components/homepage/Events.tsx` is no longer rendered and its styles were removed. Its content is Korean city festivals. TODO: delete it or give it Florea content.
+  - Unused files left in place: `public/video/ads.mov` (26 MB), `public/img/banner/header1.svg`, `public/img/banner/types/`, `public/img/banner/cities/`, `public/img/events/`.
+  - The footer still says "Product for Rent" and the prices use `$`.
+- **`.next` on OneDrive:** `yarn build` or `yarn dev` sometimes fails with `EINVAL: invalid argument, readlink …\.next\…`. Deleting the `.next` folder fixes it.
+
 - **Not checked in a browser.** Build and server-rendered pages work, but creating a product, filtering, liking and chatting through the UI were not clicked through.
 - **Unused old images:** `public/img/banner/types/` (apartment, villa, house) and `public/img/banner/cities/` are no longer used by the homepage search box. TODO: delete them or replace them when a design needs them.
 - **Old icons and photos.** Cards still use `bed.svg`, `room.svg`, `expand.svg` next to occasion, size and stock, and the sample photos in `public/img/product/` are real-estate photos. `floorPlan.png` is no longer used.
