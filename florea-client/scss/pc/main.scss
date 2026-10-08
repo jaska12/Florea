@@ -197,117 +197,208 @@ body::-webkit-scrollbar {
 				line-height: 36px;
 				letter-spacing: 0.2px;
 				text-align: center;
+				text-shadow: 0 2px 18px rgba(24, 10, 18, 0.45);
 			}
 			.search-box {
 				position: relative;
 				margin-top: 20px;
-				padding: 16px 29px;
+				padding: 16px 20px;
 				width: 1094px;
 				height: 96px;
 				display: flex;
 				flex-direction: row;
+				align-items: center;
 				justify-content: space-between;
-				background: rgba(255, 255, 255, 0.28);
-				border-radius: 12px;
+				box-sizing: border-box;
+				border-radius: 28px;
+				@include florea-glass(rgba($florea-blush, 0.14), 24px);
+				box-shadow:
+					0 22px 48px rgba(24, 10, 18, 0.36),
+					inset 0 1px 0 rgba(255, 255, 255, 0.5),
+					inset 0 -1px 0 rgba(255, 255, 255, 0.08);
+				// light caught on the top edge of the glass
+				&::before {
+					content: '';
+					position: absolute;
+					inset: 0;
+					border-radius: inherit;
+					background: radial-gradient(120% 140% at 12% -40%, rgba(255, 255, 255, 0.34) 0%, rgba(255, 255, 255, 0) 55%);
+					pointer-events: none;
+				}
 				.select-box {
-					width: 712px;
+					position: relative;
+					flex: 1;
 					display: flex;
 					flex-direction: row;
-					justify-content: space-between;
+					gap: 14px;
 					.box {
-						padding: 24px 22px;
-						width: 213px;
+						padding: 0 18px 0 22px;
+						flex: 1;
+						min-width: 0;
 						height: 56px;
 						display: flex;
 						flex-direction: row;
 						align-items: center;
 						justify-content: space-between;
-						border-radius: 12px;
-						background: rgba(255, 255, 255, 0.575);
+						border-radius: 18px;
+						background: rgba(255, 255, 255, 0.14);
+						border: 1px solid rgba(255, 255, 255, 0.26);
+						box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.32);
 						box-sizing: border-box;
 						cursor: pointer;
-						&.on {
-							background: #ffffff;
-							border: 1px solid #000;
-							color: #181a20;
-						}
+						transition:
+							background-color 260ms $logo-ease,
+							border-color 260ms $logo-ease,
+							box-shadow 260ms $logo-ease;
 						span {
-							color: #181a20;
+							color: #ffffff;
 							font-family: $font;
 							font-size: 14px;
 							font-style: normal;
-							font-weight: 400;
+							font-weight: 500;
 							line-height: 26px;
+							letter-spacing: 0.2px;
 							text-transform: capitalize;
+							transition: color 260ms $logo-ease;
 						}
-						svg {
+						.chevron {
+							display: flex;
+							align-items: center;
+							justify-content: center;
+							color: rgba(255, 255, 255, 0.86);
+							transition: color 260ms $logo-ease;
+							svg {
+								width: 22px;
+								height: 22px;
+							}
+						}
+						&:hover {
+							background: rgba(255, 255, 255, 0.22);
+							border-color: rgba(255, 255, 255, 0.42);
+						}
+						// a value has been chosen
+						&.selected {
+							background: rgba($florea-petal, 0.26);
+							border-color: rgba($florea-blush, 0.62);
+							span {
+								font-weight: 600;
+							}
+						}
+						// its menu is open
+						&.on {
+							background: rgba(255, 255, 255, 0.92);
+							border-color: rgba($florea-blush, 0.9);
+							box-shadow:
+								0 8px 22px rgba($florea-rose, 0.22),
+								inset 0 1px 0 #ffffff;
+							span {
+								color: $florea-wine;
+							}
+							.chevron {
+								color: $florea-rose;
+							}
 						}
 					}
 				}
 				.search-box-other {
+					position: relative;
+					margin-left: 16px;
 					display: flex;
 					flex-direction: row;
 					align-items: center;
 					.search-btn {
-						margin-left: 12px;
-						width: 62px;
-						height: 62px;
+						width: 58px;
+						height: 58px;
 						display: flex;
 						align-items: center;
 						justify-content: center;
-						border-radius: 55px;
-						background: #f17742;
+						border-radius: 50%;
+						background: linear-gradient(140deg, $florea-pink 0%, $florea-rose 52%, $florea-wine 100%);
+						border: 1px solid rgba(255, 255, 255, 0.34);
+						box-shadow:
+							0 10px 24px rgba($florea-rose, 0.42),
+							inset 0 1px 0 rgba(255, 255, 255, 0.42);
+						box-sizing: border-box;
 						cursor: pointer;
-						svg {
+						transition: box-shadow 260ms $logo-ease;
+						img {
 							width: 20px;
 							height: 20px;
-							color: #ffffff;
+						}
+						&:hover {
+							box-shadow:
+								0 14px 30px rgba($florea-rose, 0.52),
+								inset 0 1px 0 rgba(255, 255, 255, 0.5);
 						}
 					}
 				}
 				.filter-options {
 					position: absolute;
-					padding: 20px 40px;
-					width: 1094px;
-					min-height: 120px;
+					padding: 22px 36px;
+					width: 100%;
+					min-height: 104px;
 					height: auto;
-					top: 96px;
-					right: 0px;
+					top: 108px;
+					left: 0;
 					display: flex;
 					flex-direction: row;
 					flex-wrap: wrap;
 					justify-content: center;
 					align-items: center;
-					gap: 8px 16px;
-					visibility: hidden;
-					border-radius: 12px;
-					background: #fff;
-					box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+					gap: 10px 14px;
+					border-radius: 24px;
+					// the menu carries text, so its glass is denser than the bar's
+					background: linear-gradient(135deg, rgba(255, 255, 255, 0.86) 0%, rgba(255, 245, 249, 0.76) 100%);
+					backdrop-filter: blur(28px) saturate(170%);
+					-webkit-backdrop-filter: blur(28px) saturate(170%);
+					border: 1px solid rgba(255, 255, 255, 0.72);
+					box-shadow:
+						0 24px 54px rgba(24, 10, 18, 0.3),
+						inset 0 1px 0 #ffffff;
 					box-sizing: border-box;
-					z-index: 1;
-					&.on {
-						visibility: visible;
-						transition: 0.2s ease-out;
-						background: #fffdfd;
-					}
+					transform-origin: top center;
+					z-index: 2;
 					span {
 						display: flex;
 						align-items: center;
-						padding: 10px 30px;
-						border: 1px solid #fffdfd;
-						color: #181a20;
+						padding: 10px 26px;
+						border-radius: 999px;
+						border: 1px solid rgba($florea-rose, 0.14);
+						background: rgba(255, 255, 255, 0.5);
+						color: $florea-wine;
 						font-family: $font;
-						font-size: 20px;
+						font-size: 16px;
 						font-style: normal;
-						font-weight: 400;
+						font-weight: 500;
 						line-height: 26px;
+						letter-spacing: 0.2px;
 						cursor: pointer;
 						text-transform: capitalize;
+						transition:
+							background-color 240ms $logo-ease,
+							border-color 240ms $logo-ease,
+							color 240ms $logo-ease,
+							box-shadow 240ms $logo-ease;
 						&:hover {
-							border-radius: 5px;
-							border: 1px solid #b9b9b9;
-							box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+							background: rgba($florea-petal, 0.5);
+							border-color: rgba($florea-rose, 0.42);
+							box-shadow: 0 6px 16px rgba($florea-rose, 0.14);
 						}
+						&.active {
+							background: linear-gradient(140deg, $florea-pink 0%, $florea-rose 100%);
+							border-color: transparent;
+							color: #ffffff;
+							box-shadow: 0 8px 18px rgba($florea-rose, 0.3);
+						}
+					}
+				}
+				@media (prefers-reduced-motion: reduce) {
+					.box,
+					.box span,
+					.chevron,
+					.search-btn,
+					.filter-options span {
+						transition: none;
 					}
 				}
 			}

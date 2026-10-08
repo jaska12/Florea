@@ -6,6 +6,7 @@ import { ProductOccasion, ProductSize, ProductType } from '../../enums/product.e
 import { ProductsInquiry } from '../../types/product/product.input';
 import { useRouter } from 'next/router';
 import { useTranslation } from 'next-i18next';
+import { AnimatePresence, MotionConfig, motion, Variants } from 'framer-motion';
 
 interface HeaderFilterProps {
 	initialInput: ProductsInquiry;
@@ -14,11 +15,42 @@ interface HeaderFilterProps {
 /** BOUQUET -> bouquet, FLOWER_BOX -> flower box (capitalized in CSS) **/
 const formatLabel = (value: string): string => value.replace(/_/g, ' ').toLowerCase();
 
+/** MOTION **/
+// same curve as $logo-ease in scss/variables.scss, so the search box moves like the logo
+const EASE: [number, number, number, number] = [0.22, 1, 0.36, 1];
+
+const revealVariants: Variants = {
+	hidden: { opacity: 0, y: 14 },
+	visible: (delay: number = 0) => ({
+		opacity: 1,
+		y: 0,
+		transition: { duration: 0.6, ease: EASE, delay },
+	}),
+};
+
+const panelVariants: Variants = {
+	hidden: { opacity: 0, y: -8, scale: 0.985 },
+	visible: {
+		opacity: 1,
+		y: 0,
+		scale: 1,
+		transition: { duration: 0.28, ease: EASE, staggerChildren: 0.03, delayChildren: 0.04 },
+	},
+	exit: { opacity: 0, y: -6, scale: 0.99, transition: { duration: 0.18, ease: EASE } },
+};
+
+const optionVariants: Variants = {
+	hidden: { opacity: 0, y: 6 },
+	visible: { opacity: 1, y: 0, transition: { duration: 0.26, ease: EASE } },
+	exit: { opacity: 0 },
+};
+
 const HeaderFilter = (props: HeaderFilterProps) => {
 	const { initialInput } = props;
 	const device = useDeviceDetect();
 	const { t, i18n } = useTranslation('common');
 	const [searchFilter, setSearchFilter] = useState<ProductsInquiry>(initialInput);
+	const selectRef: any = useRef();
 	const typeRef: any = useRef();
 	const occasionRef: any = useRef();
 	const sizeRef: any = useRef();
@@ -33,6 +65,9 @@ const HeaderFilter = (props: HeaderFilterProps) => {
 	/** LIFECYCLES **/
 	useEffect(() => {
 		const clickHandler = (event: MouseEvent) => {
+			// the filter buttons open and close their own menus
+			if (selectRef?.current?.contains(event.target)) return;
+
 			if (!typeRef?.current?.contains(event.target)) {
 				setOpenType(false);
 			}
@@ -155,71 +190,127 @@ const HeaderFilter = (props: HeaderFilterProps) => {
 		}
 	};
 
+	/** VIEW DATA **/
+	const selectedType = searchFilter?.search?.typeList?.[0];
+	const selectedOccasion = searchFilter?.search?.occasionList?.[0];
+	const selectedSize = searchFilter?.search?.sizeList?.[0];
+
+	const filters = [
+		{
+			key: 'type',
+			open: openType,
+			selected: selectedType,
+			placeholder: t('Category'),
+			toggle: typeStateChangeHandler,
+		},
+		{
+			key: 'occasion',
+			open: openOccasion,
+			selected: selectedOccasion,
+			placeholder: t('Occasion'),
+			toggle: occasionStateChangeHandler,
+		},
+		{
+			key: 'size',
+			open: openSize,
+			selected: selectedSize,
+			placeholder: t('Size'),
+			toggle: sizeStateChangeHandler,
+		},
+	];
+
+	const menus = [
+		{ key: 'type', open: openType, ref: typeRef, options: productType, selected: selectedType, select: productTypeSelectHandler },
+		{
+			key: 'occasion',
+			open: openOccasion,
+			ref: occasionRef,
+			options: productOccasion,
+			selected: selectedOccasion,
+			select: productOccasionSelectHandler,
+		},
+		{ key: 'size', open: openSize, ref: sizeRef, options: productSize, selected: selectedSize, select: productSizeSelectHandler },
+	];
+
 	if (device === 'mobile') {
 		return <div>HEADER FILTER MOBILE</div>;
 	} else {
 		return (
-			<>
-				<h2 className={'search-title'}>{t('Find your perfect Florea flowers & gifts')}</h2>
-				<Stack className={'search-box'}>
-					<Stack className={'select-box'}>
-						<Box component={'div'} className={`box ${openType ? 'on' : ''}`} onClick={typeStateChangeHandler}>
-							<span>
-								{searchFilter?.search?.typeList ? formatLabel(searchFilter?.search?.typeList[0]) : t('Category')}
-							</span>
-							<ExpandMoreIcon />
-						</Box>
-						<Box className={`box ${openOccasion ? 'on' : ''}`} onClick={occasionStateChangeHandler}>
-							<span>
-								{searchFilter?.search?.occasionList
-									? formatLabel(searchFilter?.search?.occasionList[0])
-									: t('Occasion')}
-							</span>
-							<ExpandMoreIcon />
-						</Box>
-						<Box className={`box ${openSize ? 'on' : ''}`} onClick={sizeStateChangeHandler}>
-							<span>{searchFilter?.search?.sizeList ? formatLabel(searchFilter?.search?.sizeList[0]) : t('Size')}</span>
-							<ExpandMoreIcon />
-						</Box>
+			// reducedMotion="user": people who ask for less motion get fades only, no movement
+			<MotionConfig reducedMotion="user">
+				<motion.h2 className={'search-title'} variants={revealVariants} initial="hidden" animate="visible" custom={0}>
+					{t('Find your perfect Florea flowers & gifts')}
+				</motion.h2>
+				<motion.div
+					className={'search-box'}
+					variants={revealVariants}
+					initial="hidden"
+					animate="visible"
+					custom={0.12}
+				>
+					<Stack className={'select-box'} ref={selectRef}>
+						{filters.map((filter) => (
+							<motion.div
+								className={`box ${filter.open ? 'on' : ''} ${filter.selected ? 'selected' : ''}`}
+								onClick={filter.toggle}
+								whileHover={{ y: -1 }}
+								whileTap={{ scale: 0.985 }}
+								transition={{ duration: 0.24, ease: EASE }}
+								key={filter.key}
+							>
+								<span>{filter.selected ? formatLabel(filter.selected) : filter.placeholder}</span>
+								<motion.i
+									className={'chevron'}
+									animate={{ rotate: filter.open ? 180 : 0 }}
+									transition={{ duration: 0.32, ease: EASE }}
+								>
+									<ExpandMoreIcon />
+								</motion.i>
+							</motion.div>
+						))}
 					</Stack>
 					<Stack className={'search-box-other'}>
-						<Box className={'search-btn'} onClick={pushSearchHandler}>
+						<motion.div
+							className={'search-btn'}
+							onClick={pushSearchHandler}
+							whileHover={{ scale: 1.05 }}
+							whileTap={{ scale: 0.96 }}
+							transition={{ duration: 0.24, ease: EASE }}
+						>
 							<img src="/img/icons/search_white.svg" alt="" />
-						</Box>
+						</motion.div>
 					</Stack>
 
 					{/*MENU */}
-					<div className={`filter-options ${openType ? 'on' : ''}`} ref={typeRef}>
-						{productType.map((type: string) => {
-							return (
-								<span onClick={() => productTypeSelectHandler(type)} key={type}>
-									{formatLabel(type)}
-								</span>
-							);
-						})}
-					</div>
-
-					<div className={`filter-options ${openOccasion ? 'on' : ''}`} ref={occasionRef}>
-						{productOccasion.map((occasion: string) => {
-							return (
-								<span onClick={() => productOccasionSelectHandler(occasion)} key={occasion}>
-									{formatLabel(occasion)}
-								</span>
-							);
-						})}
-					</div>
-
-					<div className={`filter-options ${openSize ? 'on' : ''}`} ref={sizeRef}>
-						{productSize.map((size: string) => {
-							return (
-								<span onClick={() => productSizeSelectHandler(size)} key={size}>
-									{formatLabel(size)}
-								</span>
-							);
-						})}
-					</div>
-				</Stack>
-			</>
+					<AnimatePresence>
+						{menus.map(
+							(menu) =>
+								menu.open && (
+									<motion.div
+										className={'filter-options on'}
+										ref={menu.ref}
+										variants={panelVariants}
+										initial="hidden"
+										animate="visible"
+										exit="exit"
+										key={menu.key}
+									>
+										{menu.options.map((option: string) => (
+											<motion.span
+												className={menu.selected === option ? 'active' : ''}
+												onClick={() => menu.select(option)}
+												variants={optionVariants}
+												key={option}
+											>
+												{formatLabel(option)}
+											</motion.span>
+										))}
+									</motion.div>
+								),
+						)}
+					</AnimatePresence>
+				</motion.div>
+			</MotionConfig>
 		);
 	}
 };

@@ -4,6 +4,30 @@
 
 $font: 'Poppins', sans-serif;
 
+/** FLOREA BRAND **/
+
+$florea-wine: #7a1f45;
+$florea-rose: #b4235f;
+$florea-pink: #e0568d;
+$florea-blush: #f4a9c4;
+$florea-petal: #f3c6d6;
+$florea-gold: #f2b134;
+
+/** GLASS **/
+
+// A translucent, blurred surface with a light edge. $tint is the colour of the glass itself.
+@mixin florea-glass($tint: rgba(255, 255, 255, 0.16), $blur: 22px) {
+	background: linear-gradient(135deg, rgba(255, 255, 255, 0.18) 0%, $tint 46%, rgba(255, 255, 255, 0.06) 100%);
+	backdrop-filter: blur($blur) saturate(165%);
+	-webkit-backdrop-filter: blur($blur) saturate(165%);
+	border: 1px solid rgba(255, 255, 255, 0.3);
+
+	// browsers without backdrop-filter get a more solid surface so text stays readable
+	@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+		background: rgba(74, 22, 48, 0.82);
+	}
+}
+
 /** FLOREA LOGO HOVER **/
 
 $logo-ease: cubic-bezier(0.22, 1, 0.36, 1);

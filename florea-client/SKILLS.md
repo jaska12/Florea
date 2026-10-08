@@ -29,4 +29,5 @@ Rules for using them in this project:
 
 - `AGENTS.md` wins when a community skill disagrees with it (for example: do not rewrite the architecture, keep SCSS, use Yarn).
 - This client uses the Next.js Pages Router and Apollo Client 3. Skip advice written for the App Router or React Server Components.
-- Motion is written in SCSS. Do not add an animation library (Framer Motion, GSAP) unless asked; reuse the easing and glow values in `scss/variables.scss` so new motion matches the logo animation, and always keep the `prefers-reduced-motion` fallback.
+- Motion: `framer-motion` is installed and used by the homepage search box (`libs/components/homepage/HeaderFilter.tsx`) for enter, exit and press motion. Colour and shadow transitions stay in SCSS. Do not add another animation library (GSAP and others) unless asked.
+- Reuse the brand colours, the `florea-glass` mixin and the easing in `scss/variables.scss` so new surfaces and motion match the logo and the search box. Keep the reduced-motion fallbacks (`MotionConfig reducedMotion="user"` and the `prefers-reduced-motion` media query).
