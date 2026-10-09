@@ -15,7 +15,7 @@
           flex-direction: column;
           align-items: center;
           span {
-            color: #000;
+            color: $florea-ink;
             font-family: $font;
             font-size: 35px;
             font-style: normal;
@@ -24,7 +24,7 @@
             letter-spacing: 0.525px;
           }
           p {
-            color: #757575;
+            color: $florea-muted;
             font-family: $font;
             font-size: 16px;
             font-style: normal;
@@ -49,9 +49,9 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            border: 1px solid #EEE;
+            border: 1px solid $florea-hairline-soft;
             cursor: pointer;
-            color: #BDBDBD;
+            color: #cdb9c2;
             font-family: $font;
             font-size: 14px;
             font-style: normal;
@@ -60,7 +60,7 @@
             letter-spacing: 0.42px;
             &.active {
               border: 1px solid #725CE8;
-              background: #EB6753;
+              background: $florea-rose;
               color: #FFF;
             }
           }
@@ -72,7 +72,7 @@
         flex-direction: column;
         .title {
           margin-bottom: 25px;
-          color: #000;
+          color: $florea-ink;
           font-family: $font;
           font-size: 27px;
           font-style: normal;
@@ -88,14 +88,14 @@
         }
         .notice-content {
           .main {
-            border: 1px solid #EEE;
+            border: 1px solid $florea-hairline-soft;
             .top {
               padding: 25px 33px;
               display: flex;
               flex-direction: row;
               justify-content: space-between;
               span {
-                color: #000;
+                color: $florea-ink;
                 font-family: $font;
                 font-size: 14px;
                 font-style: normal;
@@ -112,15 +112,15 @@
                 display: flex;
                 flex-direction: row;
                 justify-content: space-between;
-                border: 1px solid #EEE;
+                border: 1px solid $florea-hairline-soft;
                 &.event {
                   background: #F6D79A;
                 }
                 div {
                   padding: 6px 9px;
                   border-radius: 12px;
-                  border: 1px solid #EB6753;
-                  color: #EB6753;
+                  border: 1px solid $florea-rose;
+                  color: $florea-rose;
                   font-family: $font;
                   font-size: 12px;
                   font-style: normal;
@@ -129,7 +129,7 @@
                 .notice-number {
                   margin-left: 18px;
                   width: 39px;
-                  color: #BDBDBD;
+                  color: #cdb9c2;
                   font-family: $font;
                   font-size: 14px;
                   font-style: normal;
@@ -138,7 +138,7 @@
                 }
                 .notice-title {
                   width: 1060px;
-                  color: #000;
+                  color: $florea-ink;
                   font-family: $font;
                   font-size: 16px;
                   font-style: normal;
@@ -146,7 +146,7 @@
                   line-height: normal;
                 }
                 .notice-date {
-                  color: #BDBDBD;
+                  color: #cdb9c2;
                   font-family: $font;
                   font-size: 14px;
                   font-style: normal;
@@ -173,7 +173,7 @@
               display: flex;
               justify-content: center;
               align-items: center;
-              color: #BDBDBD;
+              color: #cdb9c2;
               text-align: center;
               font-family: $font;
               font-size: 15px;
@@ -183,8 +183,8 @@
               letter-spacing: -0.225px;
               cursor: pointer;
               &.active {
-                border-bottom: 1px solid #EB6753;
-                color: #EB6753;
+                border-bottom: 1px solid $florea-rose;
+                color: $florea-rose;
               }
             }
           }
@@ -192,7 +192,7 @@
             margin-top: 50px;
             .MuiAccordionDetails-root {
               padding: 30px 20px;
-              background: #FAFAFA;
+              background: $florea-surface;
             }
             .badge {
               margin: 0 24px;
@@ -204,7 +204,7 @@
             }
             .question {
               .badge {
-                background: #e92C28;
+                background: $florea-rose;
                 color: #fff;
               }
             }
@@ -215,8 +215,8 @@
               align-items: center;
               flex-direction: row;
               .badge {
-                color: #EB6753;
-                border: 1px solid #EB6753;
+                color: $florea-rose;
+                border: 1px solid $florea-rose;
               }
             }
           }

@@ -18,13 +18,13 @@ const Footer = () => {
 							<img src="/img/logo/florea/florea-logo-on-dark.svg" alt="Florea" className={'logo'} />
 						</Box>
 						<Box component={'div'} className={'footer-box'}>
-							<span>total free customer care</span>
+							<span>customer care</span>
 							<p>+82 10 4867 2909</p>
 						</Box>
 						<Box component={'div'} className={'footer-box'}>
-							<span>nee live</span>
+							<span>need help with an order?</span>
 							<p>+82 10 4867 2909</p>
-							<span>Support?</span>
+							<span>We reply within a day.</span>
 						</Box>
 						<Box component={'div'} className={'footer-box'}>
 							<p>follow us on social media</p>
@@ -39,21 +39,21 @@ const Footer = () => {
 					<Stack className={'right'}>
 						<Box component={'div'} className={'bottom'}>
 							<div>
-								<strong>Popular Search</strong>
-								<span>Product for Rent</span>
-								<span>Product Low to hide</span>
+								<strong>Shop</strong>
+								<span>Same-day delivery</span>
+								<span>Gift-wrapped items</span>
 							</div>
 							<div>
 								<strong>Quick Links</strong>
 								<span>Terms of Use</span>
 								<span>Privacy Policy</span>
-								<span>Pricing Plans</span>
+								<span>Delivery information</span>
 								<span>Our Services</span>
 								<span>Contact Support</span>
 								<span>FAQs</span>
 							</div>
 							<div>
-								<strong>Discover</strong>
+								<strong>Delivery areas</strong>
 								<span>Seoul</span>
 								<span>Gyeongido</span>
 								<span>Busan</span>
@@ -76,13 +76,13 @@ const Footer = () => {
 							<img src="/img/logo/florea/florea-logo-on-dark.svg" alt="Florea" className={'logo'} />
 						</Box>
 						<Box component={'div'} className={'footer-box'}>
-							<span>total free customer care</span>
+							<span>customer care</span>
 							<p>+82 10 4867 2909</p>
 						</Box>
 						<Box component={'div'} className={'footer-box'}>
-							<span>nee live</span>
+							<span>need help with an order?</span>
 							<p>+82 10 4867 2909</p>
-							<span>Support?</span>
+							<span>We reply within a day.</span>
 						</Box>
 						<Box component={'div'} className={'footer-box'}>
 							<p>follow us on social media</p>
@@ -96,7 +96,7 @@ const Footer = () => {
 					</Stack>
 					<Stack className={'right'}>
 						<Box component={'div'} className={'top'}>
-							<strong>keep yourself up to date</strong>
+							<strong>Seasonal bouquets and gift ideas, by email</strong>
 							<div>
 								<input type="text" placeholder={'Your Email'} />
 								<span>Subscribe</span>
@@ -104,21 +104,21 @@ const Footer = () => {
 						</Box>
 						<Box component={'div'} className={'bottom'}>
 							<div>
-								<strong>Popular Search</strong>
-								<span>Product for Rent</span>
-								<span>Product Low to hide</span>
+								<strong>Shop</strong>
+								<span>Same-day delivery</span>
+								<span>Gift-wrapped items</span>
 							</div>
 							<div>
 								<strong>Quick Links</strong>
 								<span>Terms of Use</span>
 								<span>Privacy Policy</span>
-								<span>Pricing Plans</span>
+								<span>Delivery information</span>
 								<span>Our Services</span>
 								<span>Contact Support</span>
 								<span>FAQs</span>
 							</div>
 							<div>
-								<strong>Discover</strong>
+								<strong>Delivery areas</strong>
 								<span>Seoul</span>
 								<span>Gyeongido</span>
 								<span>Busan</span>

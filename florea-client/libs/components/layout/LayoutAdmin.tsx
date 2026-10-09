@@ -110,7 +110,7 @@ const withAdminLayout = (Component: ComponentType) => {
 										<Typography variant={'h6'} component={'h6'} sx={{ mb: '4px' }}>
 											{user?.memberNick}
 										</Typography>
-										<Typography variant={'subtitle1'} component={'p'} color={'#757575'}>
+										<Typography variant={'subtitle1'} component={'p'} color={'#7c6470'}>
 											{user?.memberPhone}
 										</Typography>
 									</Stack>

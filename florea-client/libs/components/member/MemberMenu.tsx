@@ -73,7 +73,7 @@ const MemberMenu = (props: MemberMenuProps) => {
 					) : (
 						<Button
 							variant="contained"
-							sx={{ background: '#ff5c35', ':hover': { background: '#ff5c35' } }}
+							sx={{ background: '#b4235f', ':hover': { background: '#b4235f' } }}
 							onClick={() => subscribeHandler(member?._id, getMemberRefetch, memberId)}
 						>
 							Follow

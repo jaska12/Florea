@@ -15,33 +15,31 @@ const About: NextPage = () => {
 				<Stack className={'intro'}>
 					<Stack className={'container'}>
 						<Stack className={'left'}>
-							<strong>We're on a Mission to Change View of Real Estate Field.</strong>
+							<strong>Flowers and gifts from the florists near you.</strong>
 						</Stack>
 						<Stack className={'right'}>
 							<p>
-								It doesn’t matter how organized you are — a surplus of toys will always ensure your house is a mess
-								waiting to happen. Fortunately, getting kids on board with the idea of ditching their stuff is a lot
-								easier than it sounds.
+								Florea brings local florists and gift shops into one place, so a bouquet for a birthday, a plant for a
+								new home or a gift box for an anniversary is a few minutes away.
 								<br />
 								<br />
-								Maecenas quis viverra metus, et efficitur ligula. Nam congue augue et ex congue, sed luctus lectus
-								congue. Integer convallis condimentum sem. Duis elementum tortor eget condimentum tempor. Praesent
-								sollicitudin lectus ut pharetra pulvinar.
+								Choose by occasion, size and budget, see who made it, and send it to someone you love. Many items can
+								be delivered the same day, and many can be gift wrapped.
 							</p>
 							<Stack className={'boxes'}>
 								<div className={'box'}>
 									<div>
 										<img src="/img/icons/garden.svg" alt="" />
 									</div>
-									<span>Modern Villa</span>
-									<p>Nullam sollicitudin blandit Nullam maximus.</p>
+									<span>Made by local florists</span>
+									<p>Each product shows the shop behind it.</p>
 								</div>
 								<div className={'box'}>
 									<div>
 										<img src="/img/icons/securePayment.svg" alt="" />
 									</div>
-									<span>Secure Payment</span>
-									<p>Nullam sollicitudin blandit Nullam maximus.</p>
+									<span>Chosen by occasion</span>
+									<p>Birthday, wedding, anniversary and more.</p>
 								</div>
 							</Stack>
 						</Stack>
@@ -54,16 +52,16 @@ const About: NextPage = () => {
 						</Stack>
 						<Stack className={'info'}>
 							<Box component={'div'}>
-								<strong>4M</strong>
-								<p>Award Winning</p>
+								<strong>6</strong>
+								<p>Categories</p>
 							</Box>
 							<Box component={'div'}>
-								<strong>12K</strong>
-								<p>Product Ready</p>
+								<strong>6</strong>
+								<p>Occasions</p>
 							</Box>
 							<Box component={'div'}>
-								<strong>20M</strong>
-								<p>Happy Customer</p>
+								<strong>3</strong>
+								<p>Sizes</p>
 							</Box>
 						</Stack>
 					</Stack>
@@ -82,14 +80,14 @@ const About: NextPage = () => {
 				<Stack className={'options'}>
 					<img src="/img/banner/aboutBanner.svg" alt="" className={'about-banner'} />
 					<Stack className={'container'}>
-						<strong>Let’s find the right selling option for you</strong>
+						<strong>For florists and gift shops</strong>
 						<Stack>
 							<div className={'icon-box'}>
 								<img src="/img/icons/security.svg" alt="" />
 							</div>
 							<div className={'text-box'}>
-								<span>Product Management</span>
-								<p>Nullam sollicitudin blandit eros eu pretium. Nullam maximus ultricies auctor.</p>
+								<span>List your products</span>
+								<p>Add bouquets, plants and gift boxes with photos, price, size and stock.</p>
 							</div>
 						</Stack>
 						<Stack>
@@ -97,8 +95,8 @@ const About: NextPage = () => {
 								<img src="/img/icons/keywording.svg" alt="" />
 							</div>
 							<div className={'text_-box'}>
-								<span>Product Management</span>
-								<p>Nullam sollicitudin blandit eros eu pretium. Nullam maximus ultricies auctor.</p>
+								<span>Reach people nearby</span>
+								<p>Buyers find you by category, occasion and location.</p>
 							</div>
 						</Stack>
 						<Stack>
@@ -106,8 +104,8 @@ const About: NextPage = () => {
 								<img src="/img/icons/investment.svg" alt="" />
 							</div>
 							<div className={'text-box'}>
-								<span>Product Management</span>
-								<p>Nullam sollicitudin blandit eros eu pretium. Nullam maximus ultricies auctor.</p>
+								<span>Build your following</span>
+								<p>Customers can follow your shop, like your products and leave reviews.</p>
 							</div>
 						</Stack>
 						<Stack className={'btn'}>
@@ -118,7 +116,7 @@ const About: NextPage = () => {
 				</Stack>
 				<Stack className={'partners'}>
 					<Stack className={'container'}>
-						<span>Trusted bu the world's best</span>
+						<span>Part of the Florea community</span>
 						<Stack className={'wrap'}>
 							<img src="/img/icons/brands/amazon.svg" alt="" />
 							<img src="/img/icons/brands/amd.svg" alt="" />
@@ -131,8 +129,8 @@ const About: NextPage = () => {
 				<Stack className={'help'}>
 					<Stack className={'container'}>
 						<Box component={'div'} className={'left'}>
-							<strong>Need help? Talk to our expert.</strong>
-							<p>Talk to our experts or Browse through more products.</p>
+							<strong>Need help choosing?</strong>
+							<p>Ask a florist on their page, or browse all products.</p>
 						</Box>
 						<Box component={'div'} className={'right'}>
 							<div className={'white'}>

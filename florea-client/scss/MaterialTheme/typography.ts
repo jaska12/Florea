@@ -1,4 +1,5 @@
 export default {
+	fontFamily: "'Outfit', 'Helvetica Neue', Arial, sans-serif",
 	h1: {
 		fontSize: 36,
 		fontWeight: 700,

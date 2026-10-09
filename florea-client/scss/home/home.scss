@@ -502,38 +502,6 @@ $home-gap: 96px;
 	.home-product-card {
 		width: 100%;
 		@include florea-product-card;
-		.card-badge {
-			position: absolute;
-			top: 14px;
-			left: 14px;
-			z-index: 1;
-			padding: 4px 12px;
-			border-radius: 999px;
-			background: rgba(255, 255, 255, 0.92);
-			color: $florea-wine;
-			font-family: $font;
-			font-size: 12px;
-			font-weight: 600;
-			line-height: 18px;
-			letter-spacing: 0.2px;
-			// the small amber dot is the only use of the accent on the card
-			&::before {
-				content: '';
-				margin-right: 6px;
-				display: inline-block;
-				width: 6px;
-				height: 6px;
-				border-radius: 50%;
-				background: $florea-gold;
-				vertical-align: middle;
-			}
-		}
-		.like-icon {
-			margin-left: 8px;
-			width: 18px;
-			height: 18px;
-			color: #a58c97;
-		}
 	}
 
 	/** three.js gallery **/
@@ -546,97 +514,105 @@ $home-gap: 96px;
 		}
 	}
 
-	/** brand band **/
-	.home-band {
-		position: relative;
-		padding: 104px 0;
-		color: #ffffff;
-		background:
-			radial-gradient(70% 120% at 100% 0%, rgba($florea-pink, 0.34) 0%, rgba($florea-pink, 0) 60%),
-			radial-gradient(60% 110% at 0% 100%, rgba(43, 20, 32, 0.5) 0%, rgba(43, 20, 32, 0) 62%),
-			$florea-wine;
-		.home-shell {
-			display: grid;
-			grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.5fr);
-			gap: 72px;
-			align-items: start;
+	/** same-day delivery banner **/
+	.sameday-banner {
+		display: grid;
+		grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+		min-height: 420px;
+		overflow: hidden;
+		border-radius: 32px;
+		background: linear-gradient(135deg, $florea-mist 0%, #ffe0ea 100%);
+		.sameday-copy {
+			padding: 64px;
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			align-items: flex-start;
 		}
-		.band-title {
-			margin: 0;
+		.sameday-kicker {
+			padding: 6px 14px;
+			border-radius: 999px;
+			background: #ffffff;
+			color: $florea-wine;
+			font-family: $font;
+			font-size: 13px;
+			font-weight: 600;
+			line-height: 20px;
+			letter-spacing: 0.2px;
+			// the amber accent, used once in the banner
+			&::before {
+				content: '';
+				margin-right: 8px;
+				display: inline-block;
+				width: 7px;
+				height: 7px;
+				border-radius: 50%;
+				background: $florea-gold;
+				vertical-align: middle;
+			}
+		}
+		.sameday-title {
+			margin: 22px 0 0;
+			max-width: 460px;
+			color: $florea-ink;
 			font-family: $font-display;
-			font-size: clamp(30px, 3.4vw, 46px);
+			font-size: clamp(30px, 3.3vw, 46px);
 			font-weight: 500;
 			line-height: 1.12;
 			letter-spacing: -0.01em;
 			text-wrap: balance;
 		}
-		.band-actions {
-			margin-top: 34px;
+		.sameday-text {
+			margin: 16px 0 0;
+			max-width: 440px;
+			color: $florea-muted;
+			font-family: $font;
+			font-size: 16px;
+			font-weight: 400;
+			line-height: 1.65;
+		}
+		.sameday-actions {
+			margin-top: 32px;
 			display: flex;
 			flex-direction: row;
 			flex-wrap: wrap;
 			gap: 12px;
 		}
-		.band-btn {
-			padding: 13px 26px;
-			border-radius: 999px;
-			border: 1px solid rgba(255, 255, 255, 0.36);
+		.sameday-photo {
+			min-height: 320px;
+			background-size: cover;
+			background-position: center;
+		}
+	}
+	.home-btn {
+		padding: 13px 26px;
+		border-radius: 999px;
+		border: 1px solid rgba($florea-rose, 0.32);
+		background: transparent;
+		color: $florea-wine;
+		font-family: $font;
+		font-size: 15px;
+		font-weight: 500;
+		line-height: 22px;
+		white-space: nowrap;
+		transition:
+			background-color 240ms $logo-ease,
+			border-color 240ms $logo-ease,
+			color 240ms $logo-ease;
+		&:hover,
+		&:focus-visible {
+			border-color: $florea-rose;
+			color: $florea-rose;
+		}
+		&.primary {
+			background: $florea-rose;
+			border-color: $florea-rose;
 			color: #ffffff;
-			font-family: $font;
-			font-size: 15px;
-			font-weight: 500;
-			line-height: 22px;
-			white-space: nowrap;
-			transition:
-				background-color 240ms $logo-ease,
-				border-color 240ms $logo-ease,
-				color 240ms $logo-ease;
 			&:hover,
 			&:focus-visible {
-				background: rgba(255, 255, 255, 0.12);
-				border-color: rgba(255, 255, 255, 0.6);
-			}
-			&.primary {
-				background: #ffffff;
-				border-color: #ffffff;
-				color: $florea-wine;
-				&:hover,
-				&:focus-visible {
-					background: $florea-petal;
-					border-color: $florea-petal;
-				}
-			}
-		}
-		.band-points {
-			display: grid;
-			grid-template-columns: repeat(3, minmax(0, 1fr));
-			gap: 36px;
-		}
-		.band-point {
-			padding-top: 22px;
-			border-top: 1px solid rgba(255, 255, 255, 0.22);
-			.point-icon {
-				display: inline-flex;
-				color: $florea-gold;
-				svg {
-					width: 26px;
-					height: 26px;
-				}
-			}
-			.point-title {
-				margin: 16px 0 0;
-				font-family: $font;
-				font-size: 17px;
-				font-weight: 600;
-				line-height: 1.35;
-			}
-			.point-text {
-				margin: 10px 0 0;
-				color: rgba(255, 255, 255, 0.78);
-				font-family: $font;
-				font-size: 14px;
-				font-weight: 400;
-				line-height: 1.65;
+				background: $florea-wine;
+				border-color: $florea-wine;
+				color: #ffffff;
 			}
 		}
 	}
@@ -833,10 +809,6 @@ $home-gap: 96px;
 		.category-tile {
 			aspect-ratio: 5 / 4;
 		}
-		.home-band .home-shell {
-			grid-template-columns: minmax(0, 1fr);
-			gap: 48px;
-		}
 		.community-layout {
 			grid-template-columns: minmax(0, 1fr);
 			gap: 48px;
@@ -845,8 +817,21 @@ $home-gap: 96px;
 }
 
 @media (max-width: 900px) {
-	.florea-home .home-gallery {
-		display: none;
+	.florea-home {
+		.home-gallery {
+			display: none;
+		}
+		.sameday-banner {
+			grid-template-columns: minmax(0, 1fr);
+			border-radius: 24px;
+			.sameday-photo {
+				order: -1;
+				min-height: 240px;
+			}
+			.sameday-copy {
+				padding: 36px 24px 40px;
+			}
+		}
 	}
 }
 
@@ -930,13 +915,6 @@ $home-gap: 96px;
 		.agent-swiper .agent-slide {
 			width: 176px;
 		}
-		.home-band {
-			padding: 72px 0;
-			.band-points {
-				grid-template-columns: minmax(0, 1fr);
-				gap: 28px;
-			}
-		}
 		.community-grid {
 			grid-template-columns: repeat(2, minmax(0, 1fr));
 		}
@@ -951,7 +929,7 @@ $home-gap: 96px;
 		.shortcut,
 		.text-link,
 		.nav-btn,
-		.band-btn,
+		.home-btn,
 		.box,
 		.box span,
 		.chevron,

@@ -31,7 +31,7 @@
       }
     }
     .user {
-      background: #f5f5f5;
+      background: $florea-surface;
     }
     hr {
       margin: 24px 0;
@@ -41,7 +41,7 @@
     }
   }
   .user {
-    background: #f5f5f5;
+    background: $florea-surface;
   }
   .menu-list {
     padding: 8px 24px 8px 32px;
@@ -52,10 +52,10 @@
     }
     li.on {
       font-weight: 600;
-      background: #FDF4F4;
-      color: #F54D56;
+      background: $florea-mist;
+      color: $florea-rose;
       span {
-        color: #212121;
+        color: $florea-ink;
       }
     }
   }
@@ -99,7 +99,7 @@
       border-radius: 4px;
     }
     .delete {
-      background: #757575;
+      background: $florea-muted;
       color: #fff;
       border-radius: 4px;
     }
@@ -121,7 +121,7 @@
     }
     .delete-txt {
       font-size: 14px;
-      color: #757575;
+      color: $florea-muted;
     }
     .up {
       color: rgba(45, 153, 255);
@@ -158,7 +158,7 @@
         }
         hr {
           margin: 6px 10px;
-          border-color: #bdbdbd;
+          border-color: #cdb9c2;
         }
         span:first-child {
           width: 220px;
@@ -216,14 +216,14 @@
           height: 80%;
           padding: 10px;
           font-size: 14px;
-          border: 1px solid #eee;
+          border: 1px solid $florea-hairline-soft;
           border-radius: 4px;
           resize: none;
         }
       }
       .desc {
         span {
-          color: #757575;
+          color: $florea-muted;
           margin-right: 4px;
         }
       }
@@ -231,7 +231,7 @@
     .user-area {
       margin-bottom: 24px;
       .user-id {
-        background: #f5f5f5;
+        background: $florea-surface;
         border-radius: 30px;
         padding: 0 8px;
         margin-top: 8px;
@@ -290,15 +290,15 @@
       box-shadow: rgb(255 48 48 / 24%) 0px 8px 16px 0px;
     }
     .btn-cancel {
-      color: #757575;
-      border: 1px solid #eee;
+      color: $florea-muted;
+      border: 1px solid $florea-hairline-soft;
     }
     .btn-upload {
-      border: 1px dashed #eee;
+      border: 1px dashed $florea-hairline-soft;
     }
-    .btn-text { color: #e92c28; }
+    .btn-text { color: $florea-rose; }
     .btn-window {
-      color: #757575;
+      color: $florea-muted;
       margin-left: 8px;
       svg {
         font-size: 20px;
@@ -323,13 +323,13 @@
           height: 48px;
           cursor: pointer;
           padding: 12px 16px;
-          color: #bdbdbd;
+          color: #cdb9c2;
           font-size: 14px;
         }
         li.on {
           font-weight: 500;
-          color: #e92c28;
-          border-bottom: 2px solid #e92c28;
+          color: $florea-rose;
+          border-bottom: 2px solid $florea-rose;
         }
       }
       &.check-table-wrap {
@@ -340,13 +340,13 @@
       }
       thead {
         tr {
-          background: #fafafa;
+          background: $florea-surface;
         }
         th {
           font-weight: bold;
           color: #374151;
           font-size: 14px;
-          border-bottom: 1px solid #eee;
+          border-bottom: 1px solid $florea-hairline-soft;
         }
         th:last-child {
           padding-right: 24px;
@@ -356,9 +356,9 @@
         }
       }
       tbody {
-        color: #616161;
+        color: $florea-muted;
         tr {
-          border-bottom: 1px solid #eee;
+          border-bottom: 1px solid $florea-hairline-soft;
         }
         tr:last-child {
           border-bottom: 0;
@@ -370,7 +370,7 @@
           padding: 12px 16px;
           border-bottom: 0;
           font-size: 14px;
-          color: #616161;
+          color: $florea-muted;
           &.info {
             display: flex;
             flex-direction: row;
@@ -408,7 +408,7 @@
       }
       .flex-box {
         button {
-          color: #e92c28;
+          color: $florea-rose;
           font-weight: 500;
           margin-right: 8px;
         }
@@ -424,13 +424,13 @@
             align-items: center;
             justify-content: space-between;
             margin-bottom: 8px;
-            background: #f5f5f5;
+            background: $florea-surface;
             border-radius: 4px;
             padding: 2px 16px;
           }
           .notice {
             margin: 6px 0 0 30px;
-            color: #bdbdbd;
+            color: #cdb9c2;
           }
         }
         .option {
@@ -439,7 +439,7 @@
             width:301px;
             height: 48px;
             padding-right: 8px;
-            color: #616161;
+            color: $florea-muted;
             span { font-size: 14px; }
           }
         }
@@ -468,7 +468,7 @@
       }
       .MuiTableCell-root {
         padding: 12px 20px;
-        border-bottom: 1px solid #eee;
+        border-bottom: 1px solid $florea-hairline-soft;
       }
       .MuiToolbar-root {
         align-items: center;
@@ -480,8 +480,8 @@
       button {
         height: 44px;
         background: #fff;
-        border: 1px solid #eee;
-        color: #757575;
+        border: 1px solid $florea-hairline-soft;
+        color: $florea-muted;
         margin-right: 8px;
       }
       thead { font-weight: 600; }

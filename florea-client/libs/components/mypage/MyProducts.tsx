@@ -117,7 +117,7 @@ const MyProducts: NextPage = ({ initialInput, ...props }: any) => {
 					</Stack>
 					<Stack className="list-box">
 						<Stack className="listing-title-box">
-							<Typography className="title-text">Listing title</Typography>
+							<Typography className="title-text">Product</Typography>
 							<Typography className="title-text">Date Published</Typography>
 							<Typography className="title-text">Status</Typography>
 							<Typography className="title-text">View</Typography>

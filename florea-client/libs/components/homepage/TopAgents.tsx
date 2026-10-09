@@ -42,19 +42,19 @@ const TopAgents = (props: TopAgentsProps) => {
 	return (
 		<section className={'home-section home-agents tinted'}>
 			<div className={'home-shell'}>
-				<SectionHeader title={'Top agents'} subtitle={'The sellers behind the products, ranked by activity.'}>
+				<SectionHeader title={'Top florists'} subtitle={'The florists and gift shops behind the products.'}>
 					<Link className={'text-link'} href={'/agent'}>
-						See all agents
+						See all florists
 					</Link>
-					<button type={'button'} className={'nav-btn swiper-agents-prev'} aria-label={'Previous agents'}>
+					<button type={'button'} className={'nav-btn swiper-agents-prev'} aria-label={'Previous florists'}>
 						<WestIcon />
 					</button>
-					<button type={'button'} className={'nav-btn swiper-agents-next'} aria-label={'Next agents'}>
+					<button type={'button'} className={'nav-btn swiper-agents-next'} aria-label={'Next florists'}>
 						<EastIcon />
 					</button>
 				</SectionHeader>
 				{topAgents.length === 0 ? (
-					<div className={'empty-state'}>No agents yet.</div>
+					<div className={'empty-state'}>No florists yet.</div>
 				) : (
 					<Swiper
 						className={'agent-swiper'}

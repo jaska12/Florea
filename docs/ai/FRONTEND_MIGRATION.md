@@ -71,6 +71,13 @@ Not renamed: the agent pages and components (`pages/agent`, `AgentCard`, `TopAge
 
 ## Known issues
 
+- **After the site-wide design system:**
+  - Inner pages are desktop-only; phones still get the "MOBILE" placeholders (homepage excepted).
+  - The site talks about delivery, but there is no order or checkout flow.
+  - The FAQ text in `libs/components/cs/Faq.tsx` is still about real estate.
+  - Prices use `$`.
+  - Product photos are missing for the test products, so cards and the detail gallery show the blush placeholder.
+
 - **Homepage (after the redesign):**
   - The dev server shows a red overlay, "Invalid message type!", whenever the backend is running. `apollo/client.ts` opens a WebSocket link to the chat gateway but never uses its `LoggingWebSocket` class, and `Chat.tsx` does not use the socket. Inherited from Nestar; not fixed.
   - On tablets the shared navbar is still fixed-width and crowds its items. The homepage sections themselves adapt.

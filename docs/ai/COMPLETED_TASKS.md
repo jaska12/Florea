@@ -31,6 +31,7 @@ In the order they were done. State as of 2026-10-05, `main` at `5f5405e`.
 - [x] 25. Homepage search box: category, occasion and size only
 - [x] 26. Community skills, glass search box and trend card (recorded after the fact)
 - [x] 27. Homepage redesign
+- [x] 28. Site-wide Florea design system
 
 ## 1. Recommend migration steps
 
@@ -377,3 +378,39 @@ In the order they were done. State as of 2026-10-05, `main` at `5f5405e`.
 | Phone 390px (phone user agent) and tablet 834px | sections lay out correctly; see the known issues for the navbar |
 
 - Not verified: liking while logged in through the UI, the feel of the animation timing, Safari.
+
+## 28. Site-wide Florea design system
+
+- Brief from the project owner: one premium design system for every page (Fraunces + Outfit, deep rose / wine / blush / amber, light theme), with the homepage sections named in the brief.
+- Scope: the UI layer. GraphQL queries, Apollo logic, routing, auth, like/view and search logic are unchanged.
+- Design system:
+  - `scss/variables.scss`: fonts changed to Fraunces (headings) and Outfit (text); tokens for surfaces, hairlines, shadows and radii; the shared product card (`florea-product-card`) now also carries the Top badge and the same-day / gift-wrap flags
+  - `scss/theme/florea.scss` (new, loaded from `pages/_app.tsx`): page background, navbar, the page header of the inner pages, footer, florist card, headings, MUI controls
+  - `scss/MaterialTheme/`: primary colour, text colours and font
+  - every colour of the old Nestar palette in `scss/pc/**`, `scss/mobile/main.scss` and `scss/app.scss` replaced by a Florea token (26 stylesheets); the same colours where components set them inline (9 components)
+- One product card everywhere: `libs/components/common/ProductCardView.tsx` (new) draws it; `HomeProductCard`, `product/ProductCard` (product list, favourites, recently visited) and `common/ProductBigCard` (similar products, florist page) keep their own data and like handlers and delegate the drawing.
+- Homepage: `OccasionTiles` and `SameDayBanner` added, `BrandBand` removed; order is hero → shop by occasion → trending → same-day banner → popular → shop by category → gallery → top rated → top florists → community.
+- Inner pages:
+  - `LayoutBasic`: one floral header image, Florea titles and descriptions for each page
+  - product detail: bed / room / area icons and icon boxes removed, readable labels, "Ask the florist", "View shop", "You may also like"
+  - product list filter: readable labels (Flower Box, Seoul, Birthday)
+  - florists: "Florist" label, search placeholder, count text; navigation label "Florists" in all three locales
+  - about page: real-estate and placeholder text replaced with Florea copy; the invented statistics replaced by true counts (6 categories, 6 occasions, 3 sizes)
+  - customer care heading, join page photo, footer copy, My page wording
+  - default avatar: a member without a photo no longer shows a broken image in the navbar and My page (display only; the stored value is unchanged)
+- Images: six occasion photos and the same-day banner photo in `public/img/home/`, cropped from photos already checked for the Unsplash License (`CREDITS.md` updated).
+- Results:
+
+| Check | Result |
+|---|---|
+| `yarn tsc --noEmit` | no errors |
+| `yarn build` | succeeded, 73 static pages |
+| Browser (headless Edge, backend running, logged in as the test florist) | homepage, product list, product detail, florists, florist page, community, customer care, about, join and My page (profile, products, favourites, add product, recently visited) render in the new theme with no horizontal scroll |
+| Leftover bed / room / area icons | none on any page checked |
+| Login through the join form | works; My page opens afterwards |
+
+- Not done from the brief:
+  - Mobile-first layouts for the inner pages. Only the homepage is responsive. The other pages still show their "MOBILE" placeholders on phones, as in Nestar.
+  - Events on the homepage: the old content was Korean city festivals, so the section stays hidden.
+  - A following count and follow button on the florist page beyond what the page already had; reviews, galleries and similar products use the existing features, restyled.
+- Not verified: Safari, and every state of every form.

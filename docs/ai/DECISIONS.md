@@ -101,3 +101,19 @@ Important decisions made during the Nestar → Florea migration session, with th
 - **Reason:** the project owner's `AGENTS.md` says "Use Yarn for all frontend commands. Do not use npm or pnpm", following the instructor's setup. Two lockfiles from two package managers drift apart, which is what had happened to the old `yarn.lock`.
 - **Rejected:** keeping both lockfiles (the rule and the repo would contradict each other).
 
+## 17. Site-wide design system from the owner's brief
+
+- **Decision:** Fraunces for headings and Outfit for text (replacing Poppins and the Playfair Display used for one day on the homepage); palette deep rose `#B4235F`, wine `#7A1F45`, blush `#FFF1F5`, amber `#F2B134` for small highlights only. The old palette was replaced token by token in every stylesheet rather than page by page.
+- **Reason:** the owner's brief names these fonts and colours and asks for one system on every page. Replacing the colours as tokens changes every page at once and leaves no page behind in the old look.
+- **Rejected:** restyling each page by hand first (weeks of work with an inconsistent site in between).
+
+## 18. "Florists" in the interface, `AGENT` in the code
+
+- **Decision:** the interface says Florist / Florists; routes (`/agent`), the `AGENT` member type, queries and component names are unchanged.
+- **Reason:** the brief calls sellers florists; renaming the role in code would touch auth, guards and the backend (see decision 14).
+
+## 19. Delivery wording
+
+- **Decision:** the site now says products are delivered, including same-day delivery, as the owner's brief describes Florea. The same-day banner links to the existing same-day and gift-wrap filters.
+- **Reason:** the brief defines Florea as a marketplace with delivery.
+- **Open:** there is no order or checkout flow in the product yet, so the wording is ahead of the features. TODO: build ordering, or soften the wording.

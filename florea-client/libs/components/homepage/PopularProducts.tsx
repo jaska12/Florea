@@ -40,9 +40,9 @@ const PopularProducts = (props: PopularProductsProps) => {
 	if (!popularProducts) return null;
 
 	return (
-		<section className={'home-section home-popular tinted'}>
+		<section className={'home-section home-popular'}>
 			<div className={'home-shell'}>
-				<SectionHeader title={'Popular products'} subtitle={'The products people have looked at the most.'}>
+				<SectionHeader title={'Popular gifts'} subtitle={'The ones people keep coming back to look at.'}>
 					<Link className={'text-link'} href={'/product'}>
 						See all products
 					</Link>

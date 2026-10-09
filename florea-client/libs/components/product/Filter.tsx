@@ -14,6 +14,7 @@ import { ProductsInquiry } from '../../types/product/product.input';
 import { useRouter } from 'next/router';
 import CancelRoundedIcon from '@mui/icons-material/CancelRounded';
 import RefreshIcon from '@mui/icons-material/Refresh';
+import { prettyLabel } from '../common/ProductCardView';
 
 interface FilterType {
 	searchFilter: ProductsInquiry;
@@ -424,7 +425,7 @@ const Filter = (props: FilterType) => {
 					</Stack>
 				</Stack>
 				<Stack className={'find-your-home'} mb={'30px'}>
-					<p className={'title'} style={{ textShadow: '0px 3px 4px #b9b9b9' }}>
+					<p className={'title'} style={{ textShadow: '0px 3px 4px #cdb9c2' }}>
 						Location
 					</p>
 					<Stack
@@ -450,7 +451,7 @@ const Filter = (props: FilterType) => {
 										onChange={productLocationSelectHandler}
 									/>
 									<label htmlFor={location} style={{ cursor: 'pointer' }}>
-										<Typography className="product-type">{location}</Typography>
+										<Typography className="product-type">{prettyLabel(location)}</Typography>
 									</label>
 								</Stack>
 							);
@@ -471,7 +472,7 @@ const Filter = (props: FilterType) => {
 								checked={(searchFilter?.search?.typeList || []).includes(type as ProductType)}
 							/>
 							<label style={{ cursor: 'pointer' }}>
-								<Typography className="product_type">{type}</Typography>
+								<Typography className="product_type">{prettyLabel(type)}</Typography>
 							</label>
 						</Stack>
 					))}
@@ -490,7 +491,7 @@ const Filter = (props: FilterType) => {
 								checked={(searchFilter?.search?.occasionList || []).includes(occasion as ProductOccasion)}
 							/>
 							<label htmlFor={occasion} style={{ cursor: 'pointer' }}>
-								<Typography className="product_type">{occasion}</Typography>
+								<Typography className="product_type">{prettyLabel(occasion)}</Typography>
 							</label>
 						</Stack>
 					))}
@@ -501,7 +502,7 @@ const Filter = (props: FilterType) => {
 						<Button
 							sx={{
 								borderRadius: '12px 0 0 12px',
-								border: !searchFilter?.search?.sizeList ? '2px solid #181A20' : '1px solid #b9b9b9',
+								border: !searchFilter?.search?.sizeList ? '2px solid #2b1420' : '1px solid #cdb9c2',
 							}}
 							onClick={() => productSizeSelectHandler(null)}
 						>
@@ -511,13 +512,13 @@ const Filter = (props: FilterType) => {
 							<Button
 								sx={{
 									borderRadius: index === productSize.length - 1 ? '0 12px 12px 0' : 0,
-									border: searchFilter?.search?.sizeList?.includes(size) ? '2px solid #181A20' : '1px solid #b9b9b9',
+									border: searchFilter?.search?.sizeList?.includes(size) ? '2px solid #2b1420' : '1px solid #cdb9c2',
 									borderLeft: searchFilter?.search?.sizeList?.includes(size) ? undefined : 'none',
 								}}
 								onClick={() => productSizeSelectHandler(size)}
 								key={size}
 							>
-								{size}
+								{prettyLabel(size)}
 							</Button>
 						))}
 					</Stack>

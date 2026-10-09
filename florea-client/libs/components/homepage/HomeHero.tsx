@@ -49,7 +49,7 @@ const HomeHero = () => {
 							{t('Find your perfect Florea flowers & gifts')}
 						</motion.h1>
 						<motion.p className={'hero-sub'} variants={riseVariants} initial="hidden" animate="visible" custom={0.1}>
-							{t('Bouquets, flower boxes, plants and gift sets from Florea sellers. Pick a category, an occasion and a size to begin.')}
+							{t('Fresh bouquets, plants and curated gift boxes from local florists and gift shops. Choose by occasion and send them to someone you love.')}
 						</motion.p>
 					</div>
 					<div className={'hero-search'}>

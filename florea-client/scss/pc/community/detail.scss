@@ -36,7 +36,7 @@
 						.community-name {
 							.name {
 								margin-top: 15px;
-								color: #181a20;
+								color: $florea-ink;
 								font-family: $font;
 								font-size: 15px;
 								font-style: normal;
@@ -52,9 +52,9 @@
 						justify-content: center;
 						align-items: center;
 						border-radius: 6px;
-						border: 1px solid #181a20;
+						border: 1px solid $florea-ink;
 						margin-bottom: 10px;
-						color: #181a20;
+						color: $florea-ink;
 						font-family: $font;
 						font-size: 14px;
 						font-style: normal;
@@ -68,7 +68,7 @@
 						padding: 0;
 						justify-content: center;
 						align-items: center;
-						background-color: #000000;
+						background-color: $florea-ink;
 						color: #ffffff;
 						border-radius: 6px;
 						margin-bottom: 10px;
@@ -92,7 +92,7 @@
 							width: 60%;
 							height: auto;
 							.title {
-								color: #000;
+								color: $florea-ink;
 								font-family: $font;
 								font-size: 24px;
 								font-style: normal;
@@ -101,7 +101,7 @@
 								letter-spacing: 0.24px;
 							}
 							.sub-title {
-								color: #757575;
+								color: $florea-muted;
 								font-family: $font;
 								font-size: 13px;
 								font-style: normal;
@@ -114,7 +114,7 @@
 							width: 91px;
 							height: 32px;
 							border-radius: 4px;
-							background: #eb6753;
+							background: $florea-rose;
 							color: #fff;
 							font-family: $font;
 							font-size: 13px;
@@ -129,7 +129,7 @@
 							width: 1012px;
 							min-height: 500px;
 							border-radius: 8px 8px 0px 0px;
-							border: 1px solid #eee;
+							border: 1px solid $florea-hairline-soft;
 							box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
 							.content-and-info {
 								width: 100%;
@@ -137,11 +137,11 @@
 								padding: 35px 25px;
 								flex-direction: row;
 								justify-content: space-between;
-								border-bottom: 1px solid #eee;
+								border-bottom: 1px solid $florea-hairline-soft;
 								.content {
 									gap: 12px;
 									.content-data {
-										color: #000;
+										color: $florea-ink;
 										font-family: $font;
 										font-size: 18px;
 										font-style: normal;
@@ -160,7 +160,7 @@
 											cursor: pointer;
 										}
 										.member-nick {
-											color: #000;
+											color: $florea-ink;
 											font-family: $font;
 											font-size: 13px;
 											font-style: normal;
@@ -172,10 +172,10 @@
 										.divider {
 											width: 1px;
 											height: 16px;
-											background: #eee;
+											background: $florea-hairline-soft;
 										}
 										.time-added {
-											color: #bdbdbd;
+											color: #cdb9c2;
 											font-family: $font;
 											font-size: 12px;
 											font-style: normal;
@@ -202,7 +202,7 @@
 										}
 										.text {
 											padding-top: 2 px;
-											color: #000;
+											color: $florea-ink;
 											font-family: $font;
 											font-size: 11px;
 											font-style: normal;
@@ -214,7 +214,7 @@
 									.divider {
 										width: 1px;
 										height: 21px;
-										background: #eeeeee;
+										background: $florea-hairline-soft;
 									}
 								}
 							}
@@ -237,8 +237,8 @@
 										height: 45px;
 										gap: 5px;
 										border-radius: 2px;
-										border: 1px solid #eee;
-										background: #eb6753;
+										border: 1px solid $florea-hairline-soft;
+										background: $florea-rose;
 										p {
 											color: #fff;
 											font-family: $font;
@@ -259,7 +259,7 @@
 							gap: 11px;
 							.title-text {
 								align-self: flex-start;
-								color: #000;
+								color: $florea-ink;
 								text-align: center;
 								font-family: $font;
 								font-size: 17px;
@@ -274,9 +274,9 @@
 									height: 61px;
 									outline: none;
 									padding: 22px 17px;
-									border: 1px solid #eee;
+									border: 1px solid $florea-hairline-soft;
 									::placeholder {
-										color: #c0c0c0;
+										color: $florea-hairline;
 										font-family: $font;
 										font-size: 14px;
 										font-style: normal;
@@ -292,10 +292,10 @@
 									justify-content: space-between;
 									align-items: center;
 									padding-left: 17px;
-									border: 1px solid #eee;
+									border: 1px solid $florea-hairline-soft;
 									border-top: none;
 									p {
-										color: #000;
+										color: $florea-ink;
 										font-family: $font;
 										font-size: 14px;
 										font-style: normal;
@@ -307,7 +307,7 @@
 										width: 100.077px;
 										height: 100%;
 										border-radius: 0;
-										background: #eb6753;
+										background: $florea-rose;
 										color: #fff;
 										font-family: $font;
 										font-size: 14px;
@@ -322,7 +322,7 @@
 						.comments {
 							width: 100%;
 							height: auto;
-							border: 1px solid #efefef;
+							border: 1px solid $florea-hairline-soft;
 							border-top: none;
 							.comments-title {
 								width: 112.087px;
@@ -330,8 +330,8 @@
 								align-items: center;
 								justify-content: center;
 								padding: 16px 15px;
-								border-bottom: 2px solid #eb6753;
-								color: #eb6753;
+								border-bottom: 2px solid $florea-rose;
+								color: $florea-rose;
 								font-family: $font;
 								font-size: 14px;
 								font-style: normal;
@@ -353,7 +353,7 @@
 								height: auto;
 								padding: 20px 24px;
 								gap: 17px;
-								border: 1px solid #efefef;
+								border: 1px solid $florea-hairline-soft;
 								border-top: none;
 								.member-info {
 									width: 100%;
@@ -375,7 +375,7 @@
 										}
 										.name-date-column {
 											.name {
-												color: #000;
+												color: $florea-ink;
 												font-family: $font;
 												font-size: 16px;
 												font-style: normal;
@@ -384,7 +384,7 @@
 												cursor: pointer;
 											}
 											.date {
-												color: #757575;
+												color: $florea-muted;
 												font-family: $font;
 												font-size: 13px;
 												font-style: normal;
@@ -403,7 +403,7 @@
 									width: 100%;
 									height: auto;
 									p {
-										color: #000;
+										color: $florea-ink;
 										font-family: $font;
 										font-size: 16px;
 										font-style: normal;
@@ -423,10 +423,10 @@
 				gap: 75px;
 				padding: 30px 9px 28px 9px;
 				border-radius: 10px;
-				border: 1px solid #c4c4c4;
+				border: 1px solid $florea-hairline;
 				.similar-articles-title {
 					padding-left: 56px;
-					color: #000;
+					color: $florea-ink;
 					font-family: $font;
 					font-size: 30px;
 					font-style: normal;

@@ -33,9 +33,9 @@ const categoryHref = (type: ProductType) => ({
 
 const CategoryTiles = () => {
 	return (
-		<section className={'home-section home-categories'}>
+		<section className={'home-section home-categories tinted'}>
 			<div className={'home-shell'}>
-				<SectionHeader title={'Shop by category'} subtitle={'Six kinds of gifts, each with its own page of products.'}>
+				<SectionHeader title={'Shop by category'} subtitle={'Bouquets, plants, gift boxes and more.'}>
 					<Link className={'text-link'} href={'/product'}>
 						All products
 					</Link>

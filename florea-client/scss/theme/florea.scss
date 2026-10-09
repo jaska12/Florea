@@ -1,0 +1,296 @@
+/** FLOREA THEME **/
+// The shared look of every page: page background, navbar, page header, footer and common controls.
+// It loads after the page stylesheets, so it only holds what should be the same everywhere.
+
+@import '/scss/variables.scss';
+
+body {
+	background: $florea-ivory;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+#pc-wrap,
+#mobile-wrap {
+	color: $florea-ink;
+	font-family: $font;
+}
+
+#pc-wrap {
+	background: $florea-ivory;
+
+	/** navbar **/
+	#top .navbar .navbar-main {
+		border-top: none;
+		transition:
+			background-color 320ms $logo-ease,
+			box-shadow 320ms $logo-ease;
+		// the state the navbar takes once the page is scrolled, and on pages without a photo behind it
+		&.transparent {
+			background-color: rgba(58, 16, 36, 0.8);
+			backdrop-filter: blur(16px) saturate(150%);
+			-webkit-backdrop-filter: blur(16px) saturate(150%);
+			box-shadow: 0 1px 0 rgba(255, 255, 255, 0.08);
+		}
+		.container {
+			.router-box div {
+				color: rgba(255, 255, 255, 0.92);
+				font-size: 15px;
+				font-weight: 500;
+				letter-spacing: 0.2px;
+				transition: color 240ms $logo-ease;
+				&:hover {
+					color: $florea-blush;
+				}
+			}
+			.user-box .join-box {
+				border-color: rgba(255, 255, 255, 0.56);
+				background: rgba(255, 255, 255, 0.08);
+				transition:
+					background-color 240ms $logo-ease,
+					border-color 240ms $logo-ease;
+				span,
+				svg {
+					font-weight: 500;
+					transition: color 240ms $logo-ease;
+				}
+				&:hover {
+					background: #ffffff;
+					border-color: #ffffff;
+					span,
+					svg {
+						color: $florea-wine;
+					}
+				}
+			}
+			.user-box .login-user img {
+				border: 2px solid rgba(255, 255, 255, 0.7);
+				box-sizing: border-box;
+			}
+		}
+	}
+
+	/** page header of the inner pages **/
+	.header-basic {
+		position: relative;
+		height: 400px;
+		background-color: #1a0d14;
+		background-position: right center !important;
+		isolation: isolate;
+		// keeps the title readable over the photo
+		&::before {
+			content: '';
+			position: absolute;
+			inset: 0;
+			z-index: -1;
+			background: linear-gradient(90deg, rgba(20, 8, 14, 0.95) 0%, rgba(58, 16, 36, 0.84) 44%, rgba(58, 16, 36, 0.36) 100%);
+		}
+		&.auth {
+			height: 320px;
+		}
+		.container {
+			margin-top: 0;
+			padding-bottom: 60px;
+			height: 100%;
+			flex-direction: column;
+			justify-content: flex-end;
+			box-sizing: border-box;
+			strong {
+				font-family: $font-display;
+				font-size: 56px;
+				font-weight: 500;
+				line-height: 1.08;
+				letter-spacing: -0.01em;
+				text-transform: none;
+			}
+			span {
+				margin-top: 14px;
+				color: rgba(255, 255, 255, 0.8);
+				font-size: 17px;
+				font-weight: 400;
+				line-height: 1.6;
+			}
+		}
+	}
+
+	/** footer **/
+	#footer {
+		padding-top: 76px;
+		background: #24101a;
+		.footer-container {
+			.main {
+				.left .footer-box {
+					span {
+						text-transform: none;
+					}
+					p {
+						font-weight: 500;
+						text-transform: none;
+					}
+					.media-box {
+						color: #cdb9c2;
+						svg {
+							font-size: 28px;
+							transition: color 240ms $logo-ease;
+							&:hover {
+								color: #ffffff;
+							}
+						}
+					}
+				}
+				.right {
+					.top {
+						strong {
+							font-family: $font-display;
+							font-size: 24px;
+							font-weight: 500;
+							line-height: 1.25;
+							text-transform: none;
+						}
+						div {
+							border-radius: 18px;
+							border: 1px solid rgba(255, 255, 255, 0.12);
+							background: rgba(255, 255, 255, 0.06);
+							span {
+								color: $florea-blush;
+								font-weight: 500;
+							}
+						}
+					}
+					.bottom div {
+						strong {
+							font-weight: 500;
+							text-transform: none;
+						}
+						span {
+							margin-top: 20px;
+						}
+					}
+				}
+			}
+			.second {
+				border-top-color: rgba(255, 255, 255, 0.1);
+			}
+		}
+	}
+
+	/** headings inside the pages **/
+	#main .main-title,
+	#main .title-main {
+		font-family: $font-display;
+		font-weight: 500;
+		letter-spacing: -0.005em;
+		text-transform: none;
+	}
+
+	/** florist card (florist list, favourites) **/
+	.agent-general-card {
+		padding: 14px 14px 18px;
+		border-radius: $florea-radius;
+		border: 1px solid $florea-line;
+		background: #ffffff;
+		box-shadow: $florea-shadow;
+		transition:
+			transform 360ms $logo-ease,
+			box-shadow 360ms $logo-ease,
+			border-color 360ms $logo-ease;
+		&:hover {
+			transform: translateY(-4px);
+			border-color: rgba($florea-rose, 0.22);
+			box-shadow: $florea-shadow-lift;
+		}
+		.agent-img {
+			position: relative;
+			border-radius: 14px;
+			background-color: $florea-mist;
+			div {
+				padding: 4px 12px;
+				border-radius: 999px;
+				background: rgba(255, 255, 255, 0.94);
+				color: $florea-wine;
+				font-weight: 600;
+				line-height: 18px;
+			}
+		}
+		.agent-desc {
+			margin-top: 16px;
+			.agent-info {
+				strong {
+					font-size: 16px;
+					transition: color 240ms $logo-ease;
+					&:hover {
+						color: $florea-rose;
+					}
+				}
+				span {
+					color: $florea-muted;
+					font-size: 13px;
+					line-height: 20px;
+				}
+			}
+		}
+	}
+
+	/** my page: the member type under the name **/
+	#main .view-list {
+		color: $florea-rose;
+		font-weight: 600;
+		letter-spacing: 0.3px;
+	}
+
+	/** product detail: summary tags and photo frames **/
+	#main .bottom-box .option {
+		padding: 4px 14px;
+		border-radius: 999px;
+		border: 1px solid rgba($florea-rose, 0.12);
+		background: rgba($florea-petal, 0.45);
+		.MuiTypography-root {
+			color: $florea-wine;
+			font-size: 13px;
+			font-weight: 500;
+			line-height: 20px;
+		}
+	}
+	// a soft frame, so a product whose photo is missing does not leave a blank hole
+	#main .main-image,
+	#main .sub-images .sub-img-box {
+		overflow: hidden;
+		border-radius: $florea-radius;
+		background: linear-gradient(135deg, #fcf1f5 0%, $florea-petal 100%);
+	}
+
+	/** common controls **/
+	.MuiPagination-root .MuiPaginationItem-root {
+		font-family: $font;
+		&.Mui-selected {
+			background-color: $florea-rose;
+			color: #ffffff;
+		}
+	}
+	.MuiCheckbox-root.Mui-checked,
+	.MuiRadio-root.Mui-checked {
+		color: $florea-rose;
+	}
+	.MuiButton-root {
+		font-family: $font;
+		text-transform: none;
+	}
+	.MuiTypography-root,
+	.MuiInputBase-root,
+	.MuiMenuItem-root,
+	.MuiTab-root {
+		font-family: $font;
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		#top .navbar .navbar-main,
+		#top .navbar .navbar-main * {
+			transition: none;
+		}
+	}
+}
+
+.MuiMenuItem-root,
+.MuiPopover-paper {
+	font-family: $font;
+}

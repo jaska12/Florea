@@ -15,7 +15,7 @@
     flex-direction: row;
     justify-content: center;
     span {
-      color: #181a20;
+      color: $florea-ink;
       font-family: $font;
       font-size: 34px;
       font-style: normal;
@@ -37,7 +37,7 @@
     height: auto;
     display: flex;
     flex-direction: row;
-    background: #181a20;
+    background: $florea-ink;
     .footer-container {
       padding: 0 10px;
       margin: 0 auto;
@@ -62,7 +62,7 @@
               cursor: pointer;
             }
             span {
-              color: #bebdbd;
+              color: #cdb9c2;
               font-family: $font;
               font-size: 14px;
               font-style: normal;
@@ -112,7 +112,7 @@
               }
               span {
                 margin-top: 25px;
-                color: #bebdbd;
+                color: #cdb9c2;
                 font-family: $font;
                 font-size: 14px;
                 font-style: normal;
@@ -126,13 +126,13 @@
       .second {
         margin-top: 60px;
         height: 45px;
-        border-top: 1px solid #212329;
+        border-top: 1px solid $florea-ink;
         display: flex;
         flex-direction: row;
         justify-content: space-between;
         align-items: flex-end;
         span {
-          color: #bebdbd;
+          color: #cdb9c2;
           font-family: $font;
           font-size: 14px;
           font-style: normal;

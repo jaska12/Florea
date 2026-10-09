@@ -1,6 +1,6 @@
 #pc-wrap {
 	#my-page {
-		background: #f6f6f6;
+		background: $florea-surface;
 		.container {
 			.my-page {
 				position: relative;
@@ -15,7 +15,7 @@
 					flex-direction: row;
 					margin: 100px 0 200px 0;
 					border-radius: 12px;
-					border: 1px solid #c4c4c4;
+					border: 1px solid $florea-hairline;
 					background: #fff;
 					box-shadow: 0px 1px 4px 0px rgba(24, 26, 32, 0.07);
 					.left-config {
@@ -48,7 +48,7 @@
 								display: flex;
 								flex-direction: column;
 								.user-name {
-									color: #181a20;
+									color: $florea-ink;
 									font-family: $font;
 									font-size: 15px;
 									font-style: normal;
@@ -99,7 +99,7 @@
 									}
 									.focus {
 										height: 50px;
-										background: #000000;
+										background: $florea-ink;
 										border-radius: 10px;
 										p {
 											font-size: 14px;
@@ -126,7 +126,7 @@
 								}
 								.sub-title {
 									margin-left: 12px;
-									color: #181a20;
+									color: $florea-ink;
 									font-family: $font;
 									font-size: 14px;
 									font-style: normal;
@@ -177,7 +177,7 @@
 										align-items: center;
 										border-radius: 6px;
 										padding: 6px 20px;
-										background: #eb6753;
+										background: $florea-rose;
 										color: #fff;
 										text-align: center;
 										text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
@@ -200,7 +200,7 @@
 										border: 1px solid rgba(255, 255, 255, 0.5);
 										background: #fff;
 										p {
-											color: #181a20;
+											color: $florea-ink;
 											font-family: $font;
 											font-size: 15px;
 											font-style: normal;
@@ -223,7 +223,7 @@
 											height: 23px;
 											overflow: hidden;
 											p {
-												color: #181a20;
+												color: $florea-ink;
 												font-family: $font;
 												font-size: 15px;
 												font-style: normal;
@@ -236,7 +236,7 @@
 											width: 100%;
 											overflow: hidden;
 											p {
-												color: #717171;
+												color: $florea-muted;
 												font-family: $font;
 												font-size: 13px;
 												font-style: normal;
@@ -256,7 +256,7 @@
 											gap: 5px;
 											align-items: center;
 											p {
-												color: #181a20;
+												color: $florea-ink;
 												font-family: $font;
 												font-size: 13px;
 												font-style: normal;
@@ -268,7 +268,7 @@
 									.divider {
 										width: 100%;
 										height: 1px;
-										background: #ddd;
+										background: $florea-hairline;
 										margin-bottom: 17px;
 									}
 									.type-buttons {
@@ -281,7 +281,7 @@
 											align-items: center;
 											gap: 7px;
 											p {
-												color: #181a20;
+												color: $florea-ink;
 												font-family: $font;
 												font-style: normal;
 												line-height: normal;
@@ -316,7 +316,7 @@
 							}
 							.total-result {
 								p {
-									color: #181a20;
+									color: $florea-ink;
 									text-align: center;
 									font-family: $font;
 									font-size: 24px;

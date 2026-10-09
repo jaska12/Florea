@@ -5,7 +5,7 @@
 a {
 	white-space: nowrap;
 	text-decoration: none;
-	color: #212121;
+	color: $florea-ink;
 }
 button {
 	text-transform: none;
@@ -13,7 +13,7 @@ button {
 	padding: 0;
 }
 button.outline {
-	border: 1px solid #eee;
+	border: 1px solid $florea-hairline-soft;
 }
 button.contain {
 	color: #fff;
@@ -29,11 +29,11 @@ body {
 	}
 	&::-webkit-scrollbar-thumb {
 		height: 30%;
-		background: #bdbdbd;
+		background: #cdb9c2;
 		border-radius: 10px;
 	}
 	&::-webkit-scrollbar-track {
-		background: #eee;
+		background: $florea-hairline-soft;
 	}
 
 	.MuiPopover-paper {
@@ -43,7 +43,7 @@ body {
 hr {
 	border-width: 0;
 	border-bottom-width: thin;
-	border-color: #eee;
+	border-color: $florea-hairline-soft;
 	margin: auto;
 }
 

@@ -36,7 +36,7 @@
 						.community-name {
 							.name {
 								margin-top: 15px;
-								color: #181a20;
+								color: $florea-ink;
 								font-family: $font;
 								font-size: 15px;
 								font-style: normal;
@@ -52,9 +52,9 @@
 						justify-content: center;
 						align-items: center;
 						border-radius: 6px;
-						border: 1px solid #181a20;
+						border: 1px solid $florea-ink;
 						margin-bottom: 10px;
-						color: #181a20;
+						color: $florea-ink;
 						font-family: $font;
 						font-size: 14px;
 						font-style: normal;
@@ -68,7 +68,7 @@
 						padding: 0;
 						justify-content: center;
 						align-items: center;
-						background-color: #000000;
+						background-color: $florea-ink;
 						color: #ffffff;
 						border-radius: 6px;
 						margin-bottom: 10px;
@@ -97,7 +97,7 @@
 								width: 60%;
 								height: auto;
 								.title {
-									color: #000;
+									color: $florea-ink;
 									font-family: $font;
 									font-size: 24px;
 									font-style: normal;
@@ -106,7 +106,7 @@
 									letter-spacing: 0.24px;
 								}
 								.sub-title {
-									color: #757575;
+									color: $florea-muted;
 									font-family: $font;
 									font-size: 13px;
 									font-style: normal;
@@ -119,7 +119,7 @@
 								width: 91px;
 								height: 32px;
 								border-radius: 4px;
-								background: #eb6753;
+								background: $florea-rose;
 								color: #fff;
 								font-family: $font;
 								font-size: 13px;
@@ -145,10 +145,10 @@
 				gap: 75px;
 				padding: 30px 9px 28px 9px;
 				border-radius: 10px;
-				border: 1px solid #c4c4c4;
+				border: 1px solid $florea-hairline;
 				.similar-articles-title {
 					padding-left: 56px;
-					color: #000;
+					color: $florea-ink;
 					font-family: $font;
 					font-size: 30px;
 					font-style: normal;
@@ -175,7 +175,7 @@
 				}
 				.total-result {
 					p {
-						color: #181a20;
+						color: $florea-ink;
 						text-align: center;
 						font-family: $font;
 						font-size: 14px;

@@ -65,7 +65,7 @@ const TopProducts = (props: TopProductsProps) => {
 	return (
 		<section className={'home-section home-top'}>
 			<div className={'home-shell'}>
-				<SectionHeader title={'Top products'} subtitle={'Ranked by likes and views together.'}>
+				<SectionHeader title={'Top rated'} subtitle={'Ranked by likes and views together.'}>
 					<button type={'button'} className={'nav-btn swiper-top-prev'} aria-label={'Previous top products'}>
 						<WestIcon />
 					</button>

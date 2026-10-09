@@ -113,7 +113,7 @@ const TuiEditor = () => {
 		<Stack>
 			<Stack direction="row" style={{ margin: '40px' }} justifyContent="space-evenly">
 				<Box component={'div'} className={'form_row'} style={{ width: '300px' }}>
-					<Typography style={{ color: '#7f838d', margin: '10px' }} variant="h3">
+					<Typography style={{ color: '#7c6470', margin: '10px' }} variant="h3">
 						Category
 					</Typography>
 					<FormControl sx={{ width: '100%', background: 'white' }}>
@@ -133,7 +133,7 @@ const TuiEditor = () => {
 					</FormControl>
 				</Box>
 				<Box component={'div'} style={{ width: '300px', flexDirection: 'column' }}>
-					<Typography style={{ color: '#7f838d', margin: '10px' }} variant="h3">
+					<Typography style={{ color: '#7c6470', margin: '10px' }} variant="h3">
 						Title
 					</Typography>
 					<TextField

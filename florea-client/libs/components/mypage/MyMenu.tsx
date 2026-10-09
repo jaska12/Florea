@@ -35,7 +35,11 @@ const MyMenu = () => {
 				<Stack className={'profile'}>
 					<Box component={'div'} className={'profile-img'}>
 						<img
-							src={user?.memberImage ? `${REACT_APP_API_URL}/${user?.memberImage}` : '/img/profile/defaultUser.svg'}
+							src={
+								user?.memberImage && !user.memberImage.startsWith('/img/')
+									? `${REACT_APP_API_URL}/${user?.memberImage}`
+									: '/img/profile/defaultUser.svg'
+							}
 							alt={'member-photo'}
 						/>
 					</Box>
@@ -57,7 +61,7 @@ const MyMenu = () => {
 				<Stack className={'sections'}>
 					<Stack className={'section'} style={{ height: user.memberType === 'AGENT' ? '228px' : '153px' }}>
 						<Typography className="title" variant={'h5'}>
-							MANAGE LISTINGS
+							MANAGE PRODUCTS
 						</Typography>
 						<List className={'sub-section'}>
 							{user.memberType === 'AGENT' && (

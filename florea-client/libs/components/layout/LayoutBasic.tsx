@@ -25,54 +25,45 @@ const withLayoutBasic = (Component: any) => {
 		const memoizedValues = useMemo(() => {
 			let title = '',
 				desc = '',
-				bgImage = '';
+				bgImage = '/img/home/hero.jpg';
 
 			switch (router.pathname) {
 				case '/product':
-					title = 'Product Search';
-					desc = 'We are glad to see you again!';
-					bgImage = '/img/banner/products.png';
+					title = 'Flowers and gifts';
+					desc = 'Filter by category, occasion, size and delivery.';
 					break;
 				case '/agent':
-					title = 'Agents';
-					desc = 'Home / Products';
-					bgImage = '/img/banner/agents.webp';
+					title = 'Florists';
+					desc = 'The florists and gift shops on Florea.';
 					break;
 				case '/agent/detail':
-					title = 'Agent Page';
-					desc = 'Home / Products';
-					bgImage = '/img/banner/header2.svg';
+					title = 'Florist';
+					desc = 'Their products, reviews and contact details.';
 					break;
 				case '/mypage':
-					title = 'my page';
-					desc = 'Home / Products';
-					bgImage = '/img/banner/header1.svg';
+					title = 'My page';
+					desc = 'Your products, favourites and profile.';
 					break;
 				case '/community':
 					title = 'Community';
-					desc = 'Home / Products';
-					bgImage = '/img/banner/header2.svg';
+					desc = 'News and conversations from Florea members.';
 					break;
 				case '/community/detail':
-					title = 'Community Detail';
-					desc = 'Home / Products';
-					bgImage = '/img/banner/header2.svg';
+					title = 'Community';
+					desc = 'News and conversations from Florea members.';
 					break;
 				case '/cs':
-					title = 'CS';
-					desc = 'We are glad to see you again!';
-					bgImage = '/img/banner/header2.svg';
+					title = 'Customer care';
+					desc = 'Notices and answers to common questions.';
 					break;
 				case '/account/join':
-					title = 'Login/Signup';
-					desc = 'Authentication Process';
-					bgImage = '/img/banner/header2.svg';
+					title = 'Welcome to Florea';
+					desc = 'Log in or create an account.';
 					setAuthHeader(true);
 					break;
 				case '/member':
-					title = 'Member Page';
-					desc = 'Home / Products';
-					bgImage = '/img/banner/header1.svg';
+					title = 'Member';
+					desc = 'Their products, followers and articles.';
 					break;
 				default:
 					break;
@@ -128,7 +119,6 @@ const withLayoutBasic = (Component: any) => {
 							style={{
 								backgroundImage: `url(${memoizedValues.bgImage})`,
 								backgroundSize: 'cover',
-								boxShadow: 'inset 10px 40px 150px 40px rgb(24 22 36)',
 							}}
 						>
 							<Stack className={'container'}>

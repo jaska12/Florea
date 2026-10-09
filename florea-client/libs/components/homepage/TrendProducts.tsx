@@ -66,7 +66,7 @@ const TrendProducts = (props: TrendProductsProps) => {
 	return (
 		<section className={'home-section home-trend'}>
 			<div className={'home-shell'}>
-				<SectionHeader title={'Trending products'} subtitle={'The products people have liked the most.'}>
+				<SectionHeader title={'Trending bouquets and gifts'} subtitle={'What people have liked the most this season.'}>
 					<button type={'button'} className={'nav-btn swiper-trend-prev'} aria-label={'Previous trending products'}>
 						<WestIcon />
 					</button>
@@ -75,7 +75,7 @@ const TrendProducts = (props: TrendProductsProps) => {
 					</button>
 				</SectionHeader>
 				{trendProducts.length === 0 ? (
-					<div className={'empty-state'}>No trending products yet.</div>
+					<div className={'empty-state'}>Nothing is trending yet.</div>
 				) : (
 					<Swiper
 						className={'product-swiper'}
