@@ -34,6 +34,7 @@ In the order they were done. State as of 2026-10-05, `main` at `5f5405e`.
 - [x] 28. Site-wide Florea design system
 - [x] 29. Fix the "Invalid message type!" runtime error
 - [x] 30. Fix the blank page caused by an invalid stored token
+- [x] 31. Notifications redesign (alerts, toasts, navbar bell)
 
 ## 1. Recommend migration steps
 
@@ -431,3 +432,36 @@ In the order they were done. State as of 2026-10-05, `main` at `5f5405e`.
 - Cause: the browser had a value under `accessToken` in localStorage that is not a JWT (for example left by another project that also runs on `localhost:3000`). `updateUserInfo` decoded it without a guard; the decode threw inside the navbar and the layout, and React removed the whole page.
 - File: `florea-client/libs/auth/index.ts`. `getJwtToken` now returns the token only if it can be decoded and otherwise removes it; `updateUserInfo` returns `false` instead of throwing.
 - Results: `yarn tsc --noEmit` no errors. Reproduced the blank page with a broken token before the fix. After the fix the homepage, product list and My page redirect render with: broken text, the word "undefined", the word "null", half a token, and a JWT from another app; no runtime errors and no error popup. Logging in through the form still works.
+
+## 31. Notifications redesign (alerts, toasts, navbar bell)
+
+- Brief from the project owner: redesign every notification in the frontend (bell, badge, dropdown, notifications page, toasts and alerts, empty and loading states). UI only; no change to GraphQL, data, routing or backend.
+- What existed before the work:
+  - Alerts and toasts: 72 calls in 26 files, all through `libs/sweetAlert.ts`, with SweetAlert's default look.
+  - The bell: a plain icon in the desktop navbar. No click, badge, dropdown or query.
+  - No notifications page. The backend has a `Notification` schema and enums but no module, query or mutation.
+- Alerts and toasts:
+  - `libs/sweetAlert.ts`: every helper keeps its name, parameters and duration, so no call site changed. One icon style for success, error, warning, info and question; Florea classes on each part; the red confirm colour and the `bounceIn` entrance removed; a close button on the two error alerts that have no timer and no button.
+  - `scss/theme/notifications.scss` (new, loaded from `pages/_app.tsx`): the dialog, the toast (placed below the fixed navbar, full width on phones, rose progress line), buttons, focus rings, motion, and a fade-only version under `prefers-reduced-motion`.
+  - `animate.css` is no longer imported (the package is still in `package.json`).
+- Bell:
+  - `libs/components/common/NotificationBell.tsx` (new): a real button with an accessible label, a badge with the unread count, and a dropdown with a header, the list, a loading state and an empty state. Icons for `LIKE`, `COMMENT`, `FOLLOW`, `ORDER` and `SYSTEM`; an unknown type gets the system icon.
+  - `libs/types/notification/notification.ts` (new): the shape of the backend schema.
+  - `Top.tsx` renders the bell for a logged-in member on desktop and, new, in the phone navbar. It passes no data, so the dropdown shows "No notifications yet".
+  - Labels added to the `en`, `kr` and `ru` locale files.
+- `libs/components/product/Filter.tsx`: two raw browser `alert('error')` calls now use the styled error alert with the existing "Something went wrong!" message.
+- Results:
+
+| Check | Result |
+|---|---|
+| `yarn tsc --noEmit` | no errors |
+| Browser (headless Edge, backend running), desktop 1600px | error alert (like while logged out), success toast (like while logged in), confirm dialog (Logout on My page; Cancel keeps the session), bell and empty dropdown (opens, closes with Escape, no sideways scroll); timed messages close by themselves |
+| Same, phone 390px | error alert, toast and bell dropdown fit the screen |
+| Reduced motion | the toast uses the fade and hides the progress line; it still closes on its timer |
+| List, unread, badge and loading states | checked with sample rows passed to the bell for the test only; the rows were removed afterwards |
+| Runtime errors from the site | none |
+
+- Not done from the brief:
+  - A notifications page: there is no data to show and routing was out of scope.
+  - Real notifications in the dropdown, mark as read, and links: these need a notification module in the backend (see BACKEND_MIGRATION.md).
+- Not verified: `yarn build` (the dev server was running on the same `.next` folder), warning and info alerts (no code calls them yet), the admin alerts, Safari.

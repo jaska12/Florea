@@ -23,5 +23,11 @@
   "my page": "마이 페이지",
   "Community Detail": "커뮤니티 디테일",
   "Login/Signup": "로그인/가입",
-  "Member Page": "멤버 페이지"
+  "Member Page": "멤버 페이지",
+  "Notifications": "알림",
+  "new": "개의 새 알림",
+  "Mark all as read": "모두 읽음으로 표시",
+  "No notifications yet": "아직 알림이 없습니다",
+  "Updates about your account will appear here.": "계정 관련 소식이 여기에 표시됩니다.",
+  "Unread": "읽지 않음"
 }

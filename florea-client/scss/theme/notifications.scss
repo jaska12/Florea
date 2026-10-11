@@ -1,0 +1,660 @@
+/** FLOREA NOTIFICATIONS **/
+// Alerts and toasts (SweetAlert, set up in libs/sweetAlert.ts) and the navbar bell with its dropdown.
+// All of these are drawn outside #pc-wrap / #mobile-wrap, so the rules here are not scoped to them.
+
+@import '/scss/variables.scss';
+
+$notify-ease: cubic-bezier(0.22, 1, 0.36, 1);
+$notify-amber-ink: #8a5a00; // amber dark enough to read on a pale amber tile
+
+@mixin notify-focus-ring {
+	outline: none;
+	box-shadow: 0 0 0 3px rgba($florea-rose, 0.28);
+}
+
+/** icon tile: the same shape for every message type **/
+.florea-alert-icon.swal2-icon {
+	margin: 0 auto 18px;
+	width: 60px;
+	height: 60px;
+	border: none;
+	border-radius: 50%;
+	background: $florea-mist;
+	color: $florea-rose;
+	.swal2-icon-content {
+		font-size: 0;
+	}
+	svg {
+		width: 30px;
+		height: 30px;
+	}
+	&.swal2-success {
+		background: $florea-mist;
+		color: $florea-rose;
+	}
+	&.swal2-error {
+		background: rgba($florea-wine, 0.1);
+		color: $florea-wine;
+	}
+	&.swal2-warning {
+		background: rgba($florea-gold, 0.2);
+		color: $notify-amber-ink;
+	}
+	&.swal2-info {
+		background: rgba($florea-muted, 0.12);
+		color: $florea-ink;
+	}
+	&.swal2-question {
+		background: $florea-mist;
+		color: $florea-rose;
+	}
+}
+
+/** alert: the centred dialog **/
+.swal2-container.florea-alert-container {
+	padding: 16px;
+	&.swal2-backdrop-show {
+		background: rgba(43, 20, 32, 0.44);
+		backdrop-filter: blur(4px);
+		-webkit-backdrop-filter: blur(4px);
+	}
+}
+
+.swal2-popup.florea-alert {
+	padding: 34px 32px 30px;
+	width: 420px;
+	max-width: 100%;
+	border-radius: 24px;
+	border: 1px solid $florea-hairline;
+	background: #ffffff;
+	box-shadow: 0 30px 70px rgba(74, 22, 48, 0.24);
+	color: $florea-ink;
+	font-family: $font;
+	.florea-alert-title {
+		padding: 0;
+		color: $florea-ink;
+		font-family: $font-display;
+		font-size: 22px;
+		font-weight: 500;
+		line-height: 30px;
+		letter-spacing: -0.1px;
+	}
+	.florea-alert-text {
+		margin: 0;
+		padding: 0;
+		color: $florea-ink;
+		font-family: $font;
+		font-size: 16px;
+		font-weight: 400;
+		line-height: 25px;
+	}
+	// a title followed by a text: the text becomes the quieter line
+	.florea-alert-title:not([style*='display: none']) + .florea-alert-text {
+		margin-top: 8px;
+		color: $florea-muted;
+		font-size: 15px;
+		line-height: 23px;
+	}
+	.florea-alert-actions {
+		margin: 26px 0 0;
+		padding: 0;
+		gap: 10px;
+		flex-wrap: wrap;
+	}
+	.florea-alert-btn {
+		margin: 0;
+		padding: 0 28px;
+		min-width: 120px;
+		height: 46px;
+		border-radius: 999px;
+		border: 1px solid transparent;
+		font-family: $font;
+		font-size: 15px;
+		font-weight: 600;
+		line-height: 1;
+		letter-spacing: 0.2px;
+		cursor: pointer;
+		transition:
+			background-color 240ms $notify-ease,
+			border-color 240ms $notify-ease,
+			color 240ms $notify-ease,
+			box-shadow 240ms $notify-ease;
+		&.confirm {
+			background: $florea-rose;
+			color: #ffffff;
+			box-shadow: 0 8px 20px rgba($florea-rose, 0.24);
+			&:hover {
+				background: $florea-wine;
+			}
+		}
+		&.cancel {
+			background: #ffffff;
+			border-color: $florea-hairline;
+			color: $florea-ink;
+			&:hover {
+				background: $florea-mist;
+				border-color: $florea-petal;
+				color: $florea-wine;
+			}
+		}
+		&:focus-visible {
+			@include notify-focus-ring;
+		}
+	}
+	.florea-alert-close {
+		position: absolute;
+		top: 14px;
+		right: 14px;
+		width: 34px;
+		height: 34px;
+		border-radius: 50%;
+		color: $florea-muted;
+		font-family: $font;
+		font-size: 26px;
+		font-weight: 300;
+		transition:
+			background-color 240ms $notify-ease,
+			color 240ms $notify-ease;
+		&:hover {
+			background: $florea-mist;
+			color: $florea-wine;
+			transform: none;
+		}
+		&:focus-visible {
+			@include notify-focus-ring;
+		}
+	}
+}
+
+/** toast: the small message in the top corner **/
+body.swal2-toast-shown .swal2-container.florea-toast-container {
+	// clear of the fixed navbar
+	padding: 99px 20px 0;
+	width: 400px;
+	max-width: 100%;
+	box-sizing: border-box;
+}
+
+.swal2-popup.florea-toast {
+	padding: 12px 16px 14px;
+	width: 100%;
+	align-items: center;
+	border-radius: 16px;
+	border: 1px solid $florea-hairline;
+	background: #ffffff;
+	box-shadow: 0 14px 34px rgba(74, 22, 48, 0.16);
+	color: $florea-ink;
+	font-family: $font;
+	.florea-alert-icon.swal2-icon {
+		margin: 0 12px 0 0;
+		width: 34px;
+		min-width: 34px;
+		height: 34px;
+		align-self: center;
+		svg {
+			width: 18px;
+			height: 18px;
+		}
+	}
+	.florea-toast-title {
+		// one line of text sits level with the icon
+		grid-row: 1 / 99;
+		align-self: center;
+		margin: 0;
+		padding: 0;
+		color: $florea-ink;
+		font-family: $font;
+		font-size: 15px;
+		font-weight: 500;
+		line-height: 22px;
+	}
+	.swal2-timer-progress-bar-container {
+		height: 3px;
+		border-radius: 0 0 16px 16px;
+		background: $florea-hairline-soft;
+	}
+	.florea-toast-progress {
+		height: 3px;
+		background: linear-gradient(90deg, $florea-rose 0%, $florea-pink 100%);
+	}
+}
+
+/** motion **/
+.florea-alert-in {
+	animation: florea-alert-in 340ms $notify-ease both;
+}
+.florea-alert-out {
+	animation: florea-alert-out 200ms ease-in both;
+}
+.florea-toast-in {
+	animation: florea-toast-in 340ms $notify-ease both;
+}
+.florea-toast-out {
+	animation: florea-toast-out 200ms ease-in both;
+}
+.florea-alert-icon-in {
+	animation: florea-icon-in 460ms $notify-ease 90ms both;
+}
+
+@keyframes florea-alert-in {
+	from {
+		opacity: 0;
+		transform: translateY(14px) scale(0.97);
+	}
+	to {
+		opacity: 1;
+		transform: none;
+	}
+}
+@keyframes florea-alert-out {
+	from {
+		opacity: 1;
+		transform: none;
+	}
+	to {
+		opacity: 0;
+		transform: translateY(8px) scale(0.98);
+	}
+}
+@keyframes florea-toast-in {
+	from {
+		opacity: 0;
+		transform: translateY(-12px);
+	}
+	to {
+		opacity: 1;
+		transform: none;
+	}
+}
+@keyframes florea-toast-out {
+	from {
+		opacity: 1;
+		transform: none;
+	}
+	to {
+		opacity: 0;
+		transform: translateY(-8px);
+	}
+}
+@keyframes florea-icon-in {
+	from {
+		opacity: 0;
+		transform: scale(0.72);
+	}
+	to {
+		opacity: 1;
+		transform: none;
+	}
+}
+@keyframes florea-fade-in {
+	from {
+		opacity: 0;
+	}
+	to {
+		opacity: 1;
+	}
+}
+@keyframes florea-fade-out {
+	from {
+		opacity: 1;
+	}
+	to {
+		opacity: 0;
+	}
+}
+@keyframes florea-notify-item-in {
+	from {
+		opacity: 0;
+		transform: translateY(6px);
+	}
+	to {
+		opacity: 1;
+		transform: none;
+	}
+}
+@keyframes florea-notify-shimmer {
+	from {
+		background-position: 200% 0;
+	}
+	to {
+		background-position: -200% 0;
+	}
+}
+
+/** navbar bell **/
+.notify-bell.MuiIconButton-root {
+	margin-right: 6px;
+	width: 42px;
+	height: 42px;
+	color: #ffffff;
+	transition:
+		background-color 240ms $notify-ease,
+		color 240ms $notify-ease;
+	svg {
+		width: 24px;
+		height: 24px;
+	}
+	&:hover,
+	&.open {
+		background: rgba(255, 255, 255, 0.16);
+	}
+	&:focus-visible {
+		box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.5);
+	}
+	.notify-badge .MuiBadge-badge {
+		// the one place the bell uses amber: it has to be seen on the wine navbar
+		min-width: 18px;
+		height: 18px;
+		padding: 0 5px;
+		border-radius: 999px;
+		background: $florea-gold;
+		color: $florea-ink;
+		font-family: $font;
+		font-size: 11px;
+		font-weight: 700;
+		line-height: 18px;
+		box-shadow: 0 0 0 2px rgba(58, 16, 36, 0.9);
+	}
+	&.light {
+		color: $florea-wine;
+		&:hover,
+		&.open {
+			background: $florea-mist;
+		}
+		&:focus-visible {
+			@include notify-focus-ring;
+		}
+		.notify-badge .MuiBadge-badge {
+			background: $florea-rose;
+			color: #ffffff;
+			box-shadow: 0 0 0 2px #ffffff;
+		}
+	}
+}
+
+/** bell dropdown **/
+.MuiPopover-paper.florea-notify {
+	margin-top: 12px;
+	width: 380px;
+	max-width: calc(100vw - 24px);
+	border-radius: 20px;
+	border: 1px solid $florea-hairline;
+	background: #ffffff;
+	box-shadow: 0 24px 56px rgba(74, 22, 48, 0.2);
+	color: $florea-ink;
+	font-family: $font;
+	overflow: hidden;
+	.notify-head {
+		padding: 18px 20px 14px;
+		flex-direction: row;
+		align-items: center;
+		gap: 10px;
+		border-bottom: 1px solid $florea-hairline-soft;
+		strong {
+			color: $florea-ink;
+			font-family: $font-display;
+			font-size: 19px;
+			font-weight: 500;
+			line-height: 26px;
+		}
+		.notify-count {
+			padding: 2px 10px;
+			border-radius: 999px;
+			background: $florea-mist;
+			color: $florea-rose;
+			font-size: 12px;
+			font-weight: 600;
+			line-height: 18px;
+		}
+		.notify-read-all {
+			margin-left: auto;
+			padding: 4px 6px;
+			border: none;
+			border-radius: 8px;
+			background: none;
+			color: $florea-rose;
+			font-family: $font;
+			font-size: 13px;
+			font-weight: 600;
+			line-height: 18px;
+			cursor: pointer;
+			transition: color 240ms $notify-ease;
+			&:hover {
+				color: $florea-wine;
+			}
+			&:focus-visible {
+				@include notify-focus-ring;
+			}
+		}
+	}
+	.notify-list {
+		margin: 0;
+		padding: 8px;
+		max-height: 420px;
+		gap: 2px;
+		list-style: none;
+		overflow-y: auto;
+		box-sizing: border-box;
+		li {
+			animation: florea-notify-item-in 320ms $notify-ease both;
+		}
+	}
+	.notify-item {
+		position: relative;
+		padding: 12px;
+		width: 100%;
+		display: flex;
+		flex-direction: row;
+		align-items: flex-start;
+		gap: 12px;
+		border: none;
+		border-radius: 14px;
+		background: none;
+		color: $florea-ink;
+		font-family: $font;
+		text-align: left;
+		cursor: pointer;
+		box-sizing: border-box;
+		transition: background-color 240ms $notify-ease;
+		&:hover {
+			background: $florea-surface;
+		}
+		&:focus-visible {
+			@include notify-focus-ring;
+		}
+		&.unread {
+			background: $florea-mist;
+			&:hover {
+				background: #ffe8ef;
+			}
+			.notify-title {
+				font-weight: 600;
+			}
+		}
+		&.read {
+			.notify-title {
+				color: #4a3540;
+				font-weight: 400;
+			}
+			.notify-icon {
+				opacity: 0.72;
+			}
+		}
+	}
+	.notify-icon {
+		flex: 0 0 38px;
+		width: 38px;
+		height: 38px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		border-radius: 12px;
+		background: #ffffff;
+		border: 1px solid $florea-hairline;
+		color: $florea-rose;
+		box-sizing: border-box;
+		svg {
+			width: 19px;
+			height: 19px;
+		}
+		&.comment,
+		&.follow {
+			color: $florea-wine;
+		}
+		&.order {
+			color: $notify-amber-ink;
+		}
+		&.system {
+			color: $florea-muted;
+		}
+	}
+	.notify-body {
+		flex: 1 1 auto;
+		min-width: 0;
+		display: flex;
+		flex-direction: column;
+		gap: 2px;
+	}
+	.notify-title {
+		color: $florea-ink;
+		font-size: 14.5px;
+		line-height: 20px;
+		overflow-wrap: anywhere;
+	}
+	.notify-desc {
+		display: -webkit-box;
+		color: $florea-muted;
+		font-size: 13.5px;
+		line-height: 19px;
+		overflow: hidden;
+		-webkit-line-clamp: 2;
+		-webkit-box-orient: vertical;
+	}
+	.notify-time {
+		margin-top: 2px;
+		color: $florea-muted;
+		font-size: 12px;
+		line-height: 16px;
+	}
+	.notify-dot {
+		flex: 0 0 8px;
+		margin-top: 6px;
+		width: 8px;
+		height: 8px;
+		border-radius: 50%;
+		background: $florea-rose;
+	}
+	// loading: three quiet placeholder rows
+	.notify-item.skeleton {
+		cursor: default;
+		&:hover {
+			background: none;
+		}
+		.notify-icon {
+			border: none;
+		}
+		.notify-icon,
+		.line {
+			background: linear-gradient(90deg, $florea-hairline-soft 25%, $florea-mist 50%, $florea-hairline-soft 75%);
+			background-size: 200% 100%;
+			animation: florea-notify-shimmer 1.6s linear infinite;
+		}
+		.notify-body {
+			padding-top: 4px;
+			gap: 8px;
+		}
+		.line {
+			height: 11px;
+			border-radius: 6px;
+			&.short {
+				width: 46%;
+			}
+		}
+	}
+	.notify-empty {
+		padding: 34px 28px 38px;
+		align-items: center;
+		text-align: center;
+		.notify-empty-icon {
+			margin-bottom: 16px;
+			width: 64px;
+			height: 64px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			border-radius: 50%;
+			background: $florea-mist;
+			color: $florea-rose;
+			svg {
+				width: 30px;
+				height: 30px;
+			}
+		}
+		strong {
+			color: $florea-ink;
+			font-family: $font-display;
+			font-size: 18px;
+			font-weight: 500;
+			line-height: 26px;
+		}
+		p {
+			margin: 6px 0 0;
+			max-width: 260px;
+			color: $florea-muted;
+			font-size: 14px;
+			line-height: 21px;
+		}
+	}
+}
+
+/** phones **/
+@media (max-width: 600px) {
+	body.swal2-toast-shown .swal2-container.florea-toast-container {
+		padding: 12px 12px 0;
+		width: 100%;
+	}
+	.swal2-popup.florea-alert {
+		padding: 30px 22px 24px;
+		border-radius: 22px;
+		.florea-alert-title {
+			font-size: 20px;
+			line-height: 28px;
+		}
+		.florea-alert-actions {
+			flex-direction: column-reverse;
+			align-items: stretch;
+			width: 100%;
+		}
+		.florea-alert-btn {
+			width: 100%;
+		}
+	}
+}
+
+/** reduced motion: a short fade instead of movement **/
+@media (prefers-reduced-motion: reduce) {
+	.florea-alert-in,
+	.florea-toast-in {
+		animation: florea-fade-in 140ms linear both;
+	}
+	.florea-alert-out,
+	.florea-toast-out {
+		animation: florea-fade-out 120ms linear both;
+	}
+	.florea-alert-icon-in,
+	.MuiPopover-paper.florea-notify .notify-list li,
+	.MuiPopover-paper.florea-notify .notify-item.skeleton .notify-icon,
+	.MuiPopover-paper.florea-notify .notify-item.skeleton .line {
+		animation: none;
+	}
+	.swal2-popup.florea-toast .swal2-timer-progress-bar-container {
+		display: none;
+	}
+	.notify-bell.MuiIconButton-root,
+	.swal2-popup.florea-alert .florea-alert-btn,
+	.swal2-popup.florea-alert .florea-alert-close,
+	.MuiPopover-paper.florea-notify .notify-item,
+	.MuiPopover-paper.florea-notify .notify-read-all {
+		transition: none;
+	}
+}

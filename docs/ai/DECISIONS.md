@@ -117,3 +117,9 @@ Important decisions made during the Nestar → Florea migration session, with th
 - **Decision:** the site now says products are delivered, including same-day delivery, as the owner's brief describes Florea. The same-day banner links to the existing same-day and gift-wrap filters.
 - **Reason:** the brief defines Florea as a marketplace with delivery.
 - **Open:** there is no order or checkout flow in the product yet, so the wording is ahead of the features. TODO: build ordering, or soften the wording.
+
+## 20. The bell shows an empty state until the backend has notifications
+
+- **Decision:** the bell opens a dropdown that says "No notifications yet". The list, unread state, badge and loading state are built in `NotificationBell` and wait for data; no sample notifications are shown to users.
+- **Reason:** the backend has only a `Notification` schema, and the notifications brief did not allow backend or GraphQL changes. Showing invented notifications would be false.
+- **Open:** TODO: a notification module in the backend (create on like, comment and follow; list; mark as read), then pass the data to `NotificationBell` from `Top.tsx`.

@@ -23,5 +23,11 @@
 	"my page": "моя страница",
 	"Community Detail": "Детали сообщества",
 	"Login/Signup": "Логин/регистрация",
-	"Member Page": "Страница участника"
+	"Member Page": "Страница участника",
+	"Notifications": "Уведомления",
+	"new": "новых",
+	"Mark all as read": "Отметить все как прочитанные",
+	"No notifications yet": "Уведомлений пока нет",
+	"Updates about your account will appear here.": "Здесь появятся новости о вашем аккаунте.",
+	"Unread": "Не прочитано"
 }

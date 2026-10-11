@@ -71,6 +71,9 @@ Not renamed: the agent pages and components (`pages/agent`, `AgentCard`, `TopAge
 
 ## Known issues
 
+- **Notifications:** the bell dropdown is always empty, because the backend has no notification query yet (DECISIONS.md, 20).
+- **My page on a full reload:** opening `/mypage` directly or pressing F5 there sends a logged-in member to the homepage (seen twice in the test browser). Probable cause, from reading the code: the page checks the member before the navbar has read the stored token. Reaching it through the navbar works. Seen during the notifications check; not changed.
+
 - **After the site-wide design system:**
   - Inner pages are desktop-only; phones still get the "MOBILE" placeholders (homepage excepted).
   - The site talks about delivery, but there is no order or checkout flow.

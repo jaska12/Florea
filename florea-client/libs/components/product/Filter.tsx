@@ -15,6 +15,8 @@ import { useRouter } from 'next/router';
 import CancelRoundedIcon from '@mui/icons-material/CancelRounded';
 import RefreshIcon from '@mui/icons-material/Refresh';
 import { prettyLabel } from '../common/ProductCardView';
+import { sweetMixinErrorAlert } from '../../sweetAlert';
+import { Messages } from '../../config';
 
 interface FilterType {
 	searchFilter: ProductsInquiry;
@@ -110,7 +112,7 @@ const Filter = (props: FilterType) => {
 				}
 
 				if (searchFilter?.search?.typeList?.length == 0) {
-					alert('error');
+					sweetMixinErrorAlert(Messages.error1).then();
 				}
 
 				console.log('productLocationSelectHandler:', e.target.value);
@@ -159,7 +161,7 @@ const Filter = (props: FilterType) => {
 				}
 
 				if (searchFilter?.search?.typeList?.length == 0) {
-					alert('error');
+					sweetMixinErrorAlert(Messages.error1).then();
 				}
 
 				console.log('productTypeSelectHandler:', e.target.value);
