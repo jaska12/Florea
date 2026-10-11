@@ -130,6 +130,12 @@ Important decisions made during the Nestar → Florea migration session, with th
   - The schema keeps the generic `notificationRefId` (the product, article or member the notification is about), not the ERD's separate `productId` and `articleId`.
   - `notificationTitle` holds a plain English line and `notificationDesc` the product title, article title or comment text. The client builds the visible sentence from the type, group and author, so it can be translated.
   - Taking a like back or unsubscribing deletes the notification, so liking and unliking repeatedly does not fill the list.
-  - The client checks for new notifications every 20 seconds instead of receiving them over the chat socket.
-- **Reason:** `notificationRefId` is what the code already had and one field serves all three groups; polling needs no change to the socket gateway, which today only carries chat messages.
-- **Rejected:** `productId` / `articleId` columns (two nullable fields and a third case for members); pushing over the socket (faster, but it couples notifications to the chat gateway). TODO: revisit if instant delivery is wanted.
+  - The server announces a change over the chat socket (`{ event: 'notification' }`, no content) and the client then asks for the list through GraphQL. A 60-second timer covers a socket that is down. (First version: a 20-second timer only.)
+- **Reason:** `notificationRefId` is what the code already had and one field serves all three groups; sending only a signal over the socket keeps the notification data behind the GraphQL guard.
+- **Rejected:** `productId` / `articleId` columns (two nullable fields and a third case for members); sending the whole notification over the socket.
+
+## 22. One socket for the page, handled in one place
+
+- **Decision:** `libs/socket.ts` owns the WebSocket: it opens it, reconnects it, and writes chat messages, the online count and the notification signal into reactive variables. Components read the variables and do not attach their own handlers to the socket.
+- **Reason:** every page has its own layout wrapper, so the chat window is mounted again on each page change. State held inside the component (the Nestar approach) would lose the conversation on every navigation.
+- **Kept from Nestar:** the socket is still created through Apollo's `WebSocketLink` (`LoggingWebSocket`), one public chat room, the last five messages in the server's memory.

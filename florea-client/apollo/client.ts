@@ -8,6 +8,7 @@ import { getJwtToken } from '../libs/auth';
 import { TokenRefreshLink } from 'apollo-link-token-refresh';
 import { sweetErrorAlert } from '../libs/sweetAlert';
 import { socketVar } from './store';
+import { openSocket } from '../libs/socket';
 let apolloClient: ApolloClient<NormalizedCacheObject>;
 
 function getHeaders() {
@@ -30,32 +31,19 @@ const tokenRefreshLink = new TokenRefreshLink({
 });
 
 // Custom WebSocket client
+// Apollo's subscription client gets this wrapper, not the socket itself: the socket carries chat and
+// notification events (libs/socket.ts), which the subscription client cannot read.
 class LoggingWebSocket {
-	private socket: WebSocket;
-
 	constructor(url: string) {
-		this.socket = new WebSocket(`${url}?token=${getJwtToken()}`);
-		socketVar(this.socket);
-
-		this.socket.onopen = () => {
-			console.log('WebSocket connection!');
-		};
-
-		this.socket.onmessage = (msg) => {
-			console.log('WebSocket message:', msg.data);
-		};
-
-		this.socket.onerror = (error) => {
-			console.log('WebSocket, error:', error);
-		};
+		openSocket(url);
 	}
 
 	send(data: string | ArrayBuffer | SharedArrayBuffer | Blob | ArrayBufferView) {
-		this.socket.send(data);
+		socketVar()?.send(data);
 	}
 
 	close() {
-		this.socket.close();
+		socketVar()?.close();
 	}
 }
 

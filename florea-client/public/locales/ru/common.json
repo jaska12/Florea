@@ -37,5 +37,13 @@
 	"commented on your product": "оставил(а) комментарий к вашему товару",
 	"commented on your article": "оставил(а) комментарий к вашей статье",
 	"left a review on your profile": "оставил(а) отзыв в вашем профиле",
-	"started following you": "подписался(ась) на вас"
+	"started following you": "подписался(ась) на вас",
+	"Live chat": "Онлайн-чат",
+	"Close chat": "Закрыть чат",
+	"online": "онлайн",
+	"Connecting...": "Подключение...",
+	"Welcome to Live chat!": "Добро пожаловать в онлайн-чат!",
+	"Type message": "Введите сообщение",
+	"Send": "Отправить",
+	"Guest": "Гость"
 }

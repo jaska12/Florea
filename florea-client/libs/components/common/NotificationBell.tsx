@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { useTranslation } from 'next-i18next';
 import { useApolloClient, useMutation, useQuery, useReactiveVar } from '@apollo/client';
@@ -10,7 +10,7 @@ import PersonAddAlt1RoundedIcon from '@mui/icons-material/PersonAddAlt1Rounded';
 import LocalMallOutlinedIcon from '@mui/icons-material/LocalMallOutlined';
 import CampaignOutlinedIcon from '@mui/icons-material/CampaignOutlined';
 import Moment from 'react-moment';
-import { userVar } from '../../../apollo/store';
+import { notificationPingVar, userVar } from '../../../apollo/store';
 import { GET_BOARD_ARTICLE, GET_NOTIFICATIONS } from '../../../apollo/user/query';
 import { READ_ALL_NOTIFICATIONS, READ_NOTIFICATION } from '../../../apollo/user/mutation';
 import { Notification, Notifications } from '../../types/notification/notification';
@@ -19,7 +19,8 @@ import { NotificationGroup, NotificationStatus, NotificationType } from '../../e
 import { MemberType } from '../../enums/member.enum';
 
 const PAGE_SIZE = 10;
-const POLL_INTERVAL = 20000;
+// new notifications are announced over the socket; this timer only covers a socket that is down
+const POLL_INTERVAL = 60000;
 
 // One icon per notification type. The backend sends LIKE, COMMENT and SUBSCRIBE today;
 // ORDER and SYSTEM are ready for when it adds them, and an unknown type gets the SYSTEM icon.
@@ -53,6 +54,7 @@ const NotificationBell = (props: NotificationBellProps) => {
 	const router = useRouter();
 	const client = useApolloClient();
 	const user = useReactiveVar(userVar);
+	const ping = useReactiveVar(notificationPingVar);
 	const [anchor, setAnchor] = useState<null | HTMLElement>(null);
 	const [limit, setLimit] = useState<number>(PAGE_SIZE);
 	const reducedMotion = useMediaQuery('(prefers-reduced-motion: reduce)');
@@ -85,6 +87,11 @@ const NotificationBell = (props: NotificationBellProps) => {
 	const total: number = result?.metaCounter?.[0]?.total ?? 0;
 	const unreadCount: number = result?.unreadCount ?? 0;
 	const firstLoad = getNotificationsLoading && !result;
+
+	/** LIFECYCLES **/
+	useEffect(() => {
+		if (ping && user?._id) getNotificationsRefetch({ input: inquiry }).catch(() => {});
+	}, [ping]);
 
 	/** HANDLERS **/
 	const openHandler = (event: React.MouseEvent<HTMLElement>) => {

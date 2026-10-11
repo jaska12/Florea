@@ -83,14 +83,27 @@ export class SocketGateway implements OnGatewayInit {
     @SubscribeMessage('message')
     public async handleMessage(client: WebSocket, payload: string): Promise<void> {
         const authMember = this.clientsAuthMap.get(client);
-        const newMessage: MessagePayload = { event: 'message', text: payload, memberData: authMember ?? null };
+        const text = typeof payload === 'string' ? payload.trim().slice(0, 300) : '';
+        if (!text) return;
+
+        const newMessage: MessagePayload = { event: 'message', text: text, memberData: authMember ?? null };
 
         const clientNick: string = authMember?.memberNick ?? 'Guest';
-        this.logger.verbose(`NEW MESSAGE [${clientNick}]: ${payload}`);
+        this.logger.verbose(`NEW MESSAGE [${clientNick}]: ${text}`);
         this.messagesList.push(newMessage);
         if (this.messagesList.length > 5) this.messagesList.splice(0, this.messagesList.length - 5);
 
         this.emitMessage(newMessage);
+    }
+
+    // Tells every open tab of one member that their notifications changed; the client then asks for the list.
+    public notifyMember(memberId: any): void {
+        const target = String(memberId);
+        this.clientsAuthMap.forEach((member, client) => {
+            if (member && String(member._id) === target && client.readyState === WebSocket.OPEN) {
+                client.send(JSON.stringify({ event: 'notification' }));
+            }
+        });
     }
 
     private broadcastMessage(sender: WebSocket, message: InfoPayload | MessagePayload) {

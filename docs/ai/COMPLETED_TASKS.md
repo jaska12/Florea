@@ -36,6 +36,7 @@ In the order they were done. State as of 2026-10-05, `main` at `5f5405e`.
 - [x] 30. Fix the blank page caused by an invalid stored token
 - [x] 31. Notifications redesign (alerts, toasts, navbar bell)
 - [x] 32. Notification module in the backend and real notifications in the bell
+- [x] 33. Live chat connected to the socket; notifications announced over it
 
 ## 1. Recommend migration steps
 
@@ -502,3 +503,36 @@ In the order they were done. State as of 2026-10-05, `main` at `5f5405e`.
   - Deleting a comment does not remove its notification.
 - Not verified: `npm run build` (the API was running in watch mode on the same `dist` folder; its watch build compiled without errors), article notifications (like and comment on an article: the test account has no article; they use the same code path as products), a review on a profile in the browser (it passed through the API), the admin pages, Safari.
 - Test data left in the dev database: the test accounts' notifications, including rows from test comments that were then set to `DELETE`; `floreauser` follows `floreatest` and likes one of its products, so `floreatest` has real notifications to look at.
+
+## 33. Live chat connected to the socket; notifications announced over it
+
+- Request from the project owner: connect the chat to the socket.
+- What existed before the work: the backend gateway (`socket/socket.gateway.ts`) already handled connections, the online count, the last five messages and new messages. The chat window in the client was the Nestar starter: two messages written by hand, an empty send handler, no link to the socket.
+- Frontend (`florea-client`):
+  - `libs/socket.ts` (new): opens the page's one WebSocket, keeps what arrives (`info`, `getMessages`, `message`, `notification`) in reactive variables, opens the socket again when it drops (2 seconds, doubling up to 30), and opens it again as the member after a login without a page reload
+  - `apollo/store.ts`: `chatMessagesVar`, `chatOnlineVar`, `chatOpenVar`, `notificationPingVar`; `libs/types/chat/chat.ts` (new)
+  - `apollo/client.ts`: `LoggingWebSocket` now only hands the socket work to `libs/socket.ts`
+  - `libs/components/Chat.tsx`: real messages (mine on the right; others on the left with avatar and nickname), sending with Enter or the button, the online count, a "Connecting..." state, a mark on the button for messages that arrived while the window was closed; the conversation and the open window survive page changes
+  - `scss/pc/main.scss`: the chat block rewritten in the Florea look
+  - `Top.tsx`: calls `refreshSocket()` when the logged-in member changes
+  - `NotificationBell.tsx`: asks for the list when the socket announces a change; the timer is now a 60-second fallback
+  - chat labels added to the `en`, `kr` and `ru` locale files
+- Backend (`florea-api`):
+  - `socket.gateway.ts`: `notifyMember(memberId)` sends `{ event: 'notification' }` to that member's open sockets; chat messages are trimmed, cut at 300 characters, and empty ones are ignored
+  - `socket.module.ts` exports the gateway; `notification.module.ts` imports it; `notification.service.ts` calls `notifyMember` after creating or removing a notification
+- Results:
+
+| Check | Result |
+|---|---|
+| `npx tsc --noEmit` for `florea-api` and `florea-batch`, `yarn tsc --noEmit` | no errors |
+| Chat test: a member in the browser and a second member on a plain WebSocket | 18 of 18: online count, a message from the other member with their name, sending with Enter, the other side receives it with my name, input cleared, spaces-only blocked, the conversation survives a page change, the unread mark, reconnect after the socket is dropped, login through the form reopens the socket as the member |
+| The bell after another member's like | changed in 1.2 seconds (20-second timer before) and changed back when the like was taken back |
+| Notification API test and browser test from task 32 | 23 of 23 and 11 of 11 again |
+
+- Lint: 3440 problems (3429 after task 32); the 11 new ones are the lines added to `socket.gateway.ts`, which keeps its 4-space indentation. `florea-api/AGENTS.md` is updated.
+- Not done:
+  - The chat is one public room, as in Nestar. There are no private conversations between a customer and a florist.
+  - Messages are kept in the server's memory (the last five) and are lost when the API restarts.
+  - The chat window is shown to logged-in members on desktop only, as before.
+- Not verified: `npm run build` and `yarn build` (the servers were running on the same output folders), Safari.
+- The test wrote a few messages into the live chat room; they disappear when the API restarts.

@@ -71,6 +71,8 @@ Not renamed: the agent pages and components (`pages/agent`, `AgentCard`, `TopAge
 
 ## Known issues
 
+- **Chat:** one public room for all logged-in members, desktop only; messages are not stored in the database.
+
 - **My page on a full reload:** opening `/mypage` directly or pressing F5 there sends a logged-in member to the homepage (seen twice in the test browser). Probable cause, from reading the code: the page checks the member before the navbar has read the stored token. Reaching it through the navbar works. Seen during the notifications check; not changed.
 
 - **After the site-wide design system:**

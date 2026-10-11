@@ -284,124 +284,277 @@ body::-webkit-scrollbar {
 
 	.chatting {
 		.chat-button {
-			border: none;
 			position: fixed;
 			bottom: 90px;
 			right: 30px;
-			height: 50px;
-			width: 50px;
+			width: 52px;
+			height: 52px;
 			display: flex;
 			align-items: center;
 			justify-content: center;
+			border: 1px solid $florea-hairline;
 			border-radius: 50%;
-			height: 50px;
-			background: #fff;
-			box-shadow: 0px 0px 10px 0px rgba(50, 50, 50, 0.2);
-			transition: transform 0.3s;
+			background: #ffffff;
+			color: $florea-rose;
+			box-shadow: 0 10px 26px rgba(74, 22, 48, 0.18);
+			cursor: pointer;
+			transition:
+				transform 320ms $logo-ease,
+				box-shadow 320ms $logo-ease,
+				color 240ms $logo-ease;
 			z-index: 999;
 			&:hover {
-				cursor: pointer;
-				transform: scale(1.1);
-				background-color: #fff;
+				transform: translateY(-2px);
+				color: $florea-wine;
+				box-shadow: 0 16px 34px rgba(180, 35, 95, 0.24);
+			}
+			&:focus-visible {
+				outline: none;
+				box-shadow: 0 0 0 3px rgba($florea-rose, 0.28);
+			}
+			// a message arrived while the window was closed
+			&.unread::after {
+				content: '';
+				position: absolute;
+				top: 6px;
+				right: 6px;
+				width: 11px;
+				height: 11px;
+				border-radius: 50%;
+				background: $florea-gold;
+				box-shadow: 0 0 0 2px #ffffff;
 			}
 		}
 		.chat-frame {
 			position: fixed;
-			right: -380px;
-			transition: right 0.7s ease-in-out;
-			width: 380px;
-			height: 500px;
+			right: -400px;
+			bottom: 156px;
+			width: 372px;
+			height: 520px;
+			max-height: calc(100vh - 190px);
 			display: flex;
 			flex-direction: column;
-			background: rgb(233, 243, 255);
-			border-radius: 34px;
-			box-shadow: 0px 0px 15px 0px rgba(50, 50, 50, 0.3);
+			background: #ffffff;
+			border: 1px solid $florea-hairline;
+			border-radius: 24px;
+			box-shadow: 0 26px 60px rgba(74, 22, 48, 0.22);
+			overflow: hidden;
+			visibility: hidden;
 			z-index: 100;
-			bottom: 150px;
-			transition: right 0.7s ease-in-out;
+			transition:
+				right 520ms $logo-ease,
+				visibility 0s linear 520ms;
 			&.open {
-				right: 10px;
+				right: 24px;
+				visibility: visible;
+				transition:
+					right 520ms $logo-ease,
+					visibility 0s;
 			}
 			.chat-top {
-				width: 100%;
-				height: 103px;
+				flex: 0 0 auto;
+				padding: 18px 22px;
 				display: flex;
-				justify-content: center;
+				flex-direction: row;
 				align-items: center;
-				border-bottom: 1px solid rgba(205, 205, 205, 0.83);
-				font-size: 30px;
-				line-height: 54px;
-				color: $florea-ink;
+				justify-content: space-between;
+				background: linear-gradient(135deg, $florea-wine 0%, $florea-rose 100%);
+				color: #ffffff;
+				strong {
+					font-family: $font-display;
+					font-size: 20px;
+					font-weight: 500;
+					line-height: 28px;
+				}
+				.chat-online {
+					padding: 3px 12px 3px 10px;
+					display: flex;
+					align-items: center;
+					gap: 7px;
+					border-radius: 999px;
+					background: rgba(255, 255, 255, 0.16);
+					font-family: $font;
+					font-size: 12.5px;
+					font-weight: 500;
+					line-height: 18px;
+					&::before {
+						content: '';
+						width: 7px;
+						height: 7px;
+						border-radius: 50%;
+						background: #8fe3b0;
+					}
+					&.offline::before {
+						background: $florea-gold;
+					}
+				}
 			}
 			.chat-content {
 				position: relative;
-				padding: 17px;
+				flex: 1 1 auto;
+				min-height: 0;
 				width: 100%;
-				height: 100%;
 				display: flex;
 				flex-direction: column;
-				justify-content: flex-start;
-				overflow: auto;
+				background: $florea-surface;
+				box-sizing: border-box;
+				overflow: hidden;
+				> div {
+					padding: 16px 16px 8px;
+					box-sizing: border-box;
+					scrollbar-width: thin;
+					scrollbar-color: $florea-petal transparent;
+				}
 				.chat-main {
 					position: relative;
 					width: 100%;
 					display: flex;
 					flex-direction: column;
-					.msg-left {
-						margin-left: 10px;
-						padding: 9px;
-						width: auto;
-						height: auto;
+					gap: 10px;
+					.chat-note {
+						margin: 2px 0 6px;
+						align-self: center;
+						color: $florea-muted;
+						font-family: $font;
+						font-size: 12.5px;
+						line-height: 18px;
+					}
+					.msg-row {
 						display: flex;
-						background: #9fa7ac;
-						border-radius: 20px 20px 20px 0px;
-						color: #fff;
+						flex-direction: row;
+						align-items: flex-end;
+						gap: 8px;
+						animation: florea-fade-in 240ms ease-out both;
+						&.right {
+							justify-content: flex-end;
+						}
+						.MuiAvatar-root {
+							width: 30px;
+							height: 30px;
+							border: 1px solid $florea-hairline;
+							background: #ffffff;
+						}
+						.msg-body {
+							max-width: 76%;
+							display: flex;
+							flex-direction: column;
+							align-items: flex-start;
+							gap: 3px;
+						}
+						.msg-name {
+							padding-left: 4px;
+							color: $florea-muted;
+							font-family: $font;
+							font-size: 11.5px;
+							font-weight: 500;
+							line-height: 14px;
+						}
+					}
+					.msg-left,
+					.msg-right {
+						padding: 9px 14px;
+						font-family: $font;
+						font-size: 14.5px;
+						line-height: 20px;
+						overflow-wrap: anywhere;
+					}
+					.msg-left {
+						background: #ffffff;
+						border: 1px solid $florea-hairline;
+						border-radius: 18px 18px 18px 6px;
+						color: $florea-ink;
+					}
+					.msg-right {
+						max-width: 76%;
+						background: $florea-rose;
+						border-radius: 18px 18px 6px 18px;
+						color: #ffffff;
 					}
 				}
 			}
 			.chat-bott {
+				flex: 0 0 auto;
+				padding: 12px 14px;
 				width: 100%;
-				height: 103px;
 				display: flex;
-				justify-content: center;
 				align-items: center;
-				border-top: 1px solid rgba(205, 205, 205, 0.83);
+				gap: 10px;
+				border-top: 1px solid $florea-hairline-soft;
+				background: #ffffff;
+				box-sizing: border-box;
 				.msg-input {
-					padding: 20px;
-					width: 276px;
-					height: 50px;
-					display: flex;
-					flex-direction: column;
-					align-items: center;
+					flex: 1 1 auto;
+					min-width: 0;
+					padding: 0 18px;
+					height: 46px;
 					background: $florea-surface;
-					border-radius: 28px;
-					border: none;
-					outline-color: #257677;
+					border: 1px solid $florea-hairline;
+					border-radius: 999px;
+					color: $florea-ink;
 					font-family: $font;
-					font-style: normal;
 					font-weight: 400;
-					font-size: 16px;
-					line-height: 24px;
+					font-size: 15px;
+					line-height: 22px;
+					box-sizing: border-box;
+					transition:
+						border-color 240ms $logo-ease,
+						box-shadow 240ms $logo-ease;
+					&::placeholder {
+						color: #a58c97;
+					}
+					&:focus {
+						outline: none;
+						border-color: $florea-rose;
+						box-shadow: 0 0 0 3px rgba($florea-rose, 0.14);
+					}
 				}
 				.send-msg-btn {
-					margin-left: 14px;
-					width: 50px;
-					height: 50px;
+					flex: 0 0 46px;
+					width: 46px;
+					height: 46px;
 					display: flex;
 					justify-content: center;
 					align-items: center;
-					border-radius: 50%;
-					background: #33c1c1;
 					border: none;
+					border-radius: 50%;
+					background: $florea-rose;
+					color: #ffffff;
+					cursor: pointer;
+					transition:
+						background-color 240ms $logo-ease,
+						opacity 240ms $logo-ease;
+					svg {
+						width: 20px;
+						height: 20px;
+					}
+					&:hover {
+						background: $florea-wine;
+					}
+					&:focus-visible {
+						outline: none;
+						box-shadow: 0 0 0 3px rgba($florea-rose, 0.28);
+					}
+					&:disabled {
+						opacity: 0.45;
+						cursor: default;
+						&:hover {
+							background: $florea-rose;
+						}
+					}
 				}
 			}
-			.msg-right {
-				padding: 9px;
-				width: auto;
-				height: auto;
-				display: flex;
-				background: #d0ece8;
-				border-radius: 20px 20px 0px 20px;
+		}
+		@media (prefers-reduced-motion: reduce) {
+			.chat-button,
+			.chat-frame,
+			.chat-frame.open {
+				transition: none;
+			}
+			.chat-button:hover {
+				transform: none;
+			}
+			.msg-row {
+				animation: none !important;
 			}
 		}
 	}

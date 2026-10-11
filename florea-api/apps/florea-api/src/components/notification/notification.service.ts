@@ -8,10 +8,14 @@ import { NotificationStatus } from '../../libs/enums/notification.enum';
 import { Direction, Message } from '../../libs/enums/common.enum';
 import { lookupAuthorData } from '../../libs/config';
 import { T } from '../../libs/types/common';
+import { SocketGateway } from '../../socket/socket.gateway';
 
 @Injectable()
 export class NotificationService {
-	constructor(@InjectModel('Notification') private readonly notificationModel: Model<Notification>) {}
+	constructor(
+		@InjectModel('Notification') private readonly notificationModel: Model<Notification>,
+		private readonly socketGateway: SocketGateway,
+	) {}
 
 	/** called by the like, comment and follow logic **/
 
@@ -20,7 +24,9 @@ export class NotificationService {
 		if (!input.receiverId || input.authorId.toString() === input.receiverId.toString()) return null;
 
 		try {
-			return (await this.notificationModel.create(input)) as unknown as Notification;
+			const result = (await this.notificationModel.create(input)) as unknown as Notification;
+			this.socketGateway.notifyMember(input.receiverId);
+			return result;
 		} catch (err) {
 			console.log('Error, Service.model:', err.message);
 			return null;
@@ -36,6 +42,7 @@ export class NotificationService {
 			const search: T = { notificationType, notificationGroup, authorId, receiverId };
 			if (notificationRefId) search.notificationRefId = notificationRefId;
 			await this.notificationModel.deleteMany(search).exec();
+			this.socketGateway.notifyMember(receiverId);
 		} catch (err) {
 			console.log('Error, Service.model:', err.message);
 		}

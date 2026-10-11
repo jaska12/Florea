@@ -13,6 +13,7 @@ import { CaretDown } from 'phosphor-react';
 import useDeviceDetect from '../hooks/useDeviceDetect';
 import Link from 'next/link';
 import NotificationBell from './common/NotificationBell';
+import { refreshSocket } from '../socket';
 import { useReactiveVar } from '@apollo/client';
 import { userVar } from '../../apollo/store';
 import { Logout } from '@mui/icons-material';
@@ -57,6 +58,11 @@ const Top = () => {
 		const jwt = getJwtToken();
 		if (jwt) updateUserInfo(jwt);
 	}, []);
+
+	useEffect(() => {
+		// after a login without a page reload the socket still belongs to a guest
+		refreshSocket();
+	}, [user?._id]);
 
 	/** HANDLERS **/
 	const langClick = (e: any) => {
