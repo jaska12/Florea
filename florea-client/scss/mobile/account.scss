@@ -1,0 +1,71 @@
+/** LOGIN AND SIGN UP **/
+
+@include tablet {
+	#pc-wrap .join-page {
+		padding: 36px 0 48px !important;
+		.container .main {
+			margin: 0 auto;
+			width: 100% !important;
+			max-width: 560px;
+			height: auto !important;
+			flex-direction: column !important;
+			border-radius: 20px !important;
+			.left {
+				padding: 40px 28px 36px;
+				width: 100% !important;
+				height: auto !important;
+				box-sizing: border-box;
+				.info p {
+					text-align: center;
+				}
+				.input-wrap,
+				.register {
+					margin-top: 30px !important;
+					width: 100% !important;
+				}
+				.input-wrap .input-box input {
+					box-sizing: border-box;
+					// 16px keeps iOS from zooming the page when a field is focused
+					font-size: 16px !important;
+				}
+				.register {
+					.type-option,
+					.remember-info {
+						width: 100%;
+						flex-wrap: wrap;
+						row-gap: 4px;
+						.MuiFormControlLabel-root {
+							min-height: 44px;
+						}
+						a {
+							display: flex;
+							align-items: center;
+							min-height: 44px;
+						}
+					}
+					button {
+						width: 100% !important;
+					}
+				}
+				.ask-info p b {
+					padding: 8px 4px;
+					display: inline-block;
+					font-size: 20px !important;
+				}
+			}
+			// the photo beside the form is decoration: narrow screens show the form only
+			.right {
+				display: none !important;
+			}
+		}
+	}
+}
+
+@include phone {
+	#pc-wrap .join-page {
+		padding: 24px 0 36px !important;
+		.container .main .left {
+			padding: 32px 20px 28px;
+		}
+	}
+}

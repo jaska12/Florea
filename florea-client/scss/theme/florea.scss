@@ -10,13 +10,9 @@ body {
 	-moz-osx-font-smoothing: grayscale;
 }
 
-#pc-wrap,
-#mobile-wrap {
+#pc-wrap {
 	color: $florea-ink;
 	font-family: $font;
-}
-
-#pc-wrap {
 	background: $florea-ivory;
 
 	/** navbar **/

@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-import useDeviceDetect from '../../hooks/useDeviceDetect';
 import Head from 'next/head';
 import Top from '../Top';
 import Footer from '../Footer';
@@ -15,7 +14,6 @@ import 'swiper/css/navigation';
 
 const withLayoutMain = (Component: any) => {
 	return (props: any) => {
-		const device = useDeviceDetect();
 		const user = useReactiveVar(userVar);
 
 		/** LIFECYCLES **/
@@ -26,57 +24,31 @@ const withLayoutMain = (Component: any) => {
 
 		/** HANDLERS **/
 
-		if (device == 'mobile') {
-			return (
-				<>
-					<Head>
-						<title>Florea</title>
-						<meta name={'title'} content={`Florea`} />
-					</Head>
-					<Stack id="mobile-wrap">
-						<Stack id={'top'}>
-							<Top />
-						</Stack>
-
-						<HomeHero />
-
-						<Stack id={'main'}>
-							<Component {...props} />
-						</Stack>
-
-						<Stack id={'footer'}>
-							<Footer />
-						</Stack>
+		return (
+			<>
+				<Head>
+					<title>Florea</title>
+					<meta name={'title'} content={`Florea`} />
+				</Head>
+				<Stack id="pc-wrap">
+					<Stack id={'top'}>
+						<Top />
 					</Stack>
-				</>
-			);
-		} else {
-			return (
-				<>
-					<Head>
-						<title>Florea</title>
-						<meta name={'title'} content={`Florea`} />
-					</Head>
-					<Stack id="pc-wrap">
-						<Stack id={'top'}>
-							<Top />
-						</Stack>
 
-						<HomeHero />
+					<HomeHero />
 
-						<Stack id={'main'}>
-							<Component {...props} />
-						</Stack>
-
-						{user?._id && <Chat />}
-
-						<Stack id={'footer'}>
-							<Footer />
-						</Stack>
+					<Stack id={'main'}>
+						<Component {...props} />
 					</Stack>
-				</>
-			);
-		}
+
+					{user?._id && <Chat />}
+
+					<Stack id={'footer'}>
+						<Footer />
+					</Stack>
+				</Stack>
+			</>
+		);
 	};
 };
 

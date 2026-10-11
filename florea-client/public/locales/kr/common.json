@@ -45,5 +45,8 @@
   "Welcome to Live chat!": "실시간 채팅에 오신 것을 환영합니다!",
   "Type message": "메시지를 입력하세요",
   "Send": "보내기",
-  "Guest": "게스트"
+  "Guest": "게스트",
+  "Menu": "메뉴",
+  "Close menu": "메뉴 닫기",
+  "Logout": "로그아웃"
 }

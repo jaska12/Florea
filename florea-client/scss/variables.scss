@@ -27,6 +27,22 @@ $florea-radius: 20px; // cards and panels
 $florea-radius-sm: 12px; // inputs and buttons
 $florea-line: rgba(180, 35, 95, 0.12); // hairlines and card borders
 
+/** BREAKPOINTS **/
+
+// tablets and phones: the desktop layout stacks and the navbar becomes a menu button
+@mixin tablet {
+	@media (max-width: 1024px) {
+		@content;
+	}
+}
+
+// phones
+@mixin phone {
+	@media (max-width: 640px) {
+		@content;
+	}
+}
+
 /** GLASS **/
 
 // A translucent, blurred surface with a light edge. $tint is the colour of the glass itself.

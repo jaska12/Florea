@@ -2,7 +2,6 @@ import React, { ChangeEvent, MouseEvent, useEffect, useState } from 'react';
 import { NextPage } from 'next';
 import { Box, Button, Menu, MenuItem, Pagination, Stack, Typography } from '@mui/material';
 import ProductCard from '../../libs/components/product/ProductCard';
-import useDeviceDetect from '../../libs/hooks/useDeviceDetect';
 import withLayoutBasic from '../../libs/components/layout/LayoutBasic';
 import Filter from '../../libs/components/product/Filter';
 import { useRouter } from 'next/router';
@@ -10,6 +9,8 @@ import { ProductsInquiry } from '../../libs/types/product/product.input';
 import { Product } from '../../libs/types/product/product';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import KeyboardArrowDownRoundedIcon from '@mui/icons-material/KeyboardArrowDownRounded';
+import TuneRoundedIcon from '@mui/icons-material/TuneRounded';
+import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
 import { Direction } from '../../libs/enums/common.enum';
 import { useMutation, useQuery } from '@apollo/client';
 import { GET_PRODUCTS } from '../../apollo/user/query';
@@ -27,7 +28,6 @@ export const getStaticProps = async ({ locale }: any) => ({
 });
 
 const ProductList: NextPage = ({ initialInput, ...props }: any) => {
-	const device = useDeviceDetect();
 	const router = useRouter();
 	const [searchFilter, setSearchFilter] = useState<ProductsInquiry>(
 		router?.query?.input ? JSON.parse(router?.query?.input as string) : initialInput,
@@ -38,6 +38,8 @@ const ProductList: NextPage = ({ initialInput, ...props }: any) => {
 	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 	const [sortingOpen, setSortingOpen] = useState(false);
 	const [filterSortName, setFilterSortName] = useState('New');
+	// on phones and tablets the filter is a panel that slides up from the bottom
+	const [filterOpen, setFilterOpen] = useState<boolean>(false);
 	const user = useReactiveVar(userVar);
 
 	/** APOLLO REQUESTS **/
@@ -131,91 +133,103 @@ const ProductList: NextPage = ({ initialInput, ...props }: any) => {
 		}
 	};
 
-	if (device === 'mobile') {
-		return <h1>PRODUCTS MOBILE</h1>;
-	} else {
-		return (
-			<div id="product-list-page" style={{ position: 'relative' }}>
-				<div className="container">
-					<Box component={'div'} className={'right'}>
-						<span>Sort by</span>
-						<div>
-							<Button onClick={sortingClickHandler} endIcon={<KeyboardArrowDownRoundedIcon />}>
-								{filterSortName}
-							</Button>
-							<Menu anchorEl={anchorEl} open={sortingOpen} onClose={sortingCloseHandler} sx={{ paddingTop: '5px' }}>
-								<MenuItem
-									onClick={sortingHandler}
-									id={'new'}
-									disableRipple
-									sx={{ boxShadow: 'rgba(149, 157, 165, 0.2) 0px 8px 24px' }}
-								>
-									New
-								</MenuItem>
-								<MenuItem
-									onClick={sortingHandler}
-									id={'lowest'}
-									disableRipple
-									sx={{ boxShadow: 'rgba(149, 157, 165, 0.2) 0px 8px 24px' }}
-								>
-									Lowest Price
-								</MenuItem>
-								<MenuItem
-									onClick={sortingHandler}
-									id={'highest'}
-									disableRipple
-									sx={{ boxShadow: 'rgba(149, 157, 165, 0.2) 0px 8px 24px' }}
-								>
-									Highest Price
-								</MenuItem>
-							</Menu>
+	return (
+		<div id="product-list-page" style={{ position: 'relative' }}>
+			<div className="container">
+				<Box component={'div'} className={'right'}>
+					<button type={'button'} className={'filter-toggle'} onClick={() => setFilterOpen(true)}>
+						<TuneRoundedIcon />
+						Filters
+					</button>
+					<span>Sort by</span>
+					<div>
+						<Button onClick={sortingClickHandler} endIcon={<KeyboardArrowDownRoundedIcon />}>
+							{filterSortName}
+						</Button>
+						<Menu anchorEl={anchorEl} open={sortingOpen} onClose={sortingCloseHandler} sx={{ paddingTop: '5px' }}>
+							<MenuItem
+								onClick={sortingHandler}
+								id={'new'}
+								disableRipple
+								sx={{ boxShadow: 'rgba(149, 157, 165, 0.2) 0px 8px 24px' }}
+							>
+								New
+							</MenuItem>
+							<MenuItem
+								onClick={sortingHandler}
+								id={'lowest'}
+								disableRipple
+								sx={{ boxShadow: 'rgba(149, 157, 165, 0.2) 0px 8px 24px' }}
+							>
+								Lowest Price
+							</MenuItem>
+							<MenuItem
+								onClick={sortingHandler}
+								id={'highest'}
+								disableRipple
+								sx={{ boxShadow: 'rgba(149, 157, 165, 0.2) 0px 8px 24px' }}
+							>
+								Highest Price
+							</MenuItem>
+						</Menu>
+					</div>
+				</Box>
+				<Stack className={'product-page'}>
+					<div className={`filter-backdrop ${filterOpen ? 'open' : ''}`} onClick={() => setFilterOpen(false)} />
+					<Stack className={`filter-config ${filterOpen ? 'open' : ''}`}>
+						<div className={'sheet-head'}>
+							<strong>Filters</strong>
+							<button type={'button'} aria-label={'Close filters'} onClick={() => setFilterOpen(false)}>
+								<CloseRoundedIcon />
+							</button>
 						</div>
-					</Box>
-					<Stack className={'product-page'}>
-						<Stack className={'filter-config'}>
-							{/* @ts-ignore */}
-							<Filter searchFilter={searchFilter} setSearchFilter={setSearchFilter} initialInput={initialInput} />
+						{/* @ts-ignore */}
+						<Filter searchFilter={searchFilter} setSearchFilter={setSearchFilter} initialInput={initialInput} />
+						<div className={'sheet-foot'}>
+							<button type={'button'} onClick={() => setFilterOpen(false)}>
+								Show {total} product{total === 1 ? '' : 's'}
+							</button>
+						</div>
+					</Stack>
+					<Stack className="main-config" mb={'76px'}>
+						<Stack className={'list-config'}>
+							{products?.length === 0 ? (
+								<div className={'no-data'}>
+									<img src="/img/icons/icoAlert.svg" alt="" />
+									<p>No Products found!</p>
+								</div>
+							) : (
+								products.map((product: Product) => {
+									return <ProductCard product={product} likeProductHandler={likeProductHandler} key={product?._id} />;
+								})
+							)}
 						</Stack>
-						<Stack className="main-config" mb={'76px'}>
-							<Stack className={'list-config'}>
-								{products?.length === 0 ? (
-									<div className={'no-data'}>
-										<img src="/img/icons/icoAlert.svg" alt="" />
-										<p>No Products found!</p>
-									</div>
-								) : (
-									products.map((product: Product) => {
-										return <ProductCard product={product} likeProductHandler={likeProductHandler} key={product?._id} />;
-									})
-								)}
-							</Stack>
-							<Stack className="pagination-config">
-								{products.length !== 0 && (
-									<Stack className="pagination-box">
-										<Pagination
-											page={currentPage}
-											count={Math.ceil(total / searchFilter.limit)}
-											onChange={handlePaginationChange}
-											shape="circular"
-											color="primary"
-										/>
-									</Stack>
-								)}
+						<Stack className="pagination-config">
+							{products.length !== 0 && (
+								<Stack className="pagination-box">
+									<Pagination
+										page={currentPage}
+										count={Math.ceil(total / searchFilter.limit)}
+										onChange={handlePaginationChange}
+										shape="circular"
+										color="primary"
+									/>
+								</Stack>
+							)}
 
-								{products.length !== 0 && (
-									<Stack className="total-result">
-										<Typography>
-											Total {total} product{total > 1 ? 's' : ''} available
-										</Typography>
-									</Stack>
-								)}
-							</Stack>
+							{products.length !== 0 && (
+								<Stack className="total-result">
+									<Typography>
+										Total {total} product{total > 1 ? 's' : ''} available
+									</Typography>
+								</Stack>
+							)}
 						</Stack>
 					</Stack>
-				</div>
+				</Stack>
 			</div>
-		);
-	}
+		</div>
+	);
 };
 
 ProductList.defaultProps = {

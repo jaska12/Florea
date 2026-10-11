@@ -4,7 +4,6 @@ import { AccordionDetails, Box, Stack, Typography } from '@mui/material';
 import MuiAccordionSummary, { AccordionSummaryProps } from '@mui/material/AccordionSummary';
 import { useRouter } from 'next/router';
 import { styled } from '@mui/material/styles';
-import useDeviceDetect from '../../hooks/useDeviceDetect';
 import KeyboardArrowDownRoundedIcon from '@mui/icons-material/KeyboardArrowDownRounded';
 
 const Accordion = styled((props: AccordionProps) => <MuiAccordion disableGutters elevation={0} square {...props} />)(
@@ -31,7 +30,6 @@ const AccordionSummary = styled((props: AccordionSummaryProps) => (
 }));
 
 const Faq = () => {
-	const device = useDeviceDetect();
 	const router = useRouter();
 	const [category, setCategory] = useState<string>('product');
 	const [expanded, setExpanded] = useState<string | false>('panel1');
@@ -433,93 +431,89 @@ const Faq = () => {
 		],
 	};
 
-	if (device === 'mobile') {
-		return <div>FAQ MOBILE</div>;
-	} else {
-		return (
-			<Stack className={'faq-content'}>
-				<Box className={'categories'} component={'div'}>
-					<div
-						className={category === 'product' ? 'active' : ''}
-						onClick={() => {
-							changeCategoryHandler('product');
-						}}
-					>
-						Product
-					</div>
-					<div
-						className={category === 'payment' ? 'active' : ''}
-						onClick={() => {
-							changeCategoryHandler('payment');
-						}}
-					>
-						Payment
-					</div>
-					<div
-						className={category === 'buyers' ? 'active' : ''}
-						onClick={() => {
-							changeCategoryHandler('buyers');
-						}}
-					>
-						Foy Buyers
-					</div>
-					<div
-						className={category === 'agents' ? 'active' : ''}
-						onClick={() => {
-							changeCategoryHandler('agents');
-						}}
-					>
-						For Agents
-					</div>
-					<div
-						className={category === 'membership' ? 'active' : ''}
-						onClick={() => {
-							changeCategoryHandler('membership');
-						}}
-					>
-						Membership
-					</div>
-					<div
-						className={category === 'community' ? 'active' : ''}
-						onClick={() => {
-							changeCategoryHandler('community');
-						}}
-					>
-						Community
-					</div>
-					<div
-						className={category === 'other' ? 'active' : ''}
-						onClick={() => {
-							changeCategoryHandler('other');
-						}}
-					>
-						Other
-					</div>
-				</Box>
-				<Box className={'wrap'} component={'div'}>
-					{data[category] &&
-						data[category].map((ele: any) => (
-							<Accordion expanded={expanded === ele?.id} onChange={handleChange(ele?.id)} key={ele?.subject}>
-								<AccordionSummary id="panel1d-header" className="question" aria-controls="panel1d-content">
-									<Typography className="badge" variant={'h4'}>
-										Q
+	return (
+		<Stack className={'faq-content'}>
+			<Box className={'categories'} component={'div'}>
+				<div
+					className={category === 'product' ? 'active' : ''}
+					onClick={() => {
+						changeCategoryHandler('product');
+					}}
+				>
+					Product
+				</div>
+				<div
+					className={category === 'payment' ? 'active' : ''}
+					onClick={() => {
+						changeCategoryHandler('payment');
+					}}
+				>
+					Payment
+				</div>
+				<div
+					className={category === 'buyers' ? 'active' : ''}
+					onClick={() => {
+						changeCategoryHandler('buyers');
+					}}
+				>
+					Foy Buyers
+				</div>
+				<div
+					className={category === 'agents' ? 'active' : ''}
+					onClick={() => {
+						changeCategoryHandler('agents');
+					}}
+				>
+					For Agents
+				</div>
+				<div
+					className={category === 'membership' ? 'active' : ''}
+					onClick={() => {
+						changeCategoryHandler('membership');
+					}}
+				>
+					Membership
+				</div>
+				<div
+					className={category === 'community' ? 'active' : ''}
+					onClick={() => {
+						changeCategoryHandler('community');
+					}}
+				>
+					Community
+				</div>
+				<div
+					className={category === 'other' ? 'active' : ''}
+					onClick={() => {
+						changeCategoryHandler('other');
+					}}
+				>
+					Other
+				</div>
+			</Box>
+			<Box className={'wrap'} component={'div'}>
+				{data[category] &&
+					data[category].map((ele: any) => (
+						<Accordion expanded={expanded === ele?.id} onChange={handleChange(ele?.id)} key={ele?.subject}>
+							<AccordionSummary id="panel1d-header" className="question" aria-controls="panel1d-content">
+								<Typography className="badge" variant={'h4'}>
+									Q
+								</Typography>
+								<Typography> {ele?.subject}</Typography>
+							</AccordionSummary>
+							<AccordionDetails>
+								<Stack className={'answer flex-box'}>
+									<Typography className="badge" variant={'h4'} color={'primary'}>
+										A
 									</Typography>
-									<Typography> {ele?.subject}</Typography>
-								</AccordionSummary>
-								<AccordionDetails>
-									<Stack className={'answer flex-box'}>
-										<Typography className="badge" variant={'h4'} color={'primary'}>
-											A
-										</Typography>
-										<Typography> {ele?.content}</Typography>
-									</Stack>
-								</AccordionDetails>
-							</Accordion>
-						))}
-				</Box>
-			</Stack>
-		);
-	}
+									<Typography> {ele?.content}</Typography>
+								</Stack>
+							</AccordionDetails>
+						</Accordion>
+					))}
+			</Box>
+		</Stack>
+	);
 };
 
 export default Faq;

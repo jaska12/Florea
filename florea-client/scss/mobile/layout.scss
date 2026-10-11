@@ -1,0 +1,388 @@
+/** LAYOUT: navbar, slide-in menu, page header, containers, footer, chat **/
+
+// the menu button exists at every width and is only shown where the row of links is hidden
+#pc-wrap #top .navbar .navbar-main .nav-toggle {
+	display: none;
+}
+
+/** slide-in menu (drawn outside #pc-wrap) **/
+.MuiDrawer-paper.florea-nav-drawer {
+	width: min(86vw, 340px);
+	display: flex;
+	flex-direction: column;
+	background: #ffffff;
+	color: $florea-ink;
+	font-family: $font;
+	box-shadow: 0 0 60px rgba(43, 20, 32, 0.28);
+	.drawer-head {
+		padding: 14px 12px 14px 20px;
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		border-bottom: 1px solid $florea-hairline-soft;
+		img {
+			width: 124px;
+			display: block;
+		}
+		button {
+			width: 44px;
+			height: 44px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			border: none;
+			border-radius: 50%;
+			background: none;
+			color: $florea-muted;
+			cursor: pointer;
+			&:hover {
+				background: $florea-mist;
+				color: $florea-wine;
+			}
+		}
+	}
+	.drawer-links {
+		padding: 12px;
+		display: flex;
+		flex-direction: column;
+		gap: 2px;
+		a {
+			padding: 0 16px;
+			min-height: 52px;
+			display: flex;
+			align-items: center;
+			border-radius: 14px;
+			color: $florea-ink;
+			font-size: 17px;
+			font-weight: 500;
+			text-decoration: none;
+			&:hover {
+				background: $florea-surface;
+			}
+			&.on {
+				background: $florea-mist;
+				color: $florea-rose;
+				font-weight: 600;
+			}
+		}
+	}
+	.drawer-lang {
+		margin: 4px 20px 0;
+		padding-top: 18px;
+		display: flex;
+		gap: 8px;
+		border-top: 1px solid $florea-hairline-soft;
+		button {
+			flex: 1 1 0;
+			height: 44px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			gap: 8px;
+			border: 1px solid $florea-hairline;
+			border-radius: 12px;
+			background: #ffffff;
+			color: $florea-ink;
+			font-family: $font;
+			font-size: 14px;
+			font-weight: 500;
+			cursor: pointer;
+			img {
+				width: 22px;
+				height: 16px;
+				border-radius: 2px;
+			}
+			&.on {
+				border-color: $florea-rose;
+				background: $florea-mist;
+				color: $florea-rose;
+				font-weight: 600;
+			}
+		}
+	}
+	.drawer-foot {
+		margin-top: auto;
+		padding: 20px 20px calc(20px + env(safe-area-inset-bottom));
+		.drawer-btn {
+			width: 100%;
+			height: 50px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			gap: 8px;
+			border: 1px solid transparent;
+			border-radius: 999px;
+			background: $florea-rose;
+			color: #ffffff;
+			font-family: $font;
+			font-size: 15px;
+			font-weight: 600;
+			text-decoration: none;
+			cursor: pointer;
+			box-sizing: border-box;
+			&.ghost {
+				border-color: $florea-hairline;
+				background: #ffffff;
+				color: $florea-ink;
+			}
+		}
+	}
+}
+
+@include tablet {
+	#pc-wrap {
+		// a safety net: nothing may push the page sideways (clip does not create a scroll box)
+		overflow-x: clip;
+
+		/** containers: the 1300px desktop width becomes the screen width with a side margin **/
+		.container {
+			width: 100% !important;
+			padding-left: 20px;
+			padding-right: 20px;
+			box-sizing: border-box;
+		}
+
+		/** navbar **/
+		#top .navbar .navbar-main {
+			padding: 0;
+			height: 64px;
+			.container {
+				padding-left: 8px;
+				padding-right: 12px;
+				gap: 2px;
+				.nav-toggle {
+					width: 44px;
+					height: 44px;
+					display: flex;
+					align-items: center;
+					justify-content: center;
+					flex: 0 0 44px;
+					border: none;
+					border-radius: 50%;
+					background: none;
+					color: #ffffff;
+					cursor: pointer;
+					svg {
+						width: 26px;
+						height: 26px;
+					}
+					&:focus-visible {
+						outline: none;
+						box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.5);
+					}
+				}
+				.logo-box {
+					margin-left: 4px;
+					margin-right: auto;
+					display: flex;
+					align-items: center;
+					a {
+						display: flex;
+						align-items: center;
+						min-height: 44px;
+					}
+					img {
+						width: 116px;
+					}
+				}
+				// the links, the language switch and the long login button live in the slide-in menu
+				.router-box,
+				.lan-box .btn-lang {
+					display: none;
+				}
+				.user-box {
+					width: auto;
+					order: 3;
+					.join-box {
+						width: 44px;
+						height: 44px;
+						border: none;
+						background: none;
+						span {
+							display: none;
+						}
+						svg {
+							margin-right: 0;
+							width: 28px;
+							height: 28px;
+						}
+					}
+					.login-user {
+						width: 44px;
+						height: 44px;
+						display: flex;
+						align-items: center;
+						justify-content: center;
+						cursor: pointer;
+						img {
+							width: 36px;
+							height: 36px;
+						}
+					}
+				}
+				.lan-box {
+					margin-left: 0;
+					order: 2;
+					.notify-bell {
+						margin-right: 0;
+						width: 44px;
+						height: 44px;
+					}
+				}
+			}
+		}
+
+		/** page header of the inner pages **/
+		.header-basic {
+			height: 300px;
+			&.auth {
+				height: 240px;
+			}
+			.container {
+				padding-bottom: 36px;
+				strong {
+					font-size: 40px;
+				}
+				span {
+					margin-top: 10px;
+					font-size: 16px;
+					line-height: 1.5;
+				}
+			}
+		}
+
+		/** footer **/
+		#footer {
+			padding: 52px 0 calc(20px + env(safe-area-inset-bottom));
+			.footer-container {
+				width: 100%;
+				padding: 0 20px;
+				box-sizing: border-box;
+				.main {
+					flex-direction: column;
+					gap: 40px;
+					.left {
+						height: auto;
+						gap: 22px;
+						.footer-box .media-box {
+							display: flex;
+							gap: 6px;
+							svg {
+								margin-right: 0;
+								padding: 8px;
+								width: 44px;
+								height: 44px;
+								box-sizing: border-box;
+							}
+						}
+					}
+					.right {
+						width: 100%;
+						.top div {
+							padding: 0 8px 0 20px;
+							width: 100%;
+							height: 56px;
+							input {
+								min-width: 0;
+								flex: 1 1 auto;
+								height: 44px;
+								background: none;
+							}
+							span {
+								padding: 0 12px;
+								display: flex;
+								align-items: center;
+								height: 44px;
+								flex: 0 0 auto;
+							}
+						}
+						.bottom {
+							margin-top: 40px;
+							display: grid;
+							grid-template-columns: repeat(3, minmax(0, 1fr));
+							gap: 32px 20px;
+							div span {
+								margin-top: 0;
+								padding: 12px 0;
+								line-height: 20px;
+							}
+							div strong {
+								margin-bottom: 6px;
+							}
+						}
+					}
+				}
+				.second {
+					margin-top: 36px;
+					padding-top: 18px;
+					height: auto;
+					flex-direction: column;
+					align-items: flex-start;
+					gap: 6px;
+				}
+			}
+		}
+
+		/** chat **/
+		.chatting {
+			.chat-button {
+				right: 16px;
+				bottom: calc(20px + env(safe-area-inset-bottom));
+			}
+			.chat-frame {
+				right: -110vw;
+				bottom: calc(84px + env(safe-area-inset-bottom));
+				&.open {
+					right: 16px;
+				}
+			}
+		}
+	}
+}
+
+@include phone {
+	#pc-wrap {
+		.container {
+			padding-left: 16px;
+			padding-right: 16px;
+		}
+
+		#top .navbar .navbar-main .container {
+			padding-left: 4px;
+			padding-right: 8px;
+		}
+
+		.header-basic {
+			height: 232px;
+			&.auth {
+				height: 200px;
+			}
+			.container {
+				padding-bottom: 26px;
+				strong {
+					font-size: 32px;
+				}
+				span {
+					margin-top: 8px;
+					font-size: 14.5px;
+				}
+			}
+		}
+
+		#footer .footer-container {
+			padding: 0 16px;
+			.main .right .bottom {
+				grid-template-columns: repeat(2, minmax(0, 1fr));
+			}
+		}
+
+		.chatting .chat-frame {
+			width: calc(100vw - 24px);
+			height: min(540px, calc(100vh - 170px));
+			max-height: none;
+			&.open {
+				right: 12px;
+			}
+		}
+	}
+}

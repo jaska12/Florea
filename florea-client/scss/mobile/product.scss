@@ -1,0 +1,233 @@
+/** PRODUCT LIST **/
+
+// parts of the bottom sheet that only exist for narrow screens
+#pc-wrap #product-list-page {
+	.filter-toggle,
+	.filter-backdrop,
+	.sheet-head,
+	.sheet-foot {
+		display: none;
+	}
+}
+
+@include tablet {
+	#pc-wrap #product-list-page {
+		padding-bottom: 24px;
+		.container {
+			flex-direction: column;
+
+			// the sort row: "Filters" on the left, "Sort by" on the right
+			.right {
+				position: static !important;
+				padding-top: 20px;
+				width: 100%;
+				.filter-toggle {
+					margin-right: auto;
+					padding: 0 18px 0 14px;
+					height: 44px;
+					display: flex;
+					align-items: center;
+					gap: 8px;
+					border: 1px solid $florea-hairline;
+					border-radius: 999px;
+					background: #ffffff;
+					color: $florea-ink;
+					font-family: $font;
+					font-size: 14.5px;
+					font-weight: 600;
+					cursor: pointer;
+					svg {
+						width: 20px;
+						height: 20px;
+						color: $florea-rose;
+					}
+				}
+				button.MuiButton-root {
+					min-height: 44px;
+				}
+			}
+
+			.product-page {
+				padding-top: 20px !important;
+				flex-direction: column !important;
+				gap: 0 !important;
+
+				.filter-backdrop {
+					position: fixed;
+					inset: 0;
+					z-index: 1200;
+					display: block;
+					background: rgba(43, 20, 32, 0.46);
+					opacity: 0;
+					pointer-events: none;
+					transition: opacity 280ms ease;
+					&.open {
+						opacity: 1;
+						pointer-events: auto;
+					}
+				}
+
+				// the filter: a sheet that slides up from the bottom edge
+				.filter-config {
+					position: fixed;
+					left: 0;
+					right: 0;
+					bottom: 0;
+					z-index: 1201;
+					width: 100% !important;
+					max-height: 86vh;
+					border-radius: 24px 24px 0 0;
+					background: #ffffff;
+					box-shadow: 0 -18px 50px rgba(43, 20, 32, 0.24);
+					overflow: hidden;
+					transform: translateY(105%);
+					visibility: hidden;
+					transition:
+						transform 380ms $logo-ease,
+						visibility 0s linear 380ms;
+					&.open {
+						transform: none;
+						visibility: visible;
+						transition:
+							transform 380ms $logo-ease,
+							visibility 0s;
+					}
+					.sheet-head {
+						flex: 0 0 auto;
+						padding: 10px 12px 10px 22px;
+						display: flex;
+						align-items: center;
+						justify-content: space-between;
+						border-bottom: 1px solid $florea-hairline-soft;
+						strong {
+							font-family: $font-display;
+							font-size: 20px;
+							font-weight: 500;
+						}
+						button {
+							width: 44px;
+							height: 44px;
+							display: flex;
+							align-items: center;
+							justify-content: center;
+							border: none;
+							border-radius: 50%;
+							background: none;
+							color: $florea-muted;
+							cursor: pointer;
+						}
+					}
+					.filter-main {
+						flex: 1 1 auto;
+						min-height: 0;
+						padding: 20px 22px 8px !important;
+						border-radius: 0 !important;
+						box-shadow: none !important;
+						overflow-y: auto;
+						overscroll-behavior: contain;
+						box-sizing: border-box;
+						.find-your-home {
+							// every place is listed: there is no hover on a touch screen to unfold the list
+							.product-location {
+								height: auto !important;
+								display: grid !important;
+								grid-template-columns: repeat(2, minmax(0, 1fr));
+								gap: 0 12px !important;
+							}
+							.input-box {
+								min-height: 44px;
+								.product-checkbox {
+									width: 22px;
+									height: 22px;
+								}
+								label {
+									flex: 1 1 auto;
+									display: flex;
+									align-items: center;
+									min-height: 44px;
+								}
+								.search-input {
+									height: 50px !important;
+								}
+							}
+							.button-group {
+								height: 46px !important;
+							}
+							.square-year-input input {
+								height: 48px !important;
+							}
+						}
+					}
+					.sheet-foot {
+						flex: 0 0 auto;
+						padding: 12px 20px calc(14px + env(safe-area-inset-bottom));
+						display: block;
+						border-top: 1px solid $florea-hairline-soft;
+						background: #ffffff;
+						button {
+							width: 100%;
+							height: 50px;
+							border: none;
+							border-radius: 999px;
+							background: $florea-rose;
+							color: #ffffff;
+							font-family: $font;
+							font-size: 15px;
+							font-weight: 600;
+							cursor: pointer;
+						}
+					}
+				}
+
+				.main-config {
+					margin-bottom: 40px !important;
+					width: 100% !important;
+					gap: 44px !important;
+					.list-config {
+						display: grid !important;
+						grid-template-columns: repeat(3, minmax(0, 1fr));
+						gap: 18px !important;
+						.card-config {
+							margin-bottom: 0;
+							width: 100% !important;
+						}
+					}
+					.pagination-config {
+						width: 100% !important;
+						height: auto !important;
+						.MuiPaginationItem-root {
+							min-width: 40px;
+							height: 40px;
+						}
+						.total-result p {
+							font-size: 17px !important;
+							font-weight: 400 !important;
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+@media (max-width: 860px) {
+	#pc-wrap #product-list-page .container .product-page .main-config .list-config {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+	}
+}
+
+@media (max-width: 520px) {
+	#pc-wrap #product-list-page .container .product-page .main-config .list-config {
+		grid-template-columns: minmax(0, 1fr);
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	#pc-wrap #product-list-page .container .product-page {
+		.filter-config,
+		.filter-config.open,
+		.filter-backdrop {
+			transition: none;
+		}
+	}
+}

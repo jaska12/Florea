@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { NextPage } from 'next';
 import { Pagination, Stack, Typography } from '@mui/material';
-import useDeviceDetect from '../../hooks/useDeviceDetect';
 import { ProductCard } from './ProductCard';
 import { useMutation, useQuery, useReactiveVar } from '@apollo/client';
 import { Product } from '../../types/product/product';
@@ -15,7 +14,6 @@ import { UPDATE_PRODUCT } from '../../../apollo/user/mutation';
 import { sweetConfirmAlert, sweetErrorHandling } from '../../sweetAlert';
 
 const MyProducts: NextPage = ({ initialInput, ...props }: any) => {
-	const device = useDeviceDetect();
 	const [searchFilter, setSearchFilter] = useState<AgentProductsInquiry>(initialInput);
 	const [agentProducts, setAgentProducts] = useState<Product[]>([]);
 	const [total, setTotal] = useState<number>(0);
@@ -89,80 +87,76 @@ const MyProducts: NextPage = ({ initialInput, ...props }: any) => {
 		router.back();
 	}
 
-	if (device === 'mobile') {
-		return <div>FLOREA PRODUCTS MOBILE</div>;
-	} else {
-		return (
-			<div id="my-product-page">
-				<Stack className="main-title-box">
-					<Stack className="right-box">
-						<Typography className="main-title">My Products</Typography>
-						<Typography className="sub-title">We are glad to see you again!</Typography>
-					</Stack>
+	return (
+		<div id="my-product-page">
+			<Stack className="main-title-box">
+				<Stack className="right-box">
+					<Typography className="main-title">My Products</Typography>
+					<Typography className="sub-title">We are glad to see you again!</Typography>
 				</Stack>
-				<Stack className="product-list-box">
-					<Stack className="tab-name-box">
-						<Typography
-							onClick={() => changeStatusHandler(ProductStatus.ACTIVE)}
-							className={searchFilter.search.productStatus === 'ACTIVE' ? 'active-tab-name' : 'tab-name'}
-						>
-							On Sale
-						</Typography>
-						<Typography
-							onClick={() => changeStatusHandler(ProductStatus.SOLD)}
-							className={searchFilter.search.productStatus === 'SOLD' ? 'active-tab-name' : 'tab-name'}
-						>
-							On Sold
-						</Typography>
+			</Stack>
+			<Stack className="product-list-box">
+				<Stack className="tab-name-box">
+					<Typography
+						onClick={() => changeStatusHandler(ProductStatus.ACTIVE)}
+						className={searchFilter.search.productStatus === 'ACTIVE' ? 'active-tab-name' : 'tab-name'}
+					>
+						On Sale
+					</Typography>
+					<Typography
+						onClick={() => changeStatusHandler(ProductStatus.SOLD)}
+						className={searchFilter.search.productStatus === 'SOLD' ? 'active-tab-name' : 'tab-name'}
+					>
+						On Sold
+					</Typography>
+				</Stack>
+				<Stack className="list-box">
+					<Stack className="listing-title-box">
+						<Typography className="title-text">Product</Typography>
+						<Typography className="title-text">Date Published</Typography>
+						<Typography className="title-text">Status</Typography>
+						<Typography className="title-text">View</Typography>
+						<Typography className="title-text">Action</Typography>
 					</Stack>
-					<Stack className="list-box">
-						<Stack className="listing-title-box">
-							<Typography className="title-text">Product</Typography>
-							<Typography className="title-text">Date Published</Typography>
-							<Typography className="title-text">Status</Typography>
-							<Typography className="title-text">View</Typography>
-							<Typography className="title-text">Action</Typography>
-						</Stack>
 
-						{agentProducts?.length === 0 ? (
-							<div className={'no-data'}>
-								<img src="/img/icons/icoAlert.svg" alt="" />
-								<p>No Product found!</p>
-							</div>
-						) : (
-							agentProducts.map((product: Product) => {
-								return (
-									<ProductCard
-										key={product._id}
-										product={product}
-										deleteProductHandler={deleteProductHandler}
-										updateProductHandler={updateProductHandler}
-									/>
-								);
-							})
-						)}
+					{agentProducts?.length === 0 ? (
+						<div className={'no-data'}>
+							<img src="/img/icons/icoAlert.svg" alt="" />
+							<p>No Product found!</p>
+						</div>
+					) : (
+						agentProducts.map((product: Product) => {
+							return (
+								<ProductCard
+									key={product._id}
+									product={product}
+									deleteProductHandler={deleteProductHandler}
+									updateProductHandler={updateProductHandler}
+								/>
+							);
+						})
+					)}
 
-						{agentProducts.length !== 0 && (
-							<Stack className="pagination-config">
-								<Stack className="pagination-box">
-									<Pagination
-										count={Math.ceil(total / searchFilter.limit)}
-										page={searchFilter.page}
-										shape="circular"
-										color="primary"
-										onChange={paginationHandler}
-									/>
-								</Stack>
-								<Stack className="total-result">
-									<Typography>{total} product available</Typography>
-								</Stack>
+					{agentProducts.length !== 0 && (
+						<Stack className="pagination-config">
+							<Stack className="pagination-box">
+								<Pagination
+									count={Math.ceil(total / searchFilter.limit)}
+									page={searchFilter.page}
+									shape="circular"
+									color="primary"
+									onChange={paginationHandler}
+								/>
 							</Stack>
-						)}
-					</Stack>
+							<Stack className="total-result">
+								<Typography>{total} product available</Typography>
+							</Stack>
+						</Stack>
+					)}
 				</Stack>
-			</div>
-		);
-	}
+			</Stack>
+		</div>
+	);
 };
 
 MyProducts.defaultProps = {

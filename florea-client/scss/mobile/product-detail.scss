@@ -1,0 +1,190 @@
+/** PRODUCT PAGE **/
+
+@include tablet {
+	#pc-wrap #product-detail-page {
+		padding-top: 64px !important;
+		padding-bottom: 56px !important;
+		.container {
+			flex-direction: column;
+		}
+		.product-detail-config {
+			padding-top: 28px !important;
+			width: 100%;
+
+			/** title, price, photos **/
+			.product-info-config {
+				.info {
+					flex-direction: column !important;
+					gap: 14px;
+					.left-box {
+						width: 100% !important;
+						.title-main {
+							font-size: 28px !important;
+							line-height: 1.2 !important;
+							overflow-wrap: anywhere;
+						}
+						.top-box,
+						.bottom-box {
+							flex-wrap: wrap;
+							row-gap: 8px;
+						}
+					}
+					.right-box {
+						width: 100% !important;
+						flex-direction: row-reverse !important;
+						align-items: center !important;
+						justify-content: space-between !important;
+						.buttons .button-box {
+							min-height: 44px;
+							align-items: center;
+						}
+						p {
+							margin: 0 !important;
+						}
+					}
+				}
+				.images {
+					.main-image {
+						height: auto !important;
+						aspect-ratio: 4 / 3;
+						img {
+							width: 100%;
+							height: 100%;
+							object-fit: cover;
+						}
+					}
+					.sub-images {
+						flex-wrap: nowrap;
+						overflow-x: auto;
+						scrollbar-width: none;
+						&::-webkit-scrollbar {
+							display: none;
+						}
+						.sub-img-box {
+							flex: 0 0 auto;
+						}
+					}
+				}
+			}
+
+			/** details, map, reviews, then the florist box **/
+			.product-desc-config {
+				flex-direction: column !important;
+				gap: 24px !important;
+				.left-config {
+					width: 100% !important;
+					.options-config {
+						display: grid !important;
+						grid-template-columns: repeat(3, minmax(0, 1fr));
+						gap: 18px 12px !important;
+						.option {
+							width: auto !important;
+						}
+					}
+					.prop-desc-config,
+					.address-config,
+					.reviews-config,
+					.leave-review-config {
+						padding: 24px 20px 28px !important;
+						box-sizing: border-box;
+					}
+					.prop-desc-config .bottom .info-box {
+						flex-direction: column !important;
+						gap: 0 !important;
+						.left,
+						.right {
+							width: 100%;
+						}
+					}
+					.address-config .map-box {
+						height: 280px !important;
+					}
+					.reviews-config .filter-box {
+						flex-wrap: wrap;
+						gap: 12px;
+					}
+					.leave-review-config {
+						textarea {
+							width: 100%;
+							box-sizing: border-box;
+						}
+						.submit-btn .submit-review {
+							width: 100% !important;
+							min-height: 50px;
+						}
+					}
+				}
+				.right-config {
+					width: 100% !important;
+					box-sizing: border-box;
+					input,
+					textarea {
+						width: 100%;
+						min-height: 48px;
+						box-sizing: border-box;
+					}
+					.send-message {
+						width: 100%;
+						min-height: 50px;
+					}
+				}
+			}
+
+			/** more products **/
+			.similar-products-config {
+				.title-pagination-box {
+					align-items: flex-end;
+					.title-box {
+						width: auto !important;
+						flex: 1 1 auto;
+						.main-title {
+							font-size: 26px !important;
+						}
+					}
+					.pagination-box svg {
+						padding: 10px;
+						width: 44px;
+						height: 44px;
+						box-sizing: border-box;
+					}
+				}
+				.cards-box .similar-homes-swiper .similar-homes-slide {
+					width: min(78vw, 340px) !important;
+					.product-big-card-box {
+						margin-left: 0;
+						margin-right: 0;
+						width: 100% !important;
+					}
+				}
+			}
+		}
+	}
+}
+
+@include phone {
+	#pc-wrap #product-detail-page .product-detail-config {
+		padding-top: 20px !important;
+		.product-info-config {
+			.info .left-box .title-main {
+				font-size: 24px !important;
+			}
+			.images .main-image {
+				aspect-ratio: 1 / 1;
+			}
+		}
+		.product-desc-config .left-config {
+			.options-config {
+				grid-template-columns: repeat(2, minmax(0, 1fr));
+			}
+			.prop-desc-config,
+			.address-config,
+			.reviews-config,
+			.leave-review-config {
+				padding: 22px 16px 24px !important;
+			}
+		}
+		.similar-products-config .title-pagination-box .title-box .main-title {
+			font-size: 22px !important;
+		}
+	}
+}

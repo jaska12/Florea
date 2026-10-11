@@ -1,6 +1,5 @@
 import React from 'react';
 import { useRouter } from 'next/router';
-import useDeviceDetect from '../../hooks/useDeviceDetect';
 import { Product } from '../../types/product/product';
 import { useReactiveVar } from '@apollo/client';
 import { userVar } from '../../../apollo/store';
@@ -15,7 +14,6 @@ interface ProductCardType {
 
 const ProductCard = (props: ProductCardType) => {
 	const { product, likeProductHandler, myFavorites, recentlyVisited } = props;
-	const device = useDeviceDetect();
 	const router = useRouter();
 	const user = useReactiveVar(userVar);
 	const liked = Boolean(myFavorites || (product?.meLiked && product?.meLiked[0]?.myFavorite));
@@ -28,23 +26,19 @@ const ProductCard = (props: ProductCardType) => {
 		});
 	};
 
-	if (device === 'mobile') {
-		return <div>PRODUCT CARD</div>;
-	} else {
-		return (
-			<ProductCardView
-				className="card-config"
-				product={product}
-				liked={liked}
-				onOpen={pushDetailHandler}
-				showStats={!recentlyVisited}
-				onLike={(e: any) => {
-					e.stopPropagation();
-					likeProductHandler?.(user, product?._id);
-				}}
-			/>
-		);
-	}
+	return (
+		<ProductCardView
+			className="card-config"
+			product={product}
+			liked={liked}
+			onOpen={pushDetailHandler}
+			showStats={!recentlyVisited}
+			onLike={(e: any) => {
+				e.stopPropagation();
+				likeProductHandler?.(user, product?._id);
+			}}
+		/>
+	);
 };
 
 export default ProductCard;

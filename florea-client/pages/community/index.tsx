@@ -4,7 +4,6 @@ import { useRouter } from 'next/router';
 import { TabContext, TabList, TabPanel } from '@mui/lab';
 import { Stack, Tab, Typography, Button, Pagination } from '@mui/material';
 import CommunityCard from '../../libs/components/common/CommunityCard';
-import useDeviceDetect from '../../libs/hooks/useDeviceDetect';
 import withLayoutBasic from '../../libs/components/layout/LayoutBasic';
 import { BoardArticle } from '../../libs/types/board-article/board-article';
 import { T } from '../../libs/types/common';
@@ -24,7 +23,6 @@ export const getStaticProps = async ({ locale }: any) => ({
 });
 
 const Community: NextPage = ({ initialInput, ...props }: T) => {
-	const device = useDeviceDetect();
 	const router = useRouter();
 	const { query } = router;
 	const articleCategory = query?.articleCategory as string;
@@ -104,183 +102,179 @@ const Community: NextPage = ({ initialInput, ...props }: T) => {
 		}
 	};
 
-	if (device === 'mobile') {
-		return <h1>COMMUNITY PAGE MOBILE</h1>;
-	} else {
-		return (
-			<div id="community-list-page">
-				<div className="container">
-					<TabContext value={searchCommunity.search.articleCategory}>
-						<Stack className="main-box">
-							<Stack className="left-config">
-								<Stack className={'image-info'}>
-									<img src={'/img/logo/florea/florea-mark.svg'} alt={'Florea'} />
-									<Stack className={'community-name'}>
-										<Typography className={'name'}>Florea Community</Typography>
-									</Stack>
-								</Stack>
-
-								<TabList
-									orientation="vertical"
-									aria-label="lab API tabs example"
-									TabIndicatorProps={{
-										style: { display: 'none' },
-									}}
-									onChange={tabChangeHandler}
-								>
-									<Tab
-										value={'FREE'}
-										label={'Free Board'}
-										className={`tab-button ${searchCommunity.search.articleCategory == 'FREE' ? 'active' : ''}`}
-									/>
-									<Tab
-										value={'RECOMMEND'}
-										label={'Recommendation'}
-										className={`tab-button ${searchCommunity.search.articleCategory == 'RECOMMEND' ? 'active' : ''}`}
-									/>
-									<Tab
-										value={'NEWS'}
-										label={'News'}
-										className={`tab-button ${searchCommunity.search.articleCategory == 'NEWS' ? 'active' : ''}`}
-									/>
-									<Tab
-										value={'HUMOR'}
-										label={'Humor'}
-										className={`tab-button ${searchCommunity.search.articleCategory == 'HUMOR' ? 'active' : ''}`}
-									/>
-								</TabList>
-							</Stack>
-							<Stack className="right-config">
-								<Stack className="panel-config">
-									<Stack className="title-box">
-										<Stack className="left">
-											<Typography className="title">{searchCommunity.search.articleCategory} BOARD</Typography>
-											<Typography className="sub-title">
-												Express your opinions freely here without content restrictions
-											</Typography>
-										</Stack>
-										<Button
-											onClick={() =>
-												router.push({
-													pathname: '/mypage',
-													query: {
-														category: 'writeArticle',
-													},
-												})
-											}
-											className="right"
-										>
-											Write
-										</Button>
-									</Stack>
-
-									<TabPanel value="FREE">
-										<Stack className="list-box">
-											{totalCount ? (
-												boardArticles?.map((boardArticle: BoardArticle) => {
-													return (
-														<CommunityCard
-															boardArticle={boardArticle}
-															key={boardArticle?._id}
-															likeArticleHandler={likeArticleHandler}
-														/>
-													);
-												})
-											) : (
-												<Stack className={'no-data'}>
-													<img src="/img/icons/icoAlert.svg" alt="" />
-													<p>No Article found!</p>
-												</Stack>
-											)}
-										</Stack>
-									</TabPanel>
-									<TabPanel value="RECOMMEND">
-										<Stack className="list-box">
-											{totalCount ? (
-												boardArticles?.map((boardArticle: BoardArticle) => {
-													return (
-														<CommunityCard
-															boardArticle={boardArticle}
-															key={boardArticle?._id}
-															likeArticleHandler={likeArticleHandler}
-														/>
-													);
-												})
-											) : (
-												<Stack className={'no-data'}>
-													<img src="/img/icons/icoAlert.svg" alt="" />
-													<p>No Article found!</p>
-												</Stack>
-											)}
-										</Stack>
-									</TabPanel>
-									<TabPanel value="NEWS">
-										<Stack className="list-box">
-											{totalCount ? (
-												boardArticles?.map((boardArticle: BoardArticle) => {
-													return (
-														<CommunityCard
-															boardArticle={boardArticle}
-															key={boardArticle?._id}
-															likeArticleHandler={likeArticleHandler}
-														/>
-													);
-												})
-											) : (
-												<Stack className={'no-data'}>
-													<img src="/img/icons/icoAlert.svg" alt="" />
-													<p>No Article found!</p>
-												</Stack>
-											)}
-										</Stack>
-									</TabPanel>
-									<TabPanel value="HUMOR">
-										<Stack className="list-box">
-											{totalCount ? (
-												boardArticles?.map((boardArticle: BoardArticle) => {
-													return (
-														<CommunityCard
-															boardArticle={boardArticle}
-															key={boardArticle?._id}
-															likeArticleHandler={likeArticleHandler}
-														/>
-													);
-												})
-											) : (
-												<Stack className={'no-data'}>
-													<img src="/img/icons/icoAlert.svg" alt="" />
-													<p>No Article found!</p>
-												</Stack>
-											)}
-										</Stack>
-									</TabPanel>
+	return (
+		<div id="community-list-page">
+			<div className="container">
+				<TabContext value={searchCommunity.search.articleCategory}>
+					<Stack className="main-box">
+						<Stack className="left-config">
+							<Stack className={'image-info'}>
+								<img src={'/img/logo/florea/florea-mark.svg'} alt={'Florea'} />
+								<Stack className={'community-name'}>
+									<Typography className={'name'}>Florea Community</Typography>
 								</Stack>
 							</Stack>
-						</Stack>
-					</TabContext>
 
-					{totalCount > 0 && (
-						<Stack className="pagination-config">
-							<Stack className="pagination-box">
-								<Pagination
-									count={Math.ceil(totalCount / searchCommunity.limit)}
-									page={searchCommunity.page}
-									shape="circular"
-									color="primary"
-									onChange={paginationHandler}
+							<TabList
+								orientation="vertical"
+								aria-label="lab API tabs example"
+								TabIndicatorProps={{
+									style: { display: 'none' },
+								}}
+								onChange={tabChangeHandler}
+							>
+								<Tab
+									value={'FREE'}
+									label={'Free Board'}
+									className={`tab-button ${searchCommunity.search.articleCategory == 'FREE' ? 'active' : ''}`}
 								/>
-							</Stack>
-							<Stack className="total-result">
-								<Typography>
-									Total {totalCount} article{totalCount > 1 ? 's' : ''} available
-								</Typography>
+								<Tab
+									value={'RECOMMEND'}
+									label={'Recommendation'}
+									className={`tab-button ${searchCommunity.search.articleCategory == 'RECOMMEND' ? 'active' : ''}`}
+								/>
+								<Tab
+									value={'NEWS'}
+									label={'News'}
+									className={`tab-button ${searchCommunity.search.articleCategory == 'NEWS' ? 'active' : ''}`}
+								/>
+								<Tab
+									value={'HUMOR'}
+									label={'Humor'}
+									className={`tab-button ${searchCommunity.search.articleCategory == 'HUMOR' ? 'active' : ''}`}
+								/>
+							</TabList>
+						</Stack>
+						<Stack className="right-config">
+							<Stack className="panel-config">
+								<Stack className="title-box">
+									<Stack className="left">
+										<Typography className="title">{searchCommunity.search.articleCategory} BOARD</Typography>
+										<Typography className="sub-title">
+											Express your opinions freely here without content restrictions
+										</Typography>
+									</Stack>
+									<Button
+										onClick={() =>
+											router.push({
+												pathname: '/mypage',
+												query: {
+													category: 'writeArticle',
+												},
+											})
+										}
+										className="right"
+									>
+										Write
+									</Button>
+								</Stack>
+
+								<TabPanel value="FREE">
+									<Stack className="list-box">
+										{totalCount ? (
+											boardArticles?.map((boardArticle: BoardArticle) => {
+												return (
+													<CommunityCard
+														boardArticle={boardArticle}
+														key={boardArticle?._id}
+														likeArticleHandler={likeArticleHandler}
+													/>
+												);
+											})
+										) : (
+											<Stack className={'no-data'}>
+												<img src="/img/icons/icoAlert.svg" alt="" />
+												<p>No Article found!</p>
+											</Stack>
+										)}
+									</Stack>
+								</TabPanel>
+								<TabPanel value="RECOMMEND">
+									<Stack className="list-box">
+										{totalCount ? (
+											boardArticles?.map((boardArticle: BoardArticle) => {
+												return (
+													<CommunityCard
+														boardArticle={boardArticle}
+														key={boardArticle?._id}
+														likeArticleHandler={likeArticleHandler}
+													/>
+												);
+											})
+										) : (
+											<Stack className={'no-data'}>
+												<img src="/img/icons/icoAlert.svg" alt="" />
+												<p>No Article found!</p>
+											</Stack>
+										)}
+									</Stack>
+								</TabPanel>
+								<TabPanel value="NEWS">
+									<Stack className="list-box">
+										{totalCount ? (
+											boardArticles?.map((boardArticle: BoardArticle) => {
+												return (
+													<CommunityCard
+														boardArticle={boardArticle}
+														key={boardArticle?._id}
+														likeArticleHandler={likeArticleHandler}
+													/>
+												);
+											})
+										) : (
+											<Stack className={'no-data'}>
+												<img src="/img/icons/icoAlert.svg" alt="" />
+												<p>No Article found!</p>
+											</Stack>
+										)}
+									</Stack>
+								</TabPanel>
+								<TabPanel value="HUMOR">
+									<Stack className="list-box">
+										{totalCount ? (
+											boardArticles?.map((boardArticle: BoardArticle) => {
+												return (
+													<CommunityCard
+														boardArticle={boardArticle}
+														key={boardArticle?._id}
+														likeArticleHandler={likeArticleHandler}
+													/>
+												);
+											})
+										) : (
+											<Stack className={'no-data'}>
+												<img src="/img/icons/icoAlert.svg" alt="" />
+												<p>No Article found!</p>
+											</Stack>
+										)}
+									</Stack>
+								</TabPanel>
 							</Stack>
 						</Stack>
-					)}
-				</div>
+					</Stack>
+				</TabContext>
+
+				{totalCount > 0 && (
+					<Stack className="pagination-config">
+						<Stack className="pagination-box">
+							<Pagination
+								count={Math.ceil(totalCount / searchCommunity.limit)}
+								page={searchCommunity.page}
+								shape="circular"
+								color="primary"
+								onChange={paginationHandler}
+							/>
+						</Stack>
+						<Stack className="total-result">
+							<Typography>
+								Total {totalCount} article{totalCount > 1 ? 's' : ''} available
+							</Typography>
+						</Stack>
+					</Stack>
+				)}
 			</div>
-		);
-	}
+		</div>
+	);
 };
 
 Community.defaultProps = {

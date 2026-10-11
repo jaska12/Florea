@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { NextPage } from 'next';
-import useDeviceDetect from '../../hooks/useDeviceDetect';
 import { Pagination, Stack, Typography } from '@mui/material';
 import ProductCard from '../product/ProductCard';
 import { Product } from '../../types/product/product';
@@ -12,7 +11,6 @@ import { Messages } from '../../config';
 import { sweetMixinErrorAlert, sweetTopSmallSuccessAlert } from '../../sweetAlert';
 
 const MyFavorites: NextPage = () => {
-	const device = useDeviceDetect();
 	const [myFavorites, setMyFavorites] = useState<Product[]>([]);
 	const [total, setTotal] = useState<number>(0);
 	const [searchFavorites, setSearchFavorites] = useState<T>({ page: 1, limit: 6 });
@@ -55,57 +53,53 @@ const MyFavorites: NextPage = () => {
 		setSearchFavorites({ ...searchFavorites, page: value });
 	};
 
-	if (device === 'mobile') {
-		return <div>FLOREA MY FAVORITES MOBILE</div>;
-	} else {
-		return (
-			<div id="my-favorites-page">
-				<Stack className="main-title-box">
-					<Stack className="right-box">
-						<Typography className="main-title">My Favorites</Typography>
-						<Typography className="sub-title">We are glad to see you again!</Typography>
-					</Stack>
+	return (
+		<div id="my-favorites-page">
+			<Stack className="main-title-box">
+				<Stack className="right-box">
+					<Typography className="main-title">My Favorites</Typography>
+					<Typography className="sub-title">We are glad to see you again!</Typography>
 				</Stack>
-				<Stack className="favorites-list-box">
-					{myFavorites?.length ? (
-						myFavorites?.map((product: Product) => {
-							return (
-								<ProductCard
-									key={product._id}
-									product={product}
-									myFavorites={true}
-									likeProductHandler={likeProductHandler}
-								/>
-							);
-						})
-					) : (
-						<div className={'no-data'}>
-							<img src="/img/icons/icoAlert.svg" alt="" />
-							<p>No Favorites found!</p>
-						</div>
-					)}
-				</Stack>
+			</Stack>
+			<Stack className="favorites-list-box">
 				{myFavorites?.length ? (
-					<Stack className="pagination-config">
-						<Stack className="pagination-box">
-							<Pagination
-								count={Math.ceil(total / searchFavorites.limit)}
-								page={searchFavorites.page}
-								shape="circular"
-								color="primary"
-								onChange={paginationHandler}
+					myFavorites?.map((product: Product) => {
+						return (
+							<ProductCard
+								key={product._id}
+								product={product}
+								myFavorites={true}
+								likeProductHandler={likeProductHandler}
 							/>
-						</Stack>
-						<Stack className="total-result">
-							<Typography>
-								Total {total} favorite product{total > 1 ? 's' : ''}
-							</Typography>
-						</Stack>
+						);
+					})
+				) : (
+					<div className={'no-data'}>
+						<img src="/img/icons/icoAlert.svg" alt="" />
+						<p>No Favorites found!</p>
+					</div>
+				)}
+			</Stack>
+			{myFavorites?.length ? (
+				<Stack className="pagination-config">
+					<Stack className="pagination-box">
+						<Pagination
+							count={Math.ceil(total / searchFavorites.limit)}
+							page={searchFavorites.page}
+							shape="circular"
+							color="primary"
+							onChange={paginationHandler}
+						/>
 					</Stack>
-				) : null}
-			</div>
-		);
-	}
+					<Stack className="total-result">
+						<Typography>
+							Total {total} favorite product{total > 1 ? 's' : ''}
+						</Typography>
+					</Stack>
+				</Stack>
+			) : null}
+		</div>
+	);
 };
 
 export default MyFavorites;
