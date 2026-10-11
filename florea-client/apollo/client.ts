@@ -87,6 +87,10 @@ function createIsomorphicLink() {
 					return { headers: getHeaders() };
 				},
 			},
+			// The server on this address is the chat gateway, which does not speak the GraphQL subscription protocol.
+			// LoggingWebSocket keeps its messages away from the subscription client (which would throw
+			// "Invalid message type!") and stores the socket in socketVar for the chat.
+			webSocketImpl: LoggingWebSocket,
 		});
 
 		const errorLink = onError(({ graphQLErrors, networkError, response }) => {

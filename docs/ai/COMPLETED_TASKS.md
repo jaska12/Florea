@@ -32,6 +32,7 @@ In the order they were done. State as of 2026-10-05, `main` at `5f5405e`.
 - [x] 26. Community skills, glass search box and trend card (recorded after the fact)
 - [x] 27. Homepage redesign
 - [x] 28. Site-wide Florea design system
+- [x] 29. Fix the "Invalid message type!" runtime error
 
 ## 1. Recommend migration steps
 
@@ -414,3 +415,11 @@ In the order they were done. State as of 2026-10-05, `main` at `5f5405e`.
   - Events on the homepage: the old content was Korean city festivals, so the section stays hidden.
   - A following count and follow button on the florist page beyond what the page already had; reviews, galleries and similar products use the existing features, restyled.
 - Not verified: Safari, and every state of every form.
+
+## 29. Fix the "Invalid message type!" runtime error
+
+- Symptom: with the backend running, every page showed the dev overlay "Unhandled Runtime Error: Invalid message type!".
+- Cause: `apollo/client.ts` opened Apollo's subscription WebSocket link on the chat gateway's address. The gateway sends its own chat messages, which the subscription client cannot parse. The file already had a `LoggingWebSocket` class for this, but it was never passed to the link.
+- File: `florea-client/apollo/client.ts` (`webSocketImpl: LoggingWebSocket` added to the link; 4 lines).
+- Results: `yarn tsc --noEmit` no errors. In a browser against the running site: no overlay and no runtime errors on the homepage (logged out and logged in), on the product list, and after waiting past the socket's 30-second timeout; the chat gateway's messages arrive on the socket.
+- Not verified: sending and receiving chat messages through the chat window.
