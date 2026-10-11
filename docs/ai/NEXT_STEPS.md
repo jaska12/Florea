@@ -13,7 +13,7 @@ Order follows the dependencies:
 1. ~~Member (`memberProperties` → `memberProducts`)~~ done
 2. ~~Property → Product, group enums, batch app~~ done
 3. Board articles (categories) **← next, needs the category values**
-4. Notices and notifications (keep `notificationRefId` or switch to the ERD's `productId` / `articleId`)
+4. Notices (notifications are done; see COMPLETED_TASKS.md, 32)
 
 **Verify before each module:** the previous module builds, typechecks, and its operations work in the GraphQL playground. Commit each module separately.
 
@@ -46,7 +46,7 @@ Use the `user-project` skill for the user-facing pages and `admin-panel` for the
 
 - Does `productLocation` keep the Korean city list or change?
 - What are the Florea board article categories?
-- Notifications: generic `notificationRefId` (current code) or `productId` / `articleId` (ERD)?
+- Notifications: `notificationRefId` was kept (DECISIONS.md, 21). Say so if the ERD's `productId` / `articleId` are wanted instead.
 - Which currency does Florea show (prices currently use `$`)?
 - Should the 3364 backend lint problems be auto-fixed in one separate formatting commit?
 - Should the client get an ESLint config?

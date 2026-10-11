@@ -35,6 +35,7 @@ In the order they were done. State as of 2026-10-05, `main` at `5f5405e`.
 - [x] 29. Fix the "Invalid message type!" runtime error
 - [x] 30. Fix the blank page caused by an invalid stored token
 - [x] 31. Notifications redesign (alerts, toasts, navbar bell)
+- [x] 32. Notification module in the backend and real notifications in the bell
 
 ## 1. Recommend migration steps
 
@@ -465,3 +466,39 @@ In the order they were done. State as of 2026-10-05, `main` at `5f5405e`.
   - A notifications page: there is no data to show and routing was out of scope.
   - Real notifications in the dropdown, mark as read, and links: these need a notification module in the backend (see BACKEND_MIGRATION.md).
 - Not verified: `yarn build` (the dev server was running on the same `.next` folder), warning and info alerts (no code calls them yet), the admin alerts, Safari.
+
+## 32. Notification module in the backend and real notifications in the bell
+
+- Request from the project owner: build notifications in the backend so the bell shows real data, and finish the whole section.
+- Backend (`florea-api/apps/florea-api/src`):
+  - new: `components/notification/` (module, resolver, service), `libs/dto/notification/` (`notification.ts`, `notification.input.ts`)
+  - operations, all behind `AuthGuard`: `getNotifications(input: NotificationsInquiry)` returns `list` (with `authorData`), `metaCounter` and `unreadCount`; `readNotification(input: String)`; `readAllNotifications` returns how many were changed
+  - notifications are created in the existing services: a like on a product, an article or a profile; a comment on a product, an article or a profile; a subscription. Taking a like back or unsubscribing removes its notification. Acting on your own product, article or profile creates nothing.
+  - a failure while writing a notification is logged and does not fail the like, comment or subscription
+  - `libs/config.ts`: `lookupAuthorData`; `schemas/Notification.model.ts`: an index on `receiverId` and `createdAt`
+  - the `notifications` collection now exists in the dev database
+- Frontend (`florea-client`):
+  - `apollo/user/query.ts`: `GET_NOTIFICATIONS`; `apollo/user/mutation.ts`: `READ_NOTIFICATION`, `READ_ALL_NOTIFICATIONS`
+  - `NotificationBell.tsx` loads the member's notifications, checks again every 20 seconds and when the dropdown opens, shows 10 rows with "Show more", marks one as read on click and opens what it is about (product, article, the florist page with the review, or the member who liked or followed), and has "Mark all as read"
+  - the row text is built in the client from the type, the group and the author's nickname, so it is translated (`en`, `kr`, `ru`)
+  - `apollo/client.ts`: a request can set `silentError` in its context so a failure does not open an alert; the notification check uses it and stops checking after an error
+  - `libs/enums/notification.enum.ts`: `SUBSCRIBE` added, as in the backend
+- Results:
+
+| Check | Result |
+|---|---|
+| `npx tsc --noEmit` for `florea-api` and `florea-batch` | no errors |
+| `yarn tsc --noEmit` (client) | no errors |
+| API flow test with two test accounts | 23 of 23: like on/off, own product, comment, follow/unfollow, profile like, read one (receiver only), status filter, read all, a member sees only their own, a guest is refused |
+| Browser, one member acting through the API while the other watches the bell | 11 of 11: the badge showed 3 new notifications without a reload (13 to 15 seconds), rows show author, action and icon, a click opens the product and marks it read, "Mark all as read" clears the badge, a like taken back removes its row, no error alert, no runtime errors |
+| A token the server refuses | the bell asks once, opens no alert and stops checking |
+| "Show more" | checked with the page size set to 2 for the test, then set back to 10 |
+| Phone width | the dropdown with real rows fits the screen |
+
+- Lint: `npx eslint` reports 3429 problems, up from the 3336 baseline. 12 are in the new files (the same kinds every resolver and service here has: the unused `returns` argument and `any` access) and the rest are the lines added to existing files, which follow those files' 4-space indentation while Prettier expects tabs. The new files are formatted with Prettier. The baseline in `florea-api/AGENTS.md` is updated to 3429.
+- Not done:
+  - A notifications page; the dropdown with "Show more" is the whole list.
+  - Notifications are not pushed over the socket; the client checks every 20 seconds.
+  - Deleting a comment does not remove its notification.
+- Not verified: `npm run build` (the API was running in watch mode on the same `dist` folder; its watch build compiled without errors), article notifications (like and comment on an article: the test account has no article; they use the same code path as products), a review on a profile in the browser (it passed through the API), the admin pages, Safari.
+- Test data left in the dev database: the test accounts' notifications, including rows from test comments that were then set to `DELETE`; `floreauser` follows `floreatest` and likes one of its products, so `floreatest` has real notifications to look at.

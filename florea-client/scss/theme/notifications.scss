@@ -434,6 +434,8 @@ body.swal2-toast-shown .swal2-container.florea-toast-container {
 		gap: 2px;
 		list-style: none;
 		overflow-y: auto;
+		scrollbar-width: thin;
+		scrollbar-color: $florea-petal transparent;
 		box-sizing: border-box;
 		li {
 			animation: florea-notify-item-in 320ms $notify-ease both;
@@ -520,6 +522,42 @@ body.swal2-toast-shown .swal2-container.florea-toast-container {
 		font-size: 14.5px;
 		line-height: 20px;
 		overflow-wrap: anywhere;
+		b {
+			color: $florea-ink;
+			font-weight: 600;
+		}
+	}
+	.notify-more {
+		padding: 6px 0 2px;
+		display: flex;
+		justify-content: center;
+		animation: none;
+		button {
+			padding: 8px 18px;
+			border: 1px solid $florea-hairline;
+			border-radius: 999px;
+			background: #ffffff;
+			color: $florea-wine;
+			font-family: $font;
+			font-size: 13px;
+			font-weight: 600;
+			line-height: 18px;
+			cursor: pointer;
+			transition:
+				background-color 240ms $notify-ease,
+				border-color 240ms $notify-ease;
+			&:hover {
+				background: $florea-mist;
+				border-color: $florea-petal;
+			}
+			&:focus-visible {
+				@include notify-focus-ring;
+			}
+			&:disabled {
+				opacity: 0.6;
+				cursor: default;
+			}
+		}
 	}
 	.notify-desc {
 		display: -webkit-box;

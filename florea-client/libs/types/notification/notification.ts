@@ -1,4 +1,6 @@
 import { NotificationGroup, NotificationStatus, NotificationType } from '../../enums/notification.enum';
+import { TotalCounter } from '../product/product';
+import { Member } from '../member/member';
 
 export interface Notification {
 	_id: string;
@@ -12,4 +14,12 @@ export interface Notification {
 	notificationRefId?: string;
 	createdAt: Date;
 	updatedAt: Date;
+	/** from aggregation **/
+	authorData?: Member;
+}
+
+export interface Notifications {
+	list: Notification[];
+	metaCounter: TotalCounter[];
+	unreadCount: number;
 }

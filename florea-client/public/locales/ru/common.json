@@ -28,6 +28,14 @@
 	"new": "новых",
 	"Mark all as read": "Отметить все как прочитанные",
 	"No notifications yet": "Уведомлений пока нет",
-	"Updates about your account will appear here.": "Здесь появятся новости о вашем аккаунте.",
-	"Unread": "Не прочитано"
+	"Unread": "Не прочитано",
+	"Likes, comments and new followers will appear here.": "Здесь появятся лайки, комментарии и новые подписчики.",
+	"Show more": "Показать ещё",
+	"liked your product": "оценил(а) ваш товар",
+	"liked your article": "оценил(а) вашу статью",
+	"liked your profile": "оценил(а) ваш профиль",
+	"commented on your product": "оставил(а) комментарий к вашему товару",
+	"commented on your article": "оставил(а) комментарий к вашей статье",
+	"left a review on your profile": "оставил(а) отзыв в вашем профиле",
+	"started following you": "подписался(ась) на вас"
 }

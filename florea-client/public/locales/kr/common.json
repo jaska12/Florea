@@ -28,6 +28,14 @@
   "new": "개의 새 알림",
   "Mark all as read": "모두 읽음으로 표시",
   "No notifications yet": "아직 알림이 없습니다",
-  "Updates about your account will appear here.": "계정 관련 소식이 여기에 표시됩니다.",
-  "Unread": "읽지 않음"
+  "Unread": "읽지 않음",
+  "Likes, comments and new followers will appear here.": "좋아요, 댓글, 새 팔로워 소식이 여기에 표시됩니다.",
+  "Show more": "더 보기",
+  "liked your product": "님이 회원님의 상품을 좋아합니다",
+  "liked your article": "님이 회원님의 게시글을 좋아합니다",
+  "liked your profile": "님이 회원님의 프로필을 좋아합니다",
+  "commented on your product": "님이 회원님의 상품에 댓글을 남겼습니다",
+  "commented on your article": "님이 회원님의 게시글에 댓글을 남겼습니다",
+  "left a review on your profile": "님이 회원님의 프로필에 후기를 남겼습니다",
+  "started following you": "님이 회원님을 팔로우하기 시작했습니다"
 }

@@ -13,6 +13,8 @@ import { Comment, Comments } from '../../libs/dto/comment/comment';
 import { lookupMember } from '../../libs/config';
 import { T } from '../../libs/types/common';
 import moment from 'moment';
+import { NotificationService } from '../notification/notification.service';
+import { NotificationGroup, NotificationType } from '../../libs/enums/notification.enum';
 
 @Injectable()
 export class CommentService {
@@ -21,6 +23,7 @@ export class CommentService {
         private readonly memberService: MemberService,
         private readonly productService: ProductService,
         private readonly boardArticleService: BoardArticleService,
+        private readonly notificationService: NotificationService,
     ) { }
 
     public async createComment(memberId: ObjectId, input: CommentInput): Promise<Comment> {
@@ -34,20 +37,28 @@ export class CommentService {
             throw new BadRequestException(Message.CREATE_FAILED);
         }
 
+        // the member who owns what was commented on, and the notification group it belongs to
+        let receiverId: ObjectId | null = null;
+        let notificationGroup: NotificationGroup = NotificationGroup.MEMBER;
+
         switch (input.commentGroup) {
             case CommentGroup.PRODUCT:
-                await this.productService.productStatsEditor({
+                const product = await this.productService.productStatsEditor({
                     _id: input.commentRefId,
                     targetKey: 'productComments',
                     modifier: 1,
                 });
+                receiverId = product?.memberId;
+                notificationGroup = NotificationGroup.PRODUCT;
                 break;
             case CommentGroup.ARTICLE:
-                await this.boardArticleService.boardArticleStatsEditor({
+                const article = await this.boardArticleService.boardArticleStatsEditor({
                     _id: input.commentRefId,
                     targetKey: 'articleComments',
                     modifier: 1,
                 });
+                receiverId = article?.memberId;
+                notificationGroup = NotificationGroup.ARTICLE;
                 break;
             case CommentGroup.MEMBER:
                 await this.memberService.memberStatsEditor({
@@ -55,7 +66,21 @@ export class CommentService {
                     targetKey: 'memberComments',
                     modifier: 1,
                 });
+                receiverId = input.commentRefId;
+                notificationGroup = NotificationGroup.MEMBER;
                 break;
+        }
+
+        if (result && receiverId) {
+            await this.notificationService.createNotification({
+                notificationType: NotificationType.COMMENT,
+                notificationGroup: notificationGroup,
+                notificationTitle: 'New comment',
+                notificationDesc: input.commentContent,
+                authorId: memberId,
+                receiverId: receiverId,
+                notificationRefId: input.commentRefId,
+            });
         }
 
         if (!result) throw new InternalServerErrorException(Message.CREATE_FAILED);

@@ -25,7 +25,7 @@ Turn the Nestar backend into the Florea backend in small, verifiable steps:
 
 1. Import Nestar as an untouched baseline. **Done.**
 2. Rename project and app identifiers, with no logic change. **Done.**
-3. Migrate the domain, one module at a time. **In progress:** member and product done; board articles and notices/notifications remain.
+3. Migrate the domain, one module at a time. **In progress:** member, product and notifications done; board articles and notices remain.
 
 ## Naming changes
 
@@ -71,7 +71,7 @@ Not renamed: `MemberType.AGENT` (decision 14 in `DECISIONS.md`), so `getAgents`,
 
 Unchanged: `members`, `comments`, `follows`, `likes`, `views`, `notices`, `notifications`.
 
-Collections that exist in the dev `Florea` database (created by Mongoose when the API starts): `boardArticles`, `comments`, `follows`, `likes`, `members`, `products`, `views`. `notices` and `notifications` have schemas but no module registers them yet, so they are not created.
+Collections that exist in the dev `Florea` database (created by Mongoose when the API starts): `boardArticles`, `comments`, `follows`, `likes`, `members`, `notifications`, `products`, `views`. `notices` has a schema but no module registers it yet, so it is not created.
 
 ### `products` schema
 
@@ -102,7 +102,7 @@ Unique index keeps its shape: `productType` + `productLocation` + `productTitle`
 ### Not changed yet (TODO)
 
 - `BoardArticleCategory`: still FREE, RECOMMEND, NEWS, HUMOR. Florea values not decided.
-- `Notification.model.ts`: the code uses a generic `notificationRefId`; the ERD shows `productId` and `articleId`. There is no notification service yet. TODO: decide which shape to keep.
+- `Notification.model.ts`: keeps the generic `notificationRefId`; the ERD shows `productId` and `articleId` (DECISIONS.md, 21). The notification module is in `components/notification`.
 
 ## GraphQL / API changes
 

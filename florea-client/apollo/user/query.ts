@@ -611,3 +611,37 @@ export const GET_MEMBER_FOLLOWINGS = gql`
 		}
 	}
 `;
+
+/**************************
+ *      NOTIFICATION      *
+ *************************/
+
+export const GET_NOTIFICATIONS = gql`
+	query GetNotifications($input: NotificationsInquiry!) {
+		getNotifications(input: $input) {
+			list {
+				_id
+				notificationType
+				notificationStatus
+				notificationGroup
+				notificationTitle
+				notificationDesc
+				authorId
+				receiverId
+				notificationRefId
+				createdAt
+				updatedAt
+				authorData {
+					_id
+					memberType
+					memberNick
+					memberImage
+				}
+			}
+			metaCounter {
+				total
+			}
+			unreadCount
+		}
+	}
+`;

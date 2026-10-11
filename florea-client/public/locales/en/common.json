@@ -28,6 +28,14 @@
   "new": "new",
   "Mark all as read": "Mark all as read",
   "No notifications yet": "No notifications yet",
-  "Updates about your account will appear here.": "Updates about your account will appear here.",
-  "Unread": "Unread"
+  "Unread": "Unread",
+  "Likes, comments and new followers will appear here.": "Likes, comments and new followers will appear here.",
+  "Show more": "Show more",
+  "liked your product": "liked your product",
+  "liked your article": "liked your article",
+  "liked your profile": "liked your profile",
+  "commented on your product": "commented on your product",
+  "commented on your article": "commented on your article",
+  "left a review on your profile": "left a review on your profile",
+  "started following you": "started following you"
 }

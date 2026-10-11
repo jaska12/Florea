@@ -16,6 +16,8 @@ import { LikeGroup } from '../../libs/enums/like.enum';
 import { ObjectId } from 'bson';
 import { LikeService } from '../like/like.service';
 import { Follower, Following, MeFollowed } from '../../libs/dto/follow/follow';
+import { NotificationService } from '../notification/notification.service';
+import { NotificationGroup, NotificationType } from '../../libs/enums/notification.enum';
 
 @Injectable()
 export class MemberService {
@@ -25,6 +27,7 @@ export class MemberService {
         private authService: AuthService,
         private viewService: ViewService,
         private likeService: LikeService,
+        private notificationService: NotificationService,
     ) { }
 
     public async signup(input: MemberInput): Promise<Member> {
@@ -153,6 +156,15 @@ export class MemberService {
         // LIKE TOGGLE via Like modules
         const modifier: number = await this.likeService.toggleLike(input);
         const result = await this.memberStatsEditor({ _id: likeRefId, targetKey: 'memberLikes', modifier: modifier });
+
+        await this.notificationService.likeNotification(modifier, {
+            notificationType: NotificationType.LIKE,
+            notificationGroup: NotificationGroup.MEMBER,
+            notificationTitle: 'New like on your profile',
+            authorId: memberId,
+            receiverId: likeRefId,
+            notificationRefId: likeRefId,
+        });
 
         if (!result) throw new InternalServerErrorException(Message.SOMETHING_WENT_WRONG);
         return result;

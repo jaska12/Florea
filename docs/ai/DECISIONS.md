@@ -122,4 +122,14 @@ Important decisions made during the Nestar → Florea migration session, with th
 
 - **Decision:** the bell opens a dropdown that says "No notifications yet". The list, unread state, badge and loading state are built in `NotificationBell` and wait for data; no sample notifications are shown to users.
 - **Reason:** the backend has only a `Notification` schema, and the notifications brief did not allow backend or GraphQL changes. Showing invented notifications would be false.
-- **Open:** TODO: a notification module in the backend (create on like, comment and follow; list; mark as read), then pass the data to `NotificationBell` from `Top.tsx`.
+- **Superseded by decision 21:** the backend module now exists and the bell shows real notifications; the empty state stays for members who have none.
+
+## 21. How notifications work
+
+- **Decision:**
+  - The schema keeps the generic `notificationRefId` (the product, article or member the notification is about), not the ERD's separate `productId` and `articleId`.
+  - `notificationTitle` holds a plain English line and `notificationDesc` the product title, article title or comment text. The client builds the visible sentence from the type, group and author, so it can be translated.
+  - Taking a like back or unsubscribing deletes the notification, so liking and unliking repeatedly does not fill the list.
+  - The client checks for new notifications every 20 seconds instead of receiving them over the chat socket.
+- **Reason:** `notificationRefId` is what the code already had and one field serves all three groups; polling needs no change to the socket gateway, which today only carries chat messages.
+- **Rejected:** `productId` / `articleId` columns (two nullable fields and a third case for members); pushing over the socket (faster, but it couples notifications to the chat gateway). TODO: revisit if instant delivery is wanted.

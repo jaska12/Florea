@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
+import { useRouter } from 'next/router';
 import { useTranslation } from 'next-i18next';
+import { useApolloClient, useMutation, useQuery, useReactiveVar } from '@apollo/client';
 import { Badge, Box, IconButton, Popover, Stack, useMediaQuery } from '@mui/material';
 import NotificationsOutlinedIcon from '@mui/icons-material/NotificationsOutlined';
 import FavoriteRoundedIcon from '@mui/icons-material/FavoriteRounded';
@@ -8,39 +10,145 @@ import PersonAddAlt1RoundedIcon from '@mui/icons-material/PersonAddAlt1Rounded';
 import LocalMallOutlinedIcon from '@mui/icons-material/LocalMallOutlined';
 import CampaignOutlinedIcon from '@mui/icons-material/CampaignOutlined';
 import Moment from 'react-moment';
-import { Notification } from '../../types/notification/notification';
-import { NotificationStatus } from '../../enums/notification.enum';
+import { userVar } from '../../../apollo/store';
+import { GET_BOARD_ARTICLE, GET_NOTIFICATIONS } from '../../../apollo/user/query';
+import { READ_ALL_NOTIFICATIONS, READ_NOTIFICATION } from '../../../apollo/user/mutation';
+import { Notification, Notifications } from '../../types/notification/notification';
+import { NotificationsInquiry } from '../../types/notification/notification.input';
+import { NotificationGroup, NotificationStatus, NotificationType } from '../../enums/notification.enum';
+import { MemberType } from '../../enums/member.enum';
 
-// One icon per notification type. The backend has LIKE and COMMENT today; the others are ready for when it adds them.
+const PAGE_SIZE = 10;
+const POLL_INTERVAL = 20000;
+
+// One icon per notification type. The backend sends LIKE, COMMENT and SUBSCRIBE today;
+// ORDER and SYSTEM are ready for when it adds them, and an unknown type gets the SYSTEM icon.
 const TYPE_ICONS: Record<string, { tone: string; icon: JSX.Element }> = {
 	LIKE: { tone: 'like', icon: <FavoriteRoundedIcon /> },
 	COMMENT: { tone: 'comment', icon: <ChatBubbleOutlineRoundedIcon /> },
-	FOLLOW: { tone: 'follow', icon: <PersonAddAlt1RoundedIcon /> },
+	SUBSCRIBE: { tone: 'follow', icon: <PersonAddAlt1RoundedIcon /> },
 	ORDER: { tone: 'order', icon: <LocalMallOutlinedIcon /> },
 	SYSTEM: { tone: 'system', icon: <CampaignOutlinedIcon /> },
 };
 
+// What the author did, written after their name. Keys are in the locale files.
+const ACTION_TEXT: Record<string, string> = {
+	LIKE_PRODUCT: 'liked your product',
+	LIKE_ARTICLE: 'liked your article',
+	LIKE_MEMBER: 'liked your profile',
+	COMMENT_PRODUCT: 'commented on your product',
+	COMMENT_ARTICLE: 'commented on your article',
+	COMMENT_MEMBER: 'left a review on your profile',
+	SUBSCRIBE_MEMBER: 'started following you',
+};
+
 interface NotificationBellProps {
-	notifications?: Notification[];
-	loading?: boolean;
-	onItemClick?: (notification: Notification) => void;
-	onMarkAllRead?: () => void;
 	// 'dark' sits on the wine navbar, 'light' on a pale surface
 	tone?: 'dark' | 'light';
 }
 
 const NotificationBell = (props: NotificationBellProps) => {
-	const { notifications = [], loading = false, onItemClick, onMarkAllRead, tone = 'dark' } = props;
+	const { tone = 'dark' } = props;
 	const { t } = useTranslation('common');
+	const router = useRouter();
+	const client = useApolloClient();
+	const user = useReactiveVar(userVar);
 	const [anchor, setAnchor] = useState<null | HTMLElement>(null);
+	const [limit, setLimit] = useState<number>(PAGE_SIZE);
 	const reducedMotion = useMediaQuery('(prefers-reduced-motion: reduce)');
 	const open = Boolean(anchor);
-	const unreadCount = notifications.filter((item) => item.notificationStatus === NotificationStatus.WAIT).length;
+	const inquiry: NotificationsInquiry = { page: 1, limit: limit };
+
+	/** APOLLO REQUESTS **/
+	const [readNotification] = useMutation(READ_NOTIFICATION);
+	const [readAllNotifications] = useMutation(READ_ALL_NOTIFICATIONS);
+
+	const {
+		loading: getNotificationsLoading,
+		data: getNotificationsData,
+		previousData: getNotificationsPrevious,
+		refetch: getNotificationsRefetch,
+		stopPolling,
+	} = useQuery(GET_NOTIFICATIONS, {
+		fetchPolicy: 'cache-and-network',
+		variables: { input: inquiry },
+		skip: !user?._id,
+		pollInterval: POLL_INTERVAL,
+		// a background check must not open an error alert (see errorLink in apollo/client.ts)
+		context: { silentError: true },
+		onError: () => stopPolling(),
+	});
+
+	// while more rows load, the rows already shown stay on screen
+	const result: Notifications | undefined = (getNotificationsData ?? getNotificationsPrevious)?.getNotifications;
+	const notifications: Notification[] = result?.list ?? [];
+	const total: number = result?.metaCounter?.[0]?.total ?? 0;
+	const unreadCount: number = result?.unreadCount ?? 0;
+	const firstLoad = getNotificationsLoading && !result;
 
 	/** HANDLERS **/
-	const itemClickHandler = (notification: Notification) => {
-		if (onItemClick) onItemClick(notification);
+	const openHandler = (event: React.MouseEvent<HTMLElement>) => {
+		setAnchor(event.currentTarget);
+		if (user?._id) getNotificationsRefetch({ input: inquiry }).catch(() => {});
+	};
+
+	const closeHandler = () => {
 		setAnchor(null);
+		setLimit(PAGE_SIZE);
+	};
+
+	// where a notification leads: the product, the article, or the member it is about
+	const linkOf = async (notification: Notification): Promise<string> => {
+		const { notificationType, notificationGroup, notificationRefId, authorId, authorData } = notification;
+
+		if (notificationGroup === NotificationGroup.PRODUCT && notificationRefId) {
+			return `/product/detail?id=${notificationRefId}`;
+		}
+
+		if (notificationGroup === NotificationGroup.ARTICLE && notificationRefId) {
+			// the article page needs the board the article is on
+			try {
+				const { data } = await client.query({ query: GET_BOARD_ARTICLE, variables: { input: notificationRefId } });
+				return `/community/detail?articleCategory=${data?.getBoardArticle?.articleCategory}&id=${notificationRefId}`;
+			} catch (err) {
+				return '/community?articleCategory=FREE';
+			}
+		}
+
+		// a review is on the receiver's own florist page; a like or a follow leads to the member who did it
+		if (notificationType === NotificationType.COMMENT && notificationRefId) {
+			return `/agent/detail?agentId=${notificationRefId}`;
+		}
+		if (authorData?.memberType === MemberType.AGENT) return `/agent/detail?agentId=${authorId}`;
+		return `/member?memberId=${authorId}`;
+	};
+
+	const itemClickHandler = async (notification: Notification) => {
+		try {
+			if (notification.notificationStatus === NotificationStatus.WAIT) {
+				await readNotification({ variables: { input: notification._id } });
+				await getNotificationsRefetch({ input: inquiry });
+			}
+		} catch (err: any) {
+			console.log('ERROR, itemClickHandler:', err.message);
+		}
+
+		const link = await linkOf(notification);
+		closeHandler();
+		await router.push(link);
+	};
+
+	const readAllHandler = async () => {
+		try {
+			await readAllNotifications();
+			await getNotificationsRefetch({ input: inquiry });
+		} catch (err: any) {
+			console.log('ERROR, readAllHandler:', err.message);
+		}
+	};
+
+	const showMoreHandler = () => {
+		setLimit(limit + PAGE_SIZE);
 	};
 
 	return (
@@ -50,7 +158,7 @@ const NotificationBell = (props: NotificationBellProps) => {
 				aria-label={unreadCount ? `${t('Notifications')} (${unreadCount})` : t('Notifications')}
 				aria-haspopup={'true'}
 				aria-expanded={open}
-				onClick={(event: React.MouseEvent<HTMLElement>) => setAnchor(event.currentTarget)}
+				onClick={openHandler}
 			>
 				<Badge className={'notify-badge'} badgeContent={unreadCount} max={99}>
 					<NotificationsOutlinedIcon />
@@ -60,7 +168,7 @@ const NotificationBell = (props: NotificationBellProps) => {
 			<Popover
 				open={open}
 				anchorEl={anchor}
-				onClose={() => setAnchor(null)}
+				onClose={closeHandler}
 				anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
 				transformOrigin={{ vertical: 'top', horizontal: 'right' }}
 				transitionDuration={reducedMotion ? 0 : 240}
@@ -74,14 +182,14 @@ const NotificationBell = (props: NotificationBellProps) => {
 							{unreadCount} {t('new')}
 						</span>
 					)}
-					{unreadCount > 0 && onMarkAllRead && (
-						<button type={'button'} className={'notify-read-all'} onClick={onMarkAllRead}>
+					{unreadCount > 0 && (
+						<button type={'button'} className={'notify-read-all'} onClick={readAllHandler}>
 							{t('Mark all as read')}
 						</button>
 					)}
 				</Stack>
 
-				{loading ? (
+				{firstLoad ? (
 					<Stack className={'notify-list'} aria-busy={'true'}>
 						{[0, 1, 2].map((row) => (
 							<Stack className={'notify-item skeleton'} key={row}>
@@ -99,12 +207,14 @@ const NotificationBell = (props: NotificationBellProps) => {
 							<NotificationsOutlinedIcon />
 						</span>
 						<strong>{t('No notifications yet')}</strong>
-						<p>{t('Updates about your account will appear here.')}</p>
+						<p>{t('Likes, comments and new followers will appear here.')}</p>
 					</Stack>
 				) : (
 					<Stack className={'notify-list'} component={'ul'}>
 						{notifications.map((notification, index) => {
 							const type = TYPE_ICONS[notification.notificationType] ?? TYPE_ICONS.SYSTEM;
+							const action = ACTION_TEXT[`${notification.notificationType}_${notification.notificationGroup}`];
+							const author = notification.authorData?.memberNick;
 							const unread = notification.notificationStatus === NotificationStatus.WAIT;
 							return (
 								<li key={notification._id} style={{ animationDelay: `${Math.min(index, 6) * 40}ms` }}>
@@ -115,7 +225,15 @@ const NotificationBell = (props: NotificationBellProps) => {
 									>
 										<span className={`notify-icon ${type.tone}`}>{type.icon}</span>
 										<Box component={'div'} className={'notify-body'}>
-											<span className={'notify-title'}>{notification.notificationTitle}</span>
+											<span className={'notify-title'}>
+												{author && action ? (
+													<>
+														<b>{author}</b> {t(action)}
+													</>
+												) : (
+													notification.notificationTitle
+												)}
+											</span>
 											{notification.notificationDesc && (
 												<span className={'notify-desc'}>{notification.notificationDesc}</span>
 											)}
@@ -128,6 +246,13 @@ const NotificationBell = (props: NotificationBellProps) => {
 								</li>
 							);
 						})}
+						{total > notifications.length && (
+							<li className={'notify-more'}>
+								<button type={'button'} onClick={showMoreHandler} disabled={getNotificationsLoading}>
+									{t('Show more')}
+								</button>
+							</li>
+						)}
 					</Stack>
 				)}
 			</Popover>

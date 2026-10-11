@@ -16,6 +16,8 @@ import { LikeService } from '../like/like.service';
 import { LikeInput } from '../../libs/dto/like/like.input';
 import { LikeGroup } from '../../libs/enums/like.enum';
 import moment from 'moment';
+import { NotificationService } from '../notification/notification.service';
+import { NotificationGroup, NotificationType } from '../../libs/enums/notification.enum';
 
 @Injectable()
 export class ProductService {
@@ -24,6 +26,7 @@ export class ProductService {
         private memberService: MemberService,
         private viewService: ViewService,
         private likeService: LikeService,
+        private notificationService: NotificationService,
     ) { }
 
     public async createProduct(input: ProductInput): Promise<Product> {
@@ -225,6 +228,16 @@ export class ProductService {
 
         const modifier: number = await this.likeService.toggleLike(input);
         const result = await this.productStatsEditor({ _id: likeRefId, targetKey: 'productLikes', modifier: modifier });
+
+        await this.notificationService.likeNotification(modifier, {
+            notificationType: NotificationType.LIKE,
+            notificationGroup: NotificationGroup.PRODUCT,
+            notificationTitle: 'New like on your product',
+            notificationDesc: target.productTitle,
+            authorId: memberId,
+            receiverId: target.memberId,
+            notificationRefId: likeRefId,
+        });
 
         if (!result) throw new InternalServerErrorException(Message.SOMETHING_WENT_WRONG);
         return result;

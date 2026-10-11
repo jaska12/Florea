@@ -16,6 +16,8 @@ import { LikeInput } from '../../libs/dto/like/like.input';
 import { LikeGroup } from '../../libs/enums/like.enum';
 import { LikeService } from '../like/like.service';
 import moment from 'moment';
+import { NotificationService } from '../notification/notification.service';
+import { NotificationGroup, NotificationType } from '../../libs/enums/notification.enum';
 
 @Injectable()
 export class BoardArticleService {
@@ -24,6 +26,7 @@ export class BoardArticleService {
         private memberService: MemberService,
         private viewService: ViewService,
         private likeService: LikeService,
+        private notificationService: NotificationService,
     ) { }
 
     public async createBoardArticle(input: BoardArticleInput): Promise<BoardArticle> {
@@ -158,6 +161,16 @@ export class BoardArticleService {
             _id: likeRefId,
             targetKey: 'articleLikes',
             modifier: modifier,
+        });
+
+        await this.notificationService.likeNotification(modifier, {
+            notificationType: NotificationType.LIKE,
+            notificationGroup: NotificationGroup.ARTICLE,
+            notificationTitle: 'New like on your article',
+            notificationDesc: target.articleTitle,
+            authorId: memberId,
+            receiverId: target.memberId,
+            notificationRefId: likeRefId,
         });
 
         if (!result) throw new InternalServerErrorException(Message.SOMETHING_WENT_WRONG);

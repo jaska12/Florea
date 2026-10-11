@@ -131,6 +131,15 @@ export const lookupFollowerData = {
     },
 };
 
+export const lookupAuthorData = {
+    $lookup: {
+        from: 'members',
+        localField: 'authorId',
+        foreignField: '_id',
+        as: 'authorData',
+    },
+};
+
 export const lookupFavorite = {
     $lookup: {
         from: 'members',

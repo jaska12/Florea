@@ -49,4 +49,6 @@ const NotificationSchema = new Schema(
     { timestamps: true, collection: 'notifications' },
 );
 
+NotificationSchema.index({ receiverId: 1, createdAt: -1 });
+
 export default NotificationSchema;

@@ -325,3 +325,23 @@ export const UNSUBSCRIBE = gql`
 		}
 	}
 `;
+
+/**************************
+ *      NOTIFICATION      *
+ *************************/
+
+export const READ_NOTIFICATION = gql`
+	mutation ReadNotification($input: String!) {
+		readNotification(input: $input) {
+			_id
+			notificationStatus
+			updatedAt
+		}
+	}
+`;
+
+export const READ_ALL_NOTIFICATIONS = gql`
+	mutation ReadAllNotifications {
+		readAllNotifications
+	}
+`;
