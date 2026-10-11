@@ -5,7 +5,8 @@ import MenuList from '../admin/AdminMenuList';
 import Toolbar from '@mui/material/Toolbar';
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
-import { Menu, MenuItem } from '@mui/material';
+import { Menu, MenuItem, useMediaQuery } from '@mui/material';
+import MenuRoundedIcon from '@mui/icons-material/MenuRounded';
 import Drawer from '@mui/material/Drawer';
 import AppBar from '@mui/material/AppBar';
 import Avatar from '@mui/material/Avatar';
@@ -30,6 +31,9 @@ const withAdminLayout = (Component: ComponentType) => {
 		const [snackbar, setSnackbar] = useState({ open: false, message: '', severity: 'success' });
 		const [title, setTitle] = useState('admin');
 		const [loading, setLoading] = useState(true);
+		// on phones and tablets the side menu is closed until the menu button is pressed
+		const narrow = useMediaQuery('(max-width:1024px)');
+		const [asideOpen, setAsideOpen] = useState(false);
 
 		/** LIFECYCLES **/
 		useEffect(() => {
@@ -37,6 +41,10 @@ const withAdminLayout = (Component: ComponentType) => {
 			if (jwt) updateUserInfo(jwt);
 			setLoading(false);
 		}, []);
+
+		useEffect(() => {
+			setAsideOpen(false);
+		}, [router.asPath]);
 
 		useEffect(() => {
 			if (!loading && user.memberType !== MemberType.ADMIN) {
@@ -66,12 +74,17 @@ const withAdminLayout = (Component: ComponentType) => {
 					<AppBar
 						position="fixed"
 						sx={{
-							width: `calc(100% - ${drawerWidth}px)`,
-							ml: `${drawerWidth}px`,
+							width: narrow ? '100%' : `calc(100% - ${drawerWidth}px)`,
+							ml: narrow ? 0 : `${drawerWidth}px`,
 							boxShadow: 'rgb(100 116 139 / 12%) 0px 1px 4px',
 							background: 'none',
 						}}
 					>
+						{narrow && (
+							<IconButton className={'aside-toggle'} aria-label={'Open menu'} onClick={() => setAsideOpen(true)}>
+								<MenuRoundedIcon />
+							</IconButton>
+						)}
 						<Toolbar>
 							<Tooltip title="Open settings">
 								<IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
@@ -129,14 +142,19 @@ const withAdminLayout = (Component: ComponentType) => {
 
 					<Drawer
 						sx={{
-							width: drawerWidth,
+							width: narrow ? 0 : drawerWidth,
 							flexShrink: 0,
 							'& .MuiDrawer-paper': {
 								width: drawerWidth,
+								maxWidth: '86vw',
 								boxSizing: 'border-box',
 							},
 						}}
-						variant="permanent"
+						variant={narrow ? 'temporary' : 'permanent'}
+						open={narrow ? asideOpen : true}
+						onClose={() => setAsideOpen(false)}
+						// stays inside #pc-wrap, where the admin styles apply
+						ModalProps={{ disablePortal: true, keepMounted: true }}
 						anchor="left"
 						className="aside"
 					>

@@ -57,7 +57,7 @@ export const ProductCard = (props: ProductCardProps) => {
 				<Typography className="name">{product.productTitle}</Typography>
 				<Typography className="address">{product.productAddress}</Typography>
 				<Typography className="price">
-					<strong>${formatterStr(product?.productPrice)}</strong>/ mo
+					<strong>${formatterStr(product?.productPrice)}</strong>
 				</Typography>
 			</Stack>
 			<Stack className="date-box">

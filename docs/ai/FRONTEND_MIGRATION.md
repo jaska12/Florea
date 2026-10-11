@@ -71,12 +71,13 @@ Not renamed: the agent pages and components (`pages/agent`, `AgentCard`, `TopAge
 
 ## Known issues
 
-- **Chat:** one public room for all logged-in members, desktop only; messages are not stored in the database.
+- **Chat:** one public room for all logged-in members; messages are not stored in the database.
+- **Screen widths:** phones and tablets are covered (COMPLETED_TASKS.md, 34). Between 1025 and 1339px the 1300px desktop layout still scrolls sideways.
+- **About page:** a house photo, the heading "Our Exclusive Agetns" and placeholder text are still there.
 
 - **My page on a full reload:** opening `/mypage` directly or pressing F5 there sends a logged-in member to the homepage (seen twice in the test browser). Probable cause, from reading the code: the page checks the member before the navbar has read the stored token. Reaching it through the navbar works. Seen during the notifications check; not changed.
 
 - **After the site-wide design system:**
-  - Inner pages are desktop-only; phones still get the "MOBILE" placeholders (homepage excepted).
   - The site talks about delivery, but there is no order or checkout flow.
   - The FAQ text in `libs/components/cs/Faq.tsx` is still about real estate.
   - Prices use `$`.

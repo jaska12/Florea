@@ -1,0 +1,247 @@
+/** ABOUT AND CUSTOMER CARE **/
+
+@include tablet {
+	#pc-wrap {
+		.about-page {
+			padding: 44px 0 40px !important;
+			.statistics,
+			.agents,
+			.options,
+			.partners,
+			.help {
+				margin-top: 60px !important;
+			}
+			.intro .container {
+				flex-direction: column !important;
+				gap: 20px;
+				.left,
+				.right {
+					width: 100% !important;
+				}
+				.left strong {
+					font-size: 27px !important;
+					line-height: 1.25 !important;
+				}
+				.right .boxes {
+					margin-top: 36px !important;
+					gap: 24px;
+					.box {
+						margin-right: 0 !important;
+						flex: 1 1 0;
+						width: auto !important;
+						min-width: 0;
+					}
+				}
+			}
+			.statistics .container {
+				.banner {
+					height: auto !important;
+					aspect-ratio: 16 / 9;
+					overflow: hidden;
+					img {
+						height: 100%;
+						object-fit: cover;
+					}
+				}
+				.info {
+					margin-top: 44px !important;
+					flex-wrap: wrap;
+					gap: 28px 12px;
+					div {
+						flex: 1 1 28%;
+						text-align: center;
+						strong {
+							font-size: 34px !important;
+						}
+					}
+				}
+			}
+			.agents .container {
+				.title {
+					font-size: 26px !important;
+				}
+				.wrap {
+					margin-top: 28px !important;
+					display: grid !important;
+					grid-template-columns: repeat(4, minmax(0, 1fr));
+					gap: 24px 16px;
+				}
+			}
+			.options {
+				height: auto !important;
+				padding: 48px 0;
+				// the side picture is decoration and has no room beside the text
+				.about-banner {
+					display: none;
+				}
+				.container {
+					strong {
+						width: 100% !important;
+						font-size: 26px !important;
+						line-height: 1.25 !important;
+					}
+					.box {
+						margin-top: 28px !important;
+						align-items: flex-start !important;
+						.icon-box {
+							flex: 0 0 64px;
+							width: 64px !important;
+							height: 56px !important;
+						}
+						.text-box,
+						.text_-box {
+							margin-left: 16px !important;
+							min-width: 0;
+							p {
+								width: auto !important;
+							}
+						}
+					}
+					.btn {
+						min-height: 50px;
+					}
+				}
+			}
+			.partners .container .wrap {
+				margin-top: 28px !important;
+				flex-wrap: wrap;
+				justify-content: center !important;
+				gap: 22px 32px;
+				img {
+					max-width: 30%;
+					height: auto;
+				}
+			}
+			.help .container {
+				padding: 40px 24px !important;
+				flex-direction: column !important;
+				gap: 24px;
+				.left strong {
+					font-size: 26px !important;
+					line-height: 1.25 !important;
+				}
+				.right {
+					flex-wrap: wrap;
+					gap: 12px;
+					div {
+						flex: 1 1 160px;
+						min-height: 50px;
+						&.black {
+							margin-left: 0 !important;
+						}
+					}
+				}
+			}
+		}
+
+		.cs-page {
+			padding: 36px 0 44px !important;
+			.container {
+				.cs-main-info {
+					.info span {
+						font-size: 28px !important;
+						text-align: center;
+					}
+					.info p {
+						text-align: center;
+					}
+					.btns {
+						margin-top: 26px !important;
+						div {
+							flex: 1 1 0;
+							max-width: 204px;
+							width: auto !important;
+						}
+					}
+				}
+				.cs-content {
+					.title {
+						font-size: 23px !important;
+					}
+					.notice-content .main {
+						.top {
+							display: none !important;
+						}
+						.bottom .notice-card {
+							padding: 14px 4px !important;
+							flex-wrap: wrap;
+							justify-content: flex-start !important;
+							align-items: center;
+							gap: 6px 10px;
+							.notice-number {
+								margin-left: 0 !important;
+								width: auto !important;
+							}
+							.notice-title {
+								flex: 1 1 60%;
+								width: auto !important;
+								min-width: 0;
+								overflow-wrap: anywhere;
+							}
+							.notice-date {
+								flex: 1 1 100%;
+								font-size: 13px;
+							}
+						}
+					}
+					.faq-content {
+						// seven categories: one row that scrolls sideways
+						.categories {
+							justify-content: flex-start !important;
+							gap: 8px;
+							overflow-x: auto;
+							scrollbar-width: none;
+							&::-webkit-scrollbar {
+								display: none;
+							}
+							div {
+								flex: 0 0 auto;
+								padding: 0 18px;
+								width: auto !important;
+								height: 44px !important;
+								white-space: nowrap;
+							}
+						}
+						.wrap {
+							margin-top: 26px !important;
+							.MuiAccordionSummary-root {
+								min-height: 52px;
+								padding: 0 10px;
+							}
+							.MuiAccordionSummary-content {
+								align-items: center;
+								min-width: 0;
+							}
+							.MuiAccordionDetails-root {
+								padding: 16px 12px !important;
+							}
+							.badge {
+								margin: 0 12px 0 0 !important;
+								flex: 0 0 auto;
+							}
+							.answer {
+								margin-left: 0 !important;
+								align-items: flex-start !important;
+								white-space: normal !important;
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+@include phone {
+	#pc-wrap .about-page {
+		.intro .container .right .boxes {
+			flex-direction: column !important;
+		}
+		.agents .container .wrap {
+			grid-template-columns: repeat(2, minmax(0, 1fr));
+		}
+		.statistics .container .info div strong {
+			font-size: 30px !important;
+		}
+	}
+}

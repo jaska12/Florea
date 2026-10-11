@@ -1,0 +1,500 @@
+/** MY PAGE AND A MEMBER'S PAGE **/
+// Both pages share one frame: a menu column and a content column. On narrow screens the menu becomes
+// a profile line with a row of pills that scrolls sideways, and the content takes the full width.
+
+@include tablet {
+	#pc-wrap {
+		#my-page,
+		#member-page {
+			.container {
+				padding-left: 0;
+				padding-right: 0;
+			}
+			.container .my-page,
+			.container .member-page {
+				padding-top: 0 !important;
+				flex-direction: column !important;
+				gap: 0 !important;
+				.back-frame {
+					margin: 0 !important;
+					width: 100% !important;
+					flex-direction: column !important;
+					border: none !important;
+					border-radius: 0 !important;
+					box-shadow: none !important;
+					background: transparent !important;
+
+					/** menu **/
+					.left-config {
+						margin: 0 !important;
+						width: 100% !important;
+						height: auto !important;
+						border: none !important;
+						border-bottom: 1px solid $florea-hairline !important;
+						border-radius: 0 !important;
+						box-shadow: none !important;
+						> .MuiStack-root {
+							padding: 18px 0 14px !important;
+						}
+						.profile {
+							margin: 0 20px !important;
+							align-items: center;
+							.profile-img img {
+								width: 60px !important;
+								height: 60px !important;
+							}
+							.user-info {
+								margin-left: 14px !important;
+								min-width: 0;
+							}
+						}
+						.follow-button-box {
+							margin: 14px 20px 0 !important;
+							button {
+								min-height: 44px;
+							}
+						}
+						.sections {
+							margin-top: 14px !important;
+							padding: 2px 20px;
+							flex-direction: row !important;
+							gap: 8px !important;
+							overflow-x: auto;
+							scrollbar-width: none;
+							&::-webkit-scrollbar {
+								display: none;
+							}
+							.section {
+								height: auto !important;
+								flex: 0 0 auto;
+								flex-direction: row !important;
+								.title {
+									display: none;
+								}
+								.sub-section {
+									padding: 0 !important;
+									width: auto !important;
+									height: auto !important;
+									flex-direction: row !important;
+									gap: 8px;
+									li {
+										margin: 0 !important;
+										padding: 0 16px 0 14px !important;
+										width: auto !important;
+										height: 44px !important;
+										border: 1px solid $florea-hairline;
+										border-radius: 999px !important;
+										background: #ffffff;
+										white-space: nowrap;
+										&.focus {
+											border-color: $florea-ink;
+											background: $florea-ink;
+										}
+										a {
+											display: flex;
+											align-items: center;
+											height: 100%;
+										}
+									}
+									.flex-box {
+										.com-icon {
+											margin-left: 0 !important;
+										}
+										.sub-title {
+											margin-left: 8px !important;
+										}
+										// counters and stray icons beside the label do not fit a pill
+										.MuiIconButton-root {
+											display: none;
+										}
+									}
+								}
+							}
+						}
+					}
+
+					/** content **/
+					.main-config {
+						margin-top: 0 !important;
+						padding: 24px 20px 48px;
+						width: 100% !important;
+						gap: 36px !important;
+						align-items: stretch !important;
+						box-sizing: border-box;
+						.list-config {
+							display: grid !important;
+							grid-template-columns: repeat(3, minmax(0, 1fr));
+							gap: 18px !important;
+							.card-config {
+								margin: 0 !important;
+								width: 100% !important;
+							}
+						}
+						.pagination-config {
+							width: 100% !important;
+							height: auto !important;
+							.total-result p {
+								font-size: 17px !important;
+								font-weight: 400 !important;
+							}
+						}
+					}
+				}
+			}
+
+			/** headings of every section **/
+			.main-title-box {
+				margin-bottom: 20px !important;
+				flex-wrap: wrap;
+				gap: 12px;
+				.right-box {
+					width: auto !important;
+					min-width: 0;
+					.main-title {
+						font-size: 26px !important;
+						line-height: 1.2 !important;
+					}
+				}
+			}
+		}
+
+		/** lists of cards: favourites, recently visited, articles **/
+		#my-favorites-page .favorites-list-box,
+		#my-articles-page .article-list-box,
+		#member-articles-page .articles-list-box {
+			display: grid !important;
+			grid-template-columns: repeat(3, minmax(0, 1fr));
+			gap: 18px !important;
+			.card-config,
+			.community-general-card-config {
+				margin: 0 !important;
+				width: 100% !important;
+			}
+		}
+
+		/** table-like lists: my products, a member's products, followers and followings **/
+		// the column headings are dropped and every row becomes a small card
+		#my-product-page,
+		#member-products-page,
+		#member-follows-page {
+			.listing-title-box {
+				display: none !important;
+			}
+			.list-box,
+			.follows-list-box {
+				min-height: 0 !important;
+			}
+		}
+		#my-product-page,
+		#member-products-page {
+			.product-card-box {
+				margin-top: 0 !important;
+				padding: 16px 0 !important;
+				height: auto !important;
+				display: grid !important;
+				grid-template-columns: 84px minmax(0, 1fr) auto;
+				column-gap: 14px;
+				row-gap: 8px;
+				align-items: center;
+				> * {
+					margin: 0 !important;
+					width: auto !important;
+					height: auto !important;
+				}
+				.image-box {
+					grid-row: 1 / span 2;
+					width: 84px !important;
+					height: 84px !important;
+					padding: 0 !important;
+					border-radius: 12px;
+					background: linear-gradient(135deg, #fcf1f5 0%, $florea-petal 100%);
+					img {
+						object-fit: cover !important;
+					}
+				}
+				.information-box {
+					grid-column: 2 / 4;
+					padding: 0 !important;
+					.name {
+						margin-bottom: 4px !important;
+						font-size: 15px !important;
+						overflow-wrap: anywhere;
+					}
+					.address {
+						margin-bottom: 6px !important;
+						font-size: 13px !important;
+					}
+				}
+				.date-box {
+					grid-column: 2;
+					align-items: flex-start !important;
+					.date {
+						font-size: 13px !important;
+						white-space: nowrap;
+					}
+				}
+				.status-box {
+					grid-column: 3;
+				}
+				.views-box {
+					grid-column: 1 / 3;
+					align-items: flex-start !important;
+					.views {
+						font-size: 13px !important;
+						&::before {
+							content: 'Views: ';
+							color: $florea-muted;
+						}
+					}
+				}
+				.action-box {
+					grid-column: 3;
+					justify-content: flex-end !important;
+					.icon-button {
+						width: 44px !important;
+						height: 44px !important;
+					}
+				}
+			}
+		}
+		#member-follows-page .follows-card-box {
+			padding: 16px 0 !important;
+			height: auto !important;
+			flex-wrap: wrap;
+			gap: 10px 12px !important;
+			align-items: center !important;
+			> * {
+				margin: 0 !important;
+				width: auto !important;
+				height: auto !important;
+			}
+			.info {
+				flex: 1 1 100%;
+				min-width: 0;
+			}
+			.details-box {
+				flex: 1 1 auto;
+				flex-wrap: wrap;
+				gap: 6px 16px;
+			}
+			.action-box {
+				flex: 0 0 auto;
+				flex-wrap: wrap;
+				gap: 8px;
+				button {
+					min-height: 44px;
+				}
+			}
+		}
+		#my-product-page .product-list-box .tab-name-box {
+			flex-wrap: wrap;
+			gap: 8px;
+			p,
+			.tab-name {
+				min-height: 44px;
+				display: flex;
+				align-items: center;
+			}
+		}
+
+		/** my profile **/
+		#my-profile-page {
+			.top-box,
+			.bottom-box {
+				padding: 20px 16px !important;
+				width: 100% !important;
+				box-sizing: border-box;
+			}
+			.top-box {
+				.photo-box .image-big-box {
+					flex-wrap: wrap;
+					gap: 14px;
+				}
+				.small-input-box {
+					gap: 14px !important;
+					.input-box {
+						width: 100% !important;
+						input {
+							width: 100% !important;
+							height: 50px;
+							box-sizing: border-box;
+							font-size: 16px !important;
+						}
+					}
+				}
+				.address-box,
+				.about-me-box {
+					width: 100% !important;
+					input,
+					textarea {
+						width: 100% !important;
+						box-sizing: border-box;
+						font-size: 16px !important;
+					}
+				}
+			}
+			.about-me-box .update-button,
+			.update-button {
+				width: 100% !important;
+				min-height: 50px;
+			}
+		}
+
+		/** write an article **/
+		#write-article-page {
+			.right-wrap,
+			.config {
+				width: 100% !important;
+				min-width: 0;
+			}
+			.right-wrap .select {
+				width: 100% !important;
+			}
+			.toastui-editor-defaultUI {
+				max-width: 100%;
+			}
+			// the category and title fields have fixed sizes written in the markup
+			.editor-top {
+				margin: 0 0 18px !important;
+				flex-direction: column !important;
+				gap: 16px;
+				.form_row {
+					width: 100% !important;
+					.MuiFormControl-root,
+					.MuiTextField-root {
+						width: 100% !important;
+					}
+				}
+			}
+			.editor-submit button {
+				margin: 24px 0 !important;
+				width: 100% !important;
+				max-width: 320px;
+				height: 50px !important;
+			}
+		}
+
+		/** add or edit a product **/
+		#add-product-page {
+			.tabs-box {
+				flex-wrap: wrap;
+			}
+			.config {
+				padding: 20px 16px !important;
+				width: 100% !important;
+				box-sizing: border-box;
+				.description-box {
+					width: 100% !important;
+				}
+				.config-row,
+				.config-detail-row,
+				.description-box .config-row {
+					flex-direction: column !important;
+					gap: 16px !important;
+					.price-year-after-price,
+					.config-column {
+						width: 100% !important;
+					}
+					input,
+					select,
+					textarea {
+						width: 100% !important;
+						box-sizing: border-box;
+						font-size: 16px !important;
+					}
+				}
+				.config-column,
+				.price-year-after-price {
+					width: 100% !important;
+					.year-built-input {
+						width: 100% !important;
+					}
+				}
+				textarea,
+				.description-text {
+					width: 100% !important;
+					box-sizing: border-box;
+					font-size: 16px !important;
+				}
+				.images-box {
+					width: 100% !important;
+					.upload-box {
+						padding: 24px 16px !important;
+						height: auto !important;
+						box-sizing: border-box;
+						.browse-button {
+							width: 100% !important;
+							max-width: 260px;
+							min-height: 48px;
+						}
+					}
+					.gallery-box {
+						gap: 10px !important;
+					}
+				}
+				.map-frame {
+					height: 320px !important;
+				}
+				.wrap-box .amenity-box {
+					min-height: 44px;
+				}
+				.buttons-row,
+				.description-box .buttons-row {
+					flex-wrap: wrap;
+					gap: 12px !important;
+					button {
+						flex: 1 1 140px;
+						min-height: 50px;
+					}
+				}
+			}
+		}
+	}
+}
+
+@media (max-width: 860px) {
+	#pc-wrap {
+		#my-page .container .my-page .back-frame .main-config .list-config,
+		#member-page .container .member-page .back-frame .main-config .list-config,
+		#my-favorites-page .favorites-list-box,
+		#my-articles-page .article-list-box,
+		#member-articles-page .articles-list-box {
+			grid-template-columns: repeat(2, minmax(0, 1fr));
+		}
+	}
+}
+
+@include phone {
+	#pc-wrap {
+		#my-page,
+		#member-page {
+			.container .my-page .back-frame,
+			.container .member-page .back-frame {
+				.left-config {
+					.profile {
+						margin: 0 16px !important;
+					}
+					.follow-button-box {
+						margin: 14px 16px 0 !important;
+					}
+					.sections {
+						padding: 2px 16px;
+					}
+				}
+				.main-config {
+					padding: 20px 16px 40px;
+				}
+			}
+			.main-title-box .right-box .main-title {
+				font-size: 23px !important;
+			}
+		}
+		#my-page .container .my-page .back-frame .main-config .list-config,
+		#member-page .container .member-page .back-frame .main-config .list-config,
+		#my-favorites-page .favorites-list-box,
+		#my-articles-page .article-list-box,
+		#member-articles-page .articles-list-box {
+			grid-template-columns: minmax(0, 1fr);
+		}
+	}
+}

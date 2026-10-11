@@ -1,0 +1,144 @@
+/** ADMIN PANEL **/
+// The side menu is a drawer opened from the top bar (LayoutAdmin.tsx); the tables scroll sideways inside their frame.
+
+@include tablet {
+	#pc-wrap.admin {
+		overflow-x: visible;
+
+		.MuiAppBar-root {
+			padding: 0 8px 0 4px;
+			justify-content: space-between;
+			align-items: center;
+			.aside-toggle {
+				width: 48px;
+				height: 48px;
+				color: $florea-ink;
+			}
+			.MuiToolbar-root {
+				padding: 0 8px;
+				min-height: 64px;
+				.MuiIconButton-root {
+					width: 44px;
+					height: 44px;
+				}
+			}
+		}
+
+		.aside {
+			.logo-box img {
+				width: 64px;
+				height: 64px;
+			}
+			.menu,
+			.menu-list li {
+				min-height: 48px;
+			}
+		}
+
+		#bunker {
+			margin-left: 0;
+			padding: 88px 16px 40px;
+			width: 100% !important;
+			min-width: 0;
+			box-sizing: border-box;
+			.content,
+			.detail {
+				width: 100% !important;
+				min-width: 0 !important;
+			}
+			.tit {
+				flex-wrap: wrap;
+				gap: 8px;
+				font-size: 23px !important;
+			}
+			.flex-space,
+			.btn-wrap,
+			.btn-action-wrap,
+			.detail .info-area,
+			.info-area {
+				flex-wrap: wrap;
+				gap: 10px;
+			}
+			.detail .info-area span:first-child {
+				width: auto !important;
+				min-width: 0 !important;
+				flex: 1 1 100%;
+			}
+			.table-wrap {
+				width: 100%;
+				min-width: 0;
+				// the status tabs: one row that scrolls sideways
+				.tab-menu {
+					padding: 0 8px !important;
+					flex-wrap: nowrap;
+					overflow-x: auto;
+					scrollbar-width: none;
+					&::-webkit-scrollbar {
+						display: none;
+					}
+					li,
+					.li {
+						flex: 0 0 auto;
+						white-space: nowrap;
+					}
+				}
+				.search-area {
+					margin: 16px 12px !important;
+					flex-wrap: wrap;
+					justify-content: flex-start !important;
+					gap: 10px;
+					> * {
+						flex: 1 1 160px;
+						margin: 0 !important;
+						min-width: 0;
+					}
+					.MuiInputBase-root,
+					.MuiSelect-select {
+						min-height: 48px;
+						box-sizing: border-box;
+					}
+				}
+				// wide tables keep their columns and scroll inside the frame
+				.MuiTableContainer-root {
+					overflow-x: auto;
+					-webkit-overflow-scrolling: touch;
+				}
+				tbody td button {
+					min-height: 40px;
+				}
+				.MuiTablePagination-root {
+					overflow-x: auto;
+					.MuiTablePagination-toolbar {
+						padding: 0 4px;
+					}
+					.MuiTablePagination-selectLabel,
+					.MuiTablePagination-displayedRows {
+						font-size: 13px;
+					}
+					.MuiTablePagination-input {
+						margin: 0 8px 0 4px;
+					}
+					.MuiTablePagination-actions {
+						margin-left: 4px;
+					}
+				}
+				.edit-options .option label {
+					width: 100% !important;
+				}
+			}
+		}
+
+		.right-dashboard-settings {
+			width: min(360px, 92vw) !important;
+		}
+	}
+}
+
+@include phone {
+	#pc-wrap.admin #bunker {
+		padding: 84px 12px 32px;
+		.tit {
+			font-size: 21px !important;
+		}
+	}
+}

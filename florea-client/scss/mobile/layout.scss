@@ -20,6 +20,11 @@
 		align-items: center;
 		justify-content: space-between;
 		border-bottom: 1px solid $florea-hairline-soft;
+		a {
+			display: flex;
+			align-items: center;
+			min-height: 44px;
+		}
 		img {
 			width: 124px;
 			display: block;

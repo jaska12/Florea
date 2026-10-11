@@ -48,6 +48,12 @@ The backend is already migrated to the product domain. Names in this client must
 - Upload target folder: `product`.
 - Enum values are listed in `../florea-api/AGENTS.md`.
 
+## Screen Widths
+
+- One markup per page. Desktop styles are in `scss/pc`, and `scss/mobile` adapts them below 1024px and 640px (mixins `tablet` and `phone` in `scss/variables.scss`).
+- Do not add `device === 'mobile'` branches or a second markup for phones.
+- A new page or component needs its rules in `scss/mobile` too; check it at 375px and 768px.
+
 ## Validation
 
 ```bash

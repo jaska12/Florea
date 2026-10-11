@@ -111,7 +111,7 @@ const TuiEditor = () => {
 
 	return (
 		<Stack>
-			<Stack direction="row" style={{ margin: '40px' }} justifyContent="space-evenly">
+			<Stack className={'editor-top'} direction="row" style={{ margin: '40px' }} justifyContent="space-evenly">
 				<Box component={'div'} className={'form_row'} style={{ width: '300px' }}>
 					<Typography style={{ color: '#7c6470', margin: '10px' }} variant="h3">
 						Category
@@ -132,7 +132,7 @@ const TuiEditor = () => {
 						</Select>
 					</FormControl>
 				</Box>
-				<Box component={'div'} style={{ width: '300px', flexDirection: 'column' }}>
+				<Box component={'div'} className={'form_row'} style={{ width: '300px', flexDirection: 'column' }}>
 					<Typography style={{ color: '#7c6470', margin: '10px' }} variant="h3">
 						Title
 					</Typography>
@@ -173,7 +173,7 @@ const TuiEditor = () => {
 				}}
 			/>
 
-			<Stack direction="row" justifyContent="center">
+			<Stack className={'editor-submit'} direction="row" justifyContent="center">
 				<Button
 					variant="contained"
 					color="primary"

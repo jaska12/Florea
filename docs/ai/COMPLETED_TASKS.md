@@ -37,6 +37,7 @@ In the order they were done. State as of 2026-10-05, `main` at `5f5405e`.
 - [x] 31. Notifications redesign (alerts, toasts, navbar bell)
 - [x] 32. Notification module in the backend and real notifications in the bell
 - [x] 33. Live chat connected to the socket; notifications announced over it
+- [x] 34. Mobile version of every page, including the admin panel
 
 ## 1. Recommend migration steps
 
@@ -536,3 +537,47 @@ In the order they were done. State as of 2026-10-05, `main` at `5f5405e`.
   - The chat window is shown to logged-in members on desktop only, as before.
 - Not verified: `npm run build` and `yarn build` (the servers were running on the same output folders), Safari.
 - The test wrote a few messages into the live chat room; they disappear when the API restarts.
+
+## 34. Mobile version of every page, including the admin panel
+
+- Brief from the project owner: audit and fix the mobile version of the whole frontend (phones 360 to 430px and tablets), then, on approval: "the admin panel too".
+- What the audit found (375, 414 and 768px):
+  1. Only the homepage worked on phones. Every other page showed a one-line placeholder ("PRODUCTS MOBILE", "LOGIN MOBILE", "MY PAGE" and so on): 45 placeholders in pages and components. A phone visitor could not log in.
+  2. Phone navbar: no logo, no login, My Page, language switch or logout; five text links in one row, under 44px tall.
+  3. Product list: no filter on phones.
+  4. Footer: three columns overlapping, the third cut off at the right edge, small targets.
+  5. Homepage: 22 tap targets under 44px; large gaps between sections; no chat.
+  6. Tablets and narrow windows that report a desktop browser got the 1300px desktop layout and a sideways scroll.
+- Approach (DECISIONS.md, 23): one markup per page at every width, adapted by `scss/mobile/*.scss` below 1024px ("tablet") and 640px ("phone"). No separate phone copies of the pages.
+- Fixed:
+  - **Placeholders:** removed from 36 components and pages; the three layouts, the navbar and the footer render one markup. `useDeviceDetect` is left only where it skips the three.js gallery on phones, and in two files that are not rendered or only read it.
+  - **Navbar:** a menu button opens a slide-in menu with the page links, the three languages and Login / Register or Logout; logo, bell and avatar stay in the bar; 64px tall.
+  - **Page header and containers:** follow the screen width with 16 to 20px side margins.
+  - **Footer:** one column, link groups in a grid, the subscribe field at full width.
+  - **Login / sign up:** the form fills the screen; the photo beside it is hidden; 16px inputs so iOS does not zoom.
+  - **Product list:** a "Filters" button opens the filter as a sheet from the bottom with a "Show N products" button; cards in 1, 2 or 3 columns.
+  - **Product page:** title, price and counts stacked; photo in a 4:3 or square frame; details, map, reviews and the florist box in one column.
+  - **Florists and a florist's page:** cards in 2 to 4 columns; search at full width.
+  - **Community and an article:** the board picker is a compact block of four buttons; articles in 1 to 3 columns; the article body cannot be wider than the screen.
+  - **My page and a member's page:** the menu is a profile line with a row of pills that scrolls sideways; product and follower tables become small cards; profile, add-product and write-article forms are one column.
+  - **About and customer care:** sections stacked; FAQ categories in a row that scrolls sideways.
+  - **Admin panel:** the side menu is a drawer opened from the top bar (`LayoutAdmin.tsx`); tables scroll sideways inside their frame.
+  - **Chat:** shown on phones; the window fits the screen.
+  - **Tap targets:** pagination, like buttons, filter checkboxes, menu pills and icon buttons are 44px; text links get an invisible 44px tap area.
+  - **Homepage:** less space between sections on phones; hero spacing for the floating navbar.
+  - Also fixed on the way: "/ mo" after the price in My products (left from Nestar).
+- Files: new `scss/mobile/{layout,account,product,product-detail,agent,community,mypage,info,admin,touch}.scss`, `scss/mobile/main.scss` rewritten and loaded last in `pages/_app.tsx`; breakpoints `tablet` and `phone` in `scss/variables.scss`; `Top.tsx` (menu), `pages/product/index.tsx` (filter sheet), `LayoutAdmin.tsx` (drawer), `Teditor.tsx` (class names only). GraphQL, routing and logic unchanged.
+- Results:
+
+| Check | Result |
+|---|---|
+| `yarn tsc --noEmit` | no errors |
+| Every page at 375px (iPhone), 414px (Android) and 768px (iPad) | no sideways scroll on any page; nothing sticks out past the right edge |
+| Phone visitor test | 21 of 21: menu and its links, 44px targets, filter sheet filters the list and closes, login through the form, like, notification list, chat window, My page pills, admin drawer, table scroll |
+| Desktop at 1600px, all 21 pages compared element by element with a record taken before the work | layout unchanged; the only differences are like counts and "Top" badges that changed in the data |
+
+- Not done:
+  - Between 1025 and 1339px the desktop layout is still 1300px wide and scrolls sideways, as before.
+  - The About page still has a house photo, the heading "Our Exclusive Agetns" with placeholder text, and feature rows whose markup lacks the class its desktop style expects. These are content problems on desktop too and were left alone.
+  - The password field on the login page shows the password as plain text (`type="text"`), as in Nestar.
+- Not verified: real devices, Safari, landscape phones, the article page with a real article (the test accounts have none), `yarn build` (the dev server was running on the same `.next` folder).

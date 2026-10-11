@@ -1,0 +1,93 @@
+/** TOUCH TARGETS AND THE HOMEPAGE ON PHONES **/
+// Anything that is tapped is at least 44px in both directions. A text link keeps its look: an invisible
+// ::after around it takes the tap, so nothing beside it moves.
+
+@mixin tap-area($block: 12px, $inline: 6px) {
+	position: relative;
+	&::after {
+		content: '';
+		position: absolute;
+		inset: (-$block) (-$inline);
+	}
+}
+
+@include tablet {
+	.MuiPagination-root .MuiPaginationItem-root {
+		min-width: 44px;
+		height: 44px;
+		border-radius: 50%;
+	}
+
+	// like button on every product card
+	.florea-card .view-like-box .like-btn,
+	#pc-wrap .view-like-box .like-btn {
+		margin: -8px -8px -8px 0 !important;
+		width: 44px !important;
+		height: 44px !important;
+	}
+
+	#pc-wrap {
+		.agent-general-card .agent-desc {
+			.agent-info a {
+				@include tap-area(10px, 4px);
+				display: block;
+			}
+			.buttons button {
+				width: 44px;
+				height: 44px;
+			}
+		}
+
+		#product-list-page .container .product-page .filter-config .filter-main .find-your-home .input-box {
+			.product-checkbox {
+				margin: 0 0 0 -11px !important;
+				width: 44px !important;
+				height: 44px !important;
+			}
+			> button.MuiIconButton-root {
+				width: 44px;
+				height: 44px;
+			}
+		}
+
+		#product-detail-page .right-config .name-phone-listings a {
+			@include tap-area(13px, 8px);
+			display: inline-block;
+		}
+
+		.join-page .container .main .left .register .MuiCheckbox-root {
+			padding: 11px;
+		}
+
+		#my-page,
+		#member-page {
+			.container .back-frame .left-config .sections .section .sub-section li {
+				height: 46px !important;
+			}
+		}
+	}
+}
+
+@media (max-width: 760px) {
+	.home-hero {
+		// room for the floating navbar (64px) and a breath above the heading
+		padding-top: 104px;
+		.hero-shortcuts .shortcut {
+			min-height: 44px;
+			display: inline-flex;
+			align-items: center;
+		}
+	}
+	.florea-home {
+		.home-section {
+			padding: 44px 0;
+		}
+		.text-link {
+			@include tap-area(11px, 8px);
+		}
+		.empty-state a {
+			@include tap-area(12px, 8px);
+			display: inline-block;
+		}
+	}
+}

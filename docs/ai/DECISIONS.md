@@ -139,3 +139,10 @@ Important decisions made during the Nestar → Florea migration session, with th
 - **Decision:** `libs/socket.ts` owns the WebSocket: it opens it, reconnects it, and writes chat messages, the online count and the notification signal into reactive variables. Components read the variables and do not attach their own handlers to the socket.
 - **Reason:** every page has its own layout wrapper, so the chat window is mounted again on each page change. State held inside the component (the Nestar approach) would lose the conversation on every navigation.
 - **Kept from Nestar:** the socket is still created through Apollo's `WebSocketLink` (`LoggingWebSocket`), one public chat room, the last five messages in the server's memory.
+
+## 23. One markup per page, responsive by screen width
+
+- **Decision:** every page and component renders the same markup at every width. `scss/pc` styles the desktop; `scss/mobile` adapts it below 1024px (`tablet`) and 640px (`phone`). The layout wrapper is `#pc-wrap` on every device, and `#mobile-wrap` is gone. Parts that only exist on narrow screens (menu button and drawer, filter sheet) are in the markup and hidden on desktop.
+- **Reason:** Nestar split by user agent and left 45 phone placeholders to be written as separate copies. Separate copies double every later change and let the two versions drift apart; a user-agent split also gives tablets that report a desktop browser the wrong layout.
+- **Cost:** the desktop rules are nested deep, so the mobile sheets use `!important` for layout overrides.
+- **Rejected:** writing a second markup for each page (the Nestar plan).
