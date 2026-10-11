@@ -33,6 +33,7 @@ In the order they were done. State as of 2026-10-05, `main` at `5f5405e`.
 - [x] 27. Homepage redesign
 - [x] 28. Site-wide Florea design system
 - [x] 29. Fix the "Invalid message type!" runtime error
+- [x] 30. Fix the blank page caused by an invalid stored token
 
 ## 1. Recommend migration steps
 
@@ -423,3 +424,10 @@ In the order they were done. State as of 2026-10-05, `main` at `5f5405e`.
 - File: `florea-client/apollo/client.ts` (`webSocketImpl: LoggingWebSocket` added to the link; 4 lines).
 - Results: `yarn tsc --noEmit` no errors. In a browser against the running site: no overlay and no runtime errors on the homepage (logged out and logged in), on the product list, and after waiting past the socket's 30-second timeout; the chat gateway's messages arrive on the socket.
 - Not verified: sending and receiving chat messages through the chat window.
+
+## 30. Fix the blank page caused by an invalid stored token
+
+- Symptom: the site showed a completely blank page (no navbar, no title, no error overlay) in the owner's browser, while it rendered in a clean test browser.
+- Cause: the browser had a value under `accessToken` in localStorage that is not a JWT (for example left by another project that also runs on `localhost:3000`). `updateUserInfo` decoded it without a guard; the decode threw inside the navbar and the layout, and React removed the whole page.
+- File: `florea-client/libs/auth/index.ts`. `getJwtToken` now returns the token only if it can be decoded and otherwise removes it; `updateUserInfo` returns `false` instead of throwing.
+- Results: `yarn tsc --noEmit` no errors. Reproduced the blank page with a broken token before the fix. After the fix the homepage, product list and My page redirect render with: broken text, the word "undefined", the word "null", half a token, and a JWT from another app; no runtime errors and no error popup. Logging in through the form still works.

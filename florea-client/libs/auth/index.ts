@@ -7,7 +7,18 @@ import { LOGIN, SIGN_UP } from '../../apollo/user/mutation';
 
 export function getJwtToken(): any {
 	if (typeof window !== 'undefined') {
-		return localStorage.getItem('accessToken') ?? '';
+		const token = localStorage.getItem('accessToken') ?? '';
+		if (!token) return '';
+
+		// A value that is not a real token (left by another project on this address, or damaged)
+		// must not crash the page: drop it and treat the visitor as logged out.
+		try {
+			decodeJWT(token);
+			return token;
+		} catch (err) {
+			localStorage.removeItem('accessToken');
+			return '';
+		}
 	}
 }
 
@@ -127,7 +138,12 @@ export const updateStorage = ({ jwtToken }: { jwtToken: any }) => {
 export const updateUserInfo = (jwtToken: any) => {
 	if (!jwtToken) return false;
 
-	const claims = decodeJWT<CustomJwtPayload>(jwtToken);
+	let claims: CustomJwtPayload;
+	try {
+		claims = decodeJWT<CustomJwtPayload>(jwtToken);
+	} catch (err) {
+		return false;
+	}
 	userVar({
 		_id: claims._id ?? '',
 		memberType: claims.memberType ?? '',
