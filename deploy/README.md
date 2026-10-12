@@ -62,14 +62,34 @@ node seed/seed-notices.mjs http://SERVER:3001/graphql ADMIN_NICK ADMIN_PASSWORD
 
 ## Updating
 
-Send the code again (the `git archive` line), then on the server:
+Do not unpack the new code over the old folder. `tar` adds and replaces files, and a file that was deleted in git stays on the server; the client build type-checks every `.ts` and `.tsx` file it finds, so one leftover file can fail it. The code goes into a fresh folder, the two settings files are carried over, and the folders are swapped after the build has passed.
 
 ```bash
-cd /root/apps/florea
-docker compose -f docker-compose.prod.yml --env-file deploy/.env up -d --build
+# on your machine, from the repo root
+git -c core.autocrlf=false archive --format=tar HEAD | ssh USER@SERVER 'rm -rf /root/apps/florea.new && mkdir -p /root/apps/florea.new && tar -x -C /root/apps/florea.new'
+
+# on the server: the settings, then the build; the running site is not touched yet
+cd /root/apps
+cp -p florea/deploy/.env florea.new/deploy/.env
+cp -p florea/florea-api/.env florea.new/florea-api/.env
+cd florea.new
+docker compose -f docker-compose.prod.yml --env-file deploy/.env build florea-next
+
+# the build passed: swap the folders and start the new client
+cd /root/apps && mv florea florea.old && mv florea.new florea && cd florea
+docker compose -f docker-compose.prod.yml --env-file deploy/.env up -d --no-deps florea-next
+
+# the site has been checked
+rm -rf /root/apps/florea.old
 ```
 
-`florea-api/.env`, `deploy/.env` and the uploaded pictures (the `florea_uploads` volume) are kept.
+These are the steps of the update of 2026-10-12, where only the client had changed: the API and the batch jobs kept running. When the API changed too, leave out `florea-next` and `--no-deps` in the two `docker compose` lines (not tried yet).
+
+Start `up` from `/root/apps/florea`, the folder the containers were first started from, not from `florea.new`.
+
+To be able to go back, tag the running image before the build (`docker tag florea-next:latest florea-next:prev`) and remove the tag when the new site has been checked (`docker rmi florea-next:prev`).
+
+`florea-api/.env`, `deploy/.env` and the uploaded pictures (the `florea_uploads` volume) are kept. On this server the Docker build cache is shared with the other projects: do not run `docker system prune` or `docker builder prune`.
 
 ## Looking at it
 

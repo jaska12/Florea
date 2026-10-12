@@ -45,6 +45,7 @@ In the order they were done. State as of 2026-10-05, `main` at `5f5405e`.
 - [x] 39. First deploy
 - [x] 40. Homepage: same-day section in place of the three.js gallery
 - [x] 41. Homepage UX fixes (v2): tabs, hidden empty sections, one spacing scale
+- [x] 42. Second deploy: the new homepage and the client fixes
 
 ## 1. Recommend migration steps
 
@@ -817,3 +818,32 @@ In the order they were done. State as of 2026-10-05, `main` at `5f5405e`.
   - the florist list page (`/agent`) still shows the default picture for a florist without a photo; only the homepage card was in this task
   - the header rules that close an unused gap use the CSS `:has()` selector; a browser without it shows the same layout with a slightly larger gap
 - Not verified: articles and florists with real pictures on the homepage (the dev database has none of the first and one of the second, and the section is hidden with three florists); browsers other than Edge; the production server (not redeployed).
+
+## 42. Second deploy: the new homepage and the client fixes
+
+- `develop` was pushed and commit `aaed950` was put on the server (http://201.18.219.9:3001). Before it the server ran `78c02b0`.
+- What reached the live site: `/admin` leads to the admin pages (commit `d1210a3`), the Add Product page opens without an error alert (commit `3f8cdcc`), the same-day section in place of the three.js gallery (40), the homepage of task 41. The two fixes were made after the first deploy and have no entry of their own in this file: `next.config.js` redirects `/admin` and `/admin/...` to `/_admin`, and `AddNewProduct.tsx` skips the product query when the address has no `productId`.
+- Only the client had changed since the first deploy (the API folder on the server was compared with the new code: the same). So only the client image was built and only `florea-next` was replaced. `florea-api` and `florea-batch` were not restarted.
+- How it was done:
+  - the code was sent into a fresh folder (`/root/apps/florea.new`), and the two settings files were copied into it from the old one
+  - the image that was running was tagged `florea-next:prev`, then the new image was built while the old site kept serving
+  - the folders were swapped and the new client started (`up -d --no-deps florea-next`)
+  - after the check: the old folder, the build log and the `prev` image were removed
+- Found before sending anything: the update steps of `deploy/README.md` would have failed. They unpack the new code over the old folder, which leaves the files that were deleted in git. `FiberContainer.tsx` was one of 18 such files, it imports `three`, the package is gone, and the client build type-checks every `.tsx` it finds. `deploy/README.md` now describes the steps above.
+- Results:
+
+| Check | Result |
+|---|---|
+| Client image build on the server | passes, 85 pages |
+| Containers | `florea-next` new and up; `florea-api` and `florea-batch` with the same start time as before |
+| Browser on the public address, at 1500, 768 and 375 px | 35 of 35 |
+| The other projects | their five containers up as before; nginx was not reloaded or changed |
+
+- What the browser check covers: the new homepage with nothing of the old one, no empty box and no broken picture, no horizontal overflow, gaps on the scale, the Shop by tabs, the three new same-day photos, "How it works", "Shop now" with the same-day filter, the notices from the production database, the other pages open, `/admin` and `/admin/users` redirect, no runtime errors, no failed requests.
+- The live homepage shows the hero, Shop by and the same-day section only. The production shop has no products, florists or articles, so Bestsellers, Top florists and Community leave themselves out, as decided in DECISIONS.md, 28.
+- Not verified on the server:
+  - the Add Product page (it needs a florist account, and none was made on production); it was checked on the dev machine when the fix was made
+  - the homepage sections that need data
+  - an update where the API changed too
+- Access: the owner gave the root password in chat for this deploy and said it will be changed. It was kept in a temporary file for the session and deleted afterwards. A key-based login is not set up.
+- Still open from the first deploy: no HTTPS; `main` is not updated; the client image is 2.11 GB.
