@@ -30,9 +30,9 @@ const riseVariants: Variants = {
 const inView = { once: true, amount: 0.25 };
 
 const PHOTOS = [
-	{ src: '/img/home/sameday-bouquet.jpg', alt: 'A pink bouquet in a vase', size: 'large' },
-	{ src: '/img/home/sameday-roses.jpg', alt: 'Soft pink roses', size: 'small' },
-	{ src: '/img/home/sameday-gift.jpg', alt: 'A pink gift box with a gold ribbon', size: 'small' },
+	{ src: '/img/home/sameday-tulips.jpg', alt: 'A bunch of tulips wrapped in a pink knit', size: 'large' },
+	{ src: '/img/home/sameday-ranunculus.jpg', alt: 'Pink ranunculus flowers', size: 'small' },
+	{ src: '/img/home/sameday-gift.jpg', alt: 'A gift wrapped in pink paper with a ribbon', size: 'small' },
 ];
 
 const STEPS = [

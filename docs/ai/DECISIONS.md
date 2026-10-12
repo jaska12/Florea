@@ -179,3 +179,10 @@ Important decisions made during the Nestar → Florea migration session, with th
 - **Decision:** the floating photo gallery is replaced with an ordinary section: the same-day offer with three photos, and the three steps of ordering. The three.js packages are removed. The old same-day banner is removed too, so the page has one same-day section.
 - **Reason:** the gallery said nothing about the shop, was hidden on phones and brought a 3D library to the page for one decoration. The new section tells a visitor what Florea does and leads to the products.
 - **Rejected:** keeping both the banner and the new section (the same message twice); changing the product search for the "Shop now" button (the product page already takes the same-day filter from the address).
+
+## 28. The homepage hides what it cannot fill
+
+- **Decision:** a homepage section that has too little to show is left out: Bestsellers with no products (and a tab of it with none), Top florists with fewer than four florists, Community with no articles. No placeholder box is shown in their place.
+- **Reason:** an empty dashed box or a row of three cards on the first page of a shop reads as a broken or abandoned site. The sections come back by themselves as the data grows.
+- **Rejected:** placeholder or sample content (the brief forbids mock data); a lower limit for florists (three cards leave half of the row empty on a desktop screen).
+- **Also decided:** product lists that differ only in their sort order are tabs of one section, and the tiles that lead into the catalog are one section with two tabs. One page section per kind of content.

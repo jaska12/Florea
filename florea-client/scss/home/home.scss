@@ -4,7 +4,6 @@
 
 @import '/scss/variables.scss';
 
-$home-gap: 96px;
 
 // centred column shared by the hero and every section
 .home-shell {
@@ -312,6 +311,11 @@ $home-gap: 96px;
 	font-family: $font;
 	overflow-x: clip;
 
+	// the one spacing scale of the homepage; the smaller screens below only change these three values
+	--home-gap: 96px; // between two sections
+	--home-head-gap: 40px; // under a section header
+	--home-block-gap: 64px; // between two blocks inside a section
+
 	ul {
 		margin: 0;
 		padding: 0;
@@ -319,15 +323,20 @@ $home-gap: 96px;
 	}
 
 	.home-section {
-		padding: $home-gap 0;
+		padding: var(--home-gap) 0;
 		&.tinted {
 			background: $florea-mist;
+		}
+		// two sections on the same background share one gap (this also covers a section that left itself out)
+		&:not(.tinted) + .home-section:not(.tinted),
+		&.tinted + .home-section.tinted {
+			padding-top: 0;
 		}
 	}
 
 	/** section header **/
 	.section-header {
-		margin-bottom: 44px;
+		margin-bottom: var(--home-head-gap);
 		display: flex;
 		flex-direction: row;
 		align-items: flex-end;
@@ -357,11 +366,67 @@ $home-gap: 96px;
 			display: flex;
 			flex-direction: row;
 			align-items: center;
+			gap: 20px;
+		}
+		.section-arrows {
+			display: flex;
+			flex-direction: row;
 			gap: 12px;
-			.text-link {
-				margin-right: 8px;
+			// when every slide fits, Swiper hides both arrows; the empty box must not keep its gap
+			&:not(:has(.nav-btn:not(.swiper-button-lock))) {
+				display: none;
 			}
 		}
+	}
+	// a tabbed section keeps the tabs close to its header
+	.section-header:has(+ .home-tabs) {
+		margin-bottom: 24px;
+	}
+
+	/** tabs **/
+	.home-tabs {
+		margin-bottom: 28px;
+		display: flex;
+		flex-direction: row;
+		gap: 8px;
+		overflow-x: auto;
+		scrollbar-width: none;
+		&::-webkit-scrollbar {
+			display: none;
+		}
+	}
+	.home-tab {
+		flex-shrink: 0;
+		padding: 0 20px;
+		min-height: 44px;
+		border-radius: 999px;
+		border: 1px solid $florea-line;
+		background: #ffffff;
+		color: $florea-wine;
+		font-family: $font;
+		font-size: 15px;
+		font-weight: 500;
+		line-height: 22px;
+		white-space: nowrap;
+		cursor: pointer;
+		transition:
+			background-color 240ms $logo-ease,
+			border-color 240ms $logo-ease,
+			color 240ms $logo-ease;
+		&:hover,
+		&:focus-visible {
+			border-color: $florea-rose;
+			color: $florea-rose;
+		}
+		&.active {
+			border-color: $florea-wine;
+			background: $florea-wine;
+			color: #ffffff;
+		}
+	}
+	// the panel of the tab that was just chosen
+	.home-panel {
+		animation: home-panel-in 360ms $logo-ease;
 	}
 	.text-link {
 		padding-bottom: 2px;
@@ -414,22 +479,6 @@ $home-gap: 96px;
 		}
 		&.swiper-button-lock {
 			display: none;
-		}
-	}
-	.empty-state {
-		padding: 56px 24px;
-		border-radius: 22px;
-		border: 1px dashed rgba($florea-rose, 0.26);
-		background: rgba($florea-petal, 0.16);
-		color: $florea-muted;
-		font-family: $font;
-		font-size: 15px;
-		line-height: 1.6;
-		text-align: center;
-		a {
-			color: $florea-rose;
-			font-weight: 500;
-			border-bottom: 1px solid rgba($florea-rose, 0.3);
 		}
 	}
 
@@ -596,7 +645,7 @@ $home-gap: 96px;
 		}
 	}
 	.sameday-steps {
-		margin-top: 72px;
+		margin-top: var(--home-block-gap);
 		// the "How it works" button scrolls here; this keeps the heading clear of the fixed navbar
 		scroll-margin-top: 112px;
 		.steps-title {
@@ -738,6 +787,33 @@ $home-gap: 96px;
 				background: #ffffff;
 				object-fit: cover;
 			}
+			// a florist without a photo: the first letters of the name on a quiet tint
+			.agent-initials {
+				width: 100%;
+				height: 100%;
+				display: grid;
+				place-items: center;
+				border-radius: 50%;
+				background: #ffffff;
+				color: $florea-wine;
+				font-family: $font-display;
+				font-size: 34px;
+				font-weight: 500;
+				line-height: 1;
+				letter-spacing: 0.01em;
+				&.tint-1 {
+					background: $florea-mist;
+					color: $florea-rose;
+				}
+				&.tint-2 {
+					background: #fdf4e3;
+					color: #8a5b12;
+				}
+				&.tint-3 {
+					background: #f6eef2;
+					color: $florea-ink;
+				}
+			}
 		}
 		.agent-name {
 			margin-top: 16px;
@@ -773,6 +849,21 @@ $home-gap: 96px;
 		grid-template-columns: minmax(0, 1.7fr) minmax(0, 1fr);
 		gap: 56px;
 		align-items: start;
+		// only one of the two boards has articles
+		&.single {
+			grid-template-columns: minmax(0, 1fr);
+		}
+	}
+	// an article without a picture
+	.no-photo {
+		display: grid;
+		place-items: center;
+		background: linear-gradient(135deg, $florea-mist 0%, rgba($florea-petal, 0.6) 100%);
+		color: rgba($florea-rose, 0.5);
+		svg {
+			width: 30px;
+			height: 30px;
+		}
 	}
 	.community-column-title {
 		margin-bottom: 20px;
@@ -864,18 +955,30 @@ $home-gap: 96px;
 		&:last-child {
 			border-bottom: 1px solid $florea-line;
 		}
-		img {
+		img,
+		.community-thumb {
 			flex-shrink: 0;
 			width: 76px;
 			height: 76px;
 			border-radius: 14px;
-			background: $florea-mist;
+			background-color: $florea-mist;
 			object-fit: cover;
 		}
 		.community-row-text {
 			min-width: 0;
 			display: block;
 		}
+	}
+}
+
+@keyframes home-panel-in {
+	from {
+		opacity: 0;
+		transform: translateY(8px);
+	}
+	to {
+		opacity: 1;
+		transform: none;
 	}
 }
 
@@ -898,6 +1001,10 @@ $home-gap: 96px;
 
 @media (max-width: 900px) {
 	.florea-home {
+		--home-gap: 72px;
+		--home-head-gap: 32px;
+		--home-block-gap: 48px;
+
 		// the text goes above the photos, and the steps under each other
 		.sameday-feature {
 			grid-template-columns: minmax(0, 1fr);
@@ -907,7 +1014,6 @@ $home-gap: 96px;
 			}
 		}
 		.sameday-steps {
-			margin-top: 52px;
 			scroll-margin-top: 84px;
 			.steps-list {
 				grid-template-columns: minmax(0, 1fr);
@@ -921,8 +1027,6 @@ $home-gap: 96px;
 }
 
 @media (max-width: 760px) {
-	$home-gap-small: 64px;
-
 	.home-shell {
 		width: calc(100% - 32px);
 	}
@@ -971,14 +1075,28 @@ $home-gap: 96px;
 		}
 	}
 	.florea-home {
-		.home-section {
-			padding: $home-gap-small 0;
-		}
+		--home-gap: 56px;
+		--home-head-gap: 28px;
+		--home-block-gap: 40px;
+
+		// the link and the arrows go under the heading, at the two ends of the row
 		.section-header {
-			margin-bottom: 32px;
 			flex-direction: column;
-			align-items: flex-start;
-			gap: 18px;
+			align-items: stretch;
+			gap: 14px;
+			.section-actions {
+				justify-content: space-between;
+			}
+		}
+		.section-header:has(+ .home-tabs) {
+			margin-bottom: 20px;
+		}
+		.home-tabs {
+			margin-bottom: 22px;
+		}
+		.home-tab {
+			padding: 0 16px;
+			font-size: 14px;
 		}
 		.category-grid {
 			grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -1046,6 +1164,7 @@ $home-gap: 96px;
 		.text-link,
 		.nav-btn,
 		.home-btn,
+		.home-tab,
 		.box,
 		.box span,
 		.chevron,
@@ -1058,6 +1177,9 @@ $home-gap: 96px;
 		.community-title,
 		.community-column-title {
 			transition: none;
+		}
+		.home-panel {
+			animation: none;
 		}
 		.category-tile:hover .tile-photo,
 		.category-tile:focus-visible .tile-photo,

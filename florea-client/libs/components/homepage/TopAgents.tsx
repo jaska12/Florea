@@ -1,5 +1,4 @@
-import React, { useState } from 'react';
-import Link from 'next/link';
+import React from 'react';
 import WestIcon from '@mui/icons-material/West';
 import EastIcon from '@mui/icons-material/East';
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -10,42 +9,34 @@ import { Member } from '../../types/member/member';
 import { AgentsInquiry } from '../../types/member/member.input';
 import { useQuery } from '@apollo/client';
 import { GET_AGENTS } from '../../../apollo/user/query';
-import { T } from '../../types/common';
 
 interface TopAgentsProps {
 	initialInput: AgentsInquiry;
 }
 
+// with fewer florists than this the row looks empty, so the section is left out
+const MIN_AGENTS = 4;
+
 const TopAgents = (props: TopAgentsProps) => {
 	const { initialInput } = props;
-	const [topAgents, setTopAgents] = useState<Member[]>([]);
 
 	/** APOLLO REQUESTS **/
-	const {
-		loading: getAgentsLoading,
-		data: getAgentsData,
-		error: getAgentsError,
-		refetch: getAgentsRefetch,
-	} = useQuery(GET_AGENTS, {
+	const { data: getAgentsData } = useQuery(GET_AGENTS, {
 		fetchPolicy: 'cache-and-network',
 		variables: { input: initialInput },
-		notifyOnNetworkStatusChange: true,
-		onCompleted: (data: T) => {
-			setTopAgents(data?.getAgents?.list);
-		},
 	});
+	const topAgents: Member[] = getAgentsData?.getAgents?.list ?? [];
 
-	/** HANDLERS **/
-
-	if (!topAgents) return null;
+	if (topAgents.length < MIN_AGENTS) return null;
 
 	return (
 		<section className={'home-section home-agents tinted'}>
 			<div className={'home-shell'}>
-				<SectionHeader title={'Top florists'} subtitle={'The florists and gift shops behind the products.'}>
-					<Link className={'text-link'} href={'/agent'}>
-						See all florists
-					</Link>
+				<SectionHeader
+					title={'Top florists'}
+					subtitle={'The florists and gift shops behind the products.'}
+					seeAll={{ href: '/agent', label: 'See all florists' }}
+				>
 					<button type={'button'} className={'nav-btn swiper-agents-prev'} aria-label={'Previous florists'}>
 						<WestIcon />
 					</button>
@@ -53,28 +44,24 @@ const TopAgents = (props: TopAgentsProps) => {
 						<EastIcon />
 					</button>
 				</SectionHeader>
-				{topAgents.length === 0 ? (
-					<div className={'empty-state'}>No florists yet.</div>
-				) : (
-					<Swiper
-						className={'agent-swiper'}
-						slidesPerView={'auto'}
-						spaceBetween={24}
-						modules={[Navigation]}
-						navigation={{
-							nextEl: '.swiper-agents-next',
-							prevEl: '.swiper-agents-prev',
-						}}
-					>
-						{topAgents.map((agent: Member) => {
-							return (
-								<SwiperSlide className={'agent-slide'} key={agent?._id}>
-									<TopAgentCard agent={agent} key={agent?.memberNick} />
-								</SwiperSlide>
-							);
-						})}
-					</Swiper>
-				)}
+				<Swiper
+					className={'agent-swiper'}
+					slidesPerView={'auto'}
+					spaceBetween={24}
+					modules={[Navigation]}
+					navigation={{
+						nextEl: '.swiper-agents-next',
+						prevEl: '.swiper-agents-prev',
+					}}
+				>
+					{topAgents.map((agent: Member) => {
+						return (
+							<SwiperSlide className={'agent-slide'} key={agent?._id}>
+								<TopAgentCard agent={agent} key={agent?.memberNick} />
+							</SwiperSlide>
+						);
+					})}
+				</Swiper>
 			</div>
 		</section>
 	);

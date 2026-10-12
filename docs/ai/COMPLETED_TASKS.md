@@ -44,6 +44,7 @@ In the order they were done. State as of 2026-10-05, `main` at `5f5405e`.
 - [x] 38. Notices and FAQ from the database, with an admin screen
 - [x] 39. First deploy
 - [x] 40. Homepage: same-day section in place of the three.js gallery
+- [x] 41. Homepage UX fixes (v2): tabs, hidden empty sections, one spacing scale
 
 ## 1. Recommend migration steps
 
@@ -769,3 +770,50 @@ In the order they were done. State as of 2026-10-05, `main` at `5f5405e`.
 - The one failed check is "no runtime errors": an object with `code=403` is thrown on the homepage. It is not from this section; the earlier browser checks met it too and skipped it. Its source was not looked for.
 - Left as it is: `react-spring` is in `package.json` and nothing imports it; after this task Yarn warns that its three.js part has no `three`. It can be removed in a separate step.
 - Not verified: the production server (not redeployed), and browsers other than Edge.
+
+## 41. Homepage UX fixes (v2): tabs, hidden empty sections, one spacing scale
+
+- Before: eight sections. Trending, Popular and Top rated showed the same few products three times; "Shop by occasion" and "Shop by category" looked alike; the community section showed an empty dashed box and the florists row had three cards; "See all" was in some headers only; two white sections in a row had a 192px gap and the others 96px.
+- New order: hero → Shop by → Bestsellers → Same-day + How Florea works → Top florists → Community → footer. The hero is not changed.
+- Sections (`florea-client/libs/components/homepage/`):
+  - `ShopBy.tsx` (new): the occasion tiles and the category tiles behind two tabs, Occasion first. The tiles and their links are the same as before.
+  - `Bestsellers.tsx` (new): Trending, Most viewed and Top rated as tabs. It runs the three `GET_PRODUCTS` requests of the old sections with their inputs unchanged. A tab with no products is not offered; with one list left there are no tabs; with no products the section is left out.
+  - `HomeTabs.tsx` (new): the tab row used by both (`tablist` / `tab` / `tabpanel`, arrow keys, Home and End).
+  - `SectionHeader.tsx`: one layout for all four headers: title and subtitle on the left, a "See all" link and the slider arrows on the right. The link is passed as `seeAll`.
+  - `TopAgents.tsx`: shown from four florists up. `TopAgentCard.tsx`: a florist without a photo, or whose photo fails to load, gets the first letters of the name on a quiet tint.
+  - `CommunityBoards.tsx`: left out when there are no articles; with articles in one board only, that board takes the full width. `CommunityCard.tsx`: an article without a picture gets a tinted block with a small flower mark; it used the Bouquets tile photo before.
+  - deleted: `OccasionTiles.tsx`, `CategoryTiles.tsx`, `TrendProducts.tsx`, `PopularProducts.tsx`, `TopProducts.tsx`
+- Photos (`florea-client/public/img/home/`): five pairs of files were crops of one photograph (hero and Love; Sweets and Congrats; Birthday, Wedding and Anniversary and the three same-day photos). `occ-love.jpg`, `occ-congrats.jpg` and `sameday-gift.jpg` are new photos under the same names; `sameday-bouquet.jpg` and `sameday-roses.jpg` are replaced by `sameday-tulips.jpg` and `sameday-ranunculus.jpg`. All five are from Unsplash under the Unsplash License; photographer, license and source of every file are in `CREDITS.md` there.
+- Spacing (`scss/home/home.scss`): three values on `.florea-home` are the whole scale, and the smaller screens only change them.
+
+| | Between sections | Under a header | Between blocks in a section |
+|---|---|---|---|
+| Desktop | 96px | 40px | 64px |
+| Up to 900px | 72px | 32px | 48px |
+| Up to 760px | 56px | 28px | 40px |
+
+  - The backgrounds alternate (white, tinted, white, tinted, white). Two sections on the same background share one gap, which also covers a section that left itself out.
+  - `scss/mobile/touch.scss`: its own 44px section padding for phones is removed; the `.empty-state` styles are removed from both files.
+- Likes: the mutation and its order (like, read the lists again, show the toast) are as before. Two things follow from the merge:
+  - after a like all three lists are read again, because the same product can be in every tab;
+  - every tab has the heart button and the same message for a guest ("You are not authenticated, please login first!"). Before, the Popular section showed the count without a button, and Trending told a guest "Something went wrong".
+- Not changed: GraphQL operations and their inputs, routes, the product list page, the hero and its search.
+- Results:
+
+| Check | Result |
+|---|---|
+| `yarn tsc --noEmit` | no errors |
+| `yarn build` | passes, 85 pages; the homepage is 51.5 kB (380 kB first load) |
+| Browser at 1500, 768 and 375 px | 87 of 87 |
+
+- What the browser check covers:
+  - with the dev data (5 products, 3 florists, no articles): the page is hero, Shop by, Bestsellers, Same-day; no empty box and nothing with a dashed border; no horizontal overflow; gaps on the scale; both tabs of Shop by with their six tiles and filters; the three tabs of Bestsellers; arrows; a tile and "See all" open the product list; tabs 44px tall on touch screens; arrow keys
+  - with answers swapped in the browser, nothing written to the database (6 florists, 5 articles): all five sections in order, alternating backgrounds, four headers alike, initials for florists without a photo and for one whose photo does not load, tinted blocks for articles without a picture, every photo of the page used once
+  - edges: four florists show the section and three do not; an empty list hides its tab and the next one opens; one list left shows no tabs; no products hides Bestsellers and the gap is not doubled
+  - a guest's like asks for a login; a member's like changes the count in the other tabs too (put back after the check); reduced motion switches the tabs without an animation; no runtime errors or React and Apollo warnings; no failed requests
+- Limits to know:
+  - with five products the three tabs of Bestsellers show the same products in a different order; the difference shows as the shop grows
+  - the same-day section keeps its own layout (text beside the photos) and has no shared header; its "Shop now" button is its link to the products
+  - the florist list page (`/agent`) still shows the default picture for a florist without a photo; only the homepage card was in this task
+  - the header rules that close an unused gap use the CSS `:has()` selector; a browser without it shows the same layout with a slightly larger gap
+- Not verified: articles and florists with real pictures on the homepage (the dev database has none of the first and one of the second, and the section is hidden with three florists); browsers other than Edge; the production server (not redeployed).

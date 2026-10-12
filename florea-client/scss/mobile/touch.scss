@@ -79,15 +79,8 @@
 		}
 	}
 	.florea-home {
-		.home-section {
-			padding: 44px 0;
-		}
 		.text-link {
 			@include tap-area(11px, 8px);
-		}
-		.empty-state a {
-			@include tap-area(12px, 8px);
-			display: inline-block;
 		}
 	}
 }
