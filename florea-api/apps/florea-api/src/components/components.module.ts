@@ -8,6 +8,7 @@ import { ViewModule } from './view/view.module';
 import { FollowModule } from './follow/follow.module';
 import { BoardArticleModule } from './board-article/board-article.module';
 import { NotificationModule } from './notification/notification.module';
+import { OrderModule } from './order/order.module';
 
 @Module({
     imports: [
@@ -20,6 +21,7 @@ import { NotificationModule } from './notification/notification.module';
         CommentModule,
         FollowModule,
         NotificationModule,
+        OrderModule,
     ],
 })
 export class ComponentsModule { }

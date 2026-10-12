@@ -14,6 +14,11 @@ export const availableProductSorts = [
 export const availableBoardArticleSorts = ['createdAt', 'updatedAt', 'articleLikes', 'articleViews'];
 export const availableCommentSorts = ['createdAt', 'updatedAt'];
 
+/** ORDER CONFIGURATION **/
+// one fee for each order (each florist delivers separately); free when the items reach the second amount
+export const DELIVERY_FEE = 5;
+export const FREE_DELIVERY_FROM = 100;
+
 /** IMAGE CONFIGURATION **/
 import { v4 as uuidv4 } from 'uuid';
 import * as path from 'path';
