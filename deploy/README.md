@@ -60,6 +60,16 @@ A new database is empty. From `florea-api` on your machine:
 node seed/seed-notices.mjs http://SERVER:3001/graphql ADMIN_NICK ADMIN_PASSWORD
 ```
 
+## Sample shops
+
+A new database has no florists and no products, and the homepage hides the sections it cannot fill. `seed/demo-shop.json` holds five sample florists with four products each, and `seed/demo-shop/` their photos. From `florea-api` on your machine:
+
+```bash
+node seed/seed-demo-shop.mjs http://SERVER:3001/graphql PASSWORD_FOR_THE_FLORIST_ACCOUNTS
+```
+
+The password (5 to 12 characters) is set on the five accounts and is not kept anywhere by the script. Running it again creates nothing twice. These shops are samples, not real businesses: an order placed with them reaches an account that you hold, and nobody delivers it.
+
 ## Updating
 
 Do not unpack the new code over the old folder. `tar` adds and replaces files, and a file that was deleted in git stays on the server; the client build type-checks every `.ts` and `.tsx` file it finds, so one leftover file can fail it. The code goes into a fresh folder, the two settings files are carried over, and the folders are swapped after the build has passed.

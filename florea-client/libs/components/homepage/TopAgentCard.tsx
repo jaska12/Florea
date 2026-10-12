@@ -44,7 +44,7 @@ const TopAgentCard = (props: TopAgentProps) => {
 					</span>
 				)}
 			</span>
-			<strong className={'agent-name'}>{agent?.memberNick}</strong>
+			<strong className={'agent-name'}>{agent?.memberFullName || agent?.memberNick}</strong>
 			<span className={'agent-meta'}>
 				{productCount} {productCount === 1 ? 'product' : 'products'}
 			</span>

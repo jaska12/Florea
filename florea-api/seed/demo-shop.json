@@ -1,0 +1,299 @@
+{
+	"florists": [
+		{
+			"memberNick": "rosegarden",
+			"memberPhone": "01000000101",
+			"memberFullName": "Rose Garden Florist",
+			"memberAddress": "Gangnam-gu, Seoul",
+			"memberDesc": "Hand-tied rose bouquets, made to order every morning.",
+			"image": "shop-rosegarden.jpg",
+			"productLocation": "SEOUL",
+			"products": [
+				{
+					"productTitle": "Single Rose with Dried Flowers",
+					"productType": "BOUQUET",
+					"productOccasion": "LOVE",
+					"productSize": "SMALL",
+					"productPrice": 24,
+					"productStock": 20,
+					"productSameDay": true,
+					"productGiftWrap": true,
+					"productDesc": "One garden rose with dried red accents, wrapped in striped paper and tied with a satin ribbon.",
+					"image": "rose-single-wrapped.jpg"
+				},
+				{
+					"productTitle": "Blush Rose and Stock Bouquet",
+					"productType": "BOUQUET",
+					"productOccasion": "ANNIVERSARY",
+					"productSize": "LARGE",
+					"productPrice": 78,
+					"productStock": 8,
+					"productSameDay": true,
+					"productGiftWrap": false,
+					"productDesc": "Soft pink garden roses with white stock flowers in a full, rounded bouquet.",
+					"image": "rose-blush-bouquet.jpg"
+				},
+				{
+					"productTitle": "White Rose Hand-tied Bouquet",
+					"productType": "BOUQUET",
+					"productOccasion": "SYMPATHY",
+					"productSize": "MEDIUM",
+					"productPrice": 52,
+					"productStock": 10,
+					"productSameDay": false,
+					"productGiftWrap": false,
+					"productDesc": "White roses, hand-tied and simply wrapped. A quiet way to say you are thinking of someone.",
+					"image": "rose-white-bouquet.jpg"
+				},
+				{
+					"productTitle": "Peach Rose Bridal Bouquet",
+					"productType": "BOUQUET",
+					"productOccasion": "WEDDING",
+					"productSize": "MEDIUM",
+					"productPrice": 110,
+					"productStock": 4,
+					"productSameDay": false,
+					"productGiftWrap": false,
+					"productDesc": "Peach and ivory roses with baby's breath and dusty miller. Made to order; please allow two days.",
+					"image": "rose-bridal-bouquet.jpg"
+				}
+			]
+		},
+		{
+			"memberNick": "petalhouse",
+			"memberPhone": "01000000102",
+			"memberFullName": "Petal House",
+			"memberAddress": "Mapo-gu, Seoul",
+			"memberDesc": "Seasonal bouquets from the morning flower market: tulips, peonies, sunflowers.",
+			"image": "shop-petalhouse.jpg",
+			"productLocation": "SEOUL",
+			"products": [
+				{
+					"productTitle": "Coral Tulip Bouquet",
+					"productType": "BOUQUET",
+					"productOccasion": "CONGRATS",
+					"productSize": "MEDIUM",
+					"productPrice": 42,
+					"productStock": 12,
+					"productSameDay": true,
+					"productGiftWrap": true,
+					"productDesc": "Double coral tulips, cut the same morning. They keep opening for days in a vase.",
+					"image": "tulip-coral-bouquet.jpg"
+				},
+				{
+					"productTitle": "Peach Peony Bouquet",
+					"productType": "BOUQUET",
+					"productOccasion": "BIRTHDAY",
+					"productSize": "LARGE",
+					"productPrice": 72,
+					"productStock": 6,
+					"productSameDay": false,
+					"productGiftWrap": false,
+					"productDesc": "Large peach peonies with their own green. Available while the season lasts.",
+					"image": "peony-peach-bouquet.jpg"
+				},
+				{
+					"productTitle": "Sunflower Bouquet",
+					"productType": "BOUQUET",
+					"productOccasion": "BIRTHDAY",
+					"productSize": "MEDIUM",
+					"productPrice": 45,
+					"productStock": 10,
+					"productSameDay": true,
+					"productGiftWrap": false,
+					"productDesc": "Sunflowers wrapped in clear paper. Bright, simple and good for any happy day.",
+					"image": "sunflower-bouquet.jpg"
+				},
+				{
+					"productTitle": "White Anemone Bouquet",
+					"productType": "BOUQUET",
+					"productOccasion": "ANNIVERSARY",
+					"productSize": "LARGE",
+					"productPrice": 84,
+					"productStock": 5,
+					"productSameDay": false,
+					"productGiftWrap": true,
+					"productDesc": "White anemones and ranunculus with eucalyptus, thistle and berries in a loose, garden-style bouquet.",
+					"image": "anemone-bouquet.jpg"
+				}
+			]
+		},
+		{
+			"memberNick": "bloombox",
+			"memberPhone": "01000000103",
+			"memberFullName": "Bloom & Box",
+			"memberAddress": "Haeundae-gu, Busan",
+			"memberDesc": "Flower boxes and gift sets, wrapped and ready to hand over.",
+			"image": "shop-bloombox.jpg",
+			"productLocation": "BUSAN",
+			"products": [
+				{
+					"productTitle": "Dried Flower Gift Box",
+					"productType": "FLOWER_BOX",
+					"productOccasion": "BIRTHDAY",
+					"productSize": "MEDIUM",
+					"productPrice": 58,
+					"productStock": 9,
+					"productSameDay": false,
+					"productGiftWrap": true,
+					"productDesc": "Small dried bouquets in kraft paper, packed in a gift box. They keep for months without water.",
+					"image": "box-dried-flowers.jpg"
+				},
+				{
+					"productTitle": "Rose and Orchid Flower Box with Card",
+					"productType": "FLOWER_BOX",
+					"productOccasion": "CONGRATS",
+					"productSize": "LARGE",
+					"productPrice": 88,
+					"productStock": 6,
+					"productSameDay": true,
+					"productGiftWrap": true,
+					"productDesc": "Cream roses, pink orchids and eucalyptus arranged in a box, with a blank card for your message.",
+					"image": "box-rose-orchid-card.jpg"
+				},
+				{
+					"productTitle": "Flowers and Macarons Gift Set",
+					"productType": "GIFT_BOX",
+					"productOccasion": "ANNIVERSARY",
+					"productSize": "MEDIUM",
+					"productPrice": 66,
+					"productStock": 7,
+					"productSameDay": true,
+					"productGiftWrap": false,
+					"productDesc": "A pink rose bouquet with a box of macarons. Two gifts in one delivery.",
+					"image": "box-flowers-macarons.jpg"
+				},
+				{
+					"productTitle": "Little Hearts Gift Box",
+					"productType": "GIFT_BOX",
+					"productOccasion": "LOVE",
+					"productSize": "SMALL",
+					"productPrice": 29,
+					"productStock": 15,
+					"productSameDay": false,
+					"productGiftWrap": true,
+					"productDesc": "A box of assorted chocolates wrapped in heart paper and tied with a red ribbon, with paper roses on top.",
+					"image": "box-little-hearts.jpg"
+				}
+			]
+		},
+		{
+			"memberNick": "greenleaf",
+			"memberPhone": "01000000104",
+			"memberFullName": "Green Leaf Studio",
+			"memberAddress": "Yeonsu-gu, Incheon",
+			"memberDesc": "House plants in pots, each sent with a care card.",
+			"image": "shop-greenleaf.jpg",
+			"productLocation": "INCHEON",
+			"products": [
+				{
+					"productTitle": "Monstera in Cream Pot",
+					"productType": "PLANT",
+					"productOccasion": "CONGRATS",
+					"productSize": "LARGE",
+					"productPrice": 54,
+					"productStock": 8,
+					"productSameDay": false,
+					"productGiftWrap": false,
+					"productDesc": "A full monstera deliciosa in a cream ceramic pot. Easy to keep; it likes bright shade.",
+					"image": "plant-monstera.jpg"
+				},
+				{
+					"productTitle": "White Orchid",
+					"productType": "PLANT",
+					"productOccasion": "ANNIVERSARY",
+					"productSize": "MEDIUM",
+					"productPrice": 62,
+					"productStock": 6,
+					"productSameDay": false,
+					"productGiftWrap": true,
+					"productDesc": "A white phalaenopsis orchid in bloom. With a weekly watering it flowers for two to three months.",
+					"image": "plant-orchid.jpg"
+				},
+				{
+					"productTitle": "Succulent Pair in Terracotta",
+					"productType": "PLANT",
+					"productOccasion": "BIRTHDAY",
+					"productSize": "SMALL",
+					"productPrice": 22,
+					"productStock": 20,
+					"productSameDay": true,
+					"productGiftWrap": true,
+					"productDesc": "Two small succulents in terracotta pots with a saucer. Water them twice a month.",
+					"image": "plant-succulents.jpg"
+				},
+				{
+					"productTitle": "Peace Lily in White Pot",
+					"productType": "PLANT",
+					"productOccasion": "SYMPATHY",
+					"productSize": "MEDIUM",
+					"productPrice": 46,
+					"productStock": 9,
+					"productSameDay": true,
+					"productGiftWrap": false,
+					"productDesc": "A peace lily with its white flowers, in a white pot. A lasting gift when words are hard to find.",
+					"image": "plant-peace-lily.jpg"
+				}
+			]
+		},
+		{
+			"memberNick": "sweetpetal",
+			"memberPhone": "01000000105",
+			"memberFullName": "Sweet Petal Gifts",
+			"memberAddress": "Jongno-gu, Seoul",
+			"memberDesc": "Macarons, chocolates and soft toys to send along with flowers.",
+			"image": "shop-sweetpetal.jpg",
+			"productLocation": "SEOUL",
+			"products": [
+				{
+					"productTitle": "Pastel Macaron Box",
+					"productType": "SWEET",
+					"productOccasion": "BIRTHDAY",
+					"productSize": "SMALL",
+					"productPrice": 26,
+					"productStock": 25,
+					"productSameDay": true,
+					"productGiftWrap": true,
+					"productDesc": "Ten macarons in five flavours: raspberry, pistachio, lemon, lavender and vanilla.",
+					"image": "sweet-macarons.jpg"
+				},
+				{
+					"productTitle": "Artisan Chocolate Box",
+					"productType": "SWEET",
+					"productOccasion": "LOVE",
+					"productSize": "SMALL",
+					"productPrice": 34,
+					"productStock": 18,
+					"productSameDay": false,
+					"productGiftWrap": true,
+					"productDesc": "Hand-finished chocolates in a hinged box: dark, milk and fruit-filled.",
+					"image": "sweet-chocolates.jpg"
+				},
+				{
+					"productTitle": "Teddy Bear with a Rose",
+					"productType": "TOY",
+					"productOccasion": "LOVE",
+					"productSize": "MEDIUM",
+					"productPrice": 38,
+					"productStock": 12,
+					"productSameDay": true,
+					"productGiftWrap": false,
+					"productDesc": "A soft grey bear in a knitted scarf, sent with one fresh red rose.",
+					"image": "toy-teddy-rose.jpg"
+				},
+				{
+					"productTitle": "Pink Teddy Gift Set",
+					"productType": "TOY",
+					"productOccasion": "BIRTHDAY",
+					"productSize": "MEDIUM",
+					"productPrice": 44,
+					"productStock": 10,
+					"productSameDay": false,
+					"productGiftWrap": true,
+					"productDesc": "A pink plush bear with a gift box wrapped in pink and tied with a ribbon.",
+					"image": "toy-pink-teddy.jpg"
+				}
+			]
+		}
+	]
+}

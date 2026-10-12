@@ -186,3 +186,10 @@ Important decisions made during the Nestar → Florea migration session, with th
 - **Reason:** an empty dashed box or a row of three cards on the first page of a shop reads as a broken or abandoned site. The sections come back by themselves as the data grows.
 - **Rejected:** placeholder or sample content (the brief forbids mock data); a lower limit for florists (three cards leave half of the row empty on a desktop screen).
 - **Also decided:** product lists that differ only in their sort order are tabs of one section, and the tiles that lead into the catalog are one section with two tabs. One page section per kind of content.
+
+## 29. Sample shops on the live site
+
+- **Decision:** the production shop is filled with five sample florists and twenty products, created through the public API by a script in the repo. The data, the photos and their credits are in `florea-api/seed/`. Views, likes, reviews and orders are not made up.
+- **Reason:** the owner asked for at least four florists with good photos so that the site looks like a working product; with an empty shop the homepage hides most of its sections.
+- **Limits:** the shops are not real. Their accounts belong to the owner, and an order placed with them is not delivered. Before the site is offered to real customers they have to be replaced by real florists or marked as samples.
+- **Rejected:** photos of people as shop pictures (a stock photo of a person would present a stranger as a florist of this shop); made-up popularity numbers.

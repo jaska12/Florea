@@ -46,6 +46,7 @@ In the order they were done. State as of 2026-10-05, `main` at `5f5405e`.
 - [x] 40. Homepage: same-day section in place of the three.js gallery
 - [x] 41. Homepage UX fixes (v2): tabs, hidden empty sections, one spacing scale
 - [x] 42. Second deploy: the new homepage and the client fixes
+- [x] 43. Sample shops on production: five florists and twenty products
 
 ## 1. Recommend migration steps
 
@@ -847,3 +848,34 @@ In the order they were done. State as of 2026-10-05, `main` at `5f5405e`.
   - an update where the API changed too
 - Access: the owner gave the root password in chat for this deploy and said it will be changed. It was kept in a temporary file for the session and deleted afterwards. A key-based login is not set up.
 - Still open from the first deploy: no HTTPS; `main` is not updated; the client image is 2.11 GB.
+
+## 43. Sample shops on production: five florists and twenty products
+
+- Before: the production shop had no florists and no products, so the live homepage showed the hero, Shop by and the same-day section only.
+- Added to the repo (`florea-api/seed/`):
+  - `demo-shop.json`: five florists (`rosegarden`, `petalhouse`, `bloombox`, `greenleaf`, `sweetpetal`) with a shop name, an area and a line about the shop, and four products each: bouquets, flower boxes, gift boxes, plants, sweets and toys, over all six occasions, priced from $22 to $110, ten of them marked same-day and eleven with gift wrap
+  - `demo-shop/`: 5 shop photos (600x600) and 20 product photos (1000x750), 2.4 MB together, with `CREDITS.md` (photographer, license and source of each; all from Unsplash under the Unsplash License)
+  - `seed-demo-shop.mjs <graphql url> <password>`: signs the florists up through the API, fills their profiles, uploads the photos and creates the products. It can be run again: an account that exists is logged in, a profile field that is filled and a product title the florist already has are left alone.
+- `florea-api/.dockerignore`: `seed` is left out of the API image.
+- `TopAgentCard.tsx`: the homepage card shows the shop name when the florist has one, and the nick otherwise.
+- The script was run on the dev database first, then on production (http://201.18.219.9:3001), through the public API; the server itself was not touched.
+- Results:
+
+| Check | Result |
+|---|---|
+| Dev: first run | 5 signed up, 5 profiles filled, 20 products created |
+| Dev: second run | nothing created, 20 products already there |
+| Dev: run with another password | stops at the first account with the API's "Wrong password" message |
+| Production: run | 5 signed up, 5 profiles filled, 20 products created |
+| Browser on the public address, at 1500, 768 and 375 px | 24 of 25 |
+| `yarn tsc --noEmit` | no errors |
+
+- What the browser check covers: the homepage now shows Shop by, Bestsellers, Same-day and Top florists; three tabs and eight product cards with their photos; five florists with a photo and four products each; no overflow, no broken picture; the product list has 20 products; the same-day, plant and sympathy filters give 10, 4 and 2; the florist list shows 5; a florist page shows its 4 products; no runtime errors; no failed requests.
+- The one failed check is the product page. Its own pattern for the price was written wrong; the facts it prints are all as expected (the page opens, two photos, no broken picture, the price and the "Add to cart" button are there), and the screenshot shows the page complete.
+- To know:
+  - These are sample shops. Their phone numbers are made up (`010-0000-01xx`) and are shown on the product pages. A visitor can order from them; the order arrives in the florist account and nobody delivers it.
+  - All counts start at zero, so the three tabs of Bestsellers show the same order until products are viewed and liked. No views or likes were made up.
+  - Community is still hidden on the homepage: there are no articles.
+  - The password of the five production accounts was made for the run and given to the owner; it is not in the repo.
+  - The shop name on the homepage card is in the code, not yet on the server (the client was not redeployed).
+- Not verified: an order placed with a sample shop on production; the product page's "Address" block, which is empty on the live site as it is on the dev machine.
