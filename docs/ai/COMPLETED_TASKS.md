@@ -42,6 +42,7 @@ In the order they were done. State as of 2026-10-05, `main` at `5f5405e`.
 - [x] 36. Production builds, and three fixes found on the way
 - [x] 37. Real-estate leftovers removed
 - [x] 38. Notices and FAQ from the database, with an admin screen
+- [x] 39. First deploy
 
 ## 1. Recommend migration steps
 
@@ -711,3 +712,32 @@ In the order they were done. State as of 2026-10-05, `main` at `5f5405e`.
   - `TERMS` is in the enum and is not used.
   - A new database starts empty: run `seed/seed-notices.mjs` after the first deploy, or add the entries in the admin panel.
 - Not verified: `npm run build` and `yarn build` after this task (the servers were running).
+
+## 39. First deploy
+
+- Request from the project owner: deploy to their server on port 3001, after checking that the port is free; two other people have projects on the same server.
+- Checked first (read only): Ubuntu, Docker and nginx present; two other projects run as Docker containers behind nginx on ports 80, 443, 3100, 3101 and 3200; port 3001 was free but closed in the firewall.
+- Two things were decided by the owner before the deploy (DECISIONS.md, 26): a separate production database, and no admin signup in production.
+- Added to the repo: `florea-api/Dockerfile` (one image for the API and the batch jobs), `florea-client/Dockerfile`, `docker-compose.prod.yml`, `deploy/nginx-florea.conf`, `deploy/.env.example`, `deploy/README.md` (how to deploy, update, make an admin, seed), `.dockerignore` files.
+- Code change: `member.service.ts` refuses a signup as `ADMIN` when `NODE_ENV` is `production`.
+- On the server:
+  - the code of commit `78c02b0` in `/root/apps/florea`; images built there; containers `florea-api`, `florea-batch`, `florea-next`, bound to `127.0.0.1` (3007 and 3002), restart policy `unless-stopped`; uploads in the volume `florea_uploads`
+  - `florea-api/.env` on the server: the database name is `FloreaProd` on the same cluster, and `SECRET_TOKEN` is a new random value made on the server
+  - nginx: a new site `florea` listening on 3001, enabled only after `nginx -t` passed; the firewall allows 3001
+  - the first admin was made by signing up a member and changing its type on the server; the 3 notices and 32 FAQ entries were seeded through the API
+- Results:
+
+| Check | Result |
+|---|---|
+| Containers | all three up; the API reports "MongoDB is connected into production db" |
+| From outside | pages 200, `/graphql` answers, the WebSocket sends its first event |
+| Signup as `ADMIN` on the server | refused ("Not Allowed Request!") |
+| Browser on the public address | 12 of 12: homepage, styles and photos, product list (empty shop), notices from the production database, login, chat socket, admin panel, admin FAQ, picture upload stored and served, phone width, no runtime errors, no failed requests |
+| The other projects after the nginx reload | their ports still listen and answer |
+
+- Not done:
+  - HTTPS. The site is plain HTTP on a port; the neighbour project uses a `sslip.io` name with a Let's Encrypt certificate, and the same can be done for Florea.
+  - The production shop is empty: no florists and no products yet.
+  - `main` was not updated; the server runs `develop`.
+  - The client image is 2.25 GB (it carries the whole build folder and dev packages). It works; it can be slimmed with Next's standalone output.
+- Not verified: a server reboot (Docker and nginx are enabled at boot and the containers restart themselves, but it was not tried).

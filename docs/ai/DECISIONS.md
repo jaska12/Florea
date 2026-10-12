@@ -165,3 +165,11 @@ Important decisions made during the Nestar → Florea migration session, with th
 - **Reason:** the customer-care page groups the FAQ into seven topics and marks some notices as events; the ERD's fields had no place for either. One collection keeps one admin screen and one set of operations.
 - **Rejected:** a separate `faqs` collection; keeping the texts in the client code (they could not be edited without a deploy).
 - **Open:** inquiries from members are not built.
+
+## 26. Production database and admin accounts
+
+- **Decision (made by the project owner on 2026-10-12, before the first deploy):**
+  - The server uses its own database, `FloreaProd`, on the same Atlas cluster. `MONGO_DEV` and `MONGO_PROD` in the local `.env` were the same address, so the dev database with its test accounts (password `test12345`, an admin among them) would otherwise have been public.
+  - In production the API refuses a signup as `ADMIN`. Nestar let anyone sign up as an admin; local development keeps that. The first admin is made on the server (deploy/README.md).
+- **Also:** the server has its own `SECRET_TOKEN`, so a login token from a developer's machine is not valid there.
+- **Rejected:** using the dev database for the public site; leaving admin signup open.
