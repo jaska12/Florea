@@ -39,6 +39,7 @@ In the order they were done. State as of 2026-10-05, `main` at `5f5405e`.
 - [x] 33. Live chat connected to the socket; notifications announced over it
 - [x] 34. Mobile version of every page, including the admin panel
 - [x] 35. Cart and delivery ordering
+- [x] 36. Production builds, and three fixes found on the way
 
 ## 1. Recommend migration steps
 
@@ -620,3 +621,31 @@ In the order they were done. State as of 2026-10-05, `main` at `5f5405e`.
   - Order numbers are the last six characters of the id.
 - Not verified: `npm run build` and `yarn build` (the servers were running on the same output folders), Safari, real devices, the Korean and Russian texts by a native reader.
 - Test data left in the dev database: the florist account `floreashop2`, the products "Pink Peony Bouquet" ($45) and "Tea And Sweets Gift Box" ($60), and the test orders of `floreauser`.
+
+## 36. Production builds, and three fixes found on the way
+
+- Reason: tasks 29 to 35 were checked with typecheck and the running dev servers only; neither `npm run build` nor `yarn build` was run during them.
+- Builds (servers stopped first):
+
+| Check | Result |
+|---|---|
+| `npm run build` (`florea-api` and `florea-batch`) | both compiled |
+| `yarn build` (client) | 86 pages generated |
+
+- Found: `yarn build` reads the API addresses at build time, and the repo has only `.env.development` (git-ignored). A build without `.env.production` succeeds but cannot reach the API. `florea-client/.env.example` (new) lists the three variables and says so.
+- The build log prints two Apollo messages many times (codes 17 and 103). Both are deprecation notices for Apollo Client 4 (a default link, `onCompleted`), not errors.
+- Production run: the client was built with the local addresses and started with `yarn start` against the dev API, and the browser tests were run on it:
+
+| Test on the production build | Result |
+|---|---|
+| Order flow | 40 of 40 |
+| Phone visitor | 21 of 21 |
+| Chat | 18 of 18 |
+| Fix checks (below) | 7 of 7 |
+| Notifications | 10 of 11 on the first run, then fixed (below) |
+
+- Fixes:
+  1. **My page on a full load.** Opening `/mypage` by its address, or pressing F5 there, sent a logged-in member to the homepage: the page checked `userVar` before the layout had read the stored token. `pages/mypage/index.tsx` now sends away only a visitor who has no usable token. A guest and a broken token still go to the homepage.
+  2. **Password field.** `pages/account/join.tsx` showed the password as plain text (`type="text"`, from Nestar). It is `type="password"` now.
+  3. **Bell count one short, now and then.** Found on the production build (1 run in 3). Apollo shares identical requests that are in flight, so when two notification signals arrived close together the second check reused the first one's answer, read before the second change was written. The notification query and the order lists now send their own request each time (`queryDeduplication: false` in the query context). After the fix: 6 of 6 runs passed.
+- Not verified: the API built for production was not started (it would use `MONGO_PROD`); only its build was checked. The third fix is supported by 6 passing runs, which makes the race unlikely, not impossible. Safari and real devices.

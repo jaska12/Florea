@@ -52,6 +52,8 @@ const OrdersPanel = (props: OrdersPanelProps) => {
 		fetchPolicy: 'cache-and-network',
 		variables: { input: inquiry },
 		notifyOnNetworkStatusChange: true,
+		// every refetch after a socket signal sends its own request (see NotificationBell)
+		context: { queryDeduplication: false },
 	});
 
 	const result = (getOrdersData ?? getOrdersPrevious)?.[agent ? 'getAgentOrders' : 'getMyOrders'];

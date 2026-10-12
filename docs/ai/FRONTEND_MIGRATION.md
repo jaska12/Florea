@@ -77,7 +77,6 @@ Not renamed: the agent pages and components (`pages/agent`, `AgentCard`, `TopAge
 - **Screen widths:** phones and tablets are covered (COMPLETED_TASKS.md, 34). Between 1025 and 1339px the 1300px desktop layout still scrolls sideways.
 - **About page:** a house photo, the heading "Our Exclusive Agetns" and placeholder text are still there.
 
-- **My page on a full reload:** opening `/mypage` directly or pressing F5 there sends a logged-in member to the homepage (seen twice in the test browser). Probable cause, from reading the code: the page checks the member before the navbar has read the stored token. Reaching it through the navbar works. Seen during the notifications check; not changed.
 
 - **After the site-wide design system:**
   - The FAQ text in `libs/components/cs/Faq.tsx` is still about real estate.
@@ -99,5 +98,5 @@ Not renamed: the agent pages and components (`pages/agent`, `AgentCard`, `TopAge
 - **Prices are shown with `$`** while the price filter steps go up to 2,000,000. TODO: decide the currency.
 - **Apollo warnings during build:** `useQuery` `onCompleted` is deprecated in the installed Apollo Client. Inherited from Nestar, not changed.
 - **Package manager:** Yarn only (`yarn`, `yarn dev`, `yarn build`). `package-lock.json` was removed and `yarn.lock` regenerated. Yarn prints peer-dependency warnings during install; they do not stop it.
-- **Env file:** `.env.development` exists locally (ignored by git) and points at `localhost:3007`.
+- **Env file:** `.env.development` exists locally (ignored by git) and points at `localhost:3007`. `.env.example` lists the variables. A production build needs them in `.env.production` before `yarn build`.
 - **No ESLint setup.** TODO: decide whether to add one.

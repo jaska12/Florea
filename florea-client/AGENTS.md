@@ -62,5 +62,6 @@ yarn tsc --noEmit
 yarn build
 ```
 
-- Run the app with `yarn dev`. It needs `.env.development` with `REACT_APP_API_URL`, `REACT_APP_API_GRAPHQL_URL` and `REACT_APP_API_WS`.
+- Run the app with `yarn dev`. It needs `.env.development` with `REACT_APP_API_URL`, `REACT_APP_API_GRAPHQL_URL` and `REACT_APP_API_WS` (see `.env.example`).
+- `yarn build` reads the same three variables from `.env.production`. Stop `yarn dev` before building: both write to `.next`.
 - There is no ESLint config in this project, so `yarn lint` only opens an interactive setup. Do not add a lint setup unless asked.

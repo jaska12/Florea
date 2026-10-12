@@ -92,7 +92,8 @@ const Join: NextPage = () => {
 							<div className={'input-box'}>
 								<span>Password</span>
 								<input
-									type="text"
+									type="password"
+									autoComplete={loginView ? 'current-password' : 'new-password'}
 									placeholder={'Enter Password'}
 									onChange={(e) => handleInput('password', e.target.value)}
 									required={true}

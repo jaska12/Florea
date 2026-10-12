@@ -79,8 +79,10 @@ const NotificationBell = (props: NotificationBellProps) => {
 		variables: { input: inquiry },
 		skip: !user?._id,
 		pollInterval: POLL_INTERVAL,
-		// a background check must not open an error alert (see errorLink in apollo/client.ts)
-		context: { silentError: true },
+		// A background check must not open an error alert (see errorLink in apollo/client.ts).
+		// Apollo shares identical requests that are in flight. Two signals close together would then share one
+		// answer, read before the second change was written, so every check here sends its own request.
+		context: { silentError: true, queryDeduplication: false },
 		onError: () => stopPolling(),
 	});
 
