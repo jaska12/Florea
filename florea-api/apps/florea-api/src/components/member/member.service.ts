@@ -31,6 +31,12 @@ export class MemberService {
     ) { }
 
     public async signup(input: MemberInput): Promise<Member> {
+        // On the public server nobody signs up as an admin: the first admin is made on the server itself.
+        // Local development keeps the Nestar way of creating one through signup.
+        if (input.memberType === MemberType.ADMIN && process.env.NODE_ENV === 'production') {
+            throw new BadRequestException(Message.NOT_ALLOWED_REQUEST);
+        }
+
         // Hash password
         input.memberPassword = await this.authService.hashPassword(input.memberPassword);
         try {

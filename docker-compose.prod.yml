@@ -1,0 +1,51 @@
+# Production: the API, the batch jobs and the Next.js client, each bound to this machine only.
+# nginx (deploy/nginx-florea.conf) is the one public door.
+#
+#   docker compose -f docker-compose.prod.yml --env-file deploy/.env up -d --build
+#
+# Needs: deploy/.env (see deploy/.env.example) and florea-api/.env (PORT_API, PORT_BATCH, MONGO_PROD, SECRET_TOKEN).
+name: florea
+
+services:
+  florea-api:
+    build: ./florea-api
+    image: florea-server
+    container_name: florea-api
+    restart: unless-stopped
+    env_file: ./florea-api/.env
+    environment:
+      NODE_ENV: production
+    command: ['node', 'dist/apps/florea-api/main']
+    ports:
+      - '127.0.0.1:${FLOREA_API_PORT:-3007}:3007'
+    volumes:
+      - florea_uploads:/app/uploads
+
+  florea-batch:
+    image: florea-server
+    container_name: florea-batch
+    restart: unless-stopped
+    depends_on:
+      - florea-api
+    env_file: ./florea-api/.env
+    environment:
+      NODE_ENV: production
+    command: ['node', 'dist/apps/florea-batch/main']
+
+  florea-next:
+    build:
+      context: ./florea-client
+      args:
+        REACT_APP_API_URL: ${FLOREA_PUBLIC_URL}
+        REACT_APP_API_GRAPHQL_URL: ${FLOREA_PUBLIC_URL}/graphql
+        REACT_APP_API_WS: ${FLOREA_PUBLIC_WS}
+    image: florea-next
+    container_name: florea-next
+    restart: unless-stopped
+    depends_on:
+      - florea-api
+    ports:
+      - '127.0.0.1:${FLOREA_NEXT_PORT:-3002}:3000'
+
+volumes:
+  florea_uploads:

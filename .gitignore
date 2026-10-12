@@ -1,0 +1,2 @@
+# the server-side settings of a deployment (addresses and ports); see deploy/.env.example
+deploy/.env
