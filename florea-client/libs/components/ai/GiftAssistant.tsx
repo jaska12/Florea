@@ -16,7 +16,7 @@ import AddToCartButton from '../common/AddToCartButton';
 import AiNote from './AiNote';
 import { aiErrorMessage } from './aiError';
 
-const PROMPT_MIN = 3;
+const PROMPT_MIN = 2;
 const PROMPT_MAX = 300;
 const EXAMPLES = [
 	'A birthday gift for my mother who loves tulips',
@@ -76,12 +76,23 @@ const GiftAssistant = () => {
 			occasion: (occasion || undefined) as ProductOccasion | undefined,
 			status: 'loading',
 		};
+		// what was written before in this conversation goes along, so that a follow-up is understood
+		const history = giftAssistantTurnsVar()
+			.map((earlier) => earlier.prompt)
+			.slice(-4);
 		giftAssistantTurnsVar([...giftAssistantTurnsVar(), turn]);
 		setPrompt('');
 
 		try {
 			const result = await recommend({
-				variables: { input: { prompt: turn.prompt, budgetMax: turn.budgetMax, occasion: turn.occasion } },
+				variables: {
+					input: {
+						prompt: turn.prompt,
+						budgetMax: turn.budgetMax,
+						occasion: turn.occasion,
+						...(history.length > 0 ? { history } : {}),
+					},
+				},
 			});
 			if (!result.data) throw new Error();
 			setTurn(turn.id, { status: 'done', result: result.data.aiGiftRecommend });
@@ -145,7 +156,7 @@ const GiftAssistant = () => {
 						<div className={'ga-thread'} ref={threadRef} aria-live={'polite'}>
 							{turns.length === 0 && (
 								<div className={'ga-welcome'}>
-									<p>Who is the gift for, and what is the occasion? A budget helps too.</p>
+									<p>Hello! Who is the gift for, and what is the occasion? A budget helps too.</p>
 									<ul>
 										{EXAMPLES.map((example) => (
 											<li key={example}>

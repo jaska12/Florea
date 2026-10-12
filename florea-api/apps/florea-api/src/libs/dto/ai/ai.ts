@@ -20,7 +20,7 @@ export class AiGiftRecommendation {
 	@Field(() => Boolean)
 	aiUsed: boolean;
 
-	/** a line for the customer when there is something to explain (nothing matched, the assistant is down) **/
+	/** what the assistant says to the customer: its own short reply, or a line that explains (nothing matched, the assistant is down) **/
 	@Field(() => String, { nullable: true })
 	message?: string;
 }

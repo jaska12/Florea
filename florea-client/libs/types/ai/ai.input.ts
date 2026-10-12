@@ -6,6 +6,8 @@ export interface AiGiftRecommendInput {
 	budgetMax?: number;
 	occasion?: ProductOccasion;
 	size?: ProductSize;
+	/** what the member wrote earlier in the same conversation, oldest first **/
+	history?: string[];
 }
 
 export interface AiCardMessageInput {

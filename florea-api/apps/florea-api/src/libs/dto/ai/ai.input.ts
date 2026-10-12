@@ -1,12 +1,12 @@
 import { Field, Float, InputType } from '@nestjs/graphql';
-import { IsNotEmpty, IsOptional, Length, Max, Min } from 'class-validator';
+import { ArrayMaxSize, IsArray, IsNotEmpty, IsOptional, IsString, Length, Max, MaxLength, Min } from 'class-validator';
 import { ProductOccasion, ProductSize, ProductType } from '../../enums/product.enum';
 import { AiCardTone, AiLanguage } from '../../enums/ai.enum';
 
 @InputType()
 export class AiGiftRecommendInput {
 	@IsNotEmpty()
-	@Length(3, 300)
+	@Length(2, 300)
 	@Field(() => String)
 	prompt: string;
 
@@ -23,6 +23,15 @@ export class AiGiftRecommendInput {
 	@IsOptional()
 	@Field(() => ProductSize, { nullable: true })
 	size?: ProductSize;
+
+	/** what the member wrote earlier in the same conversation, oldest first, so that "something cheaper" makes sense **/
+	@IsOptional()
+	@IsArray()
+	@ArrayMaxSize(6)
+	@IsString({ each: true })
+	@MaxLength(300, { each: true })
+	@Field(() => [String], { nullable: true })
+	history?: string[];
 }
 
 @InputType()

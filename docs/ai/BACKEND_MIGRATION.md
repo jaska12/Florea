@@ -128,6 +128,7 @@ Search input `PISearch`:
 
 - Module `components/ai`: `AiClient` (calls the OpenAI API with the `openai` package; the only file that knows the provider), `AiService`, `AiResolver`. It has no collection of its own; it reads `products`.
 - Mutations: `aiGiftRecommend` and `aiCardMessage` (any logged-in member), `aiProductDescription` (`AGENT`).
+- `aiGiftRecommend` also takes `history` (the member's earlier messages) and returns the assistant's own short reply in `message` (task 48).
 - Types: `AiGiftRecommendInput`, `AiCardMessageInput`, `AiProductDescriptionInput`, `AiGiftRecommendation` (`list` of `AiGiftPick { product, reason }`, `aiUsed`, `message`), `AiCardMessages`, `AiProductDescription`. Enums: `AiCardTone` (`WARM`, `ROMANTIC`, `PLAYFUL`, `FORMAL`), `AiLanguage` (`ENGLISH`, `KOREAN`, `RUSSIAN`, `UZBEK`).
 - Settings in `.env`: `OPENAI_API_KEY`, `AI_MODEL` (optional; `gpt-6-luna` when empty). Without a key the mutations answer with the fallback or a "not available" message.
 - Ten requests a minute for each member; the count is kept in memory.

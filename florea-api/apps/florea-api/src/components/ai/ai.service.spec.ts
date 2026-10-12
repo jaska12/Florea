@@ -119,6 +119,51 @@ describe('AiService', () => {
 			expect(result.message).toBeTruthy();
 		});
 
+		it('passes on what the assistant says, with or without picks', async () => {
+			const candidates = [product(1)];
+			const { service, askJson } = setup(candidates);
+			askJson.mockResolvedValueOnce({ reply: "Salom! Sovg'a kim uchun?", picks: [] });
+			const greeting = await service.giftRecommend(memberId, { prompt: 'salom' });
+			expect(greeting).toEqual({ list: [], aiUsed: true, message: "Salom! Sovg'a kim uchun?" });
+
+			askJson.mockResolvedValueOnce({
+				reply: 'Here is one that fits.',
+				picks: [{ id: String(candidates[0]._id), reason: 'A classic.' }],
+			});
+			const withPick = await service.giftRecommend(memberId, { prompt: 'a gift for my mother' });
+			expect(withPick.list).toHaveLength(1);
+			expect(withPick.message).toBe('Here is one that fits.');
+
+			askJson.mockResolvedValueOnce({ reply: 'word '.repeat(200), picks: [] });
+			const long = await service.giftRecommend(memberId, { prompt: 'a gift' });
+			expect((long.message ?? '').length).toBeLessThanOrEqual(300);
+		});
+
+		it('sends the last four earlier messages of the conversation along with the request', async () => {
+			const { service, askJson } = setup([product(1)]);
+			askJson.mockResolvedValue({ reply: 'Ok.', picks: [] });
+			await service.giftRecommend(memberId, {
+				prompt: 'something cheaper',
+				history: ['one', 'two', '  ', 'a gift for my mother', 'she likes pink', 'for her birthday'],
+			});
+			const user = askJson.mock.calls[0][0].user;
+			expect(user).toContain(
+				[
+					'<earlier_messages>',
+					'- two',
+					'- a gift for my mother',
+					'- she likes pink',
+					'- for her birthday',
+					'</earlier_messages>',
+				].join('\n'),
+			);
+			expect(user).not.toContain('- one');
+			expect(user).toContain(['<request>', 'something cheaper', '</request>'].join('\n'));
+
+			await service.giftRecommend(memberId, { prompt: 'a gift' });
+			expect(askJson.mock.calls[1][0].user).not.toContain('earlier_messages');
+		});
+
 		it('falls back to the most popular matching products when the model fails', async () => {
 			const candidates = Array.from({ length: 7 }, (_, n) => product(n));
 			const { service, askJson } = setup(candidates);

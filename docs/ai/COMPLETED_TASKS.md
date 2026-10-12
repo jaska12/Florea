@@ -51,6 +51,7 @@ In the order they were done. State as of 2026-10-05, `main` at `5f5405e`.
 - [x] 45. AI features: gift assistant, card messages, product descriptions
 - [x] 46. AI features moved to the OpenAI API and checked with the real model
 - [x] 47. Third deploy: the AI features, the four-florist row, the API and the client together
+- [x] 48. Gift assistant answers like a chat: its own reply, and the earlier messages
 
 ## 1. Recommend migration steps
 
@@ -1003,3 +1004,24 @@ In the order they were done. State as of 2026-10-05, `main` at `5f5405e`.
 - Afterwards: the old folder, the build log and the two fallback images were removed from the server; the password and key files used for the session were deleted from the dev machine.
 - Access: the owner said to use the login already given for deploys. No key-based login is set up; the root password has been written in the chat several times and should be changed.
 - Not verified on the server: "Write it for me" on the checkout page and "Generate description" in the product form in a browser (their mutations were called directly and pass; the screens were checked on the dev machine); a server reboot.
+
+## 48. Gift assistant answers like a chat: its own reply, and the earlier messages
+
+- Reported by the owner: they wrote "salom" in the assistant and got "Nothing among the current products fits that well. Try describing it in another way." The model had answered (no product fits a greeting), and the panel showed the fixed line for an empty list, so it looked as if the assistant was not answering.
+- Backend (`components/ai/ai.service.ts`, `libs/dto/ai/ai.input.ts`):
+  - the model now also returns `reply`, one or two short sentences to the customer in their language. It is passed on in `message` (300 characters at most). With picks it introduces them; with none it asks what would help. A greeting, a thank-you or small talk gets a warm answer and the question who the gift is for; anything that is not about gifts gets a polite "I only help with gifts here". No picks in those cases.
+  - `AiGiftRecommendInput.history` (optional, six lines at most, 300 characters each): what the member wrote earlier in the conversation. The last four go to the model with the request, so "something cheaper" or "for my mother" is understood. Only the member's own messages are sent, not the assistant's earlier answers.
+  - a request may be two characters long ("hi"); it was three
+  - the fixed line is still used when the model returns no reply and no picks
+- Frontend (`libs/components/ai/GiftAssistant.tsx`): the request sends the earlier messages of the panel; two characters are enough to send; the opening line starts with "Hello!".
+- Results:
+
+| Check | Result |
+|---|---|
+| `npx tsc` for `florea-api`, `yarn tsc --noEmit` | no errors |
+| `npx jest apps/florea-api/src/components/ai` | 18 of 18 (two new: the reply is passed on and shortened; the last four earlier messages are sent) |
+| Lint of the AI files | no problems |
+| A conversation on the dev API with the real model | "salom" is answered in Uzbek with a question; "onamga tug'ilgan kuniga sovg'a kerak" gets four products with reasons in Uzbek; "arzonrog'i bormi?" gets cheaper ones for the same mother and birthday; "rahmat" is answered; "what is the capital of France?" is declined politely; "hi" is answered in English |
+| The panel in a browser on the dev site | "hi" and "salom" get a reply and no cards; the real request gets cards under the assistant's own line |
+
+- Not verified: `yarn build` and `npm run build` after this change (the type checks pass); the live site, which still runs the version of task 47 and answers "salom" with the fixed line until it is deployed.
