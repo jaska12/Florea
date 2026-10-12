@@ -6,6 +6,13 @@ const nextConfig = {
 		REACT_APP_API_GRAPHQL_URL: process.env.REACT_APP_API_GRAPHQL_URL,
 		REACT_APP_API_WS: process.env.REACT_APP_API_WS,
 	},
+	// The admin pages live under /_admin (the name Nestar gave them). /admin is what people type, so it leads there.
+	async redirects() {
+		return [
+			{ source: '/admin', destination: '/_admin', permanent: false },
+			{ source: '/admin/:path*', destination: '/_admin/:path*', permanent: false },
+		];
+	},
 };
 
 const { i18n } = require('./next-i18next.config');
