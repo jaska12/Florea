@@ -13,6 +13,7 @@ import '../scss/theme/florea.scss';
 import '../scss/theme/notifications.scss';
 import '../scss/home/home.scss';
 import '../scss/theme/order.scss';
+import '../scss/theme/ai.scss';
 import '../scss/mobile/main.scss';
 
 const App = ({ Component, pageProps }: AppProps) => {

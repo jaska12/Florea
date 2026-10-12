@@ -43,6 +43,7 @@ The backend is already migrated to the product domain. Names in this client must
 - Notification operations: `getNotifications`, `readNotification`, `readAllNotifications` (type `NotificationsInquiry`).
 - Order operations: `createOrder`, `updateOrder`, `updateOrderByAgent`, `updateOrderByAdmin`, `getMyOrders`, `getAgentOrders`, `getOrder`, `getAllOrdersByAdmin` (types `OrderInput`, `OrderUpdate`, `OrdersInquiry`). `OrderStatus`: `PENDING`, `CONFIRMED`, `PREPARING`, `OUT_FOR_DELIVERY`, `DELIVERED`, `CANCELLED`.
 - Notice operations: `getNotices` (public), `createNoticeByAdmin`, `updateNoticeByAdmin`, `removeNoticeByAdmin`, `getAllNoticesByAdmin`. `NoticeCategory`: `NOTICE`, `FAQ`, `TERMS`, `INQUIRY`. `NoticeTopic`: `PRODUCT`, `PAYMENT`, `ORDER`, `FLORIST`, `ACCOUNT`, `COMMUNITY`, `OTHER`.
+- AI operations (all need a login): `aiGiftRecommend`, `aiCardMessage`, `aiProductDescription` (florists only). Types `AiGiftRecommendInput`, `AiCardMessageInput`, `AiProductDescriptionInput`. `AiCardTone`: `WARM`, `ROMANTIC`, `PLAYFUL`, `FORMAL`. `AiLanguage`: `ENGLISH`, `KOREAN`, `RUSSIAN`, `UZBEK`. The client never calls the Claude API and holds no key.
 - Types: `Product`, `Products`, `ProductInput`, `ProductUpdate`, `ProductsInquiry`, `AgentProductsInquiry`, `AllProductsInquiry`.
 - Member counter: `memberProducts`.
 - Group enums (like, view, comment): `PRODUCT`.

@@ -6,6 +6,7 @@ import Footer from '../Footer';
 import { Stack } from '@mui/material';
 import { getJwtToken, updateUserInfo } from '../../auth';
 import Chat from '../Chat';
+import GiftAssistant from '../ai/GiftAssistant';
 import { useReactiveVar } from '@apollo/client';
 import { userVar } from '../../../apollo/store';
 import 'swiper/css';
@@ -41,6 +42,7 @@ const withLayoutFull = (Component: any) => {
 					</Stack>
 
 					{user?._id && <Chat />}
+					<GiftAssistant />
 
 					<Stack id={'footer'}>
 						<Footer />

@@ -20,7 +20,7 @@ Use those files as the source of truth for AI Agent related migration history, a
 - Keep the existing NestJS resolver/service/module pattern based on MVC and DI.
 - Keep DTOs and enums under `apps/florea-api/src/libs`, and schemas under `apps/florea-api/src/schemas`.
 - The catalog module is `product` (`components/product`, `libs/dto/product`, `libs/enums/product.enum.ts`, `schemas/Product.model.ts`).
-- Keep shared modules reusable: auth, member, like, view, comment, follow, board article, notification, order, notice, socket.
+- Keep shared modules reusable: auth, member, like, view, comment, follow, board article, notification, order, notice, ai, socket.
 - API is GraphQL (Apollo), database is MongoDB (Mongoose), auth is JWT.
 
 ## Domain Rules
@@ -36,6 +36,13 @@ Use those files as the source of truth for AI Agent related migration history, a
   - `ProductSize`: `SMALL`, `MEDIUM`, `LARGE`
   - `ProductStatus`: `ACTIVE`, `SOLD`, `DELETE`
   - `ProductLocation`: keep the current location values until a later migration explicitly changes them.
+
+## AI Rules
+
+- Only `components/ai/ai.client.ts` talks to the Claude API. The key comes from `ANTHROPIC_API_KEY` in `.env`; never log it, return it or put it in a DTO.
+- A product, price or stock level shown to a member comes from the database. The model returns ids and text; check every id against what was sent.
+- Tests never call the API: mock `AiClient` (service tests) or `AiService` (resolver tests).
+- Before changing the request, read the current SDK documentation and model list; model ids and parameters change.
 
 ## Workflow
 
@@ -67,4 +74,4 @@ To debug with breakpoints in VS Code, open the repo root and run the `Debug Flor
 npx eslint "{src,apps,libs,test}/**/*.ts"
 ```
 
-The lint baseline is 3489 problems: 3336 inherited from Nestar, plus the notification, order and notice modules and the socket changes (see `../docs/ai/COMPLETED_TASKS.md`, 32, 33, 35 and 38). A change must not increase it.
+The lint baseline is 3497 problems: 3336 inherited from Nestar, plus the notification, order and notice modules, the socket changes and three lines of the AI task (see `../docs/ai/COMPLETED_TASKS.md`, 32, 33, 35, 38 and 45). A change must not increase it.

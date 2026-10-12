@@ -3,6 +3,7 @@ import { makeVar } from '@apollo/client';
 import { CustomJwtPayload } from '../libs/types/customJwtPayload';
 import { ChatMessage } from '../libs/types/chat/chat';
 import { CartItem } from '../libs/types/cart/cart';
+import { GiftTurn } from '../libs/types/ai/ai';
 export const themeVar = makeVar({});
 
 export const userVar = makeVar<CustomJwtPayload>({
@@ -39,3 +40,7 @@ export const notificationPingVar = makeVar<number>(0);
 
 /** filled by libs/cart.ts **/
 export const cartVar = makeVar<CartItem[]>([]);
+
+/** the gift assistant: kept here so the conversation is still there after a page change **/
+export const giftAssistantOpenVar = makeVar<boolean>(false);
+export const giftAssistantTurnsVar = makeVar<GiftTurn[]>([]);

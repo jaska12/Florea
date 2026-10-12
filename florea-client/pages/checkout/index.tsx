@@ -13,6 +13,7 @@ import { CartGroup, CartItem } from '../../libs/types/cart/cart';
 import { OrderInput } from '../../libs/types/order/order.input';
 import { deliveryTimeSlots, REACT_APP_API_URL } from '../../libs/config';
 import { formatterStr } from '../../libs/utils';
+import CardMessageHelper from '../../libs/components/ai/CardMessageHelper';
 
 export const getStaticProps = async ({ locale }: any) => ({
 	props: {
@@ -260,6 +261,7 @@ const Checkout: NextPage = () => {
 							<h3>
 								Gift card message <small>optional</small>
 							</h3>
+							<CardMessageHelper onPick={(message) => changeHandler('cardMessage', message)} />
 							<label className={'field'}>
 								<span className={'sr-only'}>Gift card message</span>
 								<textarea

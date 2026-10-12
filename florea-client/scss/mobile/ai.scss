@@ -1,0 +1,69 @@
+/** AI FEATURES ON NARROW SCREENS **/
+// Desktop rules: scss/theme/ai.scss.
+
+@include tablet {
+	// the chat button sits lower here (scss/mobile/layout.scss), and this one follows it
+	.gift-assistant-button {
+		right: 16px;
+		bottom: calc(20px + env(safe-area-inset-bottom));
+		&.above-chat {
+			bottom: calc(84px + env(safe-area-inset-bottom));
+		}
+	}
+}
+
+@include phone {
+	// the panel takes the whole screen
+	.gift-assistant {
+		width: 100vw;
+		.ga-head {
+			padding: 14px 10px 14px 16px;
+			.ga-heading strong {
+				font-size: 19px;
+				line-height: 26px;
+			}
+		}
+		.ga-thread {
+			padding: 18px 16px;
+		}
+		.ga-form {
+			padding: 12px 12px calc(12px + env(safe-area-inset-bottom));
+		}
+		// 16px keeps iOS from zooming in when a field is focused
+		.ga-filters select,
+		.ga-filters input,
+		.ga-input textarea {
+			font-size: 16px;
+		}
+	}
+
+	.ai-helper {
+		.ai-helper-row {
+			grid-template-columns: minmax(0, 1fr);
+		}
+		.ai-helper-field input,
+		.ai-helper-field select {
+			font-size: 16px;
+		}
+		.ai-helper-tones button {
+			min-height: 44px;
+		}
+		.ai-helper-go {
+			align-self: stretch;
+		}
+		.ai-helper-toggle {
+			min-height: 44px;
+		}
+	}
+
+	#pc-wrap {
+		.config-column .title-row {
+			flex-direction: column;
+			align-items: flex-start;
+			gap: 8px;
+		}
+		.ai-generate {
+			min-height: 44px;
+		}
+	}
+}

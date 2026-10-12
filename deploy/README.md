@@ -13,7 +13,7 @@ nginx (`deploy/nginx-florea.conf`) is the one public door: `/graphql`, `/uploads
 ## Settings on the server (not in git)
 
 - `deploy/.env`: the public address and the local ports. Copy `deploy/.env.example`.
-- `florea-api/.env`: `PORT_API=3007`, `PORT_BATCH=3008`, `MONGO_PROD`, `SECRET_TOKEN`. The compose file sets `NODE_ENV=production`, which makes the API use `MONGO_PROD`.
+- `florea-api/.env`: `PORT_API=3007`, `PORT_BATCH=3008`, `MONGO_PROD`, `SECRET_TOKEN`, and for the AI features `ANTHROPIC_API_KEY` (and `AI_MODEL` to change the model). `florea-api/.env.example` lists them. The compose file sets `NODE_ENV=production`, which makes the API use `MONGO_PROD`. Without the key the site works and the AI features answer "not available".
 
 The client reads the public address while it is built. If the address changes, the client image has to be built again.
 

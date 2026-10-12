@@ -1,0 +1,757 @@
+/** AI FEATURES **/
+// The gift assistant (floating button and panel), "Write it for me" on the checkout page,
+// and "Generate description" in the product form. Narrow screens: scss/mobile/ai.scss.
+
+@import '/scss/variables.scss';
+
+$ai-ease: cubic-bezier(0.22, 1, 0.36, 1);
+
+@mixin ai-focus {
+	outline: 2px solid rgba($florea-rose, 0.5);
+	outline-offset: 2px;
+}
+
+@mixin ai-sr-only {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	margin: -1px;
+	padding: 0;
+	overflow: hidden;
+	clip: rect(0, 0, 0, 0);
+	white-space: nowrap;
+	border: 0;
+}
+
+// the line shown wherever something on the page was written or chosen by AI
+.ai-note {
+	display: block;
+	color: $florea-muted;
+	font-family: $font;
+	font-size: 12.5px;
+	font-weight: 400;
+	line-height: 18px;
+}
+
+/** the floating button **/
+.gift-assistant-button {
+	position: fixed;
+	right: 30px;
+	// a guest has no chat button, so this one takes its place; a member sees it above the chat button
+	bottom: 90px;
+	z-index: 998;
+	padding: 0 20px 0 16px;
+	height: 50px;
+	display: inline-flex;
+	align-items: center;
+	gap: 9px;
+	border: none;
+	border-radius: 999px;
+	background: linear-gradient(135deg, $florea-rose 0%, $florea-wine 100%);
+	box-shadow: 0 12px 28px rgba($florea-wine, 0.28);
+	color: #ffffff;
+	font-family: $font;
+	font-size: 15px;
+	font-weight: 500;
+	line-height: 22px;
+	cursor: pointer;
+	transition:
+		transform 320ms $ai-ease,
+		box-shadow 320ms $ai-ease;
+	&.above-chat {
+		bottom: 158px;
+	}
+	svg {
+		width: 20px;
+		height: 20px;
+		// the amber accent, used on the mark only
+		color: $florea-gold;
+	}
+	&:hover {
+		transform: translateY(-2px);
+		box-shadow: 0 16px 34px rgba($florea-wine, 0.34);
+	}
+	&:focus-visible {
+		@include ai-focus;
+	}
+}
+
+/** the panel **/
+.gift-assistant {
+	width: 460px;
+	max-width: 100vw;
+	display: flex;
+	flex-direction: column;
+	background: $florea-surface;
+	color: $florea-ink;
+	font-family: $font;
+
+	.sr-only {
+		@include ai-sr-only;
+	}
+	button,
+	input,
+	select,
+	textarea {
+		font-family: $font;
+	}
+	button:focus-visible,
+	a:focus-visible,
+	select:focus-visible {
+		@include ai-focus;
+	}
+
+	.ga-head {
+		flex-shrink: 0;
+		padding: 20px 16px 18px 22px;
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		gap: 14px;
+		border-bottom: 1px solid $florea-hairline;
+		background: #ffffff;
+		.ga-mark {
+			flex-shrink: 0;
+			width: 42px;
+			height: 42px;
+			display: grid;
+			place-items: center;
+			border-radius: 50%;
+			background: $florea-mist;
+			color: $florea-rose;
+			svg {
+				width: 21px;
+				height: 21px;
+			}
+		}
+		.ga-heading {
+			min-width: 0;
+			flex: 1;
+			display: flex;
+			flex-direction: column;
+			strong {
+				color: $florea-ink;
+				font-family: $font-display;
+				font-size: 21px;
+				font-weight: 500;
+				line-height: 28px;
+			}
+			span {
+				color: $florea-muted;
+				font-size: 13.5px;
+				line-height: 20px;
+			}
+		}
+		.ga-close {
+			flex-shrink: 0;
+			width: 44px;
+			height: 44px;
+			display: grid;
+			place-items: center;
+			border: none;
+			border-radius: 50%;
+			background: transparent;
+			color: $florea-muted;
+			cursor: pointer;
+			transition:
+				background-color 240ms $ai-ease,
+				color 240ms $ai-ease;
+			&:hover {
+				background: $florea-mist;
+				color: $florea-wine;
+			}
+		}
+	}
+
+	.ga-login {
+		padding: 32px 24px;
+		p {
+			margin: 0 0 22px;
+			color: $florea-muted;
+			font-size: 15px;
+			line-height: 1.6;
+		}
+		.ga-login-btn {
+			padding: 13px 26px;
+			display: inline-block;
+			border-radius: 999px;
+			background: $florea-rose;
+			color: #ffffff;
+			font-size: 15px;
+			font-weight: 500;
+			line-height: 22px;
+			transition: background-color 240ms $ai-ease;
+			&:hover {
+				background: $florea-wine;
+			}
+		}
+	}
+
+	/** the conversation **/
+	.ga-thread {
+		min-height: 0;
+		flex: 1;
+		padding: 22px;
+		display: flex;
+		flex-direction: column;
+		gap: 26px;
+		overflow-y: auto;
+		overscroll-behavior: contain;
+	}
+	.ga-welcome {
+		p {
+			margin: 0 0 16px;
+			color: $florea-ink;
+			font-size: 15.5px;
+			line-height: 1.6;
+		}
+		ul {
+			margin: 0;
+			padding: 0;
+			display: flex;
+			flex-direction: column;
+			gap: 8px;
+			list-style: none;
+		}
+		button {
+			padding: 11px 16px;
+			width: 100%;
+			border: 1px solid $florea-line;
+			border-radius: 14px;
+			background: #ffffff;
+			color: $florea-wine;
+			font-size: 14.5px;
+			line-height: 21px;
+			text-align: left;
+			cursor: pointer;
+			transition:
+				border-color 240ms $ai-ease,
+				background-color 240ms $ai-ease;
+			&:hover {
+				border-color: rgba($florea-rose, 0.4);
+				background: $florea-mist;
+			}
+		}
+	}
+	.ga-turn {
+		display: flex;
+		flex-direction: column;
+		gap: 14px;
+		animation: ga-turn-in 420ms $ai-ease;
+	}
+	.ga-ask {
+		align-self: flex-end;
+		max-width: 86%;
+		padding: 11px 16px;
+		border-radius: 18px 18px 5px 18px;
+		background: $florea-wine;
+		color: #ffffff;
+		p {
+			margin: 0;
+			font-size: 15px;
+			line-height: 1.5;
+			overflow-wrap: anywhere;
+		}
+		.ga-ask-meta {
+			margin-top: 4px;
+			display: block;
+			color: rgba(255, 255, 255, 0.76);
+			font-size: 12.5px;
+			line-height: 18px;
+		}
+	}
+	.ga-answer {
+		color: $florea-ink;
+		font-size: 15px;
+		line-height: 1.55;
+		.ga-line {
+			margin: 0 0 14px;
+		}
+		&.loading {
+			display: flex;
+			flex-direction: row;
+			align-items: center;
+			gap: 10px;
+			color: $florea-muted;
+		}
+		&.error {
+			padding: 12px 16px;
+			border-radius: 14px;
+			border: 1px solid rgba($florea-rose, 0.22);
+			background: #ffffff;
+			color: $florea-wine;
+		}
+	}
+	.ga-dots {
+		display: inline-flex;
+		gap: 4px;
+		i {
+			width: 6px;
+			height: 6px;
+			border-radius: 50%;
+			background: $florea-rose;
+			animation: ga-dot 1200ms ease-in-out infinite;
+			&:nth-child(2) {
+				animation-delay: 160ms;
+			}
+			&:nth-child(3) {
+				animation-delay: 320ms;
+			}
+		}
+	}
+
+	/** the picks: the product card of the site, the reason, the cart button **/
+	.ga-picks {
+		margin: 0;
+		padding: 0;
+		display: flex;
+		flex-direction: column;
+		gap: 26px;
+		list-style: none;
+		li {
+			display: flex;
+			flex-direction: column;
+			gap: 12px;
+		}
+	}
+	.ga-card {
+		width: 100%;
+		@include florea-product-card;
+		// the panel scrolls, so the card does not lift under the pointer
+		&:hover {
+			transform: none;
+		}
+		.card-img {
+			height: 200px;
+		}
+	}
+	.ga-reason {
+		margin: 0;
+		padding: 11px 14px;
+		display: flex;
+		flex-direction: row;
+		align-items: flex-start;
+		gap: 9px;
+		border-radius: 14px;
+		background: $florea-mist;
+		color: $florea-ink;
+		font-size: 14.5px;
+		line-height: 1.5;
+		svg {
+			flex-shrink: 0;
+			margin-top: 2px;
+			width: 16px;
+			height: 16px;
+			color: $florea-gold;
+		}
+	}
+	.add-to-cart.full {
+		width: 100%;
+		min-height: 46px;
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		gap: 8px;
+		border-radius: 999px;
+		background: $florea-rose;
+		color: #ffffff;
+		font-size: 15px;
+		font-weight: 500;
+		&:hover:not(:disabled) {
+			background: $florea-wine;
+		}
+		&:disabled {
+			background: $florea-hairline;
+			color: $florea-muted;
+			cursor: default;
+		}
+		svg {
+			width: 19px;
+			height: 19px;
+		}
+	}
+
+	/** the request form **/
+	.ga-form {
+		flex-shrink: 0;
+		padding: 14px 18px 14px;
+		display: flex;
+		flex-direction: column;
+		gap: 10px;
+		border-top: 1px solid $florea-hairline;
+		background: #ffffff;
+		.ai-note {
+			text-align: center;
+		}
+	}
+	.ga-filters {
+		display: grid;
+		grid-template-columns: minmax(0, 1fr) 132px;
+		gap: 8px;
+		label {
+			position: relative;
+			display: block;
+		}
+		select,
+		input {
+			padding: 0 14px;
+			width: 100%;
+			height: 42px;
+			border: 1px solid $florea-hairline;
+			border-radius: 12px;
+			background: #ffffff;
+			color: $florea-ink;
+			font-size: 14.5px;
+			box-sizing: border-box;
+			transition: border-color 240ms $ai-ease;
+			&:focus {
+				outline: none;
+				border-color: $florea-rose;
+			}
+		}
+		.ga-budget {
+			i {
+				position: absolute;
+				top: 0;
+				left: 14px;
+				height: 42px;
+				display: flex;
+				align-items: center;
+				color: $florea-muted;
+				font-size: 14.5px;
+				font-style: normal;
+			}
+			input {
+				padding-left: 28px;
+			}
+		}
+	}
+	.ga-input {
+		padding: 6px 6px 6px 16px;
+		display: flex;
+		flex-direction: row;
+		align-items: flex-end;
+		gap: 8px;
+		border: 1px solid $florea-hairline;
+		border-radius: 22px;
+		background: #ffffff;
+		transition: border-color 240ms $ai-ease;
+		&:focus-within {
+			border-color: $florea-rose;
+		}
+		textarea {
+			min-width: 0;
+			flex: 1;
+			padding: 9px 0;
+			border: none;
+			background: transparent;
+			color: $florea-ink;
+			font-size: 15px;
+			line-height: 22px;
+			resize: none;
+			&:focus {
+				outline: none;
+			}
+			&::placeholder {
+				color: $florea-muted;
+			}
+		}
+		button {
+			flex-shrink: 0;
+			width: 44px;
+			height: 44px;
+			display: grid;
+			place-items: center;
+			border: none;
+			border-radius: 50%;
+			background: $florea-rose;
+			color: #ffffff;
+			cursor: pointer;
+			transition:
+				background-color 240ms $ai-ease,
+				opacity 240ms $ai-ease;
+			&:hover:not(:disabled) {
+				background: $florea-wine;
+			}
+			&:disabled {
+				opacity: 0.35;
+				cursor: default;
+			}
+			svg {
+				width: 21px;
+				height: 21px;
+			}
+		}
+	}
+}
+
+@keyframes ga-turn-in {
+	from {
+		opacity: 0;
+		transform: translateY(10px);
+	}
+	to {
+		opacity: 1;
+		transform: none;
+	}
+}
+@keyframes ga-dot {
+	0%,
+	80%,
+	100% {
+		opacity: 0.3;
+	}
+	40% {
+		opacity: 1;
+	}
+}
+
+/** "Write it for me" on the checkout page **/
+.ai-helper {
+	margin: -4px 0 14px;
+	font-family: $font;
+	button:focus-visible,
+	select:focus-visible {
+		@include ai-focus;
+	}
+	.ai-helper-toggle {
+		padding: 0 16px 0 13px;
+		min-height: 40px;
+		display: inline-flex;
+		align-items: center;
+		gap: 8px;
+		border: 1px solid rgba($florea-rose, 0.32);
+		border-radius: 999px;
+		background: #ffffff;
+		color: $florea-wine;
+		font-family: $font;
+		font-size: 14.5px;
+		font-weight: 500;
+		cursor: pointer;
+		transition:
+			border-color 240ms $ai-ease,
+			background-color 240ms $ai-ease;
+		svg {
+			width: 18px;
+			height: 18px;
+			color: $florea-gold;
+		}
+		&:hover,
+		&[aria-expanded='true'] {
+			border-color: $florea-rose;
+			background: $florea-mist;
+		}
+	}
+	.ai-helper-body {
+		margin-top: 12px;
+		padding: 18px;
+		display: flex;
+		flex-direction: column;
+		gap: 14px;
+		border-radius: 18px;
+		background: $florea-mist;
+		animation: ga-turn-in 360ms $ai-ease;
+	}
+	.ai-helper-row {
+		display: grid;
+		grid-template-columns: minmax(0, 1fr) 170px;
+		gap: 12px;
+	}
+	.ai-helper-field {
+		display: flex;
+		flex-direction: column;
+		gap: 6px;
+		span {
+			color: $florea-ink;
+			font-size: 13.5px;
+			font-weight: 500;
+			line-height: 20px;
+		}
+		input,
+		select {
+			padding: 0 14px;
+			width: 100%;
+			height: 44px;
+			border: 1px solid $florea-hairline;
+			border-radius: 12px;
+			background: #ffffff;
+			color: $florea-ink;
+			font-family: $font;
+			font-size: 15px;
+			box-sizing: border-box;
+			&:focus {
+				outline: none;
+				border-color: $florea-rose;
+			}
+		}
+	}
+	.ai-helper-tones {
+		display: flex;
+		flex-direction: row;
+		flex-wrap: wrap;
+		gap: 8px;
+		button {
+			padding: 0 16px;
+			min-height: 38px;
+			border: 1px solid $florea-line;
+			border-radius: 999px;
+			background: #ffffff;
+			color: $florea-wine;
+			font-family: $font;
+			font-size: 14px;
+			cursor: pointer;
+			transition:
+				background-color 240ms $ai-ease,
+				border-color 240ms $ai-ease,
+				color 240ms $ai-ease;
+			&.on {
+				border-color: $florea-wine;
+				background: $florea-wine;
+				color: #ffffff;
+			}
+		}
+	}
+	.ai-helper-go {
+		align-self: flex-start;
+		padding: 0 22px;
+		min-height: 44px;
+		border: none;
+		border-radius: 999px;
+		background: $florea-rose;
+		color: #ffffff;
+		font-family: $font;
+		font-size: 15px;
+		font-weight: 500;
+		cursor: pointer;
+		transition:
+			background-color 240ms $ai-ease,
+			opacity 240ms $ai-ease;
+		&:hover:not(:disabled) {
+			background: $florea-wine;
+		}
+		&:disabled {
+			opacity: 0.45;
+			cursor: default;
+		}
+	}
+	.ai-helper-error {
+		margin: 0;
+		color: $florea-wine;
+		font-size: 14px;
+		line-height: 1.5;
+	}
+	.ai-helper-list {
+		margin: 0;
+		padding: 0;
+		display: flex;
+		flex-direction: column;
+		gap: 8px;
+		list-style: none;
+		button {
+			padding: 12px 16px;
+			width: 100%;
+			border: 1px solid $florea-line;
+			border-radius: 14px;
+			background: #ffffff;
+			color: $florea-ink;
+			font-family: $font;
+			font-size: 15px;
+			line-height: 1.5;
+			text-align: left;
+			cursor: pointer;
+			transition:
+				border-color 240ms $ai-ease,
+				box-shadow 240ms $ai-ease;
+			&:hover {
+				border-color: rgba($florea-rose, 0.45);
+			}
+			&.picked {
+				border-color: $florea-rose;
+				box-shadow: 0 0 0 1px $florea-rose;
+			}
+		}
+	}
+}
+
+/** "Generate description" in the product form **/
+#add-product-page,
+#pc-wrap {
+	.config-column .title-row {
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		justify-content: space-between;
+		gap: 12px;
+	}
+	.ai-generate {
+		padding: 0 16px 0 13px;
+		min-height: 40px;
+		display: inline-flex;
+		align-items: center;
+		gap: 8px;
+		border: 1px solid rgba($florea-rose, 0.32);
+		border-radius: 999px;
+		background: #ffffff;
+		color: $florea-wine;
+		font-family: $font;
+		font-size: 14px;
+		font-weight: 500;
+		cursor: pointer;
+		transition:
+			border-color 240ms $ai-ease,
+			background-color 240ms $ai-ease;
+		svg {
+			width: 18px;
+			height: 18px;
+			color: $florea-gold;
+		}
+		&:hover:not(:disabled) {
+			border-color: $florea-rose;
+			background: $florea-mist;
+		}
+		&:disabled {
+			opacity: 0.6;
+			cursor: default;
+		}
+		&:focus-visible {
+			@include ai-focus;
+		}
+	}
+	.ai-generate-foot {
+		margin-top: 8px;
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+		gap: 4px;
+		.ai-generate-error {
+			color: $florea-wine;
+			font-family: $font;
+			font-size: 14px;
+			line-height: 1.5;
+		}
+		.ai-generate-undo {
+			padding: 0;
+			border: none;
+			border-bottom: 1px solid rgba($florea-rose, 0.3);
+			background: transparent;
+			color: $florea-rose;
+			font-family: $font;
+			font-size: 14px;
+			line-height: 22px;
+			cursor: pointer;
+		}
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.gift-assistant-button,
+	.gift-assistant *,
+	.ai-helper *,
+	.ai-generate {
+		transition: none !important;
+		animation: none !important;
+	}
+	.gift-assistant-button:hover {
+		transform: none;
+	}
+}

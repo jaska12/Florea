@@ -48,6 +48,7 @@ In the order they were done. State as of 2026-10-05, `main` at `5f5405e`.
 - [x] 42. Second deploy: the new homepage and the client fixes
 - [x] 43. Sample shops on production: five florists and twenty products
 - [x] 44. Top florists as one row of four, and sample articles for the community
+- [x] 45. AI features: gift assistant, card messages, product descriptions
 
 ## 1. Recommend migration steps
 
@@ -903,3 +904,43 @@ In the order they were done. State as of 2026-10-05, `main` at `5f5405e`.
 
 - On the server and not: the articles are data and are live. The four-florist row, the shop names on the cards and the two-line titles are in the code only; the live site still runs the client of task 42, so it shows five florists in a slider and cuts long article titles until the next deploy.
 - To know: with five sample florists of equal rank, which four are shown is the database's order (the first four created). It changes when the ranks do.
+
+## 45. AI features: gift assistant, card messages, product descriptions
+
+- Three features that call the Claude API from the backend. The key is read on the server from `ANTHROPIC_API_KEY` and is never sent to the browser; the model is `AI_MODEL`, and `claude-haiku-5-5` when that is empty.
+- The model: the brief named `claude-haiku-4-5-20251001`. Anthropic's model page lists it as a legacy model that is still available, and `claude-haiku-5-5` as the current fastest one, so that one is the default (the owner approved the plan that proposed it). The request uses `output_config.format` with a JSON schema, the current way to get JSON back; no beta header.
+- Backend (`florea-api`):
+  - package `@anthropic-ai/sdk` (0.133.0)
+  - `components/ai/`: `ai.client.ts` (the only file that talks to the API: 15 s timeout, one retry), `ai.service.ts` (the three features, the rate limit, the checks on every answer), `ai.resolver.ts`, `ai.module.ts`, and two test files
+  - `libs/dto/ai/`, `libs/enums/ai.enum.ts` (`AiCardTone`, `AiLanguage`), two messages in `Message`
+  - `.env.example` (new): every variable the API reads, with `ANTHROPIC_API_KEY` and `AI_MODEL` empty
+- The three mutations:
+  - `aiGiftRecommend(input: { prompt, budgetMax?, occasion?, size? })`, for a logged-in member. It takes up to 30 products from the database (active, in stock, matching the filters, not the member's own), sends the model only id, title, type, occasion, size, price and a shortened description, and returns up to five of them with a one-sentence reason each. An id that is not among the candidates is dropped, and so is a repeat.
+  - `aiCardMessage(input: { occasion, recipient, tone, language? })`, for a logged-in member: three messages of 200 characters at most.
+  - `aiProductDescription(input: { title, type, occasion, size, notes? })`, for florists only: one description of 500 characters at most (the limit of `productDesc`).
+- Limits and failures:
+  - ten requests a minute for each member, over the three features together; the count is in memory
+  - when the model cannot answer (no key, time-out, refusal, an answer that is not what was asked for), the gift assistant returns the most popular matching products without reasons and says so; the other two return a clear "not available right now" message. The request never fails with a server error, and no text is made up in place of the model's.
+  - the customer's words and the shop's texts are sent as data, with an instruction not to follow anything written inside them; whatever comes back is used only as ids to look up and as plain text
+- Frontend (`florea-client`):
+  - `libs/components/ai/GiftAssistant.tsx`: a "Find a gift" button in the corner of every page (above the chat button for a member) that opens a side panel; on a phone the panel fills the screen. A guest is asked to log in. The member writes a request, with an occasion and a budget if they like, and gets the site's normal product cards with the reason under each and "Add to cart". The conversation stays while the member moves between pages (`giftAssistantOpenVar`, `giftAssistantTurnsVar` in `apollo/store.ts`); the server keeps nothing of it.
+  - `libs/components/ai/CardMessageHelper.tsx` on the checkout page: "Write it for me" asks who the card is for, the occasion and the tone, shows three suggestions, and a click puts one into the message field, where it can be edited. The language follows the language of the site.
+  - `libs/components/mypage/AddNewProduct.tsx`: "Generate description" fills the description from the title, type, occasion and size; what is already typed in the box is passed on as notes, and "Undo" puts it back.
+  - `AiNote.tsx` ("AI suggestions may not be perfect"), `aiError.ts`, `scss/theme/ai.scss`, `scss/mobile/ai.scss`; three mutations in `apollo/user/mutation.ts`; types in `libs/types/ai/`
+  - failures are shown inside the panel or under the button, not as the site's error alert
+- Results:
+
+| Check | Result |
+|---|---|
+| `npx tsc` for `florea-api` and `florea-batch`, `npm run build` | no errors |
+| `npx jest apps/florea-api/src/components/ai` | 16 of 16; the model client and the database are mocks, nothing reaches the API |
+| The three mutations on the running dev API, without a key | 15 of 15: a guest and a wrong role are refused, bad input is refused, the filters are applied, a florist is not offered their own products, the fallback and the "not available" answers, the rate limit, another member unaffected |
+| `yarn tsc --noEmit`, `yarn build` | no errors; 85 pages |
+| Browser at 1500, 768 and 375 px | 36 of 37 |
+
+- What the browser check covers: the button for a guest and for a member; the login prompt; examples; a request with filters; the fallback and "nothing matches"; the loading line; three picks as normal cards with reasons; "Add to cart" fills the cart; a refused request explained in the panel; a card opens the product and the panel closes; the conversation is kept; Escape; the checkout helper (no-key message, three suggestions, insert, edit); the product form (missing fields, no-key message, fill, edit, undo); tablet and phone (nothing sticks out, the form stays in view, tap sizes); reduced motion; no failed requests.
+- The one failed check is "no React warnings": the product form's selects set `selected` on an `<option>`. Those six lines were in the form before this task.
+- **Not verified: a real answer from the model.** `florea-api/.env` has no `ANTHROPIC_API_KEY` yet, so no request reached the Claude API. The screens with suggestions were checked with answers swapped in inside the browser. With a key, run the three mutations once (the gift assistant in the panel is the quickest) before relying on them.
+- Lint: 3497 problems. The new files add none; three lines added to two existing files in their own four-space style add 3. Before this task the count was 3494 by that sum, not the 3489 recorded in `florea-api/AGENTS.md`; the difference of 5 was not looked for.
+- The other tests of the repo (3 suites) fail as they did before this task: Jest cannot load the `uuid` package that `libs/config.ts` imports.
+- To put this on the server: add `ANTHROPIC_API_KEY` to `florea-api/.env` there and rebuild the API image as well as the client. Each request costs a little; the login, the rate limit and the short answers keep it small.

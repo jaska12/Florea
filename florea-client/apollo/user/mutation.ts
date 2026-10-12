@@ -382,3 +382,58 @@ export const UPDATE_ORDER_BY_AGENT = gql`
 		}
 	}
 `;
+
+/**************************
+ *           AI           *
+ *************************/
+
+export const AI_GIFT_RECOMMEND = gql`
+	mutation AiGiftRecommend($input: AiGiftRecommendInput!) {
+		aiGiftRecommend(input: $input) {
+			aiUsed
+			message
+			list {
+				reason
+				product {
+					_id
+					productType
+					productStatus
+					productLocation
+					productAddress
+					productTitle
+					productPrice
+					productOccasion
+					productSize
+					productStock
+					productViews
+					productLikes
+					productComments
+					productRank
+					productImages
+					productDesc
+					productSameDay
+					productGiftWrap
+					memberId
+					createdAt
+					updatedAt
+				}
+			}
+		}
+	}
+`;
+
+export const AI_CARD_MESSAGE = gql`
+	mutation AiCardMessage($input: AiCardMessageInput!) {
+		aiCardMessage(input: $input) {
+			list
+		}
+	}
+`;
+
+export const AI_PRODUCT_DESCRIPTION = gql`
+	mutation AiProductDescription($input: AiProductDescriptionInput!) {
+		aiProductDescription(input: $input) {
+			text
+		}
+	}
+`;

@@ -193,3 +193,11 @@ Important decisions made during the Nestar → Florea migration session, with th
 - **Reason:** the owner asked for at least four florists with good photos so that the site looks like a working product; with an empty shop the homepage hides most of its sections.
 - **Limits:** the shops are not real. Their accounts belong to the owner, and an order placed with them is not delivered. Before the site is offered to real customers they have to be replaced by real florists or marked as samples.
 - **Rejected:** photos of people as shop pictures (a stock photo of a person would present a stranger as a florist of this shop); made-up popularity numbers.
+
+## 30. AI features call the model from the backend only
+
+- **Decision:** the browser never talks to the Claude API. It calls three GraphQL mutations of our own API; the key is in the server's `.env`. Every AI operation needs a login and is counted per member (ten a minute).
+- **The model chooses, the database answers:** for gift ideas the model gets a short list of real products and returns ids and reasons. The products shown are read from the database by those ids; an id the model was not given is dropped. The model cannot add a product, a price or a stock level.
+- **When the model fails:** the gift assistant falls back to popular matching products and says the assistant is not available; card messages and descriptions return a clear message. Nothing is written in the model's place.
+- **Default model:** `claude-haiku-5-5`, the current fastest model on Anthropic's list; `AI_MODEL` changes it without a code change.
+- **Rejected:** calling the API from the browser (the key would be public); letting guests use it (cost, and no member to count); a database table of requests for the rate limit (one API container; a count in memory is enough until there are more).

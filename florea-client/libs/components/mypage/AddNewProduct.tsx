@@ -8,9 +8,12 @@ import axios from 'axios';
 import { getJwtToken } from '../../auth';
 import { useMutation, useQuery, useReactiveVar } from '@apollo/client';
 import { userVar } from '../../../apollo/store';
-import { CREATE_PRODUCT, UPDATE_PRODUCT } from '../../../apollo/user/mutation';
+import { AI_PRODUCT_DESCRIPTION, CREATE_PRODUCT, UPDATE_PRODUCT } from '../../../apollo/user/mutation';
 import { GET_PRODUCT } from '../../../apollo/user/query';
 import { sweetErrorHandling, sweetMixinErrorAlert, sweetMixinSuccessAlert } from '../../sweetAlert';
+import AutoAwesomeRoundedIcon from '@mui/icons-material/AutoAwesomeRounded';
+import AiNote from '../ai/AiNote';
+import { aiErrorMessage } from '../ai/aiError';
 
 const AddProduct = ({ initialValues, ...props }: any) => {
 	const router = useRouter();
@@ -22,9 +25,16 @@ const AddProduct = ({ initialValues, ...props }: any) => {
 	const [productSize, setProductSize] = useState<ProductSize[]>(Object.values(ProductSize));
 	const token = getJwtToken();
 	const user = useReactiveVar(userVar);
+	// the description as it was before the last "Generate description", for the undo link
+	const [descBeforeAi, setDescBeforeAi] = useState<string | null>(null);
+	const [aiError, setAiError] = useState<string>('');
 
 	/** APOLLO REQUESTS **/
 	const [createProduct] = useMutation(CREATE_PRODUCT);
+	// a failure is shown under the button, so the global error alert stays closed
+	const [generateDescription, { loading: aiLoading }] = useMutation(AI_PRODUCT_DESCRIPTION, {
+		context: { silentError: true },
+	});
 	const [updateProduct] = useMutation(UPDATE_PRODUCT);
 
 	const {
@@ -112,6 +122,42 @@ const AddProduct = ({ initialValues, ...props }: any) => {
 			await sweetMixinErrorAlert(err.message);
 		}
 	}
+
+	const generateDescriptionHandler = async () => {
+		const { productTitle, productType, productOccasion, productSize, productDesc } = insertProductData;
+		if (!productTitle || productTitle.trim().length < 3 || !productType || !productOccasion || !productSize) {
+			setAiError('Fill in the title, type, occasion and size first.');
+			return;
+		}
+		setAiError('');
+		try {
+			// what is already typed in the box is passed on as notes: the flowers, the colours, what is in the box
+			const notes = (productDesc ?? '').trim().slice(0, 300);
+			const result = await generateDescription({
+				variables: {
+					input: {
+						title: productTitle.trim(),
+						type: productType,
+						occasion: productOccasion,
+						size: productSize,
+						...(notes ? { notes } : {}),
+					},
+				},
+			});
+			const text: string | undefined = result.data?.aiProductDescription?.text;
+			if (!text) throw new Error();
+			setDescBeforeAi(productDesc ?? '');
+			setInsertProductData({ ...insertProductData, productDesc: text });
+		} catch (err: any) {
+			setAiError(aiErrorMessage(err));
+		}
+	};
+
+	const undoDescriptionHandler = () => {
+		if (descBeforeAi === null) return;
+		setInsertProductData({ ...insertProductData, productDesc: descBeforeAi });
+		setDescBeforeAi(null);
+	};
 
 	const doDisabledCheck = () => {
 		if (
@@ -385,7 +431,18 @@ const AddProduct = ({ initialValues, ...props }: any) => {
 
 						<Typography className="product-title">Product Description</Typography>
 						<Stack className="config-column">
-							<Typography className="title">Description</Typography>
+							<Stack className="title-row">
+								<Typography className="title">Description</Typography>
+								<button
+									type={'button'}
+									className={'ai-generate'}
+									onClick={generateDescriptionHandler}
+									disabled={aiLoading}
+								>
+									<AutoAwesomeRoundedIcon />
+									{aiLoading ? 'Writing…' : 'Generate description'}
+								</button>
+							</Stack>
 							<textarea
 								name=""
 								id=""
@@ -395,6 +452,19 @@ const AddProduct = ({ initialValues, ...props }: any) => {
 									setInsertProductData({ ...insertProductData, productDesc: value })
 								}
 							></textarea>
+							<div className={'ai-generate-foot'}>
+								{aiError && (
+									<span className={'ai-generate-error'} role={'alert'}>
+										{aiError}
+									</span>
+								)}
+								{descBeforeAi !== null && !aiError && (
+									<button type={'button'} className={'ai-generate-undo'} onClick={undoDescriptionHandler}>
+										Undo: put my text back
+									</button>
+								)}
+								<AiNote>Notes typed in the box are used as hints. Check the text before saving.</AiNote>
+							</div>
 						</Stack>
 					</Stack>
 

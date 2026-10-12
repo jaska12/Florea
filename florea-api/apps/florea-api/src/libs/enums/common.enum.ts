@@ -27,6 +27,9 @@ export enum Message {
     ORDER_STATUS_NOT_ALLOWED = 'This status change is not allowed!',
 
     NOTICE_TOPIC_REQUIRED = 'Choose a topic for the FAQ entry!',
+
+    AI_TOO_MANY_REQUESTS = 'You are asking too fast. Please wait a minute and try again.',
+    AI_UNAVAILABLE = 'The assistant is not available right now. Please try again in a moment.',
 }
 
 export enum Direction {
