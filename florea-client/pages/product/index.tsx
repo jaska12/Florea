@@ -20,6 +20,7 @@ import { sweetMixinErrorAlert, sweetTopSmallSuccessAlert } from '../../libs/swee
 import { Message } from '../../libs/enums/common.enum';
 import { useReactiveVar } from '@apollo/client';
 import { userVar } from '../../apollo/store';
+import { productPriceCeiling } from '../../libs/config';
 
 export const getStaticProps = async ({ locale }: any) => ({
 	props: {
@@ -241,7 +242,7 @@ ProductList.defaultProps = {
 		search: {
 			pricesRange: {
 				start: 0,
-				end: 2000000,
+				end: productPriceCeiling,
 			},
 		},
 	},

@@ -67,7 +67,7 @@ const InquiryArticles: NextPage = (props: any) => {
 								</Select>
 
 								<OutlinedInput
-									value={'searchInput'}
+									value={''}
 									// onChange={(e) => handleInput(e.target.value)}
 									sx={{ width: '100%' }}
 									className={'search'}

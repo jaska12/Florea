@@ -59,6 +59,10 @@ const withLayoutBasic = (Component: any) => {
 					desc = 'Log in or create an account.';
 					setAuthHeader(true);
 					break;
+				case '/about':
+					title = 'About Florea';
+					desc = 'Local florists and gift shops in one place.';
+					break;
 				case '/cart':
 					title = 'Your cart';
 					desc = 'Flowers and gifts you have chosen.';

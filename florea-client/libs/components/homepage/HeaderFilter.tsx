@@ -6,6 +6,7 @@ import { ProductsInquiry } from '../../types/product/product.input';
 import { useRouter } from 'next/router';
 import { useTranslation } from 'next-i18next';
 import { AnimatePresence, MotionConfig, motion, Variants } from 'framer-motion';
+import { productPriceCeiling } from '../../config';
 
 interface HeaderFilterProps {
 	initialInput: ProductsInquiry;
@@ -313,7 +314,7 @@ HeaderFilter.defaultProps = {
 		search: {
 			pricesRange: {
 				start: 0,
-				end: 2000000,
+				end: productPriceCeiling,
 			},
 		},
 	},

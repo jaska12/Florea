@@ -71,31 +71,22 @@ Not renamed: the agent pages and components (`pages/agent`, `AgentCard`, `TopAge
 
 ## Known issues
 
-- **Orders:** cash on delivery only; the delivery fee does not depend on the address; products without a photo show the blush placeholder in the cart and in orders. The product page still falls back to a living-room photo (`/img/product/bigImage.png`, from Nestar) when a product has no photo.
+- **Real-estate leftovers:** removed in task 37 (COMPLETED_TASKS.md). Still open: prices use `$` and the currency is not decided; the admin customer-care screens have no data.
+
+- **Orders:** cash on delivery only; the delivery fee does not depend on the address; products without a photo show the blush placeholder in the cart and in orders.
 
 - **Chat:** one public room for all logged-in members; messages are not stored in the database.
 - **Screen widths:** phones and tablets are covered (COMPLETED_TASKS.md, 34). Between 1025 and 1339px the 1300px desktop layout still scrolls sideways.
-- **About page:** a house photo, the heading "Our Exclusive Agetns" and placeholder text are still there.
 
 
 - **After the site-wide design system:**
-  - The FAQ text in `libs/components/cs/Faq.tsx` is still about real estate.
   - Prices use `$`.
-  - Product photos are missing for the test products, so cards and the detail gallery show the blush placeholder.
 
 - **Homepage (after the redesign):**
   - On tablets the shared navbar is still fixed-width and crowds its items. The homepage sections themselves adapt.
-  - Product cards show a blush placeholder because the test products have no real photos.
-  - `libs/components/homepage/Events.tsx` is no longer rendered and its styles were removed. Its content is Korean city festivals. TODO: delete it or give it Florea content.
-  - Unused files left in place: `public/video/ads.mov` (26 MB), `public/img/banner/header1.svg`, `public/img/banner/types/`, `public/img/banner/cities/`, `public/img/events/`.
-  - The footer still says "Product for Rent" and the prices use `$`.
 - **`.next` on OneDrive:** `yarn build` or `yarn dev` sometimes fails with `EINVAL: invalid argument, readlink …\.next\…`. Deleting the `.next` folder fixes it.
 
 - **Not checked in a browser.** Build and server-rendered pages work, but creating a product, filtering, liking and chatting through the UI were not clicked through.
-- **Unused old images:** `public/img/banner/types/` (apartment, villa, house) and `public/img/banner/cities/` are no longer used by the homepage search box. TODO: delete them or replace them when a design needs them.
-- **Old icons and photos.** Cards still use `bed.svg`, `room.svg`, `expand.svg` next to occasion, size and stock, and the sample photos in `public/img/product/` are real-estate photos. `floorPlan.png` is no longer used.
-- **Real-estate marketing text remains** in `libs/components/cs/Faq.tsx`, `pages/about/index.tsx`, `libs/components/Footer.tsx` ("Product for Rent"), `libs/components/mypage/Article.tsx`, the SEO description in `pages/_document.tsx`, and the `kr` / `ru` translations (for example "Product type" is still translated as "property type").
-- **Prices are shown with `$`** while the price filter steps go up to 2,000,000. TODO: decide the currency.
 - **Apollo warnings during build:** `useQuery` `onCompleted` is deprecated in the installed Apollo Client. Inherited from Nestar, not changed.
 - **Package manager:** Yarn only (`yarn`, `yarn dev`, `yarn build`). `package-lock.json` was removed and `yarn.lock` regenerated. Yarn prints peer-dependency warnings during install; they do not stop it.
 - **Env file:** `.env.development` exists locally (ignored by git) and points at `localhost:3007`. `.env.example` lists the variables. A production build needs them in `.env.production` before `yarn build`.

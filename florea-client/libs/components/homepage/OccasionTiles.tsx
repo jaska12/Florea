@@ -2,6 +2,7 @@ import React from 'react';
 import Link from 'next/link';
 import SectionHeader from './SectionHeader';
 import { ProductOccasion } from '../../enums/product.enum';
+import { productPriceCeiling } from '../../config';
 
 interface OccasionTile {
 	occasion: ProductOccasion;
@@ -26,7 +27,7 @@ const occasionHref = (occasion: ProductOccasion) => ({
 		input: JSON.stringify({
 			page: 1,
 			limit: 9,
-			search: { pricesRange: { start: 0, end: 2000000 }, occasionList: [occasion] },
+			search: { pricesRange: { start: 0, end: productPriceCeiling }, occasionList: [occasion] },
 		}),
 	},
 });

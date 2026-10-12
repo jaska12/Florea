@@ -4,6 +4,7 @@ import { useTranslation } from 'next-i18next';
 import { MotionConfig, motion, Variants } from 'framer-motion';
 import HeaderFilter from './HeaderFilter';
 import { ProductOccasion } from '../../enums/product.enum';
+import { productPriceCeiling } from '../../config';
 
 // same curve as $logo-ease in scss/variables.scss
 const EASE: [number, number, number, number] = [0.22, 1, 0.36, 1];
@@ -32,7 +33,7 @@ const occasionHref = (occasion: ProductOccasion) => ({
 		input: JSON.stringify({
 			page: 1,
 			limit: 9,
-			search: { pricesRange: { start: 0, end: 2000000 }, occasionList: [occasion] },
+			search: { pricesRange: { start: 0, end: productPriceCeiling }, occasionList: [occasion] },
 		}),
 	},
 });

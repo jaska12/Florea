@@ -12,13 +12,13 @@ export default function Document() {
 				<link rel="manifest" href="/manifest.json" />
 
 				{/* SEO */}
-				<meta name="keyword" content={'florea, florea.uz, devex mern, mern nestjs fullstack'} />
+				<meta name="keyword" content={'florea, flowers, bouquets, plants, gift boxes, flower delivery, florist'} />
 				<meta
 					name={'description'}
 					content={
-						'Buy and sell products anywhere anytime in South Korea. Best Products at Best prices on florea.uz | ' +
-						'Покупайте и продавайте недвижимость в любой точке Южной Кореи в любое время. Лучшая недвижимость по лучшим ценам на florea.uz | ' +
-						'대한민국 언제 어디서나 부동산을 사고팔 수 있습니다. Florea.uz에서 최적의 가격으로 최고의 부동산을 만나보세요'
+						'Order bouquets, plants and gift boxes from local florists and have them delivered. | ' +
+						'Заказывайте букеты, растения и подарочные наборы у местных флористов с доставкой. | ' +
+						'지역 플로리스트의 꽃다발, 식물, 선물 박스를 주문하고 배송받으세요.'
 					}
 				/>
 			</Head>

@@ -40,6 +40,7 @@ In the order they were done. State as of 2026-10-05, `main` at `5f5405e`.
 - [x] 34. Mobile version of every page, including the admin panel
 - [x] 35. Cart and delivery ordering
 - [x] 36. Production builds, and three fixes found on the way
+- [x] 37. Real-estate leftovers removed
 
 ## 1. Recommend migration steps
 
@@ -649,3 +650,32 @@ In the order they were done. State as of 2026-10-05, `main` at `5f5405e`.
   2. **Password field.** `pages/account/join.tsx` showed the password as plain text (`type="text"`, from Nestar). It is `type="password"` now.
   3. **Bell count one short, now and then.** Found on the production build (1 run in 3). Apollo shares identical requests that are in flight, so when two notification signals arrived close together the second check reused the first one's answer, read before the second change was written. The notification query and the order lists now send their own request each time (`queryDeduplication: false` in the query context). After the fix: 6 of 6 runs passed.
 - Not verified: the API built for production was not started (it would use `MONGO_PROD`); only its build was checked. The third fix is supported by 6 passing runs, which makes the race unlikely, not impossible. Safari and real devices.
+
+## 37. Real-estate leftovers removed
+
+- What was still left from Nestar, and what was done:
+  - **About page:** the house photo is replaced by a Florea photo; the empty section "Our Exclusive Agetns" with placeholder text is removed; the row of company logos (Amazon, AMD, Cisco, Dropcam, Spotify) under "Part of the Florea community" is removed, because Florea has no such partners; the three feature rows get the class their style expects; the phone number is the one in the footer; the two buttons are links (join, customer care); the page has its header title and its translations (the navbar said "Agents" there).
+  - **FAQ (`libs/components/cs/Faq.tsx`):** 32 questions and answers about Florea replace the real-estate ones, in the same seven groups (Product, Payment, Orders, For Florists, Account, Community, Other). Each answer describes what the site does today.
+  - **Notices (`libs/components/cs/Notice.tsx`):** three notices that are true of the site replace "Register to use and get discounts" and the 2024 dates.
+  - **Product page:** a product without a photo showed a living-room picture; it now shows the blush frame.
+  - **Community:** an article without a picture showed a living room (and a 6 MB SVG on the homepage); both now use a Florea photo. The default member picture on an article is the default avatar.
+  - **Admin customer care (FAQ, Notice, Inquiry):** the five made-up rows ("mb id", "member.mb_full_name") are replaced by "data not found", and the search field no longer shows the word "searchInput". These screens have no backend yet.
+  - **Translations:** Korean "매물" and Russian "Имущество" / "Тип недвижимости" (real-estate words) are now "상품" and "Товары" / "Тип товара"; "Agent Page" says florist; the unused key "Home / For Rent" is removed.
+  - **SEO description (`pages/_document.tsx`):** it spoke of buying and selling real estate in three languages; it now describes Florea.
+  - **Price filter:** its default upper limit was 2,000,000 (a house price), written in six places. It is `productPriceCeiling` (10,000) in `libs/config.ts` now.
+  - **Deleted, after checking nothing refers to them:** `public/img/banner/` (headers, city and house-type pictures), `public/img/product/` (sample real-estate photos, floor plan), `public/img/events/`, `public/img/community/`, `public/img/event.svg`, `public/img/apartmentMain.png`, `public/video/ads.mov` (26 MB), and the unused components `homepage/Events.tsx` and `mypage/Article.tsx`. 37 asset files in all.
+- Dev database (not in the repo): the five test products got everyday names and prices ($38 to $64) and a photo each, uploaded through the API from the Unsplash pictures in `public/img/home`. Three of them had photo paths that pointed at no file.
+- Results:
+
+| Check | Result |
+|---|---|
+| `yarn tsc --noEmit` | no errors |
+| Browser: About, customer care (every FAQ group), product list and product page, admin FAQ | render with the new content; no real-estate words on the FAQ page; no sideways scroll at 375px |
+| Order flow | 40 of 40 |
+| Phone visitor | 21 of 21 |
+
+- Not done:
+  - Prices are still shown with `$`; the currency was not decided.
+  - "Lost your password?" on the login page still does nothing; the FAQ says so.
+  - The admin customer-care screens are empty until notices and FAQ get a backend (NEXT_STEPS.md).
+- Not verified: `yarn build` after this task (the dev server was running), the Korean and Russian texts by a native reader.

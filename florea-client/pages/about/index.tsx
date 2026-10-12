@@ -1,10 +1,17 @@
 import React from 'react';
 import { NextPage } from 'next';
+import Link from 'next/link';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import withLayoutBasic from '../../libs/components/layout/LayoutBasic';
 import { Stack, Box } from '@mui/material';
 
-const About: NextPage = () => {
+export const getStaticProps = async ({ locale }: any) => ({
+	props: {
+		...(await serverSideTranslations(locale, ['common'])),
+	},
+});
 
+const About: NextPage = () => {
 	return (
 		<Stack className={'about-page'}>
 			<Stack className={'intro'}>
@@ -43,7 +50,7 @@ const About: NextPage = () => {
 			<Stack className={'statistics'}>
 				<Stack className={'container'}>
 					<Stack className={'banner'}>
-						<img src="/img/banner/header1.svg" alt="" />
+						<img src="/img/home/hero.jpg" alt="" />
 					</Stack>
 					<Stack className={'info'}>
 						<Box component={'div'}>
@@ -61,22 +68,11 @@ const About: NextPage = () => {
 					</Stack>
 				</Stack>
 			</Stack>
-			<Stack className={'agents'}>
-				<Stack className={'container'}>
-					<span className={'title'}>Our Exclusive Agetns</span>
-					<p className={'desc'}>Aliquam lacinia diam quis lacus euismod</p>
-					<Stack className={'wrap'}>
-						{/*{[1, 2, 3, 4, 5].map(() => {*/}
-						{/*	return <AgentCard />;*/}
-						{/*})}*/}
-					</Stack>
-				</Stack>
-			</Stack>
 			<Stack className={'options'}>
-				<img src="/img/banner/aboutBanner.svg" alt="" className={'about-banner'} />
+				<img src="/img/home/occ-anniversary.jpg" alt="" className={'about-banner'} />
 				<Stack className={'container'}>
 					<strong>For florists and gift shops</strong>
-					<Stack>
+					<Stack className={'box'}>
 						<div className={'icon-box'}>
 							<img src="/img/icons/security.svg" alt="" />
 						</div>
@@ -85,16 +81,16 @@ const About: NextPage = () => {
 							<p>Add bouquets, plants and gift boxes with photos, price, size and stock.</p>
 						</div>
 					</Stack>
-					<Stack>
+					<Stack className={'box'}>
 						<div className={'icon-box'}>
 							<img src="/img/icons/keywording.svg" alt="" />
 						</div>
-						<div className={'text_-box'}>
-							<span>Reach people nearby</span>
-							<p>Buyers find you by category, occasion and location.</p>
+						<div className={'text-box'}>
+							<span>Receive orders</span>
+							<p>Buyers find you by category, occasion and location, and order for delivery.</p>
 						</div>
 					</Stack>
-					<Stack>
+					<Stack className={'box'}>
 						<div className={'icon-box'}>
 							<img src="/img/icons/investment.svg" alt="" />
 						</div>
@@ -103,38 +99,26 @@ const About: NextPage = () => {
 							<p>Customers can follow your shop, like your products and leave reviews.</p>
 						</div>
 					</Stack>
-					<Stack className={'btn'}>
-						Learn More
+					<Link href={'/account/join'} className={'btn'}>
+						Open your shop
 						<img src="/img/icons/rightup.svg" alt="" />
-					</Stack>
-				</Stack>
-			</Stack>
-			<Stack className={'partners'}>
-				<Stack className={'container'}>
-					<span>Part of the Florea community</span>
-					<Stack className={'wrap'}>
-						<img src="/img/icons/brands/amazon.svg" alt="" />
-						<img src="/img/icons/brands/amd.svg" alt="" />
-						<img src="/img/icons/brands/cisco.svg" alt="" />
-						<img src="/img/icons/brands/dropcam.svg" alt="" />
-						<img src="/img/icons/brands/spotify.svg" alt="" />
-					</Stack>
+					</Link>
 				</Stack>
 			</Stack>
 			<Stack className={'help'}>
 				<Stack className={'container'}>
 					<Box component={'div'} className={'left'}>
 						<strong>Need help choosing?</strong>
-						<p>Ask a florist on their page, or browse all products.</p>
+						<p>Ask a florist on their page, or read the answers in customer care.</p>
 					</Box>
 					<Box component={'div'} className={'right'}>
-						<div className={'white'}>
-							Contact Us
+						<Link href={'/cs'} className={'white'}>
+							Customer care
 							<img src="/img/icons/rightup.svg" alt="" />
-						</div>
+						</Link>
 						<div className={'black'}>
 							<img src="/img/icons/call.svg" alt="" />
-							920 851 9087
+							+82 10 4867 2909
 						</div>
 					</Box>
 				</Stack>

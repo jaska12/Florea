@@ -27,10 +27,8 @@ Order follows the dependencies:
 
 Use the `user-project` skill for the user-facing pages and `admin-panel` for the admin pages, one page per task.
 
-1. Product type images for the header filter (`public/img/banner/types/`).
-2. Icons on the cards (bed, room, expand) and the sample photos in `public/img/product/`.
-3. Real-estate text: FAQ, about page, footer, mypage article sample, SEO description, `kr` / `ru` translations.
-4. Currency symbol.
+1. Done in task 37: old images, sample photos, real-estate text, SEO description, `kr` / `ru` words.
+2. Currency symbol (prices use `$`).
 
 ### 3. Final sweep
 

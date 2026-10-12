@@ -123,7 +123,8 @@
 				.right {
 					flex-wrap: wrap;
 					gap: 12px;
-					div {
+					div,
+					a {
 						flex: 1 1 160px;
 						min-height: 50px;
 						&.black {

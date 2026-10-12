@@ -2,6 +2,7 @@ import React from 'react';
 import Link from 'next/link';
 import SectionHeader from './SectionHeader';
 import { ProductType } from '../../enums/product.enum';
+import { productPriceCeiling } from '../../config';
 
 interface CategoryTile {
 	type: ProductType;
@@ -26,7 +27,7 @@ const categoryHref = (type: ProductType) => ({
 		input: JSON.stringify({
 			page: 1,
 			limit: 9,
-			search: { pricesRange: { start: 0, end: 2000000 }, typeList: [type] },
+			search: { pricesRange: { start: 0, end: productPriceCeiling }, typeList: [type] },
 		}),
 	},
 });

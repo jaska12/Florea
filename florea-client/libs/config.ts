@@ -12,6 +12,10 @@ export const Messages = {
 
 export const topProductRank = 2;
 
+// The top of the price filter when the visitor has not set one. It was 2,000,000, a house price from Nestar.
+// A product priced above it is hidden until the visitor raises the limit, so keep it well above real prices.
+export const productPriceCeiling = 10000;
+
 // The delivery rule, the same as DELIVERY_FEE and FREE_DELIVERY_FROM in the API (libs/config.ts there).
 // The cart shows what the server will charge; the server's sum is the one that counts.
 export const deliveryFee = 5;

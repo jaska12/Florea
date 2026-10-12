@@ -11,13 +11,18 @@ const Notice = () => {
 		{
 			no: 1,
 			event: true,
-			title: 'Register to use and get discounts',
-			date: '01.03.2024',
+			title: 'Ordering with delivery is open: pay in cash when your order arrives',
+			date: '12.10.2026',
 		},
 		{
 			no: 2,
-			title: "It's absolutely free to upload and trade products",
-			date: '31.03.2024',
+			title: "Delivery is free when one florist's items come to $100 or more",
+			date: '12.10.2026',
+		},
+		{
+			no: 3,
+			title: 'Notifications and the live chat are available to members',
+			date: '11.10.2026',
 		},
 	];
 

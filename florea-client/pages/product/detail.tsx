@@ -314,17 +314,16 @@ const ProductDetail: NextPage = ({ initialComment, ...props }: any) => {
 						)}
 						<Stack className={'images'}>
 							<Stack className={'main-image'}>
-								<img
-									src={slideImage ? `${REACT_APP_API_URL}/${slideImage}` : '/img/product/bigImage.png'}
-									alt={'main-image'}
-								/>
+								{slideImage && (
+									<img src={`${REACT_APP_API_URL}/${slideImage}`} alt={product?.productTitle ?? 'Product photo'} />
+								)}
 							</Stack>
 							<Stack className={'sub-images'}>
 								{product?.productImages.map((subImg: string) => {
 									const imagePath: string = `${REACT_APP_API_URL}/${subImg}`;
 									return (
 										<Stack className={'sub-img-box'} onClick={() => changeImageHandler(subImg)} key={subImg}>
-											<img src={imagePath} alt={'sub-image'} />
+											<img src={imagePath} alt={''} />
 										</Stack>
 									);
 								})}

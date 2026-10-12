@@ -32,7 +32,7 @@ const AccordionSummary = styled((props: AccordionSummaryProps) => (
 const Faq = () => {
 	const router = useRouter();
 	const [category, setCategory] = useState<string>('product');
-	const [expanded, setExpanded] = useState<string | false>('panel1');
+	const [expanded, setExpanded] = useState<string | false>('faq-product-1');
 
 	/** APOLLO REQUESTS **/
 	/** LIFECYCLES **/
@@ -49,384 +49,189 @@ const Faq = () => {
 	const data: any = {
 		product: [
 			{
-				id: '00f5a45ed8897f8090116a01',
-				subject: 'Are the products displayed on the site reliable?',
-				content: 'of course we only have verified products',
+				id: 'faq-product-1',
+				subject: 'What can I order on Florea?',
+				content: 'Bouquets, flower boxes, plants, gift boxes, sweets and toys from local florists and gift shops.',
 			},
 			{
-				id: '00f5a45ed8897f8090116a22',
-				subject: 'What types of products do you offer?',
-				content: 'We offer single-family homes, condos, townhouses, apartments, and penthouses',
+				id: 'faq-product-2',
+				subject: 'How do I find something for an occasion?',
+				content:
+					'On the Products page, filter by occasion (birthday, wedding, anniversary, love, congratulations, sympathy), by category, size, location and price. The homepage has shortcuts for the most common occasions.',
 			},
 			{
-				id: '00f5a45ed8897f8090116a21',
-				subject: 'How can I search for products on your website?',
-				content: 'Simply use our search bar to enter location, price range, bedrooms/bathrooms, and product type.',
+				id: 'faq-product-3',
+				subject: 'What do "Same day" and "Gift wrap" on a product mean?',
+				content:
+					'The florist offers same-day delivery, or gift wrapping, for that product. You can also filter the product list by these two options.',
 			},
 			{
-				id: '00f5a45ed8897f8090116a23',
-				subject: 'Do you provide assistance for first-time homebuyers?',
-				content: 'Yes, we guide you through the process and help find suitable financing.',
+				id: 'faq-product-4',
+				subject: 'What does "Out of stock" mean?',
+				content:
+					'The florist has none left at the moment, so the product cannot be added to the cart. It can be ordered again when the florist adds stock.',
 			},
 			{
-				id: '00f5a45ed8897f8090116a24',
-				subject: 'What should I consider when buying a product?',
-				content: 'Location, condition, size, amenities, and future development plans.',
-			},
-			{
-				id: '00f5a45ed8897f8090116a25',
-				subject: 'How long does the home-buying process typically take?',
-				content: 'Usually 3 to 6 days, depending on various factors.',
-			},
-			{
-				id: '00f5a45ed8897f8090116a29',
-				subject: 'What happens if I encounter issues with the product after purchase?',
-				content: 'We offer post-purchase support to address any concerns promptly.',
-			},
-			{
-				id: '00f5a45ed8897f8090116a28',
-				subject: 'Do you offer products in specific neighborhoods?',
-				content: 'Yes, we have listings in various neighborhoods based on your preferences.',
-			},
-			{
-				id: '00f5a45ed8897f8090116a27',
-				subject: 'Can I sell my product through your website?',
-				content: 'Absolutely, we provide services for selling products as well.',
-			},
-			{
-				id: '00f5a45ed8897f8090116b99',
-				subject: 'What if I need help understanding legal aspects of product purchase?',
-				content: 'Our team can provide basic guidance and recommend legal professionals if needed.',
+				id: 'faq-product-5',
+				subject: 'Who makes the products?',
+				content:
+					"Every product shows the florist behind it. Open the florist's page to see their other products and the reviews customers left.",
 			},
 		],
 		payment: [
 			{
-				id: '00f5a45ed8897f8090116a02',
-				subject: 'How can I make the payment?',
-				content: 'you make the payment through an agent!',
+				id: 'faq-payment-1',
+				subject: 'How do I pay?',
+				content: 'Cash on delivery: you pay when the order arrives. Florea does not take online payments yet.',
 			},
 			{
-				id: '00f5a45ed8897f8090116a91',
-				subject: 'Are there any additional fees for using your services?',
-				content: 'No, our services are free for buyers. Sellers pay a commission upon successful sale.',
+				id: 'faq-payment-2',
+				subject: 'How much is delivery?',
+				content: "Delivery is $5 for each order. It is free when the items of that order come to $100 or more.",
 			},
 			{
-				id: '00f5a45ed8897f8090116a92',
-				subject: 'Is there an option for installment payments?',
-				content: 'Yes, we offer installment payment plans for certain products. Please inquire for more details.',
-			},
-			{
-				id: '00f5a45ed8897f8090116a93',
-				subject: 'Is my payment information secure on your website?',
+				id: 'faq-payment-3',
+				subject: 'Why does my cart turn into more than one order?',
 				content:
-					'Yes, we use industry-standard encryption technology to ensure the security of your payment information.',
+					'Each florist prepares and delivers their own products. If your cart has products from two florists, it becomes two orders, each with its own delivery fee and its own status.',
 			},
 			{
-				id: '00f5a45ed8897f8090116a94',
-				subject: 'Can I make payments online through your website?',
-				content: "Yes, you can securely make payments online through our website's payment portal.",
-			},
-			{
-				id: '00f5a45ed8897f8090116a95',
-				subject: "What happens if there's an issue with my payment?",
-				content: 'If you encounter any issues with your payment, please contact our support team for assistance.',
-			},
-			{
-				id: '00f5a45ed8897f8090116a96',
-				subject: 'Do you offer refunds for payments made?',
-				content:
-					'Refund policies vary depending on the circumstances. Please refer to our refund policy or contact us for more information.',
-			},
-			{
-				id: '00f5a45ed8897f8090116a97',
-				subject: 'Are there any discounts or incentives for early payments?',
-				content:
-					'We occasionally offer discounts or incentives for early payments. Check our promotions or contact us for current offers.',
-			},
-			{
-				id: '00f5a45ed8897f8090116a99',
-				subject: 'How long does it take for payments to be processed?',
-				content:
-					'Payment processing times vary depending on the payment method used. Typically, credit/debit card payments are processed instantly',
-			},
-			{
-				id: '00f5a45ed8897f8090116a98',
-				subject: 'Are there penalties for late payments?',
-				content:
-					'Late payment penalties may apply depending on the terms of your agreement. Please refer to your contract or contact us for details.',
+				id: 'faq-payment-4',
+				subject: 'Can the price change after I place the order?',
+				content: 'No. An order keeps the prices it was placed with.',
 			},
 		],
 		buyers: [
 			{
-				id: '00f5a45ed8897f8090116a03',
-				subject: 'What should buyers pay attention to?',
-				content: 'Buyers should check and decide whether the product they want to buy or rent is actually suitable!',
+				id: 'faq-orders-1',
+				subject: 'How do I place an order?',
+				content:
+					'Add products to the cart, open the cart and go to checkout. Enter who receives the order, the address, the delivery date and time, and, if you like, a message for the gift card. You need to be logged in to place the order.',
 			},
 			{
-				id: '00f5a45ed8897f8090116a85',
-				subject: 'How can I determine if a product is within my budget?',
-				content:
-					'Calculate your budget by considering your income, down payment, and potential mortgage payments. Our agents can assist you within your budget.',
+				id: 'faq-orders-2',
+				subject: 'Can I send an order to someone else?',
+				content: 'Yes. At checkout you enter the name and phone number of the person who will receive it.',
 			},
 			{
-				id: '00f5a45ed8897f8090116a84',
-				subject: 'What documents do I need to provide when purchasing a product?',
-				content:
-					"You'll typically need identification, proof of income, bank statements, and any necessary loan documentation. Our team will guide you through.",
+				id: 'faq-orders-3',
+				subject: 'When will it be delivered?',
+				content: 'You choose the delivery date and one of four time slots between 09:00 and 21:00.',
 			},
 			{
-				id: '00f5a45ed8897f8090116a83',
-				subject: 'What factors should I consider when choosing a neighborhood?',
+				id: 'faq-orders-4',
+				subject: 'How do I follow my order?',
 				content:
-					'Consider factors such as location, safety, schools, amenities, transportation, and future development plans.',
+					'My Page → My Orders shows each order with its steps: Placed, Confirmed, Preparing, Out for delivery, Delivered. You also get a notification at every step.',
 			},
 			{
-				id: '00f5a45ed8897f8090116a82',
-				subject: 'Can I negotiate the price of a product?',
+				id: 'faq-orders-5',
+				subject: 'Can I cancel an order?',
 				content:
-					'Yes, you can negotiate the price of a product. Our agents will assist you in making competitive offers and negotiating terms with the seller.',
+					'Yes, in My Page → My Orders, while the order is still "Placed". Once the florist has confirmed it, call the florist; their phone number is on the order.',
 			},
 			{
-				id: '00f5a45ed8897f8090116a81',
-				subject: 'What are some red flags to watch out for when viewing products?',
-				content:
-					'Watch out for signs of structural damage, water damage, mold, outdated systems, and undesirable neighborhood conditions.',
-			},
-			{
-				id: '00f5a45ed8897f8090116a80',
-				subject: 'Do you provide assistance with product inspections?',
-				content:
-					'Yes, we can recommend reputable inspectors and accompany you during product inspections to identify any potential issues.',
-			},
-			{
-				id: '00f5a45ed8897f8090116a79',
-				subject: 'How long does it typically take to find the right product?',
-				content:
-					'The timeframe varies depending on your preferences and market conditions. Our agents will work diligently to find the right product as quickly as possible.',
-			},
-			{
-				id: '00f5a45ed8897f8090116a78',
-				subject: 'What are the advantages of using a real estate agent when buying a product?',
-				content:
-					'Real estate agents provide expertise, negotiation skills, and guidance throughout the buying process, ultimately saving you time and hassle.',
-			},
-			{
-				id: '00f5a45ed8897f8090116a77',
-				subject: 'What happens if I change my mind about a product after making an offer?',
-				content:
-					'Depending on the terms of the offer and the stage of the transaction, you may have options to withdraw your offer.',
+				id: 'faq-orders-6',
+				subject: 'Is my cart saved?',
+				content: 'The cart is kept in the browser you used until you place the order. It is not shared with your other devices.',
 			},
 		],
-
 		agents: [
 			{
-				id: '00f5a45ed8897f8090116a04',
-				subject: 'What do I need to do if I want to become an agent?',
+				id: 'faq-florists-1',
+				subject: 'How do I sell on Florea?',
+				content: 'Sign up and choose "Agent" as the account type. Then open My Page → Add Product.',
+			},
+			{
+				id: 'faq-florists-2',
+				subject: 'Where do I see my orders?',
 				content:
-					'If you really decide to become an agent, you should read our terms and conditions and contact the admin!',
+					'My Page → Shop Orders. You get a notification for each new order, and you move it on as you work: Confirmed, Preparing, Out for delivery, Delivered. The buyer is told at every step.',
 			},
 			{
-				id: '00f5a45ed8897f8090116a62',
-				subject: 'What qualifications do I need to become a real estate agent?',
-				content: 'Complete pre-licensing course, pass licensing exam, meet state requirements.',
-			},
-			{
-				id: '00f5a45ed8897f8090116a63',
-				subject: 'How do I find clients as a new real estate agent?',
-				content: 'Build network, use online/offline marketing, join reputable brokerage.',
-			},
-			{
-				id: '00f5a45ed8897f8090116a64',
-				subject: 'What are some effective marketing strategies for selling products?',
-				content: 'Use social media, online platforms, networking events, and direct mail.',
-			},
-			{
-				id: '00f5a45ed8897f8090116a65',
-				subject: 'How do I handle negotiations with buyers and sellers?',
-				content: 'Develop strong negotiation skills, understand market trends, represent client interests.',
-			},
-			{
-				id: '00f5a45ed8897f8090116a66',
-				subject: 'What should I do to stay updated with market trends and changes?',
-				content: 'Attend industry events, follow real estate news, participate in training.',
-			},
-			{
-				id: '00f5a45ed8897f8090116a67',
-				subject: 'How do I handle difficult clients or situations?',
+				id: 'faq-florists-3',
+				subject: 'How does stock work?',
 				content:
-					'Approach with professionalism, empathy, and patience. Listen actively, address issues collaboratively.',
+					'The stock of a product goes down when it is ordered and comes back if the order is cancelled. At zero the product shows "Out of stock". You change the stock by editing the product in My Page → My Products.',
 			},
 			{
-				id: '00f5a45ed8897f8090116a68',
-				subject: 'What tools and technologies should I utilize as a real estate agent?',
-				content: 'Use CRM software, virtual tours, digital marketing tools, and mobile apps.',
+				id: 'faq-florists-4',
+				subject: 'Can I cancel an order?',
+				content: 'Yes, until it is out for delivery. The buyer is notified and the stock comes back.',
 			},
 			{
-				id: '00f5a45ed8897f8090116a69',
-				subject: 'How do I ensure compliance with real estate laws and regulations?',
-				content: 'Stay updated with laws, attend education courses, consult legal professionals.',
-			},
-			{
-				id: '00f5a45ed8897f8090116a70',
-				subject: 'What strategies can I use to grow my real estate business?',
-				content: 'Build relationships, provide exceptional service, seek referrals, and continuously improve skills.',
+				id: 'faq-florists-5',
+				subject: 'Who delivers the order?',
+				content: 'You do. Each florist delivers their own orders to the address and at the time the buyer chose.',
 			},
 		],
 		membership: [
 			{
-				id: '00f5a45ed8897f8090116a05',
-				subject: 'Do you have a membership service on your site?',
-				content: 'membership service is not available on our site yet!',
+				id: 'faq-account-1',
+				subject: 'Is an account free?',
+				content: 'Yes, for buyers and for florists.',
 			},
 			{
-				id: '00f5a45ed8897f8090116a60',
-				subject: 'What are the benefits of becoming a member on your website?',
-				content: 'We currently do not offer membership benefits, but stay tuned for updates on any future offerings.',
-			},
-			{
-				id: '00f5a45ed8897f8090116a59',
-				subject: 'Is there a fee associated with becoming a member?',
-				content: 'As membership services are not available, there are no associated fees at this time.',
-			},
-			{
-				id: '00f5a45ed8897f8090116a58',
-				subject: 'Will membership provide access to exclusive content or features?',
-				content: "We don't currently have membership-exclusive content or features.",
-			},
-			{
-				id: '00f5a45ed8897f8090116a57',
-				subject: 'How can I sign up for a membership on your site?',
-				content: 'As of now, we do not have a sign-up process for memberships.',
-			},
-			{
-				id: '00f5a45ed8897f8090116a56',
-				subject: 'Do members receive discounts on product listings or services?',
-				content: 'Membership discounts are not part of our current offerings.',
-			},
-			{
-				id: '00f5a45ed8897f8090116a55',
-				subject: 'Are there plans to introduce a membership program in the future?',
+				id: 'faq-account-2',
+				subject: 'What do I need an account for?',
 				content:
-					"While we can't confirm any plans at this time, we're always exploring ways to enhance our services for users.",
+					'To place orders, like products, leave reviews, follow florists, write in the community and use the live chat. Browsing and filling the cart work without one.',
 			},
 			{
-				id: '00f5a45ed8897f8090116a54',
-				subject: 'What kind of content or benefits can members expect if a membership program is introduced?',
-				content: "We're evaluating potential benefits and features, but specifics are not available yet.",
+				id: 'faq-account-3',
+				subject: 'How do I change my photo, phone or address?',
+				content: 'In My Page → My Profile. The address there is filled in for you at checkout.',
 			},
 			{
-				id: '00f5a45ed8897f8090116a33',
-				subject: 'Do you offer a premium membership option on your platform?',
-				content: 'Currently, we do not provide a premium membership option.',
+				id: 'faq-account-4',
+				subject: 'Which languages does Florea have?',
+				content: 'English, Korean and Russian. Use the flag in the top bar, or the language buttons in the menu on a phone.',
 			},
 			{
-				id: '00f5a45ed8897f8090116a32',
-				subject: 'Will membership grant access to exclusive deals or discounts?',
-				content: 'Membership perks, including deals or discounts, are not available at this time.',
+				id: 'faq-account-5',
+				subject: 'I forgot my password. What now?',
+				content: 'Password reset is not available on the site yet. Please call customer care at +82 10 4867 2909.',
 			},
 		],
 		community: [
 			{
-				id: '00f5a45ed8897f8090116a06',
-				subject: 'What should I do if there is abusive or criminal behavior in the community section?',
-				content: 'If you encounter this situation, please report it immediately or contact the admin!',
+				id: 'faq-community-1',
+				subject: 'What is the community?',
+				content: 'Boards where members write articles: Free Board, Recommendation, News and Humor.',
 			},
 			{
-				id: '00f5a45ed8897f8090116a44',
-				subject: 'How can I participate in the community section of your website?',
-				content: 'Create an account and engage in discussions.',
+				id: 'faq-community-2',
+				subject: 'How do I write an article?',
+				content: 'Log in and open My Page → Write Article, or press "Write" on the Community page.',
 			},
 			{
-				id: '00f5a45ed8897f8090116a45',
-				subject: 'Are there guidelines for posting?',
-				content: 'Yes, follow our community guidelines.',
+				id: 'faq-community-3',
+				subject: 'What is the live chat?',
+				content:
+					'One shared room for members who are logged in; the button is at the bottom right of the page. Messages are not stored, so it is for quick questions, not for records.',
 			},
 			{
-				id: '00f5a45ed8897f8090116a46',
-				subject: 'What should I do if I encounter spam or irrelevant posts?',
-				content: 'Report them to the admin.',
-			},
-			{
-				id: '00f5a45ed8897f8090116a47',
-				subject: 'Can I connect with other members outside of the community section?',
-				content: 'Currently, no.',
-			},
-			{
-				id: '00f5a45ed8897f8090116a48',
-				subject: 'Can I share personal experiences or recommendations?',
-				content: 'Yes, if relevant you can share personal experiences and recommendations.',
-			},
-			{
-				id: '00f5a45ed8897f8090116a49',
-				subject: 'How can I ensure privacy?',
-				content: 'Avoid sharing sensitive information.',
-			},
-			{
-				id: '00f5a45ed8897f8090116a50',
-				subject: 'How can I contribute positively?',
-				content: 'Respect others and engage constructively.',
-			},
-			{
-				id: '00f5a45ed8897f8090116a51',
-				subject: 'What if I notice misinformation?',
-				content: 'Provide correct information or report to the admin.',
-			},
-			{
-				id: '00f5a45ed8897f8090116a52',
-				subject: 'Are there moderators?',
-				content: 'Yes, we have moderators.',
+				id: 'faq-community-4',
+				subject: 'Will I know when someone likes or comments on my article?',
+				content: 'Yes. Likes, comments and new followers appear under the bell in the top bar.',
 			},
 		],
 		other: [
 			{
-				id: '00f5a45ed8897f8090116a40',
-				subject: 'Who should I contact if I want to buy your site?',
-				content: 'We have no plans to sell the site at this time!',
+				id: 'faq-other-1',
+				subject: 'What are the notifications under the bell?',
+				content:
+					'News about your account: likes, comments, new followers, and every step of your orders. Press one to open what it is about.',
 			},
 			{
-				id: '00f5a45ed8897f8090116a39',
-				subject: 'Can I advertise my services on your website?',
-				content: 'We currently do not offer advertising opportunities on our site.',
+				id: 'faq-other-2',
+				subject: 'Does Florea work on a phone?',
+				content: 'Yes. Every page is laid out for phones and tablets as well as for a computer.',
 			},
 			{
-				id: '00f5a45ed8897f8090116a38',
-				subject: 'Are there sponsorship opportunities available on your platform?',
-				content: 'At this time, we do not have sponsorship opportunities.',
-			},
-			{
-				id: '00f5a45ed8897f8090116a36',
-				subject: 'Can I contribute guest posts or articles to your website?',
-				content: "We're not accepting guest posts or articles at the moment.",
-			},
-			{
-				id: '00f5a45ed8897f8090116a35',
-				subject: 'Is there a referral program for recommending your website to others?',
-				content: "We don't have a referral program in place currently.",
-			},
-			{
-				id: '00f5a45ed8897f8090116a34',
-				subject: 'Do you offer affiliate partnerships for promoting your services?',
-				content: 'Affiliate partnerships are not available at this time.',
-			},
-			{
-				id: '00f5a45ed8897f8090116a33',
-				subject: 'Can I purchase merchandise related to your website?',
-				content: "We don't have merchandise available for purchase.",
-			},
-			{
-				id: '00f5a45ed8897f8090116a32',
-				subject: 'Are there any job openings or opportunities to work with your team?',
-				content: 'Currently, we do not have any job openings or opportunities available.',
-			},
-			{
-				id: '00f5a45ed8897f8090116a31',
-				subject: 'Do you host events or webinars related to real estate?',
-				content: "We're not hosting events or webinars at this time.",
-			},
-			{
-				id: '00f5a45ed8897f8090116a30',
-				subject: 'Can I request custom features or functionalities for your website?',
-				content: "We're not accepting requests for custom features or functionalities.",
+				id: 'faq-other-3',
+				subject: 'How do I reach customer care?',
+				content: 'Call +82 10 4867 2909.',
 			},
 		],
 	};
@@ -456,7 +261,7 @@ const Faq = () => {
 						changeCategoryHandler('buyers');
 					}}
 				>
-					Foy Buyers
+					Orders
 				</div>
 				<div
 					className={category === 'agents' ? 'active' : ''}
@@ -464,7 +269,7 @@ const Faq = () => {
 						changeCategoryHandler('agents');
 					}}
 				>
-					For Agents
+					For Florists
 				</div>
 				<div
 					className={category === 'membership' ? 'active' : ''}
@@ -472,7 +277,7 @@ const Faq = () => {
 						changeCategoryHandler('membership');
 					}}
 				>
-					Membership
+					Account
 				</div>
 				<div
 					className={category === 'community' ? 'active' : ''}

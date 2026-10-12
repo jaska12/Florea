@@ -13,7 +13,7 @@ const CommunityCard = (props: CommunityCardProps) => {
 	const { vertical, article, index } = props;
 	const articleImage = article?.articleImage
 		? `${process.env.REACT_APP_API_URL}/${article?.articleImage}`
-		: '/img/event.svg';
+		: '/img/home/cat-bouquet.jpg';
 	const articleHref = `/community/detail?articleCategory=${article?.articleCategory}&id=${article?._id}`;
 
 	// vertical: a photo card in the news grid; otherwise a compact row in the side list

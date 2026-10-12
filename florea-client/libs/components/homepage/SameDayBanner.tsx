@@ -1,5 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
+import { productPriceCeiling } from '../../config';
 
 /** the product list page reads its filters from this query string; "options" is its same-day / gift-wrap filter **/
 const optionHref = (option: 'productSameDay' | 'productGiftWrap') => ({
@@ -8,7 +9,7 @@ const optionHref = (option: 'productSameDay' | 'productGiftWrap') => ({
 		input: JSON.stringify({
 			page: 1,
 			limit: 9,
-			search: { pricesRange: { start: 0, end: 2000000 }, options: [option] },
+			search: { pricesRange: { start: 0, end: productPriceCeiling }, options: [option] },
 		}),
 	},
 });

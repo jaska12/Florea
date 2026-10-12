@@ -141,7 +141,13 @@ export const FaqArticlesPanelList = (props: FaqArticlesPanelListType) => {
 					{/*@ts-ignore*/}
 					<EnhancedTableHead />
 					<TableBody>
-						{[1, 2, 3, 4, 5].map((ele: any, index: number) => {
+						<TableRow>
+							<TableCell align="center" colSpan={8}>
+								<span className={'no-data'}>data not found!</span>
+							</TableCell>
+						</TableRow>
+						{/* rows come from the API once customer care has one; nothing is made up meanwhile */}
+						{([] as number[]).map((ele: any, index: number) => {
 							const member_image = '/img/profile/defaultUser.svg';
 
 							let status_class_name = '';
