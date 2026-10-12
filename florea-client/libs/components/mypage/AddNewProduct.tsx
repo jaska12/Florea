@@ -37,6 +37,8 @@ const AddProduct = ({ initialValues, ...props }: any) => {
 		variables: {
 			input: router.query.productId,
 		},
+		// the page also edits a product; when a new one is added there is no product to load
+		skip: !router.query.productId,
 	});
 
 	/** LIFECYCLES **/
