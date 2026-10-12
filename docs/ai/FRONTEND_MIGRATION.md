@@ -73,7 +73,7 @@ Not renamed: the agent pages and components (`pages/agent`, `AgentCard`, `TopAge
 
 - **Real-estate leftovers:** removed in task 37 (COMPLETED_TASKS.md). Still open: prices use `$` and the currency is not decided.
 - **Customer care:** notices and FAQ come from the database (task 38). The admin Inquiry page is still a mock-up.
-- **AI features (task 45):** the gift assistant (`libs/components/ai/GiftAssistant.tsx`, on every page through the three layouts), "Write it for me" on the checkout page (`CardMessageHelper.tsx`) and "Generate description" in the product form. They call `aiGiftRecommend`, `aiCardMessage` and `aiProductDescription`; the client holds no key. A real answer from the model has not been seen yet: the dev API has no key.
+- **AI features (tasks 45 and 46):** the gift assistant (`libs/components/ai/GiftAssistant.tsx`, on every page through the three layouts), "Write it for me" on the checkout page (`CardMessageHelper.tsx`) and "Generate description" in the product form. They call `aiGiftRecommend`, `aiCardMessage` and `aiProductDescription`; the client holds no key. Checked with the real model in task 46.
 - **React warning in the product form:** its selects set `selected` on an `<option>`; inherited, not changed.
 
 - **Orders:** cash on delivery only; the delivery fee does not depend on the address; products without a photo show the blush placeholder in the cart and in orders.

@@ -39,7 +39,7 @@ Use those files as the source of truth for AI Agent related migration history, a
 
 ## AI Rules
 
-- Only `components/ai/ai.client.ts` talks to the Claude API. The key comes from `ANTHROPIC_API_KEY` in `.env`; never log it, return it or put it in a DTO.
+- Only `components/ai/ai.client.ts` talks to the AI provider (the OpenAI API). The key comes from `OPENAI_API_KEY` in `.env`; never log it, return it or put it in a DTO.
 - A product, price or stock level shown to a member comes from the database. The model returns ids and text; check every id against what was sent.
 - Tests never call the API: mock `AiClient` (service tests) or `AiService` (resolver tests).
 - Before changing the request, read the current SDK documentation and model list; model ids and parameters change.
@@ -74,4 +74,4 @@ To debug with breakpoints in VS Code, open the repo root and run the `Debug Flor
 npx eslint "{src,apps,libs,test}/**/*.ts"
 ```
 
-The lint baseline is 3497 problems: 3336 inherited from Nestar, plus the notification, order and notice modules, the socket changes and three lines of the AI task (see `../docs/ai/COMPLETED_TASKS.md`, 32, 33, 35, 38 and 45). A change must not increase it.
+The lint baseline is 3497 problems: 3336 inherited from Nestar, plus the notification, order and notice modules, the socket changes and three lines of the AI task (see `../docs/ai/COMPLETED_TASKS.md`, 32, 33, 35, 38, 45 and 46). A change must not increase it.

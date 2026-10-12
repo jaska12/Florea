@@ -6,7 +6,7 @@ import { ProductOccasion, ProductSize, ProductStatus, ProductType } from '../../
 import { AiCardTone, AiLanguage } from '../../libs/enums/ai.enum';
 import { Message } from '../../libs/enums/common.enum';
 
-// No test here reaches the Claude API: the client is a mock, and so is the product collection.
+// No test here reaches the OpenAI API: the client is a mock, and so is the product collection.
 
 const product = (n: number) => ({
 	_id: new ObjectId(),

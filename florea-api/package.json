@@ -23,7 +23,6 @@
     "test:e2e": "jest --config ./apps/florea-api/test/jest-e2e.json"
   },
   "dependencies": {
-    "@anthropic-ai/sdk": "^0.133.0",
     "@apollo/server": "^5.5.1",
     "@as-integrations/express5": "^1.1.2",
     "@nestjs/apollo": "^13.4.4",
@@ -48,6 +47,7 @@
     "graphql-upload": "^13.0.0",
     "moment": "^2.30.1",
     "mongoose": "^9.9.2",
+    "openai": "^7.32.0",
     "reflect-metadata": "^0.2.2",
     "rxjs": "^7.8.1",
     "uuid": "^14.0.2",

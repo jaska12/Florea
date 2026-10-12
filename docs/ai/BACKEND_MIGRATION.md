@@ -25,7 +25,7 @@ Turn the Nestar backend into the Florea backend in small, verifiable steps:
 
 1. Import Nestar as an untouched baseline. **Done.**
 2. Rename project and app identifiers, with no logic change. **Done.**
-3. Migrate the domain, one module at a time. **In progress:** member, product, notifications and notices done; board articles remain. Orders (`orders`, `orderItems`, `components/order`) are a new feature added on top, not a migration of Nestar code (COMPLETED_TASKS.md, 35). So are the AI features (`components/ai`, COMPLETED_TASKS.md, 45).
+3. Migrate the domain, one module at a time. **In progress:** member, product, notifications and notices done; board articles remain. Orders (`orders`, `orderItems`, `components/order`) are a new feature added on top, not a migration of Nestar code (COMPLETED_TASKS.md, 35). So are the AI features (`components/ai`, COMPLETED_TASKS.md, 45 and 46).
 
 ## Naming changes
 
@@ -126,10 +126,10 @@ Search input `PISearch`:
 
 ## AI features (task 45)
 
-- Module `components/ai`: `AiClient` (calls the Claude API with `@anthropic-ai/sdk`), `AiService`, `AiResolver`. It has no collection of its own; it reads `products`.
+- Module `components/ai`: `AiClient` (calls the OpenAI API with the `openai` package; the only file that knows the provider), `AiService`, `AiResolver`. It has no collection of its own; it reads `products`.
 - Mutations: `aiGiftRecommend` and `aiCardMessage` (any logged-in member), `aiProductDescription` (`AGENT`).
 - Types: `AiGiftRecommendInput`, `AiCardMessageInput`, `AiProductDescriptionInput`, `AiGiftRecommendation` (`list` of `AiGiftPick { product, reason }`, `aiUsed`, `message`), `AiCardMessages`, `AiProductDescription`. Enums: `AiCardTone` (`WARM`, `ROMANTIC`, `PLAYFUL`, `FORMAL`), `AiLanguage` (`ENGLISH`, `KOREAN`, `RUSSIAN`, `UZBEK`).
-- Settings in `.env`: `ANTHROPIC_API_KEY`, `AI_MODEL` (optional). Without a key the mutations answer with the fallback or a "not available" message.
+- Settings in `.env`: `OPENAI_API_KEY`, `AI_MODEL` (optional; `gpt-6-luna` when empty). Without a key the mutations answer with the fallback or a "not available" message.
 - Ten requests a minute for each member; the count is kept in memory.
 
 ## What stayed unchanged

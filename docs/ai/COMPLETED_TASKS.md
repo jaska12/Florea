@@ -49,6 +49,7 @@ In the order they were done. State as of 2026-10-05, `main` at `5f5405e`.
 - [x] 43. Sample shops on production: five florists and twenty products
 - [x] 44. Top florists as one row of four, and sample articles for the community
 - [x] 45. AI features: gift assistant, card messages, product descriptions
+- [x] 46. AI features moved to the OpenAI API and checked with the real model
 
 ## 1. Recommend migration steps
 
@@ -907,6 +908,7 @@ In the order they were done. State as of 2026-10-05, `main` at `5f5405e`.
 
 ## 45. AI features: gift assistant, card messages, product descriptions
 
+- Read with task 46: the provider written about here (the Claude API, `ANTHROPIC_API_KEY`, `claude-haiku-5-5`) was replaced by the OpenAI API the next day, before any real request had been made. Everything else in this entry still holds.
 - Three features that call the Claude API from the backend. The key is read on the server from `ANTHROPIC_API_KEY` and is never sent to the browser; the model is `AI_MODEL`, and `claude-haiku-5-5` when that is empty.
 - The model: the brief named `claude-haiku-4-5-20251001`. Anthropic's model page lists it as a legacy model that is still available, and `claude-haiku-5-5` as the current fastest one, so that one is the default (the owner approved the plan that proposed it). The request uses `output_config.format` with a JSON schema, the current way to get JSON back; no beta header.
 - Backend (`florea-api`):
@@ -944,3 +946,32 @@ In the order they were done. State as of 2026-10-05, `main` at `5f5405e`.
 - Lint: 3497 problems. The new files add none; three lines added to two existing files in their own four-space style add 3. Before this task the count was 3494 by that sum, not the 3489 recorded in `florea-api/AGENTS.md`; the difference of 5 was not looked for.
 - The other tests of the repo (3 suites) fail as they did before this task: Jest cannot load the `uuid` package that `libs/config.ts` imports.
 - To put this on the server: add `ANTHROPIC_API_KEY` to `florea-api/.env` there and rebuild the API image as well as the client. Each request costs a little; the login, the rate limit and the short answers keep it small.
+
+## 46. AI features moved to the OpenAI API and checked with the real model
+
+- Why: the owner has an OpenAI key and no Anthropic key, and asked for the features to use it. The brief of task 45 named the Claude API; this is a change of that brief by the owner.
+- What changed, all of it in the backend:
+  - package `openai` (7.32.0) in place of `@anthropic-ai/sdk`
+  - `components/ai/ai.client.ts`: the request is now `client.responses.create` (the Responses API) with `text.format` of type `json_schema` in strict mode, which is what OpenAI's structured-outputs guide shows today. `store: false`, so the customer's words are not kept on OpenAI's side after the answer. Timeout 15 s and one retry, as before. An answer that is not `completed`, or a refusal, counts as a failure.
+  - settings: `OPENAI_API_KEY` in place of `ANTHROPIC_API_KEY`; `AI_MODEL` stays, and the default is `gpt-6-luna`, which OpenAI's model page gives as its most economical model for high-volume tasks
+  - `ai.service.ts`: each request names its answer format (`gift_picks`, `card_messages`, `product_description`), which the API asks for. The prompts, the checks on the answers, the rate limit and the fallbacks are unchanged.
+- Not changed: the three mutations and their types, the tests' expectations, the whole frontend.
+- The key: the owner sent it in the chat and asked for it to be added. It is in `florea-api/.env`, which git ignores. Because it was written in a chat it should be replaced by a new one in OpenAI's dashboard.
+- Results, with the real model:
+
+| Check | Result |
+|---|---|
+| `npx tsc` for both apps, `npm run build` | no errors |
+| `npx jest apps/florea-api/src/components/ai` | 16 of 16 (mocks; no request leaves the machine) |
+| Lint | 3497 problems, as after task 45 |
+| The three mutations on the dev API | 16 of 16 |
+| The three flows in the browser | 7 of 7 |
+
+- What the model did in those runs:
+  - gift assistant, "My sister just moved into her first flat. Something that lasts, not cut flowers.", up to $60: three plants (a monstera, a house plant, a pair of succulents), each with a reason that used only what the product data says; 5.4 s
+  - gift assistant with filters (occasion and size): only products with that occasion and size came back
+  - card messages: three messages of 86 to 135 characters; in Korean when Korean was asked for; 2.6 s
+  - product description from a title and the florist's notes: 220 and 250 characters, using the notes and nothing that was not given; 2.9 s
+- Also checked in the browser: the page talks only to the site and to its own API, never to the AI provider, and none of the scripts it loads holds a key or the name of the key's variable.
+- Still as written in task 45: a guest and a wrong role are refused, ten requests a minute for each member, the fallback when the model cannot answer. Those were run again here and pass.
+- Not verified: the features on the production server (the key is not there and the API image was not rebuilt); how the answers hold up in Russian and Uzbek (English and Korean were tried); long use against the rate limits of the OpenAI account.
