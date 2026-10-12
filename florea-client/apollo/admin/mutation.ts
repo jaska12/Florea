@@ -165,3 +165,49 @@ export const UPDATE_ORDER_BY_ADMIN = gql`
 		}
 	}
 `;
+
+/**************************
+ *         NOTICE         *
+ *************************/
+
+export const CREATE_NOTICE_BY_ADMIN = gql`
+	mutation CreateNoticeByAdmin($input: NoticeInput!) {
+		createNoticeByAdmin(input: $input) {
+			_id
+			noticeCategory
+			noticeStatus
+			noticeTopic
+			noticeEvent
+			noticeTitle
+			noticeContent
+			memberId
+			createdAt
+			updatedAt
+		}
+	}
+`;
+
+export const UPDATE_NOTICE_BY_ADMIN = gql`
+	mutation UpdateNoticeByAdmin($input: NoticeUpdate!) {
+		updateNoticeByAdmin(input: $input) {
+			_id
+			noticeCategory
+			noticeStatus
+			noticeTopic
+			noticeEvent
+			noticeTitle
+			noticeContent
+			memberId
+			createdAt
+			updatedAt
+		}
+	}
+`;
+
+export const REMOVE_NOTICE_BY_ADMIN = gql`
+	mutation RemoveNoticeByAdmin($input: String!) {
+		removeNoticeByAdmin(noticeId: $input) {
+			_id
+		}
+	}
+`;

@@ -71,7 +71,8 @@ Not renamed: the agent pages and components (`pages/agent`, `AgentCard`, `TopAge
 
 ## Known issues
 
-- **Real-estate leftovers:** removed in task 37 (COMPLETED_TASKS.md). Still open: prices use `$` and the currency is not decided; the admin customer-care screens have no data.
+- **Real-estate leftovers:** removed in task 37 (COMPLETED_TASKS.md). Still open: prices use `$` and the currency is not decided.
+- **Customer care:** notices and FAQ come from the database (task 38). The admin Inquiry page is still a mock-up.
 
 - **Orders:** cash on delivery only; the delivery fee does not depend on the address; products without a photo show the blush placeholder in the cart and in orders.
 

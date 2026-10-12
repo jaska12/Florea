@@ -13,7 +13,7 @@ Order follows the dependencies:
 1. ~~Member (`memberProperties` → `memberProducts`)~~ done
 2. ~~Property → Product, group enums, batch app~~ done
 3. Board articles (categories) **← next, needs the category values**
-4. Notices (notifications are done; see COMPLETED_TASKS.md, 32)
+4. Done: notifications (COMPLETED_TASKS.md, 32) and notices with the FAQ (38). Open: inquiries from members.
 
 **Verify before each module:** the previous module builds, typechecks, and its operations work in the GraphQL playground. Commit each module separately.
 

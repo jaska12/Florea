@@ -1,5 +1,5 @@
 import { Schema } from 'mongoose';
-import { NoticeCategory, NoticeStatus } from '../libs/enums/notice.enum';
+import { NoticeCategory, NoticeStatus, NoticeTopic } from '../libs/enums/notice.enum';
 
 const NoticeSchema = new Schema(
     {
@@ -13,6 +13,18 @@ const NoticeSchema = new Schema(
             type: String,
             enum: NoticeStatus,
             default: NoticeStatus.HOLD,
+        },
+
+        // for an FAQ entry: the group it is shown under
+        noticeTopic: {
+            type: String,
+            enum: NoticeTopic,
+        },
+
+        // for a notice: shown with the "event" badge
+        noticeEvent: {
+            type: Boolean,
+            default: false,
         },
 
         noticeTitle: {
@@ -33,5 +45,7 @@ const NoticeSchema = new Schema(
     },
     { timestamps: true, collection: 'notices' },
 );
+
+NoticeSchema.index({ noticeCategory: 1, noticeStatus: 1, createdAt: -1 });
 
 export default NoticeSchema;

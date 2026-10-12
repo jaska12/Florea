@@ -158,3 +158,10 @@ Important decisions made during the Nestar → Florea migration session, with th
 - **Reason:** each florist prepares and delivers their own products, so a shared order could not have one status. Keeping an out-of-stock product listed lets the florist restock without relisting.
 - **Rejected:** one order for the whole cart with only the admin moving it; switching products to `SOLD` at zero stock.
 - **Also decided while building:** the cart is kept in the browser, not in the database, as the brief asked; the server takes prices and the fee from its own data.
+
+## 25. Notices and FAQ in one collection
+
+- **Decision:** announcements and FAQ entries are both rows of `notices`, told apart by `noticeCategory` (`NOTICE`, `FAQ`). Two fields were added to the schema of the ERD: `noticeTopic`, the group an FAQ entry is shown under, and `noticeEvent`, the "event" mark of an announcement. A new entry is `HOLD` unless the admin chooses otherwise; the admin form offers `ACTIVE` first.
+- **Reason:** the customer-care page groups the FAQ into seven topics and marks some notices as events; the ERD's fields had no place for either. One collection keeps one admin screen and one set of operations.
+- **Rejected:** a separate `faqs` collection; keeping the texts in the client code (they could not be edited without a deploy).
+- **Open:** inquiries from members are not built.

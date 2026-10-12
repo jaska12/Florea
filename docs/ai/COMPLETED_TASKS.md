@@ -41,6 +41,7 @@ In the order they were done. State as of 2026-10-05, `main` at `5f5405e`.
 - [x] 35. Cart and delivery ordering
 - [x] 36. Production builds, and three fixes found on the way
 - [x] 37. Real-estate leftovers removed
+- [x] 38. Notices and FAQ from the database, with an admin screen
 
 ## 1. Recommend migration steps
 
@@ -679,3 +680,34 @@ In the order they were done. State as of 2026-10-05, `main` at `5f5405e`.
   - "Lost your password?" on the login page still does nothing; the FAQ says so.
   - The admin customer-care screens are empty until notices and FAQ get a backend (NEXT_STEPS.md).
 - Not verified: `yarn build` after this task (the dev server was running), the Korean and Russian texts by a native reader.
+
+## 38. Notices and FAQ from the database, with an admin screen
+
+- Before: the customer-care page showed notices and FAQ written in the component files, and the admin FAQ and Notice screens were mock-ups. The backend had a `Notice` schema and no module.
+- Backend (`florea-api/apps/florea-api/src`):
+  - new: `components/notice/` (module, resolver, service), `libs/dto/notice/`
+  - `Notice` schema: `noticeTopic` (the FAQ group) and `noticeEvent` (the "event" mark) added; `NoticeCategory` gets `NOTICE`; new enum `NoticeTopic` (`PRODUCT`, `PAYMENT`, `ORDER`, `FLORIST`, `ACCOUNT`, `COMMUNITY`, `OTHER`)
+  - `getNotices` is public and returns active entries of one category; `createNoticeByAdmin`, `updateNoticeByAdmin`, `removeNoticeByAdmin` and `getAllNoticesByAdmin` are for admins
+  - an FAQ entry needs a topic; an entry is removed for good only after it has the `DELETE` status (as products are); search text is treated as plain text
+  - `seed/notices.json` and `seed/seed-notices.mjs`: the 3 notices and 32 FAQ entries, created through the API; running it again adds nothing
+- Frontend (`florea-client`):
+  - `libs/components/cs/Notice.tsx` and `Faq.tsx` read from `getNotices`; the texts are no longer in the code
+  - `libs/components/admin/cs/NoticePanel.tsx` (new) is the admin screen for both lists: status tabs, topic filter and title search, add and edit in a dialog, status change in the row, remove after `DELETE`
+  - `pages/_admin/cs/faq.tsx` and `notice.tsx` use it; the mock `FaqList.tsx` and `NoticeList.tsx` are deleted
+  - the notice list on the customer-care page shows the text under the title
+- Results:
+
+| Check | Result |
+|---|---|
+| `npx tsc --noEmit` for `florea-api` and `florea-batch`, `yarn tsc --noEmit` | no errors |
+| Notice API test | 24 of 24: create, topic rule, length rule, roles, what visitors see, edit, topic filter, search, order, admin list, remove rules |
+| Seed script on the dev database | 35 created; second run: 0 created, 35 already there |
+| Browser | 19 of 19: the page shows the 3 notices and the 7 FAQ groups from the database; in the admin screen a question is added (with the form's messages), found by search, edited, put on hold, deleted and removed, and the public page follows each step; phone width fits |
+
+- Found on the way: the theme fixes every outlined input at 48px, so a multi-line field overflowed its box. The dialog's text field sets its own height.
+- Lint: 3489 problems (3460 before); the 29 new ones are in the notice files, of the same kinds as in every resolver and service here. `florea-api/AGENTS.md` is updated.
+- Not done:
+  - **Inquiry** (questions from members to customer care). The enum has `INQUIRY` and the admin panel has an Inquiry page, which is still a mock-up with no data and is not linked in the menu.
+  - `TERMS` is in the enum and is not used.
+  - A new database starts empty: run `seed/seed-notices.mjs` after the first deploy, or add the entries in the admin panel.
+- Not verified: `npm run build` and `yarn build` after this task (the servers were running).

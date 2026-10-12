@@ -225,3 +225,13 @@
     }
   }
 }
+
+// a notice shows its text under the title
+#pc-wrap .cs-page .container .cs-content .notice-content .main .bottom .notice-card .notice-title small {
+  margin-top: 4px;
+  display: block;
+  color: $florea-muted;
+  font-size: 13.5px;
+  font-weight: 400;
+  line-height: 20px;
+}

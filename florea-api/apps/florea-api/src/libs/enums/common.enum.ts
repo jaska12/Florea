@@ -25,6 +25,8 @@ export enum Message {
     DELIVERY_DATE_PASSED = 'The delivery date cannot be in the past!',
     ORDER_CANNOT_BE_CANCELLED = 'This order can no longer be cancelled!',
     ORDER_STATUS_NOT_ALLOWED = 'This status change is not allowed!',
+
+    NOTICE_TOPIC_REQUIRED = 'Choose a topic for the FAQ entry!',
 }
 
 export enum Direction {

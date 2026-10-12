@@ -1,0 +1,244 @@
+[
+	{
+		"noticeCategory": "NOTICE",
+		"noticeEvent": true,
+		"noticeTitle": "Ordering with delivery is open: pay in cash when your order arrives",
+		"noticeContent": "Add products to the cart, enter the address, date and time at checkout, and pay in cash when the order arrives."
+	},
+	{
+		"noticeCategory": "NOTICE",
+		"noticeEvent": false,
+		"noticeTitle": "Delivery is free when one florist's items come to $100 or more",
+		"noticeContent": "Delivery is $5 for each order. When the items of one order come to $100 or more, that order is delivered free."
+	},
+	{
+		"noticeCategory": "NOTICE",
+		"noticeEvent": false,
+		"noticeTitle": "Notifications and the live chat are available to members",
+		"noticeContent": "Likes, comments, new followers and every step of an order appear under the bell. The live chat is at the bottom right of the page."
+	},
+	{
+		"noticeCategory": "FAQ",
+		"noticeTopic": "PRODUCT",
+		"noticeEvent": false,
+		"noticeTitle": "What can I order on Florea?",
+		"noticeContent": "Bouquets, flower boxes, plants, gift boxes, sweets and toys from local florists and gift shops."
+	},
+	{
+		"noticeCategory": "FAQ",
+		"noticeTopic": "PRODUCT",
+		"noticeEvent": false,
+		"noticeTitle": "How do I find something for an occasion?",
+		"noticeContent": "On the Products page, filter by occasion (birthday, wedding, anniversary, love, congratulations, sympathy), by category, size, location and price. The homepage has shortcuts for the most common occasions."
+	},
+	{
+		"noticeCategory": "FAQ",
+		"noticeTopic": "PRODUCT",
+		"noticeEvent": false,
+		"noticeTitle": "What do \"Same day\" and \"Gift wrap\" on a product mean?",
+		"noticeContent": "The florist offers same-day delivery, or gift wrapping, for that product. You can also filter the product list by these two options."
+	},
+	{
+		"noticeCategory": "FAQ",
+		"noticeTopic": "PRODUCT",
+		"noticeEvent": false,
+		"noticeTitle": "What does \"Out of stock\" mean?",
+		"noticeContent": "The florist has none left at the moment, so the product cannot be added to the cart. It can be ordered again when the florist adds stock."
+	},
+	{
+		"noticeCategory": "FAQ",
+		"noticeTopic": "PRODUCT",
+		"noticeEvent": false,
+		"noticeTitle": "Who makes the products?",
+		"noticeContent": "Every product shows the florist behind it. Open the florist's page to see their other products and the reviews customers left."
+	},
+	{
+		"noticeCategory": "FAQ",
+		"noticeTopic": "PAYMENT",
+		"noticeEvent": false,
+		"noticeTitle": "How do I pay?",
+		"noticeContent": "Cash on delivery: you pay when the order arrives. Florea does not take online payments yet."
+	},
+	{
+		"noticeCategory": "FAQ",
+		"noticeTopic": "PAYMENT",
+		"noticeEvent": false,
+		"noticeTitle": "How much is delivery?",
+		"noticeContent": "Delivery is $5 for each order. It is free when the items of that order come to $100 or more."
+	},
+	{
+		"noticeCategory": "FAQ",
+		"noticeTopic": "PAYMENT",
+		"noticeEvent": false,
+		"noticeTitle": "Why does my cart turn into more than one order?",
+		"noticeContent": "Each florist prepares and delivers their own products. If your cart has products from two florists, it becomes two orders, each with its own delivery fee and its own status."
+	},
+	{
+		"noticeCategory": "FAQ",
+		"noticeTopic": "PAYMENT",
+		"noticeEvent": false,
+		"noticeTitle": "Can the price change after I place the order?",
+		"noticeContent": "No. An order keeps the prices it was placed with."
+	},
+	{
+		"noticeCategory": "FAQ",
+		"noticeTopic": "ORDER",
+		"noticeEvent": false,
+		"noticeTitle": "How do I place an order?",
+		"noticeContent": "Add products to the cart, open the cart and go to checkout. Enter who receives the order, the address, the delivery date and time, and, if you like, a message for the gift card. You need to be logged in to place the order."
+	},
+	{
+		"noticeCategory": "FAQ",
+		"noticeTopic": "ORDER",
+		"noticeEvent": false,
+		"noticeTitle": "Can I send an order to someone else?",
+		"noticeContent": "Yes. At checkout you enter the name and phone number of the person who will receive it."
+	},
+	{
+		"noticeCategory": "FAQ",
+		"noticeTopic": "ORDER",
+		"noticeEvent": false,
+		"noticeTitle": "When will it be delivered?",
+		"noticeContent": "You choose the delivery date and one of four time slots between 09:00 and 21:00."
+	},
+	{
+		"noticeCategory": "FAQ",
+		"noticeTopic": "ORDER",
+		"noticeEvent": false,
+		"noticeTitle": "How do I follow my order?",
+		"noticeContent": "My Page → My Orders shows each order with its steps: Placed, Confirmed, Preparing, Out for delivery, Delivered. You also get a notification at every step."
+	},
+	{
+		"noticeCategory": "FAQ",
+		"noticeTopic": "ORDER",
+		"noticeEvent": false,
+		"noticeTitle": "Can I cancel an order?",
+		"noticeContent": "Yes, in My Page → My Orders, while the order is still \"Placed\". Once the florist has confirmed it, call the florist; their phone number is on the order."
+	},
+	{
+		"noticeCategory": "FAQ",
+		"noticeTopic": "ORDER",
+		"noticeEvent": false,
+		"noticeTitle": "Is my cart saved?",
+		"noticeContent": "The cart is kept in the browser you used until you place the order. It is not shared with your other devices."
+	},
+	{
+		"noticeCategory": "FAQ",
+		"noticeTopic": "FLORIST",
+		"noticeEvent": false,
+		"noticeTitle": "How do I sell on Florea?",
+		"noticeContent": "Sign up and choose \"Agent\" as the account type. Then open My Page → Add Product."
+	},
+	{
+		"noticeCategory": "FAQ",
+		"noticeTopic": "FLORIST",
+		"noticeEvent": false,
+		"noticeTitle": "Where do I see my orders?",
+		"noticeContent": "My Page → Shop Orders. You get a notification for each new order, and you move it on as you work: Confirmed, Preparing, Out for delivery, Delivered. The buyer is told at every step."
+	},
+	{
+		"noticeCategory": "FAQ",
+		"noticeTopic": "FLORIST",
+		"noticeEvent": false,
+		"noticeTitle": "How does stock work?",
+		"noticeContent": "The stock of a product goes down when it is ordered and comes back if the order is cancelled. At zero the product shows \"Out of stock\". You change the stock by editing the product in My Page → My Products."
+	},
+	{
+		"noticeCategory": "FAQ",
+		"noticeTopic": "FLORIST",
+		"noticeEvent": false,
+		"noticeTitle": "Can I cancel an order?",
+		"noticeContent": "Yes, until it is out for delivery. The buyer is notified and the stock comes back."
+	},
+	{
+		"noticeCategory": "FAQ",
+		"noticeTopic": "FLORIST",
+		"noticeEvent": false,
+		"noticeTitle": "Who delivers the order?",
+		"noticeContent": "You do. Each florist delivers their own orders to the address and at the time the buyer chose."
+	},
+	{
+		"noticeCategory": "FAQ",
+		"noticeTopic": "ACCOUNT",
+		"noticeEvent": false,
+		"noticeTitle": "Is an account free?",
+		"noticeContent": "Yes, for buyers and for florists."
+	},
+	{
+		"noticeCategory": "FAQ",
+		"noticeTopic": "ACCOUNT",
+		"noticeEvent": false,
+		"noticeTitle": "What do I need an account for?",
+		"noticeContent": "To place orders, like products, leave reviews, follow florists, write in the community and use the live chat. Browsing and filling the cart work without one."
+	},
+	{
+		"noticeCategory": "FAQ",
+		"noticeTopic": "ACCOUNT",
+		"noticeEvent": false,
+		"noticeTitle": "How do I change my photo, phone or address?",
+		"noticeContent": "In My Page → My Profile. The address there is filled in for you at checkout."
+	},
+	{
+		"noticeCategory": "FAQ",
+		"noticeTopic": "ACCOUNT",
+		"noticeEvent": false,
+		"noticeTitle": "Which languages does Florea have?",
+		"noticeContent": "English, Korean and Russian. Use the flag in the top bar, or the language buttons in the menu on a phone."
+	},
+	{
+		"noticeCategory": "FAQ",
+		"noticeTopic": "ACCOUNT",
+		"noticeEvent": false,
+		"noticeTitle": "I forgot my password. What now?",
+		"noticeContent": "Password reset is not available on the site yet. Please call customer care at +82 10 4867 2909."
+	},
+	{
+		"noticeCategory": "FAQ",
+		"noticeTopic": "COMMUNITY",
+		"noticeEvent": false,
+		"noticeTitle": "What is the community?",
+		"noticeContent": "Boards where members write articles: Free Board, Recommendation, News and Humor."
+	},
+	{
+		"noticeCategory": "FAQ",
+		"noticeTopic": "COMMUNITY",
+		"noticeEvent": false,
+		"noticeTitle": "How do I write an article?",
+		"noticeContent": "Log in and open My Page → Write Article, or press \"Write\" on the Community page."
+	},
+	{
+		"noticeCategory": "FAQ",
+		"noticeTopic": "COMMUNITY",
+		"noticeEvent": false,
+		"noticeTitle": "What is the live chat?",
+		"noticeContent": "One shared room for members who are logged in; the button is at the bottom right of the page. Messages are not stored, so it is for quick questions, not for records."
+	},
+	{
+		"noticeCategory": "FAQ",
+		"noticeTopic": "COMMUNITY",
+		"noticeEvent": false,
+		"noticeTitle": "Will I know when someone likes or comments on my article?",
+		"noticeContent": "Yes. Likes, comments and new followers appear under the bell in the top bar."
+	},
+	{
+		"noticeCategory": "FAQ",
+		"noticeTopic": "OTHER",
+		"noticeEvent": false,
+		"noticeTitle": "What are the notifications under the bell?",
+		"noticeContent": "News about your account: likes, comments, new followers, and every step of your orders. Press one to open what it is about."
+	},
+	{
+		"noticeCategory": "FAQ",
+		"noticeTopic": "OTHER",
+		"noticeEvent": false,
+		"noticeTitle": "Does Florea work on a phone?",
+		"noticeContent": "Yes. Every page is laid out for phones and tablets as well as for a computer."
+	},
+	{
+		"noticeCategory": "FAQ",
+		"noticeTopic": "OTHER",
+		"noticeEvent": false,
+		"noticeTitle": "How do I reach customer care?",
+		"noticeContent": "Call +82 10 4867 2909."
+	}
+]

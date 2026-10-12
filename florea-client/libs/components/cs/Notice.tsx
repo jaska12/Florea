@@ -1,30 +1,31 @@
-import React from 'react';
-import { Stack, Box } from '@mui/material';
+import React, { useState } from 'react';
+import { Stack, Box, Pagination } from '@mui/material';
+import moment from 'moment';
+import { useQuery } from '@apollo/client';
+import { GET_NOTICES } from '../../../apollo/user/query';
+import { Notice as NoticeEntry } from '../../types/notice/notice';
+import { NoticesInquiry } from '../../types/notice/notice.input';
+import { NoticeCategory } from '../../enums/notice.enum';
+
+const LIMIT = 10;
 
 const Notice = () => {
+	const [page, setPage] = useState<number>(1);
+	const inquiry: NoticesInquiry = { page: page, limit: LIMIT, search: { noticeCategory: NoticeCategory.NOTICE } };
 
 	/** APOLLO REQUESTS **/
-	/** LIFECYCLES **/
-	/** HANDLERS **/
+	const {
+		loading: getNoticesLoading,
+		data: getNoticesData,
+		previousData: getNoticesPrevious,
+	} = useQuery(GET_NOTICES, {
+		fetchPolicy: 'cache-and-network',
+		variables: { input: inquiry },
+	});
 
-	const data = [
-		{
-			no: 1,
-			event: true,
-			title: 'Ordering with delivery is open: pay in cash when your order arrives',
-			date: '12.10.2026',
-		},
-		{
-			no: 2,
-			title: "Delivery is free when one florist's items come to $100 or more",
-			date: '12.10.2026',
-		},
-		{
-			no: 3,
-			title: 'Notifications and the live chat are available to members',
-			date: '11.10.2026',
-		},
-	];
+	const result = (getNoticesData ?? getNoticesPrevious)?.getNotices;
+	const notices: NoticeEntry[] = result?.list ?? [];
+	const total: number = result?.metaCounter?.[0]?.total ?? 0;
 
 	return (
 		<Stack className={'notice-content'}>
@@ -36,15 +37,40 @@ const Notice = () => {
 					<span>date</span>
 				</Box>
 				<Stack className={'bottom'}>
-					{data.map((ele: any) => (
-						<div className={`notice-card ${ele?.event && 'event'}`} key={ele.title}>
-							{ele?.event ? <div>event</div> : <span className={'notice-number'}>{ele.no}</span>}
-							<span className={'notice-title'}>{ele.title}</span>
-							<span className={'notice-date'}>{ele.date}</span>
+					{notices.map((notice: NoticeEntry, index: number) => (
+						<div className={`notice-card ${notice.noticeEvent ? 'event' : ''}`} key={notice._id}>
+							{notice.noticeEvent ? (
+								<div>event</div>
+							) : (
+								// the newest notice has the highest number
+								<span className={'notice-number'}>{total - (page - 1) * LIMIT - index}</span>
+							)}
+							<span className={'notice-title'}>
+								{notice.noticeTitle}
+								<small>{notice.noticeContent}</small>
+							</span>
+							<span className={'notice-date'}>{moment(notice.createdAt).format('DD.MM.YYYY')}</span>
 						</div>
 					))}
+					{notices.length === 0 && !getNoticesLoading && (
+						<div className={'no-data'}>
+							<img src="/img/icons/icoAlert.svg" alt="" />
+							<p>No notices yet.</p>
+						</div>
+					)}
 				</Stack>
 			</Stack>
+			{total > LIMIT && (
+				<Stack className={'pagination'}>
+					<Pagination
+						page={page}
+						count={Math.ceil(total / LIMIT)}
+						onChange={(e: any, value: number) => setPage(value)}
+						shape="circular"
+						color="primary"
+					/>
+				</Stack>
+			)}
 		</Stack>
 	);
 };

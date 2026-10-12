@@ -25,7 +25,7 @@ Turn the Nestar backend into the Florea backend in small, verifiable steps:
 
 1. Import Nestar as an untouched baseline. **Done.**
 2. Rename project and app identifiers, with no logic change. **Done.**
-3. Migrate the domain, one module at a time. **In progress:** member, product and notifications done; board articles and notices remain. Orders (`orders`, `orderItems`, `components/order`) are a new feature added on top, not a migration of Nestar code (COMPLETED_TASKS.md, 35).
+3. Migrate the domain, one module at a time. **In progress:** member, product, notifications and notices done; board articles remain. Orders (`orders`, `orderItems`, `components/order`) are a new feature added on top, not a migration of Nestar code (COMPLETED_TASKS.md, 35).
 
 ## Naming changes
 
@@ -71,7 +71,7 @@ Not renamed: `MemberType.AGENT` (decision 14 in `DECISIONS.md`), so `getAgents`,
 
 Unchanged: `members`, `comments`, `follows`, `likes`, `views`, `notices`, `notifications`.
 
-Collections that exist in the dev `Florea` database (created by Mongoose when the API starts): `boardArticles`, `comments`, `follows`, `likes`, `members`, `notifications`, `orderItems`, `orders`, `products`, `views`. `notices` has a schema but no module registers it yet, so it is not created.
+Collections that exist in the dev `Florea` database (created by Mongoose when the API starts): `boardArticles`, `comments`, `follows`, `likes`, `members`, `notices`, `notifications`, `orderItems`, `orders`, `products`, `views`.
 
 ### `products` schema
 
