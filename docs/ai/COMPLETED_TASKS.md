@@ -47,6 +47,7 @@ In the order they were done. State as of 2026-10-05, `main` at `5f5405e`.
 - [x] 41. Homepage UX fixes (v2): tabs, hidden empty sections, one spacing scale
 - [x] 42. Second deploy: the new homepage and the client fixes
 - [x] 43. Sample shops on production: five florists and twenty products
+- [x] 44. Top florists as one row of four, and sample articles for the community
 
 ## 1. Recommend migration steps
 
@@ -879,3 +880,26 @@ In the order they were done. State as of 2026-10-05, `main` at `5f5405e`.
   - The password of the five production accounts was made for the run and given to the owner; it is not in the repo.
   - The shop name on the homepage card is in the code, not yet on the server (the client was not redeployed).
 - Not verified: an order placed with a sample shop on production; the product page's "Address" block, which is empty on the live site as it is on the dev machine.
+
+## 44. Top florists as one row of four, and sample articles for the community
+
+- Asked by the owner: the Top florists section of the homepage keeps four florists.
+- `florea-client/libs/components/homepage/TopAgents.tsx`: the section asks for four florists (by rank, as before) and shows them as one row of four equal cards. The slider and its arrows are gone; "See all" still leads to the florist list. The section is still left out with fewer than four.
+- `scss/home/home.scss`:
+  - `.agent-grid`: four columns, two on phones; `.agent-swiper` removed
+  - a long shop name takes a second line on phones (it was cut with "…")
+  - article titles in the community section wrap to two lines. They were cut after one: the card was a flex column, which cancels the two-line clamp, and the title inherited `nowrap`. Nobody had seen it, because there were no articles.
+- Sample articles (`florea-api/seed/demo-shop.json`, `seed-demo-shop.mjs`, `seed/demo-shop/`): six short articles written under the sample shops' own names, four in News with a photo each and two in the Free board. The script creates them after the products and skips a title the florist already has. Four photos were added, with their credits.
+- The script was run again on the dev database and on production: 6 articles created, nothing else touched; a second run on dev created nothing.
+- Results:
+
+| Check | Result |
+|---|---|
+| `yarn tsc --noEmit`, `yarn build` | no errors; 85 pages |
+| Dev, browser at 1500, 768 and 375 px | four florists in one row (two rows of two on a phone), equal widths, from edge to edge of the page column, no arrows, no overflow |
+| Dev, article titles | two lines where needed, none cut, at 1500 and 375 px |
+| Production API | 4 News articles with pictures and 2 Free board articles, each under its shop |
+| Production homepage | all five sections are shown: Shop by, Bestsellers, Same-day, Top florists, Community; no broken picture |
+
+- On the server and not: the articles are data and are live. The four-florist row, the shop names on the cards and the two-line titles are in the code only; the live site still runs the client of task 42, so it shows five florists in a slider and cuts long article titles until the next deploy.
+- To know: with five sample florists of equal rank, which four are shown is the database's order (the first four created). It changes when the ranks do.

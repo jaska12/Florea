@@ -1,8 +1,4 @@
 import React from 'react';
-import WestIcon from '@mui/icons-material/West';
-import EastIcon from '@mui/icons-material/East';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation } from 'swiper';
 import TopAgentCard from './TopAgentCard';
 import SectionHeader from './SectionHeader';
 import { Member } from '../../types/member/member';
@@ -14,8 +10,8 @@ interface TopAgentsProps {
 	initialInput: AgentsInquiry;
 }
 
-// with fewer florists than this the row looks empty, so the section is left out
-const MIN_AGENTS = 4;
+// the section is one row of four florists; with fewer the row looks empty, so the section is left out
+const AGENT_COUNT = 4;
 
 const TopAgents = (props: TopAgentsProps) => {
 	const { initialInput } = props;
@@ -27,7 +23,7 @@ const TopAgents = (props: TopAgentsProps) => {
 	});
 	const topAgents: Member[] = getAgentsData?.getAgents?.list ?? [];
 
-	if (topAgents.length < MIN_AGENTS) return null;
+	if (topAgents.length < AGENT_COUNT) return null;
 
 	return (
 		<section className={'home-section home-agents tinted'}>
@@ -36,32 +32,16 @@ const TopAgents = (props: TopAgentsProps) => {
 					title={'Top florists'}
 					subtitle={'The florists and gift shops behind the products.'}
 					seeAll={{ href: '/agent', label: 'See all florists' }}
-				>
-					<button type={'button'} className={'nav-btn swiper-agents-prev'} aria-label={'Previous florists'}>
-						<WestIcon />
-					</button>
-					<button type={'button'} className={'nav-btn swiper-agents-next'} aria-label={'Next florists'}>
-						<EastIcon />
-					</button>
-				</SectionHeader>
-				<Swiper
-					className={'agent-swiper'}
-					slidesPerView={'auto'}
-					spaceBetween={24}
-					modules={[Navigation]}
-					navigation={{
-						nextEl: '.swiper-agents-next',
-						prevEl: '.swiper-agents-prev',
-					}}
-				>
-					{topAgents.map((agent: Member) => {
+				/>
+				<ul className={'agent-grid'}>
+					{topAgents.slice(0, AGENT_COUNT).map((agent: Member) => {
 						return (
-							<SwiperSlide className={'agent-slide'} key={agent?._id}>
-								<TopAgentCard agent={agent} key={agent?.memberNick} />
-							</SwiperSlide>
+							<li key={agent?._id}>
+								<TopAgentCard agent={agent} />
+							</li>
 						);
 					})}
-				</Swiper>
+				</ul>
 			</div>
 		</section>
 	);
@@ -70,7 +50,7 @@ const TopAgents = (props: TopAgentsProps) => {
 TopAgents.defaultProps = {
 	initialInput: {
 		page: 1,
-		limit: 10,
+		limit: AGENT_COUNT,
 		sort: 'memberRank',
 		direction: 'DESC',
 		search: {},

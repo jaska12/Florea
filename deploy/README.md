@@ -62,7 +62,7 @@ node seed/seed-notices.mjs http://SERVER:3001/graphql ADMIN_NICK ADMIN_PASSWORD
 
 ## Sample shops
 
-A new database has no florists and no products, and the homepage hides the sections it cannot fill. `seed/demo-shop.json` holds five sample florists with four products each, and `seed/demo-shop/` their photos. From `florea-api` on your machine:
+A new database has no florists and no products, and the homepage hides the sections it cannot fill. `seed/demo-shop.json` holds five sample florists with four products each and six short community articles, and `seed/demo-shop/` their photos. From `florea-api` on your machine:
 
 ```bash
 node seed/seed-demo-shop.mjs http://SERVER:3001/graphql PASSWORD_FOR_THE_FLORIST_ACCOUNTS

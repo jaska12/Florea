@@ -57,6 +57,14 @@
 					"productDesc": "Peach and ivory roses with baby's breath and dusty miller. Made to order; please allow two days.",
 					"image": "rose-bridal-bouquet.jpg"
 				}
+			],
+			"articles": [
+				{
+					"articleCategory": "NEWS",
+					"articleTitle": "What the colour of a rose says",
+					"articleContent": "Red is for love, pink for thanks and admiration. White suits weddings and sympathy, yellow is for friendship, and peach says you are glad to know someone. Not sure? A mixed bouquet says a little of everything.",
+					"image": "article-rose-colours.jpg"
+				}
 			]
 		},
 		{
@@ -115,6 +123,19 @@
 					"productGiftWrap": true,
 					"productDesc": "White anemones and ranunculus with eucalyptus, thistle and berries in a loose, garden-style bouquet.",
 					"image": "anemone-bouquet.jpg"
+				}
+			],
+			"articles": [
+				{
+					"articleCategory": "NEWS",
+					"articleTitle": "How to keep cut flowers fresh for a week",
+					"articleContent": "Cut the stems at an angle, strip the leaves that would sit under water, and use a clean vase. Change the water every two days and trim the stems again. Keep the bouquet away from fruit, heaters and direct sun.",
+					"image": "article-cut-flowers.jpg"
+				},
+				{
+					"articleCategory": "FREE",
+					"articleTitle": "What is in season in autumn?",
+					"articleContent": "Dahlias, chrysanthemums, cosmos and the last sunflowers. Autumn bouquets hold well in a cool room. Which autumn flower is your favourite?"
 				}
 			]
 		},
@@ -175,6 +196,14 @@
 					"productDesc": "A box of assorted chocolates wrapped in heart paper and tied with a red ribbon, with paper roses on top.",
 					"image": "box-little-hearts.jpg"
 				}
+			],
+			"articles": [
+				{
+					"articleCategory": "NEWS",
+					"articleTitle": "A card message in two lines",
+					"articleContent": "Say what the day is, then one true thing about the person: \"Happy birthday, Mina. You make every room brighter.\" Short and specific beats long and general. You can add the message at checkout.",
+					"image": "article-card-message.jpg"
+				}
 			]
 		},
 		{
@@ -234,6 +263,14 @@
 					"productDesc": "A peace lily with its white flowers, in a white pot. A lasting gift when words are hard to find.",
 					"image": "plant-peace-lily.jpg"
 				}
+			],
+			"articles": [
+				{
+					"articleCategory": "NEWS",
+					"articleTitle": "Four house plants that forgive a missed watering",
+					"articleContent": "Monstera, peace lily, snake plant and most succulents cope with a dry week. Water when the top of the soil is dry, not by the calendar. A peace lily droops when it is thirsty and stands up again within hours.",
+					"image": "article-house-plants.jpg"
+				}
 			]
 		},
 		{
@@ -292,6 +329,13 @@
 					"productGiftWrap": true,
 					"productDesc": "A pink plush bear with a gift box wrapped in pink and tied with a ribbon.",
 					"image": "toy-pink-teddy.jpg"
+				}
+			],
+			"articles": [
+				{
+					"articleCategory": "FREE",
+					"articleTitle": "Which sweets go well with flowers?",
+					"articleContent": "Macarons and boxed chocolates travel well all year. On hot days keep the box out of the sun and away from the vase. What would you like to find next to a bouquet?"
 				}
 			]
 		}

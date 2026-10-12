@@ -1,7 +1,7 @@
-// Fills an empty shop: the florists and products in seed/demo-shop.json are created through the API,
-// with the photos in seed/demo-shop/. These are sample shops, not real businesses.
+// Fills an empty shop: the florists, their products and their community articles in seed/demo-shop.json
+// are created through the API, with the photos in seed/demo-shop/. These are sample shops, not real businesses.
 // It can be run again: a florist that exists is logged in, not signed up; a profile that has a photo
-// and a product whose title the florist already has are left alone.
+// and a product or an article whose title the florist already has are left alone.
 //
 //   node seed/seed-demo-shop.mjs <graphql url> <password for the florist accounts>
 //   node seed/seed-demo-shop.mjs http://localhost:3007/graphql mypassword
@@ -22,7 +22,7 @@ const photoDir = path.join(here, 'demo-shop');
 const { florists } = JSON.parse(fs.readFileSync(path.join(here, 'demo-shop.json'), 'utf8'));
 
 // every photo has to be there before anything is written
-for (const file of florists.flatMap((f) => [f.image, ...f.products.map((p) => p.image)])) {
+for (const file of florists.flatMap((f) => [f.image, ...f.products.map((p) => p.image), ...(f.articles ?? []).map((a) => a.image)]).filter(Boolean)) {
 	if (!fs.existsSync(path.join(photoDir, file))) {
 		console.error(`missing photo: seed/demo-shop/${file}`);
 		process.exit(1);
@@ -63,7 +63,7 @@ const upload = async (file, target, token) => {
 };
 
 const MEMBER = `_id memberNick memberType memberFullName memberImage memberAddress memberDesc accessToken`;
-const count = { signedUp: 0, profiles: 0, products: 0, productsThere: 0 };
+const count = { signedUp: 0, profiles: 0, products: 0, productsThere: 0, articles: 0, articlesThere: 0 };
 
 for (const florist of florists) {
 	// the account
@@ -136,9 +136,34 @@ for (const florist of florists) {
 		);
 		count.products++;
 	}
+
+	// the community articles
+	const articles = florist.articles ?? [];
+	if (articles.length > 0) {
+		const { getBoardArticles } = await gql(
+			`query($input: BoardArticlesInquiry!){ getBoardArticles(input: $input){ list { articleTitle } } }`,
+			{ input: { page: 1, limit: 200, search: { memberId: member._id } } },
+			token,
+		);
+		const written = new Set(getBoardArticles.list.map((article) => article.articleTitle.toLowerCase()));
+		for (const article of articles) {
+			if (written.has(article.articleTitle.toLowerCase())) {
+				count.articlesThere++;
+				continue;
+			}
+			const { image, ...fields } = article;
+			const picture = image ? { articleImage: await upload(image, 'article', token) } : {};
+			await gql(
+				`mutation($input: BoardArticleInput!){ createBoardArticle(input: $input){ _id } }`,
+				{ input: { ...fields, ...picture } },
+				token,
+			);
+			count.articles++;
+		}
+	}
 	console.log(`${florist.memberNick}: ok`);
 }
 
 console.log(
-	`florists signed up: ${count.signedUp}, profiles filled: ${count.profiles}, products created: ${count.products}, products already there: ${count.productsThere}`,
+	`florists signed up: ${count.signedUp}, profiles filled: ${count.profiles}, products created: ${count.products} (already there: ${count.productsThere}), articles created: ${count.articles} (already there: ${count.articlesThere})`,
 );

@@ -1,6 +1,6 @@
 # Image credits
 
-The photos in this folder are the shop and product photos of the sample shops in `../demo-shop.json`. Every one is from Unsplash and is used under the Unsplash License (https://unsplash.com/license): free to use, also commercially, without permission; credit is not required and is given here anyway. None of them is an Unsplash+ (paid) photo. Each was cropped to 600x600 (shop photos) or 1000x750 (product photos).
+The photos in this folder are the shop, product and article photos of the sample shops in `../demo-shop.json`. Every one is from Unsplash and is used under the Unsplash License (https://unsplash.com/license): free to use, also commercially, without permission; credit is not required and is given here anyway. None of them is an Unsplash+ (paid) photo. Each was cropped to 600x600 (shop photos) 1000x750 (product photos) or 800x600 (article photos).
 
 They were taken on 2026-10-12 through Unsplash's own download address (`https://unsplash.com/photos/<id>/download`), which names the photographer in the file it serves.
 
@@ -31,3 +31,7 @@ They were taken on 2026-10-12 through Unsplash's own download address (`https://
 | sweet-chocolates.jpg | Product photo | Clint McKoy | Unsplash License | https://unsplash.com/photos/2TN8bSoWWeA |
 | toy-teddy-rose.jpg | Product photo | Natalie Kinnear | Unsplash License | https://unsplash.com/photos/0hZAhSF9uuY |
 | toy-pink-teddy.jpg | Product photo | freestocks | Unsplash License | https://unsplash.com/photos/PuYPLH0BQq0 |
+| article-cut-flowers.jpg | Article photo | Sixteen Miles Out | Unsplash License | https://unsplash.com/photos/2oKdzcvs6fE |
+| article-house-plants.jpg | Article photo | feey | Unsplash License | https://unsplash.com/photos/hF6Kfu0oG48 |
+| article-rose-colours.jpg | Article photo | Robert Arnar | Unsplash License | https://unsplash.com/photos/nRVFSaVbca8 |
+| article-card-message.jpg | Article photo | Diana Polekhina | Unsplash License | https://unsplash.com/photos/XjTFpNmN6VQ |
