@@ -173,3 +173,9 @@ Important decisions made during the Nestar → Florea migration session, with th
   - In production the API refuses a signup as `ADMIN`. Nestar let anyone sign up as an admin; local development keeps that. The first admin is made on the server (deploy/README.md).
 - **Also:** the server has its own `SECRET_TOKEN`, so a login token from a developer's machine is not valid there.
 - **Rejected:** using the dev database for the public site; leaving admin signup open.
+
+## 27. No three.js on the homepage
+
+- **Decision:** the floating photo gallery is replaced with an ordinary section: the same-day offer with three photos, and the three steps of ordering. The three.js packages are removed. The old same-day banner is removed too, so the page has one same-day section.
+- **Reason:** the gallery said nothing about the shop, was hidden on phones and brought a 3D library to the page for one decoration. The new section tells a visitor what Florea does and leads to the products.
+- **Rejected:** keeping both the banner and the new section (the same message twice); changing the product search for the "Shop now" button (the product page already takes the same-day filter from the address).

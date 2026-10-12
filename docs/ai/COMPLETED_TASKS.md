@@ -43,6 +43,7 @@ In the order they were done. State as of 2026-10-05, `main` at `5f5405e`.
 - [x] 37. Real-estate leftovers removed
 - [x] 38. Notices and FAQ from the database, with an admin screen
 - [x] 39. First deploy
+- [x] 40. Homepage: same-day section in place of the three.js gallery
 
 ## 1. Recommend migration steps
 
@@ -741,3 +742,30 @@ In the order they were done. State as of 2026-10-05, `main` at `5f5405e`.
   - `main` was not updated; the server runs `develop`.
   - The client image is 2.25 GB (it carries the whole build folder and dev packages). It works; it can be slimmed with Next's standalone output.
 - Not verified: a server reboot (Docker and nginx are enabled at boot and the containers restart themselves, but it was not tried).
+
+## 40. Homepage: same-day section in place of the three.js gallery
+
+- Before: the homepage had a band of photos floating in a three.js canvas (desktop only), and a separate same-day banner further up.
+- Now one section, `libs/components/homepage/SameDayFeature.tsx`, between "Shop by category" and "Top rated":
+  - on the left a label, the heading "Flowers & gifts, delivered the same day", a sentence with the "add gift wrap" link, and two buttons; on the right one large photo with two small ones
+  - under it "How Florea works": three steps (choose, add a card message and address, delivered with care)
+  - "Shop now" opens the product list with the same-day filter on; the product page already reads its filters from the address, so its code was not changed. "How it works" scrolls to the steps.
+  - the blocks rise a little as they scroll into view (framer-motion, once); with reduced motion they only fade in and the photos do not zoom
+  - phone and tablet: the text goes above the photos and the steps go under each other; on a phone the large photo is on top with the two small ones under it
+- Removed:
+  - `libs/components/common/FiberContainer.tsx`, `ScrollControls.tsx` and `libs/components/homepage/SameDayBanner.tsx`, with their styles
+  - packages `three`, `@react-three/fiber`, `@react-three/drei`, `@types/three`
+  - `public/img/fiber/` and `public/img/home/sameday.jpg`; three of the gallery photos were kept as `public/img/home/sameday-bouquet.jpg`, `sameday-roses.jpg` and `sameday-gift.jpg` (credits moved to `public/img/home/CREDITS.md`)
+- New page order: hero → shop by occasion → trending → popular → shop by category → same-day delivery → top rated → top florists → community.
+- Not changed: GraphQL operations, routes, the product list and its filters.
+- Results:
+
+| Check | Result |
+|---|---|
+| `yarn tsc --noEmit` | no errors |
+| `yarn build` | passes, 85 pages; the homepage is 50.9 kB (380 kB first load) |
+| Browser at 1500, 768 and 375 px | 38 of 39: no canvas left, no horizontal overflow, the three photos load, layout as described at each width, "How it works" stops with the heading under the navbar, "Shop now" opens `/product` with the same-day box ticked (3 products in the dev database), the gift wrap link carries its filter, reduced motion, no failed requests |
+
+- The one failed check is "no runtime errors": an object with `code=403` is thrown on the homepage. It is not from this section; the earlier browser checks met it too and skipped it. Its source was not looked for.
+- Left as it is: `react-spring` is in `package.json` and nothing imports it; after this task Yarn warns that its three.js part has no `three`. It can be removed in a separate step.
+- Not verified: the production server (not redeployed), and browsers other than Edge.

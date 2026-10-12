@@ -1,5 +1,4 @@
 import { NextPage } from 'next';
-import useDeviceDetect from '../libs/hooks/useDeviceDetect';
 import withLayoutMain from '../libs/components/layout/LayoutHome';
 import CommunityBoards from '../libs/components/homepage/CommunityBoards';
 import PopularProducts from '../libs/components/homepage/PopularProducts';
@@ -8,8 +7,7 @@ import TrendProducts from '../libs/components/homepage/TrendProducts';
 import TopProducts from '../libs/components/homepage/TopProducts';
 import CategoryTiles from '../libs/components/homepage/CategoryTiles';
 import OccasionTiles from '../libs/components/homepage/OccasionTiles';
-import SameDayBanner from '../libs/components/homepage/SameDayBanner';
-import FiberContainer from '../libs/components/common/FiberContainer';
+import SameDayFeature from '../libs/components/homepage/SameDayFeature';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
 export const getStaticProps = async ({ locale }: any) => ({
@@ -19,22 +17,14 @@ export const getStaticProps = async ({ locale }: any) => ({
 });
 
 const Home: NextPage = () => {
-	const device = useDeviceDetect();
-
 	// One layout for every screen size; the stylesheet (scss/home/home.scss) adapts it.
 	return (
 		<div className={'florea-home'}>
 			<OccasionTiles />
 			<TrendProducts />
-			<SameDayBanner />
 			<PopularProducts />
 			<CategoryTiles />
-			{/* the three.js gallery needs a pointer and a wide screen, so phones skip it */}
-			{device !== 'mobile' && (
-				<section className={'home-gallery'} aria-hidden="true">
-					<FiberContainer />
-				</section>
-			)}
+			<SameDayFeature />
 			<TopProducts />
 			<TopAgents />
 			<CommunityBoards />

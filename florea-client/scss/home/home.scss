@@ -499,42 +499,28 @@ $home-gap: 96px;
 		@include florea-product-card;
 	}
 
-	/** three.js gallery **/
-	.home-gallery {
-		padding: 0 0 56px;
-		background: $florea-mist;
-		// the component sets its own top margin inline; the section spacing replaces it
-		.threeJSContainer {
-			margin-top: 0 !important;
-		}
-	}
-
-	/** same-day delivery banner **/
-	.sameday-banner {
+	/** same-day delivery: the offer with a photo collage, then how ordering works **/
+	.sameday-feature {
 		display: grid;
-		grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
-		min-height: 420px;
-		overflow: hidden;
-		border-radius: 32px;
-		background: linear-gradient(135deg, $florea-mist 0%, #ffe0ea 100%);
+		grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr);
+		align-items: center;
+		gap: 56px;
 		.sameday-copy {
-			padding: 64px;
 			display: flex;
 			flex-direction: column;
-			justify-content: center;
 			align-items: flex-start;
 		}
 		.sameday-kicker {
 			padding: 6px 14px;
 			border-radius: 999px;
-			background: #ffffff;
+			background: $florea-mist;
 			color: $florea-wine;
 			font-family: $font;
 			font-size: 13px;
 			font-weight: 600;
 			line-height: 20px;
 			letter-spacing: 0.2px;
-			// the amber accent, used once in the banner
+			// the amber accent, used once in the section
 			&::before {
 				content: '';
 				margin-right: 8px;
@@ -548,23 +534,27 @@ $home-gap: 96px;
 		}
 		.sameday-title {
 			margin: 22px 0 0;
-			max-width: 460px;
+			max-width: 520px;
 			color: $florea-ink;
 			font-family: $font-display;
-			font-size: clamp(30px, 3.3vw, 46px);
+			font-size: clamp(32px, 3.6vw, 50px);
 			font-weight: 500;
-			line-height: 1.12;
+			line-height: 1.1;
 			letter-spacing: -0.01em;
 			text-wrap: balance;
 		}
 		.sameday-text {
-			margin: 16px 0 0;
-			max-width: 440px;
+			margin: 18px 0 0;
+			max-width: 460px;
 			color: $florea-muted;
 			font-family: $font;
-			font-size: 16px;
+			font-size: 17px;
 			font-weight: 400;
 			line-height: 1.65;
+			.text-link {
+				font-size: inherit;
+				line-height: inherit;
+			}
 		}
 		.sameday-actions {
 			margin-top: 32px;
@@ -572,11 +562,106 @@ $home-gap: 96px;
 			flex-direction: row;
 			flex-wrap: wrap;
 			gap: 12px;
+			button.home-btn {
+				cursor: pointer;
+			}
 		}
-		.sameday-photo {
-			min-height: 320px;
-			background-size: cover;
-			background-position: center;
+		// one large photo with two small ones beside it; the corners match the category tiles
+		.sameday-bento {
+			display: grid;
+			grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
+			grid-template-rows: repeat(2, minmax(0, 1fr));
+			gap: 16px;
+			aspect-ratio: 6 / 5;
+			.bento-photo {
+				min-width: 0;
+				min-height: 0;
+				overflow: hidden;
+				border-radius: 24px;
+				background: linear-gradient(135deg, #fcf1f5 0%, $florea-petal 100%);
+				&.large {
+					grid-row: 1 / span 2;
+				}
+				img {
+					width: 100%;
+					height: 100%;
+					display: block;
+					object-fit: cover;
+					transition: transform 800ms $logo-ease;
+				}
+				&:hover img {
+					transform: scale(1.04);
+				}
+			}
+		}
+	}
+	.sameday-steps {
+		margin-top: 72px;
+		// the "How it works" button scrolls here; this keeps the heading clear of the fixed navbar
+		scroll-margin-top: 112px;
+		.steps-title {
+			margin: 0 0 24px;
+			color: $florea-ink;
+			font-family: $font-display;
+			font-size: 26px;
+			font-weight: 500;
+			line-height: 34px;
+		}
+		.steps-list {
+			margin: 0;
+			padding: 0;
+			display: grid;
+			grid-template-columns: repeat(3, minmax(0, 1fr));
+			gap: 20px;
+			list-style: none;
+		}
+		.step {
+			padding: 28px 28px 30px;
+			display: flex;
+			flex-direction: column;
+			align-items: flex-start;
+			border: 1px solid $florea-line;
+			border-radius: 24px;
+			background: $florea-surface;
+			.step-icon {
+				margin-bottom: 20px;
+				width: 52px;
+				height: 52px;
+				display: grid;
+				place-items: center;
+				border-radius: 16px;
+				background: #ffffff;
+				border: 1px solid $florea-line;
+				color: $florea-rose;
+				svg {
+					width: 26px;
+					height: 26px;
+				}
+			}
+			.step-number {
+				color: $florea-rose;
+				font-family: $font;
+				font-size: 12.5px;
+				font-weight: 600;
+				line-height: 18px;
+				letter-spacing: 0.6px;
+				text-transform: uppercase;
+			}
+			strong {
+				margin-top: 6px;
+				color: $florea-ink;
+				font-family: $font;
+				font-size: 18px;
+				font-weight: 600;
+				line-height: 26px;
+			}
+			p {
+				margin: 8px 0 0;
+				color: $florea-muted;
+				font-family: $font;
+				font-size: 15px;
+				line-height: 1.6;
+			}
 		}
 	}
 	.home-btn {
@@ -813,18 +898,23 @@ $home-gap: 96px;
 
 @media (max-width: 900px) {
 	.florea-home {
-		.home-gallery {
-			display: none;
-		}
-		.sameday-banner {
+		// the text goes above the photos, and the steps under each other
+		.sameday-feature {
 			grid-template-columns: minmax(0, 1fr);
-			border-radius: 24px;
-			.sameday-photo {
-				order: -1;
-				min-height: 240px;
+			gap: 36px;
+			.sameday-bento {
+				aspect-ratio: 4 / 3;
 			}
-			.sameday-copy {
-				padding: 36px 24px 40px;
+		}
+		.sameday-steps {
+			margin-top: 52px;
+			scroll-margin-top: 84px;
+			.steps-list {
+				grid-template-columns: minmax(0, 1fr);
+				gap: 14px;
+			}
+			.step {
+				padding: 22px 22px 24px;
 			}
 		}
 	}
@@ -904,6 +994,37 @@ $home-gap: 96px;
 				font-size: 18px;
 			}
 		}
+		// the large photo on top, the two small ones side by side under it
+		.sameday-feature {
+			.sameday-text {
+				font-size: 16px;
+			}
+			.sameday-actions {
+				width: 100%;
+				.home-btn {
+					flex: 1 1 140px;
+					text-align: center;
+				}
+			}
+			.sameday-bento {
+				grid-template-columns: repeat(2, minmax(0, 1fr));
+				grid-template-rows: auto;
+				gap: 12px;
+				aspect-ratio: auto;
+				.bento-photo {
+					aspect-ratio: 1 / 1;
+					border-radius: 18px;
+					&.large {
+						grid-row: auto;
+						grid-column: 1 / -1;
+						aspect-ratio: 16 / 10;
+					}
+				}
+			}
+		}
+		.sameday-steps .step {
+			border-radius: 18px;
+		}
 		.product-swiper .product-slide {
 			width: min(300px, 78vw);
 		}
@@ -932,6 +1053,7 @@ $home-gap: 96px;
 		.filter-options span,
 		.category-tile .tile-photo,
 		.category-tile::after,
+		.sameday-feature .sameday-bento .bento-photo img,
 		.home-agent-card,
 		.community-title,
 		.community-column-title {
@@ -939,6 +1061,7 @@ $home-gap: 96px;
 		}
 		.category-tile:hover .tile-photo,
 		.category-tile:focus-visible .tile-photo,
+		.sameday-feature .sameday-bento .bento-photo:hover img,
 		.home-agent-card:hover,
 		.home-agent-card:focus-visible {
 			transform: none;

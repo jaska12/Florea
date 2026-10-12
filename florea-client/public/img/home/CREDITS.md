@@ -17,4 +17,6 @@ The photos in this folder are from Unsplash and are free to use under the Unspla
 | occ-love.jpg | Occasion tile: Love | carlo cucchia | https://unsplash.com/photos/pink-and-white-flowers-with-green-leaves-DHUFjpmTYds |
 | occ-congrats.jpg | Occasion tile: Congrats | Brigitte Tohm | https://unsplash.com/photos/irRhPKPqP9Y |
 | occ-sympathy.jpg | Occasion tile: Sympathy | Bibi Pace | https://unsplash.com/photos/pink-and-white-rose-flowers-2wnzvLpzbjc |
-| sameday.jpg | Same-day delivery banner | Nina Mercado | https://unsplash.com/photos/gold-and-silver-gift-box-CnrDuY0tFrg |
+| sameday-bouquet.jpg | Same-day delivery section: large photo | Yuliia Dementsova | https://unsplash.com/photos/a-vase-filled-with-pink-flowers-on-top-of-a-table-cKXdPrR_RS0 |
+| sameday-roses.jpg | Same-day delivery section: small photo | Volodymyr Lymariev | https://unsplash.com/photos/soft-pink-roses-and-white-flowers-in-a-delicate-bouquet-xgMgYVWFm0k |
+| sameday-gift.jpg | Same-day delivery section: small photo | Ekaterina Shevchenko | https://unsplash.com/photos/wrapped-gift-box-ZLTlHeKbh04 |
