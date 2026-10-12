@@ -37,6 +37,11 @@ Use those files as the source of truth for AI Agent related migration history, a
   - `ProductStatus`: `ACTIVE`, `SOLD`, `DELETE`
   - `ProductLocation`: keep the current location values until a later migration explicitly changes them.
 
+## Packages
+
+- The backend uses npm. The image build on the server runs `npm ci`, which refuses a lock file that is not exactly in sync.
+- npm on Windows can drop lock entries that only Linux needs (it happened with `@emnapi/core` and `@emnapi/runtime`, COMPLETED_TASKS.md, 47). After `npm install` or `npm uninstall`, look at `git diff package-lock.json`: it should show the package you added or removed and nothing else. If other entries disappeared, put them back from the previous lock file.
+
 ## AI Rules
 
 - Only `components/ai/ai.client.ts` talks to the AI provider (the OpenAI API). The key comes from `OPENAI_API_KEY` in `.env`; never log it, return it or put it in a DTO.

@@ -93,11 +93,15 @@ docker compose -f docker-compose.prod.yml --env-file deploy/.env up -d --no-deps
 rm -rf /root/apps/florea.old
 ```
 
-These are the steps of the update of 2026-10-12, where only the client had changed: the API and the batch jobs kept running. When the API changed too, leave out `florea-next` and `--no-deps` in the two `docker compose` lines (not tried yet).
+These are the steps of an update where only the client changed: the API and the batch jobs keep running. When the API changed too, leave out `florea-next` and `--no-deps` in the two `docker compose` lines; all three containers are then replaced and the API is away for a few seconds (done on 2026-10-12, third deploy).
+
+A new setting goes into `florea.new/florea-api/.env` after the two `cp` lines and before the build.
 
 Start `up` from `/root/apps/florea`, the folder the containers were first started from, not from `florea.new`.
 
-To be able to go back, tag the running image before the build (`docker tag florea-next:latest florea-next:prev`) and remove the tag when the new site has been checked (`docker rmi florea-next:prev`).
+To be able to go back, tag the running images before the build (`docker tag florea-next:latest florea-next:prev`, and `florea-server` the same way when the API changes) and remove the tags when the new site has been checked (`docker rmi florea-next:prev`).
+
+If the API image stops at `npm ci` saying the lock file is not in sync, the lock file was changed by npm on Windows; see "Packages" in `florea-api/AGENTS.md`. The running site is not affected by a failed build.
 
 `florea-api/.env`, `deploy/.env` and the uploaded pictures (the `florea_uploads` volume) are kept. On this server the Docker build cache is shared with the other projects: do not run `docker system prune` or `docker builder prune`.
 

@@ -50,6 +50,7 @@ In the order they were done. State as of 2026-10-05, `main` at `5f5405e`.
 - [x] 44. Top florists as one row of four, and sample articles for the community
 - [x] 45. AI features: gift assistant, card messages, product descriptions
 - [x] 46. AI features moved to the OpenAI API and checked with the real model
+- [x] 47. Third deploy: the AI features, the four-florist row, the API and the client together
 
 ## 1. Recommend migration steps
 
@@ -975,3 +976,30 @@ In the order they were done. State as of 2026-10-05, `main` at `5f5405e`.
 - Also checked in the browser: the page talks only to the site and to its own API, never to the AI provider, and none of the scripts it loads holds a key or the name of the key's variable.
 - Still as written in task 45: a guest and a wrong role are refused, ten requests a minute for each member, the fallback when the model cannot answer. Those were run again here and pass.
 - Not verified: the features on the production server (the key is not there and the API image was not rebuilt); how the answers hold up in Russian and Uzbek (English and Korean were tried); long use against the rate limits of the OpenAI account.
+
+## 47. Third deploy: the AI features, the four-florist row, the API and the client together
+
+- `develop` was pushed and commit `6f97080` was put on the server (http://201.18.219.9:3001). Before it the server ran `aaed950`.
+- What reached the live site: the AI features (45, 46), Top florists as a row of four with shop names, two-line article titles (44).
+- The first update in which the API changed too. Both images were built and all three containers replaced; the steps are the ones in `deploy/README.md`, with the build and the `up` for every service.
+- The owner's new OpenAI key was put into `florea-api/.env` on the dev machine and on the server (sent over SSH, not written to any file in the repo). Inside the API container the variable is set.
+- A build that failed, and why:
+  - the first build of the API image stopped at `npm ci`: "package.json and package-lock.json are not in sync", missing `@emnapi/core` and `@emnapi/runtime`
+  - cause: installing and removing packages with npm on Windows (task 45 and 46) had dropped those two entries from the lock file; the Linux install needs them
+  - fix (commit `6f97080`): the lock file is the last one that had built on the server, plus the entry of the `openai` package
+  - the live site was not touched by the failure: the code was still in the side folder, and the folders are swapped only after the build passes
+- Results:
+
+| Check | Result |
+|---|---|
+| Image builds on the server | both pass (after the lock fix); client 85 pages |
+| Containers | all three new and up; the API and the batch log "MongoDB is connected into production db" |
+| The three AI mutations on the live API, with the real model | pass: a guest is refused; gift picks with reasons within the budget; three card messages in Russian; a product description |
+| Browser on the public address, at 1500, 768 and 375 px | 15 of 16 |
+| The other projects on the server | their containers up as before; nginx was not reloaded or changed |
+
+- What the model answered on the live site: for "a plant for a friend who just moved house, nothing too big" up to $60, the succulent pair ($22); for "something sweet for a colleague, to say thank you" up to $40, the chocolate box and the macaron box. Each answer took 2 to 4 seconds.
+- The one failed check: on a phone two of the six article titles are longer than two lines at that width and end with "…". That is the two-line limit doing its work, not a title cut after one line; the check counted it as cut.
+- Afterwards: the old folder, the build log and the two fallback images were removed from the server; the password and key files used for the session were deleted from the dev machine.
+- Access: the owner said to use the login already given for deploys. No key-based login is set up; the root password has been written in the chat several times and should be changed.
+- Not verified on the server: "Write it for me" on the checkout page and "Generate description" in the product form in a browser (their mutations were called directly and pass; the screens were checked on the dev machine); a server reboot.
