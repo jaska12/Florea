@@ -66,7 +66,7 @@ Important decisions made during the Nestar → Florea migration session, with th
 
 - **Decision (made by the project owner):** the first ER model, based on the Burak project (with `orders`, `orderItems`, `reviews`, `sessions`), was removed. `Florea-ERD.pdf` is now the target. It follows Nestar's structure: `members`, `products`, `views`, `likes`, `follows`, `comments`, `boardArticles`, `notices`, `notifications`.
 - **Reason:** not recorded in this session. TODO: add the owner's reason.
-- **Effect:** the earlier open questions are settled. JWT stays (no `sessions`), `comments` stays (no separate `reviews`), notices and notifications stay, and there are no order collections.
+- **Effect:** the earlier open questions are settled. JWT stays (no `sessions`), `comments` stays (no separate `reviews`), notices and notifications stay, and there are no order collections. **Changed by decision 24:** `orders` and `orderItems` were added later at the owner's request.
 
 ## 12. Git workflow
 
@@ -146,3 +146,15 @@ Important decisions made during the Nestar → Florea migration session, with th
 - **Reason:** Nestar split by user agent and left 45 phone placeholders to be written as separate copies. Separate copies double every later change and let the two versions drift apart; a user-agent split also gives tablets that report a desktop browser the wrong layout.
 - **Cost:** the desktop rules are nested deep, so the mobile sheets use `!important` for layout overrides.
 - **Rejected:** writing a second markup for each page (the Nestar plan).
+
+## 24. Orders
+
+- **Decision (the owner approved the plan on 2026-10-12):**
+  - `orders` and `orderItems` are back in the data model (they were removed in decision 11).
+  - One order per florist: a cart with products of two florists becomes two orders, each with its own status and delivery fee. `orders.agentId` records the florist.
+  - Delivery costs $5 per order and is free when the order's items reach $100.
+  - A product whose stock reaches 0 stays `ACTIVE` and is shown as "Out of stock"; it is not switched to `SOLD`.
+  - Payment is cash on delivery.
+- **Reason:** each florist prepares and delivers their own products, so a shared order could not have one status. Keeping an out-of-stock product listed lets the florist restock without relisting.
+- **Rejected:** one order for the whole cart with only the admin moving it; switching products to `SOLD` at zero stock.
+- **Also decided while building:** the cart is kept in the browser, not in the database, as the brief asked; the server takes prices and the fee from its own data.

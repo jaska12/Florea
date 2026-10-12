@@ -32,6 +32,9 @@ const TYPE_ICONS: Record<string, { tone: string; icon: JSX.Element }> = {
 	SYSTEM: { tone: 'system', icon: <CampaignOutlinedIcon /> },
 };
 
+// order notifications that go to the florist; the others go to the buyer
+const SHOP_ORDER_TITLES = ['New order', 'An order was cancelled'];
+
 // What the author did, written after their name. Keys are in the locale files.
 const ACTION_TEXT: Record<string, string> = {
 	LIKE_PRODUCT: 'liked your product',
@@ -107,6 +110,11 @@ const NotificationBell = (props: NotificationBellProps) => {
 	// where a notification leads: the product, the article, or the member it is about
 	const linkOf = async (notification: Notification): Promise<string> => {
 		const { notificationType, notificationGroup, notificationRefId, authorId, authorData } = notification;
+
+		if (notificationGroup === NotificationGroup.ORDER && notificationRefId) {
+			const category = SHOP_ORDER_TITLES.includes(notification.notificationTitle) ? 'shopOrders' : 'myOrders';
+			return `/mypage?category=${category}&orderId=${notificationRefId}`;
+		}
 
 		if (notificationGroup === NotificationGroup.PRODUCT && notificationRefId) {
 			return `/product/detail?id=${notificationRefId}`;
@@ -238,7 +246,7 @@ const NotificationBell = (props: NotificationBellProps) => {
 														<b>{author}</b> {t(action)}
 													</>
 												) : (
-													notification.notificationTitle
+													t(notification.notificationTitle)
 												)}
 											</span>
 											{notification.notificationDesc && (

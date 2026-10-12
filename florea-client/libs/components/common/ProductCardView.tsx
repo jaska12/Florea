@@ -7,6 +7,7 @@ import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
 import { Product } from '../../types/product/product';
 import { REACT_APP_API_URL, topProductRank } from '../../config';
 import { formatterStr } from '../../utils';
+import AddToCartButton from './AddToCartButton';
 
 interface ProductCardViewProps {
 	product: Product;
@@ -48,6 +49,7 @@ const ProductCardView = (props: ProductCardViewProps) => {
 						{product?.productGiftWrap && <span className={'flag'}>Gift wrap</span>}
 					</span>
 				)}
+				<AddToCartButton product={product} />
 			</Box>
 			<Box component={'div'} className={'info'}>
 				<strong className={'title'} onClick={wholeCardOpens ? undefined : onOpen}>

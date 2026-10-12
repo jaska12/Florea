@@ -48,5 +48,13 @@
   "Guest": "게스트",
   "Menu": "메뉴",
   "Close menu": "메뉴 닫기",
-  "Logout": "로그아웃"
+  "Logout": "로그아웃",
+  "Cart": "장바구니",
+  "New order": "새 주문이 들어왔습니다",
+  "An order was cancelled": "주문이 취소되었습니다",
+  "Your order is confirmed": "주문이 확인되었습니다",
+  "Your order is being prepared": "주문을 준비하고 있습니다",
+  "Your order is out for delivery": "주문이 배송 중입니다",
+  "Your order has been delivered": "주문이 배송 완료되었습니다",
+  "Your order was cancelled": "주문이 취소되었습니다"
 }

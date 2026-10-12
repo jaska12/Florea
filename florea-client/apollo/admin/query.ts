@@ -194,3 +194,57 @@ export const GET_COMMENTS = gql`
 		}
 	}
 `;
+
+/**************************
+ *          ORDER         *
+ *************************/
+
+export const GET_ALL_ORDERS_BY_ADMIN = gql`
+	query GetAllOrdersByAdmin($input: OrdersInquiry!) {
+		getAllOrdersByAdmin(input: $input) {
+			list {
+				_id
+				orderTotal
+				orderDelivery
+				orderStatus
+				recipientName
+				recipientPhone
+				deliveryAddress
+				deliveryDate
+				deliveryTime
+				cardMessage
+				memberId
+				agentId
+				createdAt
+				updatedAt
+				orderItems {
+					_id
+					itemQuantity
+					itemPrice
+					productId
+					productData {
+						_id
+						productTitle
+						productImages
+						productStatus
+					}
+				}
+				memberData {
+					_id
+					memberNick
+					memberPhone
+					memberImage
+				}
+				agentData {
+					_id
+					memberNick
+					memberPhone
+					memberImage
+				}
+			}
+			metaCounter {
+				total
+			}
+		}
+	}
+`;

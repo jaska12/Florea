@@ -20,7 +20,7 @@ Use those files as the source of truth for AI Agent related migration history, a
 - Keep the existing NestJS resolver/service/module pattern based on MVC and DI.
 - Keep DTOs and enums under `apps/florea-api/src/libs`, and schemas under `apps/florea-api/src/schemas`.
 - The catalog module is `product` (`components/product`, `libs/dto/product`, `libs/enums/product.enum.ts`, `schemas/Product.model.ts`).
-- Keep shared modules reusable: auth, member, like, view, comment, follow, board article, notification, socket.
+- Keep shared modules reusable: auth, member, like, view, comment, follow, board article, notification, order, socket.
 - API is GraphQL (Apollo), database is MongoDB (Mongoose), auth is JWT.
 
 ## Domain Rules
@@ -67,4 +67,4 @@ To debug with breakpoints in VS Code, open the repo root and run the `Debug Flor
 npx eslint "{src,apps,libs,test}/**/*.ts"
 ```
 
-The lint baseline is 3440 problems: 3336 inherited from Nestar, plus the notification module and the socket changes (see `../docs/ai/COMPLETED_TASKS.md`, 32 and 33). A change must not increase it.
+The lint baseline is 3460 problems: 3336 inherited from Nestar, plus the notification module, the socket changes and the order module (see `../docs/ai/COMPLETED_TASKS.md`, 32, 33 and 35). A change must not increase it.

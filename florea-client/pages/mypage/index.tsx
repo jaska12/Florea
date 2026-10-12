@@ -12,6 +12,7 @@ import MyArticles from '../../libs/components/mypage/MyArticles';
 import { useMutation, useReactiveVar } from '@apollo/client';
 import { userVar } from '../../apollo/store';
 import MyMenu from '../../libs/components/mypage/MyMenu';
+import OrdersPanel from '../../libs/components/order/OrdersPanel';
 import WriteArticle from '../../libs/components/mypage/WriteArticle';
 import MemberFollowers from '../../libs/components/member/MemberFollowers';
 import { sweetErrorHandling, sweetTopSmallSuccessAlert } from '../../libs/sweetAlert';
@@ -114,6 +115,8 @@ const MyPage: NextPage = () => {
 							<Stack className={'list-config'}>
 								{category === 'addProduct' && <AddProduct />}
 								{category === 'myProducts' && <MyProducts />}
+								{category === 'myOrders' && <OrdersPanel role={'buyer'} />}
+								{category === 'shopOrders' && <OrdersPanel role={'agent'} />}
 								{category === 'myFavorites' && <MyFavorites />}
 								{category === 'recentlyVisited' && <RecentlyVisited />}
 								{category === 'myArticles' && <MyArticles />}

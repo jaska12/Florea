@@ -32,6 +32,8 @@ import { CREATE_COMMENT, LIKE_TARGET_PRODUCT } from '../../apollo/user/mutation'
 import { sweetErrorHandling, sweetMixinErrorAlert, sweetTopSmallSuccessAlert } from '../../libs/sweetAlert';
 import 'swiper/css';
 import 'swiper/css/pagination';
+import AddToCartButton from '../../libs/components/common/AddToCartButton';
+import { canBuy, MAX_QUANTITY } from '../../libs/cart';
 
 SwiperCore.use([Autoplay, Navigation, Pagination]);
 
@@ -47,6 +49,7 @@ const ProductDetail: NextPage = ({ initialComment, ...props }: any) => {
 	const [productId, setProductId] = useState<string | null>(null);
 	const [product, setProduct] = useState<Product | null>(null);
 	const [slideImage, setSlideImage] = useState<string>('');
+	const [cartQuantity, setCartQuantity] = useState<number>(1);
 	const [destinationProducts, setDestinationProducts] = useState<Product[]>([]);
 	const [commentInquiry, setCommentInquiry] = useState<CommentsInquiry>(initialComment);
 	const [productComments, setProductComments] = useState<Comment[]>([]);
@@ -283,6 +286,32 @@ const ProductDetail: NextPage = ({ initialComment, ...props }: any) => {
 								<Typography>${formatterStr(product?.productPrice)}</Typography>
 							</Stack>
 						</Stack>
+						{product && user?._id !== product.memberId && (
+							<div className={'detail-cart'}>
+								{canBuy(product) && (
+									<div className={'qty'} role={'group'} aria-label={'Quantity'}>
+										<button
+											type={'button'}
+											aria-label={'One less'}
+											disabled={cartQuantity <= 1}
+											onClick={() => setCartQuantity(cartQuantity - 1)}
+										>
+											−
+										</button>
+										<span aria-live={'polite'}>{cartQuantity}</span>
+										<button
+											type={'button'}
+											aria-label={'One more'}
+											disabled={cartQuantity >= Math.min(product.productStock, MAX_QUANTITY)}
+											onClick={() => setCartQuantity(cartQuantity + 1)}
+										>
+											+
+										</button>
+									</div>
+								)}
+								<AddToCartButton product={product} variant={'full'} quantity={cartQuantity} />
+							</div>
+						)}
 						<Stack className={'images'}>
 							<Stack className={'main-image'}>
 								<img

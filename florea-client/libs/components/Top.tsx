@@ -15,6 +15,7 @@ import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined
 import { CaretDown } from 'phosphor-react';
 import Link from 'next/link';
 import NotificationBell from './common/NotificationBell';
+import CartIcon from './common/CartIcon';
 import { refreshSocket } from '../socket';
 import { useReactiveVar } from '@apollo/client';
 import { userVar } from '../../apollo/store';
@@ -233,7 +234,8 @@ const Top = () => {
 						)}
 
 						<div className={'lan-box'}>
-							{user?._id && <NotificationBell />}
+							<CartIcon />
+						{user?._id && <NotificationBell />}
 							<Button
 								disableRipple
 								className="btn-lang"

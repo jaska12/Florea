@@ -2,6 +2,7 @@ import { makeVar } from '@apollo/client';
 
 import { CustomJwtPayload } from '../libs/types/customJwtPayload';
 import { ChatMessage } from '../libs/types/chat/chat';
+import { CartItem } from '../libs/types/cart/cart';
 export const themeVar = makeVar({});
 
 export const userVar = makeVar<CustomJwtPayload>({
@@ -35,3 +36,6 @@ export const chatOnlineVar = makeVar<number>(0);
 export const chatOpenVar = makeVar<boolean>(false);
 // goes up by one each time the server says the member has a new or removed notification
 export const notificationPingVar = makeVar<number>(0);
+
+/** filled by libs/cart.ts **/
+export const cartVar = makeVar<CartItem[]>([]);

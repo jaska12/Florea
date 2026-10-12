@@ -151,3 +151,17 @@ export const REMOVE_COMMENT_BY_ADMIN = gql`
 		}
 	}
 `;
+
+/**************************
+ *          ORDER         *
+ *************************/
+
+export const UPDATE_ORDER_BY_ADMIN = gql`
+	mutation UpdateOrderByAdmin($input: OrderUpdate!) {
+		updateOrderByAdmin(input: $input) {
+			_id
+			orderStatus
+			updatedAt
+		}
+	}
+`;

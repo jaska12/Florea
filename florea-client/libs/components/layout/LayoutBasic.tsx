@@ -59,6 +59,18 @@ const withLayoutBasic = (Component: any) => {
 					desc = 'Log in or create an account.';
 					setAuthHeader(true);
 					break;
+				case '/cart':
+					title = 'Your cart';
+					desc = 'Flowers and gifts you have chosen.';
+					break;
+				case '/checkout':
+					title = 'Checkout';
+					desc = 'Tell us where and when to deliver.';
+					break;
+				case '/order/complete':
+					title = 'Thank you';
+					desc = 'Your order has been placed.';
+					break;
 				case '/member':
 					title = 'Member';
 					desc = 'Their products, followers and articles.';

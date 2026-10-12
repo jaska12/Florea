@@ -22,7 +22,11 @@
 						position: relative;
 						padding: 0 0 0 0;
 						width: 266px;
-						height: 700px;
+						// the menu grows with its items (a florist has more of them)
+						align-self: flex-start;
+						min-height: 700px;
+						height: auto;
+						padding-bottom: 40px;
 						border-radius: 12px;
 						background: #fff;
 						border: 1px solid rgba(196, 196, 196, 0.79);

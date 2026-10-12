@@ -71,6 +71,8 @@ Not renamed: the agent pages and components (`pages/agent`, `AgentCard`, `TopAge
 
 ## Known issues
 
+- **Orders:** cash on delivery only; the delivery fee does not depend on the address; products without a photo show the blush placeholder in the cart and in orders. The product page still falls back to a living-room photo (`/img/product/bigImage.png`, from Nestar) when a product has no photo.
+
 - **Chat:** one public room for all logged-in members; messages are not stored in the database.
 - **Screen widths:** phones and tablets are covered (COMPLETED_TASKS.md, 34). Between 1025 and 1339px the 1300px desktop layout still scrolls sideways.
 - **About page:** a house photo, the heading "Our Exclusive Agetns" and placeholder text are still there.
@@ -78,7 +80,6 @@ Not renamed: the agent pages and components (`pages/agent`, `AgentCard`, `TopAge
 - **My page on a full reload:** opening `/mypage` directly or pressing F5 there sends a logged-in member to the homepage (seen twice in the test browser). Probable cause, from reading the code: the page checks the member before the navbar has read the stored token. Reaching it through the navbar works. Seen during the notifications check; not changed.
 
 - **After the site-wide design system:**
-  - The site talks about delivery, but there is no order or checkout flow.
   - The FAQ text in `libs/components/cs/Faq.tsx` is still about real estate.
   - Prices use `$`.
   - Product photos are missing for the test products, so cards and the detail gallery show the blush placeholder.

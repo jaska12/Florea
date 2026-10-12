@@ -2,6 +2,7 @@ export enum NotificationType {
 	LIKE = 'LIKE',
 	COMMENT = 'COMMENT',
 	SUBSCRIBE = 'SUBSCRIBE',
+	ORDER = 'ORDER',
 }
 
 export enum NotificationStatus {
@@ -13,4 +14,5 @@ export enum NotificationGroup {
 	MEMBER = 'MEMBER',
 	ARTICLE = 'ARTICLE',
 	PRODUCT = 'PRODUCT',
+	ORDER = 'ORDER',
 }

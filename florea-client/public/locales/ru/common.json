@@ -48,5 +48,13 @@
 	"Guest": "Гость",
 	"Menu": "Меню",
 	"Close menu": "Закрыть меню",
-	"Logout": "Выйти"
+	"Logout": "Выйти",
+	"Cart": "Корзина",
+	"New order": "Новый заказ",
+	"An order was cancelled": "Заказ отменён",
+	"Your order is confirmed": "Ваш заказ подтверждён",
+	"Your order is being prepared": "Ваш заказ готовится",
+	"Your order is out for delivery": "Ваш заказ передан в доставку",
+	"Your order has been delivered": "Ваш заказ доставлен",
+	"Your order was cancelled": "Ваш заказ отменён"
 }

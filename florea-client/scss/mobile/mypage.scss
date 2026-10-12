@@ -121,13 +121,13 @@
 						gap: 36px !important;
 						align-items: stretch !important;
 						box-sizing: border-box;
+						// one section at a time fills the column
 						.list-config {
-							display: grid !important;
-							grid-template-columns: repeat(3, minmax(0, 1fr));
-							gap: 18px !important;
-							.card-config {
-								margin: 0 !important;
-								width: 100% !important;
+							display: block !important;
+							width: 100% !important;
+							> * {
+								width: 100%;
+								box-sizing: border-box;
 							}
 						}
 						.pagination-config {
@@ -454,8 +454,6 @@
 
 @media (max-width: 860px) {
 	#pc-wrap {
-		#my-page .container .my-page .back-frame .main-config .list-config,
-		#member-page .container .member-page .back-frame .main-config .list-config,
 		#my-favorites-page .favorites-list-box,
 		#my-articles-page .article-list-box,
 		#member-articles-page .articles-list-box {
@@ -489,8 +487,6 @@
 				font-size: 23px !important;
 			}
 		}
-		#my-page .container .my-page .back-frame .main-config .list-config,
-		#member-page .container .member-page .back-frame .main-config .list-config,
 		#my-favorites-page .favorites-list-box,
 		#my-articles-page .article-list-box,
 		#member-articles-page .articles-list-box {

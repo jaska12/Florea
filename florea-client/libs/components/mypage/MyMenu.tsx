@@ -9,6 +9,8 @@ import IconButton from '@mui/material/IconButton';
 import { REACT_APP_API_URL } from '../../config';
 import { logOut } from '../../auth';
 import { sweetConfirmAlert, sweetMixinErrorAlert } from '../../sweetAlert';
+import LocalMallOutlinedIcon from '@mui/icons-material/LocalMallOutlined';
+import StorefrontOutlinedIcon from '@mui/icons-material/StorefrontOutlined';
 
 const MyMenu = () => {
 	const router = useRouter();
@@ -54,7 +56,7 @@ const MyMenu = () => {
 				</Stack>
 			</Stack>
 			<Stack className={'sections'}>
-				<Stack className={'section'} style={{ height: user.memberType === 'AGENT' ? '228px' : '153px' }}>
+				<Stack className={'section'} style={{ height: user.memberType === 'AGENT' ? '306px' : '192px' }}>
 					<Typography className="title" variant={'h5'}>
 						MANAGE PRODUCTS
 					</Typography>
@@ -109,6 +111,40 @@ const MyMenu = () => {
 								</ListItem>
 							</>
 						)}
+						{user.memberType === 'AGENT' && (
+							<ListItem className={pathname === 'shopOrders' ? 'focus' : ''}>
+								<Link
+									href={{
+										pathname: '/mypage',
+										query: { category: 'shopOrders' },
+									}}
+									scroll={false}
+								>
+									<div className={'flex-box'}>
+										<StorefrontOutlinedIcon className={'com-icon'} sx={{ fontSize: 18, color: category === 'shopOrders' ? '#ffffff' : '#2b1420' }} />
+										<Typography className={'sub-title'} variant={'subtitle1'} component={'p'}>
+											Shop Orders
+										</Typography>
+									</div>
+								</Link>
+							</ListItem>
+						)}
+						<ListItem className={pathname === 'myOrders' ? 'focus' : ''}>
+							<Link
+								href={{
+									pathname: '/mypage',
+									query: { category: 'myOrders' },
+								}}
+								scroll={false}
+							>
+								<div className={'flex-box'}>
+									<LocalMallOutlinedIcon className={'com-icon'} sx={{ fontSize: 18, color: category === 'myOrders' ? '#ffffff' : '#2b1420' }} />
+									<Typography className={'sub-title'} variant={'subtitle1'} component={'p'}>
+										My Orders
+									</Typography>
+								</div>
+							</Link>
+						</ListItem>
 						<ListItem className={pathname === 'myFavorites' ? 'focus' : ''}>
 							<Link
 								href={{

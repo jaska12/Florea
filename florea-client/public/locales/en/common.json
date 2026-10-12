@@ -48,5 +48,13 @@
   "Guest": "Guest",
   "Menu": "Menu",
   "Close menu": "Close menu",
-  "Logout": "Logout"
+  "Logout": "Logout",
+  "Cart": "Cart",
+  "New order": "New order",
+  "An order was cancelled": "An order was cancelled",
+  "Your order is confirmed": "Your order is confirmed",
+  "Your order is being prepared": "Your order is being prepared",
+  "Your order is out for delivery": "Your order is out for delivery",
+  "Your order has been delivered": "Your order has been delivered",
+  "Your order was cancelled": "Your order was cancelled"
 }

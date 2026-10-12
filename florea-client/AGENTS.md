@@ -41,6 +41,7 @@ The backend is already migrated to the product domain. Names in this client must
 
 - Operations: `createProduct`, `getProduct`, `updateProduct`, `getProducts`, `getAgentProducts`, `likeTargetProduct`, `getFavorites`, `getVisited`, `getAllProductsByAdmin`, `updateProductByAdmin`, `removeProductByAdmin`.
 - Notification operations: `getNotifications`, `readNotification`, `readAllNotifications` (type `NotificationsInquiry`).
+- Order operations: `createOrder`, `updateOrder`, `updateOrderByAgent`, `updateOrderByAdmin`, `getMyOrders`, `getAgentOrders`, `getOrder`, `getAllOrdersByAdmin` (types `OrderInput`, `OrderUpdate`, `OrdersInquiry`). `OrderStatus`: `PENDING`, `CONFIRMED`, `PREPARING`, `OUT_FOR_DELIVERY`, `DELIVERED`, `CANCELLED`.
 - Types: `Product`, `Products`, `ProductInput`, `ProductUpdate`, `ProductsInquiry`, `AgentProductsInquiry`, `AllProductsInquiry`.
 - Member counter: `memberProducts`.
 - Group enums (like, view, comment): `PRODUCT`.

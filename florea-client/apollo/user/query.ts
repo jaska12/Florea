@@ -645,3 +645,152 @@ export const GET_NOTIFICATIONS = gql`
 		}
 	}
 `;
+
+/**************************
+ *          ORDER         *
+ *************************/
+
+export const GET_MY_ORDERS = gql`
+	query GetMyOrders($input: OrdersInquiry!) {
+		getMyOrders(input: $input) {
+			list {
+				_id
+				orderTotal
+				orderDelivery
+				orderStatus
+				recipientName
+				recipientPhone
+				deliveryAddress
+				deliveryDate
+				deliveryTime
+				cardMessage
+				memberId
+				agentId
+				createdAt
+				updatedAt
+				orderItems {
+					_id
+					itemQuantity
+					itemPrice
+					productId
+					productData {
+						_id
+						productTitle
+						productImages
+						productStatus
+					}
+				}
+				memberData {
+					_id
+					memberNick
+					memberPhone
+					memberImage
+				}
+				agentData {
+					_id
+					memberNick
+					memberPhone
+					memberImage
+				}
+			}
+			metaCounter {
+				total
+			}
+		}
+	}
+`;
+
+export const GET_AGENT_ORDERS = gql`
+	query GetAgentOrders($input: OrdersInquiry!) {
+		getAgentOrders(input: $input) {
+			list {
+				_id
+				orderTotal
+				orderDelivery
+				orderStatus
+				recipientName
+				recipientPhone
+				deliveryAddress
+				deliveryDate
+				deliveryTime
+				cardMessage
+				memberId
+				agentId
+				createdAt
+				updatedAt
+				orderItems {
+					_id
+					itemQuantity
+					itemPrice
+					productId
+					productData {
+						_id
+						productTitle
+						productImages
+						productStatus
+					}
+				}
+				memberData {
+					_id
+					memberNick
+					memberPhone
+					memberImage
+				}
+				agentData {
+					_id
+					memberNick
+					memberPhone
+					memberImage
+				}
+			}
+			metaCounter {
+				total
+			}
+		}
+	}
+`;
+
+export const GET_ORDER = gql`
+	query GetOrder($input: String!) {
+		getOrder(orderId: $input) {
+				_id
+			orderTotal
+			orderDelivery
+			orderStatus
+			recipientName
+			recipientPhone
+			deliveryAddress
+			deliveryDate
+			deliveryTime
+			cardMessage
+			memberId
+			agentId
+			createdAt
+			updatedAt
+			orderItems {
+				_id
+				itemQuantity
+				itemPrice
+				productId
+				productData {
+					_id
+					productTitle
+					productImages
+					productStatus
+				}
+			}
+			memberData {
+				_id
+				memberNick
+				memberPhone
+				memberImage
+			}
+			agentData {
+				_id
+				memberNick
+				memberPhone
+				memberImage
+			}
+		}
+	}
+`;

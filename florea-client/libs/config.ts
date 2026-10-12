@@ -11,3 +11,10 @@ export const Messages = {
 };
 
 export const topProductRank = 2;
+
+// The delivery rule, the same as DELIVERY_FEE and FREE_DELIVERY_FROM in the API (libs/config.ts there).
+// The cart shows what the server will charge; the server's sum is the one that counts.
+export const deliveryFee = 5;
+export const freeDeliveryFrom = 100;
+
+export const deliveryTimeSlots = ['09:00-12:00', '12:00-15:00', '15:00-18:00', '18:00-21:00'];

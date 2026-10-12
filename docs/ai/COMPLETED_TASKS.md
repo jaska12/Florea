@@ -38,6 +38,7 @@ In the order they were done. State as of 2026-10-05, `main` at `5f5405e`.
 - [x] 32. Notification module in the backend and real notifications in the bell
 - [x] 33. Live chat connected to the socket; notifications announced over it
 - [x] 34. Mobile version of every page, including the admin panel
+- [x] 35. Cart and delivery ordering
 
 ## 1. Recommend migration steps
 
@@ -581,3 +582,41 @@ In the order they were done. State as of 2026-10-05, `main` at `5f5405e`.
   - The About page still has a house photo, the heading "Our Exclusive Agetns" with placeholder text, and feature rows whose markup lacks the class its desktop style expects. These are content problems on desktop too and were left alone.
   - The password field on the login page shows the password as plain text (`type="text"`), as in Nestar.
 - Not verified: real devices, Safari, landscape phones, the article page with a real article (the test accounts have none), `yarn build` (the dev server was running on the same `.next` folder).
+
+## 35. Cart and delivery ordering
+
+- Brief from the project owner: a full cart and delivery order flow, backend and frontend. The plan was approved with three choices: one order per florist, a $5 delivery fee that is free from $100 of items, and a product with no stock stays listed as "Out of stock".
+- Backend (`florea-api/apps/florea-api/src`):
+  - new: `schemas/Order.model.ts`, `schemas/OrderItem.model.ts` (collections `orders`, `orderItems`), `libs/enums/order.enum.ts`, `libs/dto/order/`, `components/order/` (module, resolver, service)
+  - `orders` has the fields of the brief plus `agentId`, the florist whose products are in the order
+  - operations: `createOrder` (returns one order per florist), `updateOrder` (the buyer cancels while `PENDING`), `updateOrderByAgent`, `updateOrderByAdmin`, `getMyOrders`, `getAgentOrders`, `getOrder`, `getAllOrdersByAdmin`
+  - prices and the delivery fee are taken from the database and `libs/config.ts` (`DELIVERY_FEE`, `FREE_DELIVERY_FROM`), never from the request
+  - stock: taken when the order is placed, with a condition in the query so two buyers cannot take the same piece; given back when an order is cancelled; if one product is short, nothing is taken
+  - status: only forward (`PENDING` → `CONFIRMED` → `PREPARING` → `OUT_FOR_DELIVERY` → `DELIVERED`); a florist or admin may cancel until the order is out for delivery
+  - notifications: a new order and a buyer's cancellation go to the florist; every status change goes to the buyer; `ORDER` added to `NotificationType` and `NotificationGroup`
+  - payment: cash on delivery; nothing is charged
+- Frontend (`florea-client`):
+  - cart: `libs/cart.ts` and `cartVar`, kept in `localStorage` (`floreaCart`) and shared between tabs; `AddToCartButton` on every product card and, with a quantity stepper, on the product page; `CartIcon` with the count in the navbar
+  - pages: `/cart` (grouped by florist, quantity, remove, totals), `/checkout` (recipient, address filled from the member's address, date, time slot, card message, summary, field-by-field messages), `/order/complete`
+  - My page: "My Orders" for every member and "Shop Orders" for florists (`components/order/OrdersPanel.tsx`, `OrderCard.tsx`, `OrderTimeline.tsx`), with status tabs, the delivery timeline, cancel, and "Mark as …" for the florist; the lists follow status changes over the socket
+  - admin: `/_admin/orders` with a status selector, and "Orders" in the admin menu
+  - notifications about orders open the order; their text is translated (`en`, `kr`, `ru`)
+  - styles: `scss/theme/order.scss`, one sheet for every width
+  - the My page menu box on desktop now grows with its items (a florist has two more)
+- Results:
+
+| Check | Result |
+|---|---|
+| `npx tsc --noEmit` for `florea-api` and `florea-batch`, `yarn tsc --noEmit` | no errors |
+| Order API test | 47 of 47: totals and fee, two florists in one request, stock down and back, refused requests leave the stock alone, own product, past date, guest, reading by buyer, florist and admin, every status step with its notification, cancel rules |
+| Browser, whole flow | 40 of 40: add to cart from a card and the product page → cart → checkout validation → order placed (2 orders) → thank-you page → the florist confirms → the bell and the open order follow each step to Delivered without a reload → buyer cancels a pending order → stock error shown on the page → florist screen → admin list → guest → cart, checkout and orders at phone width |
+| Earlier tests again | notifications 23 of 23, phone visitor 21 of 21, chat 18 of 18 |
+
+- Lint: 3460 problems (3440 before); the 20 new ones are in the order files, of the same kinds as in every resolver and service here. `florea-api/AGENTS.md` is updated.
+- Not done:
+  - No online payment.
+  - Delivery is a date and a time slot; there is no delivery zone or distance check, and the fee does not depend on the address.
+  - A cart line is a copy of what the buyer saw. If the price or stock changes before checkout, the server's numbers win and the buyer sees the server's message.
+  - Order numbers are the last six characters of the id.
+- Not verified: `npm run build` and `yarn build` (the servers were running on the same output folders), Safari, real devices, the Korean and Russian texts by a native reader.
+- Test data left in the dev database: the florist account `floreashop2`, the products "Pink Peony Bouquet" ($45) and "Tea And Sweets Gift Box" ($60), and the test orders of `floreauser`.

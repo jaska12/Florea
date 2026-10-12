@@ -345,3 +345,40 @@ export const READ_ALL_NOTIFICATIONS = gql`
 		readAllNotifications
 	}
 `;
+
+/**************************
+ *          ORDER         *
+ *************************/
+
+export const CREATE_ORDER = gql`
+	mutation CreateOrder($input: OrderInput!) {
+		createOrder(input: $input) {
+			_id
+			orderTotal
+			orderDelivery
+			orderStatus
+			agentId
+			createdAt
+		}
+	}
+`;
+
+export const UPDATE_ORDER = gql`
+	mutation UpdateOrder($input: OrderUpdate!) {
+		updateOrder(input: $input) {
+			_id
+			orderStatus
+			updatedAt
+		}
+	}
+`;
+
+export const UPDATE_ORDER_BY_AGENT = gql`
+	mutation UpdateOrderByAgent($input: OrderUpdate!) {
+		updateOrderByAgent(input: $input) {
+			_id
+			orderStatus
+			updatedAt
+		}
+	}
+`;
