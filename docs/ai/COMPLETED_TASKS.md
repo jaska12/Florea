@@ -1097,9 +1097,29 @@ In the order they were done. State as of 2026-10-05, `main` at `5f5405e`.
 - The AI answers themselves were not asked again with the real model in this task; the backend is unchanged since task 48, where they followed the language of the request. The panels' own texts were checked in all three languages.
 - Korean and Russian were written by the assistant and not read by a native speaker.
 - Tablet width (768px) was not part of this run.
-- Not deployed: the live site still has the previous version.
 
 **Known and left**
 
 - on phones "See all" beside a section title is 8px wider than its box in every language (it was so before)
 - status tabs of the orders and the homepage tabs scroll sideways on a phone when the labels are long (Russian); that is how the strips are built
+
+**Deployed on 2026-10-14 (fifth deploy)**
+
+- Steps of `deploy/README.md` for an update of the client alone: code into `/root/apps/florea.new`, the two settings files carried over, `florea-next` built there, folders swapped, `up -d --no-deps florea-next`. The API and the batch container were not restarted.
+- Two things were found on the live site, fixed and deployed again the same way (three client builds in all, each 77 pages):
+  - **`<html lang>` turned into `kr` in the browser.** The server sends `ko`, but Next writes the locale of the address into the tag on every navigation inside the site, and the florists and community pages change their own address when they open. `pages/_app.tsx` now sets the tag again after each navigation (commit `0f53364`). The local run had shown both `ko` and `kr` for Korean and it was not followed up at the time.
+  - **Korean lines broke inside a word** (the hero title ended a line with "꽃" and started the next with "과"). `scss/app.scss`: `word-break: keep-all` for Korean, with `overflow-wrap: break-word` so that a long word still fits (commit `4a86c02`).
+- Checks on the public address after the last build:
+
+| Check | Result |
+|---|---|
+| Eight public pages (home, products, florists, community, customer care, about, join, cart) in three languages at 1440 and 390 px, as a guest | 46 of 48 pass: no raw key, no sideways scroll, `<html lang>` right, the navbar in the language |
+| The two that did not pass | the English home page opened in Russian, because the test browser still had Russian stored from the run before. That is the language memory doing its work, not a fault of the page; English passed in the run made before any language was stored. |
+| `<html lang>` after opening florists, community and products and then following a navbar link, Korean and Russian | 6 of 6 (`ko`, `ru`) |
+| Language memory | `/kr/product`, then `/agent` → `/kr/agent` |
+| Other projects on the server | their containers kept running; nginx was not touched |
+
+- Afterwards the side folders, the build log and the fallback image tag were removed from the server, and the password files of the session were deleted from the dev machine.
+- The three builds left about 9 GB of untagged images and build cache on the server disk (50% used, 49 GB free). They were not removed, because the cache is shared with the other projects.
+- Access: the owner said to use the server login given earlier in the conversation. No key-based login is set up yet.
+- Not verified on the live site: the pages behind a login (My page, checkout, orders, admin) in a browser. They were checked on the dev machine with the same code; on the server only their addresses were requested (200).
