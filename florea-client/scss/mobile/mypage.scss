@@ -29,6 +29,8 @@
 						margin: 0 !important;
 						width: 100% !important;
 						height: auto !important;
+						// the desktop column is at least 700px tall; here the menu is one row of chips
+						min-height: 0 !important;
 						border: none !important;
 						border-bottom: 1px solid $florea-hairline !important;
 						border-radius: 0 !important;

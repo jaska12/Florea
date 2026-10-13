@@ -71,7 +71,7 @@ Not renamed: the agent pages and components (`pages/agent`, `AgentCard`, `TopAge
 
 ## Known issues
 
-- **Real-estate leftovers:** removed in task 37 (COMPLETED_TASKS.md). Still open: prices use `$` and the currency is not decided.
+- **Real-estate leftovers:** removed in task 37 (COMPLETED_TASKS.md). Prices stay in dollars in all three languages (DECISIONS.md, 32).
 - **Customer care:** notices and FAQ come from the database (task 38). The admin Inquiry page is still a mock-up.
 - **AI features (tasks 45 and 46):** the gift assistant (`libs/components/ai/GiftAssistant.tsx`, on every page through the three layouts), "Write it for me" on the checkout page (`CardMessageHelper.tsx`) and "Generate description" in the product form. They call `aiGiftRecommend`, `aiCardMessage` and `aiProductDescription`; the client holds no key. Checked with the real model in task 46.
 - **React warning in the product form:** its selects set `selected` on an `<option>`; inherited, not changed.
@@ -94,3 +94,5 @@ Not renamed: the agent pages and components (`pages/agent`, `AgentCard`, `TopAge
 - **Package manager:** Yarn only (`yarn`, `yarn dev`, `yarn build`). `package-lock.json` was removed and `yarn.lock` regenerated. Yarn prints peer-dependency warnings during install; they do not stop it.
 - **Env file:** `.env.development` exists locally (ignored by git) and points at `localhost:3007`. `.env.example` lists the variables. A production build needs them in `.env.production` before `yarn build`.
 - **No ESLint setup.** TODO: decide whether to add one.
+
+- **Translations (task 49):** every text is a key in `public/locales/<language>/<namespace>.json`; rules are in `florea-client/AGENTS.md` ("Translations") and the reasons in DECISIONS.md, 32. `yarn i18n:check` has to pass before a change is done. Open: Korean and Russian were not read by a native speaker; content from the database is shown as written (the notices and FAQ entries of the shop are English); a new API message is shown in English until it gets a line in `libs/i18n/serverText.ts`.

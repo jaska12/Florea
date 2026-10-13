@@ -1028,3 +1028,78 @@ In the order they were done. State as of 2026-10-05, `main` at `5f5405e`.
 - On the live API with the real model: "salom" is answered in Uzbek with the question who the gift is for; "onamga tug'ilgan kuniga sovg'a kerak" gets five products with reasons; "arzonrog'i bormi?" gets the three cheapest for the same occasion.
 - During the deploy the SSH session and one request from the dev machine dropped for a moment (the dev machine's network, not the server: other sites were unreachable at the same time). The containers had already been started; the checks were run again after it.
 - Not verified: the panel of the live site in a browser after this deploy (the conversation above was held through the API; the panel was checked on the dev machine); `yarn build` on the dev machine (it passed on the server).
+
+## 49. Full translation of the client: English, Korean, Russian
+
+- Before: 57 keys in one `common.json`; about a tenth of the site followed the language. Most pages, every alert, the dates, the prices, the admin panel and the AI components were English whatever language was chosen, and eight admin pages did not load translations at all.
+- Now every text of the client is a key, in all three languages.
+
+**Structure**
+
+- `public/locales/{en,kr,ru}/`: twelve files, one per feature: `common` (navbar, footer, cards, alerts, enum labels, server messages), `ai`, `home`, `product`, `agent`, `community`, `order`, `mypage`, `member`, `account`, `cs`, `admin`. 832 keys; 859 English texts, 832 Korean, 913 Russian (the difference is plural forms).
+- `libs/i18n/` (new):
+  - `server.ts`: `pageTranslations(locale, [namespaces])` for `getStaticProps`; `common` and `ai` are always loaded
+  - `tr.ts`: `tr('ns:key', 'English')` for code outside React (alerts, the cart, helpers)
+  - `format.ts`: `useFormat()` with `number`, `price`, `date`, `weekday`, `ago`, `dateTime` and others, built on `Intl`
+  - `labels.ts`: `useEnumLabel()`; an enum value is shown through `enum.<group>.<value>` and is stored and sent unchanged
+  - `serverText.ts`: the English messages and notification titles of the API, mapped to keys
+  - `memory.ts`: the language chosen last is stored in the browser; an address without a language goes to it
+  - `locale.ts`: the address says `kr`, `Intl` and `<html lang>` get `ko`
+- `scripts/i18n-check.mjs` and `yarn i18n:check`: fails on a key the code asks for and English lacks, a key missing in Korean or Russian, a missing plural form, an empty text, or a page that does not load a namespace it (or anything it imports) reads. Unused keys are listed.
+
+**What changed in the pages**
+
+- every page loads its namespaces in `getStaticProps`; the eight admin pages got one
+- strings moved to keys in the pages, the layouts, the navbar and footer, the homepage sections, cards, filters, cart, checkout, orders, My page, the member page, community, customer care, the admin panel, the gift assistant, the card helper and the product-description button
+- sentences with a number use plural keys (Russian has four forms); sentences with a name or a link inside use `Trans`
+- dates, prices and counts go through `useFormat()`; `moment` formats with English words and `toLocaleString()` calls are gone
+- enum labels (product type, occasion, size, location, order status, article category, member type and status, notice topic and status, card tone) come from `common.json`; `orderStatusLabels` and the label maps of the notice enums were removed
+- alerts (`libs/sweetAlert.ts`) translate their buttons and pass every message through `serverText()`
+- `<html lang>` follows the language; the page description and keywords are translated
+- the texts MUI brings with it (pagination, "Rows per page") follow the language through the theme (`pages/_app.tsx`); the article editor's toolbar uses its own Korean and Russian texts
+- not changed: GraphQL documents, routes, stored values, the backend
+
+**Found while checking in the browser, and fixed**
+
+- the occasion shortcuts under the hero search showed the enum value in lower case (`birthday`)
+- MUI pagination and the editor toolbar were English (above)
+- `text-transform: capitalize` gave every Russian word a capital letter ("Мои Заказы"). The 34 rules now read `var(--title-case, capitalize)`, and Russian turns it off in `scss/app.scss`. Russian texts that relied on it start with a capital in the file.
+- avatars in the admin lists had the alt text "Remy Sharp" (the letter "R" appeared when a photo was missing); they use the nickname or the product title
+- the email field of "Ask the florist" had the placeholder `creativelayers088`
+- on phones the My page menu kept the desktop minimum height of 700px, which left half a screen empty under it. Not a translation matter; one line in `scss/mobile/mypage.scss`.
+- three keys nothing read were removed; `formatLabel` and `prettyLabel` (unused after the enum labels) were removed
+
+**Results**
+
+| Check | Result |
+|---|---|
+| `yarn i18n:check` | passes: 0 missing keys in English, Korean, Russian; 0 missing plural forms; 0 pages without a namespace they read; 0 unused keys |
+| `yarn tsc --noEmit` | no errors |
+| `yarn build` | succeeds, 77 static pages |
+| Browser, production build, 37 page states × 3 languages × 2 widths (1440 and 390 px) = 222 | raw keys shown: 0; pages with sideways scroll: 0 |
+| Latin text left on the Korean and Russian pages | only database content (titles, nicknames, addresses, notices, FAQ), ids, the brand name, file formats, and "English" in the language menu |
+| `<html lang>` | `en`, `ko`, `ru` |
+| Language memory | `/ru/product`, then `/product` → `/ru/product`; reload and a link keep Russian; choosing English in the navbar is stored and `/product` stays English |
+
+- The 37 page states: home (guest and member, with the language menu, the bell, the chat, the gift assistant and the phone drawer opened), join, products, product detail, cart (empty and with an item), checkout (with "Write it for me" opened), order placed, florists, florist page, community, article, customer care, about, a member's page (four tabs), My page (eleven sections, as a customer and as a florist), and the seven admin pages.
+- Test data: one order was placed on the dev database as `aitester` so that the order pages had something to show.
+
+**What stays in English or as written, on purpose**
+
+- everything from the database: product titles and descriptions, nicknames, addresses, articles, comments, chat messages, notices and FAQ entries
+- the name of each language in the language menu is written in that language
+- "Q" and "A" marks in the FAQ; "Markdown" and "WYSIWYG" in the Russian editor (the editor's own translation keeps them)
+- the empty date field shows the placeholder of the visitor's browser, not of the site
+
+**Not verified**
+
+- The screenshots were not all looked at one by one: the 222 states were checked by script (keys, Latin text, overflow), and about fifteen screenshots were read by eye (home, drawer, product page, checkout, My page, admin orders).
+- The AI answers themselves were not asked again with the real model in this task; the backend is unchanged since task 48, where they followed the language of the request. The panels' own texts were checked in all three languages.
+- Korean and Russian were written by the assistant and not read by a native speaker.
+- Tablet width (768px) was not part of this run.
+- Not deployed: the live site still has the previous version.
+
+**Known and left**
+
+- on phones "See all" beside a section title is 8px wider than its box in every language (it was so before)
+- status tabs of the orders and the homepage tabs scroll sideways on a phone when the labels are long (Russian); that is how the strips are built
