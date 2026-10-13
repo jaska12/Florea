@@ -5,6 +5,9 @@ import { languageTag } from './locale';
 export type DateStyle = 'short' | 'medium' | 'long' | 'full';
 export type DateValue = Date | string | number | null | undefined;
 
+/** a date in digits with the whole year: "10/12/2026", "2026. 10. 12.", "12.10.2026" **/
+const NUMERIC_DATE: Intl.DateTimeFormatOptions = { year: 'numeric', month: '2-digit', day: '2-digit' };
+
 /** numbers, prices and dates written the way the chosen language writes them **/
 export const formatters = (locale?: string) => {
 	const tag = languageTag(locale);
@@ -25,7 +28,9 @@ export const formatters = (locale?: string) => {
 		price: (value?: number | null): string => money.format(value ?? 0),
 		date: (value: DateValue, style: DateStyle = 'medium'): string => {
 			const date = toDate(value);
-			return valid(date) ? new Intl.DateTimeFormat(tag, { dateStyle: style }).format(date) : '';
+			if (!valid(date)) return '';
+			// the short style of Intl writes the year with two digits ("10/12/26"), which reads as a day or a month
+			return new Intl.DateTimeFormat(tag, style === 'short' ? NUMERIC_DATE : { dateStyle: style }).format(date);
 		},
 		/** a date with its weekday and no year: "Tuesday, 13 October" **/
 		weekday: (value: DateValue, withYear = false): string => {
@@ -57,10 +62,10 @@ export const formatters = (locale?: string) => {
 			}
 			return relative.format(0, 'second');
 		},
-		/** a short date with the time: "10/13/26, 2:05 PM" **/
+		/** a short date with the time: "10/13/2026, 2:05 PM" **/
 		dateTime: (value: DateValue): string => {
 			const date = toDate(value);
-			return valid(date) ? new Intl.DateTimeFormat(tag, { dateStyle: 'short', timeStyle: 'short' }).format(date) : '';
+			return valid(date) ? new Intl.DateTimeFormat(tag, { ...NUMERIC_DATE, hour: 'numeric', minute: '2-digit' }).format(date) : '';
 		},
 		/** the day and the month, without the year: "13 October" **/
 		dayMonth: (value: DateValue): string => {

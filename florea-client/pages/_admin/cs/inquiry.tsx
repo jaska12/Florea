@@ -70,7 +70,7 @@ const InquiryArticles: NextPage = (props: any) => {
 							</List>
 							<Divider />
 							<Stack className={'search-area'} sx={{ m: '24px' }}>
-								<Select sx={{ width: '160px', mr: '20px' }} value={'searchCategory'}>
+								<Select sx={{ width: '160px', mr: '20px' }} value={'mb_nick'}>
 									<MenuItem value={'mb_nick'}>{t('inquiry.searchBy.nick')}</MenuItem>
 									<MenuItem value={'mb_id'}>{t('inquiry.searchBy.id')}</MenuItem>
 								</Select>
@@ -109,9 +109,9 @@ const InquiryArticles: NextPage = (props: any) => {
 						<TablePagination
 							rowsPerPageOptions={[20, 40, 60]}
 							component="div"
-							count={4}
-							rowsPerPage={10}
-							page={1}
+							count={0}
+							rowsPerPage={20}
+							page={0}
 							onPageChange={() => {}}
 							onRowsPerPageChange={() => {}}
 						/>

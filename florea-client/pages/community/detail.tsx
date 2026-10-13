@@ -235,7 +235,7 @@ const CommunityDetail: NextPage = ({ initialInput, ...props }: T) => {
 								style: { display: 'none' },
 							}}
 							onChange={tabChangeHandler}
-							value={articleCategory}
+							value={articleCategory ?? false}
 						>
 							<Tab
 								value={'FREE'}
