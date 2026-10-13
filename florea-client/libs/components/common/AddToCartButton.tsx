@@ -48,7 +48,7 @@ const AddToCartButton = (props: AddToCartButtonProps) => {
 			type={'button'}
 			className={'add-to-cart icon'}
 			onClick={addHandler}
-			aria-label={`Add ${product.productTitle} to cart`}
+			aria-label={t('addToCart.addItem', { title: product.productTitle })}
 		>
 			<AddShoppingCartRoundedIcon />
 		</button>

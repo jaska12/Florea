@@ -259,5 +259,14 @@
         "desc": "상품, 팔로워, 게시글."
       }
     }
+  },
+  "floristCard": {
+    "productsCount_other": "상품 {{count}}개"
+  },
+  "addToCart": {
+    "addItem": "{{title}} 장바구니에 담기"
+  },
+  "footer": {
+    "rights": "© {{year}} Florea. All rights reserved."
   }
 }

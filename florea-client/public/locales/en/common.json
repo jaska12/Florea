@@ -4,10 +4,13 @@
   },
   "addToCart": {
     "addToCart": "Add to cart",
-    "outOfStock": "Out of stock"
+    "outOfStock": "Out of stock",
+    "addItem": "Add {{title}} to cart"
   },
   "floristCard": {
-    "florist": "Florist"
+    "florist": "Florist",
+    "productsCount_one": "{{count}} product",
+    "productsCount_other": "{{count}} products"
   },
   "productCard": {
     "top": "Top",
@@ -39,7 +42,8 @@
     "gyeongido": "Gyeongido",
     "busan": "Busan",
     "jejudo": "Jejudo",
-    "privacyTermsSitemap": "Privacy · Terms · Sitemap"
+    "privacyTermsSitemap": "Privacy · Terms · Sitemap",
+    "rights": "© {{year}} Florea. All rights reserved."
   },
   "hero": {
     "popularOccasions": "Popular occasions",

@@ -14,7 +14,7 @@ import { ProductsInquiry } from '../../types/product/product.input';
 import { useRouter } from 'next/router';
 import CancelRoundedIcon from '@mui/icons-material/CancelRounded';
 import RefreshIcon from '@mui/icons-material/Refresh';
-import { prettyLabel } from '../common/ProductCardView';
+import { useEnumLabel } from '../../i18n/labels';
 import { sweetMixinErrorAlert } from '../../sweetAlert';
 import { Messages } from '../../config';
 
@@ -26,6 +26,7 @@ interface FilterType {
 
 const Filter = (props: FilterType) => {
 	const { t } = useTranslation('product');
+	const enumLabel = useEnumLabel();
 	const { searchFilter, setSearchFilter, initialInput } = props;
 	const router = useRouter();
 	const [productLocation, setProductLocation] = useState<ProductLocation[]>(Object.values(ProductLocation));
@@ -450,7 +451,7 @@ const Filter = (props: FilterType) => {
 									onChange={productLocationSelectHandler}
 								/>
 								<label htmlFor={location} style={{ cursor: 'pointer' }}>
-									<Typography className="product-type">{prettyLabel(location)}</Typography>
+									<Typography className="product-type">{enumLabel('productLocation', location)}</Typography>
 								</label>
 							</Stack>
 						);
@@ -471,7 +472,7 @@ const Filter = (props: FilterType) => {
 							checked={(searchFilter?.search?.typeList || []).includes(type as ProductType)}
 						/>
 						<label style={{ cursor: 'pointer' }}>
-							<Typography className="product_type">{prettyLabel(type)}</Typography>
+							<Typography className="product_type">{enumLabel('productType', type)}</Typography>
 						</label>
 					</Stack>
 				))}
@@ -490,7 +491,7 @@ const Filter = (props: FilterType) => {
 							checked={(searchFilter?.search?.occasionList || []).includes(occasion as ProductOccasion)}
 						/>
 						<label htmlFor={occasion} style={{ cursor: 'pointer' }}>
-							<Typography className="product_type">{prettyLabel(occasion)}</Typography>
+							<Typography className="product_type">{enumLabel('productOccasion', occasion)}</Typography>
 						</label>
 					</Stack>
 				))}
@@ -517,7 +518,7 @@ const Filter = (props: FilterType) => {
 							onClick={() => productSizeSelectHandler(size)}
 							key={size}
 						>
-							{prettyLabel(size)}
+							{enumLabel('productSize', size)}
 						</Button>
 					))}
 				</Stack>

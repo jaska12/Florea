@@ -69,7 +69,7 @@ const Footer = () => {
 				</Stack>
 			</Stack>
 			<Stack className={'second'}>
-				<span>© Florea - All rights reserved. Florea {moment().year()}</span>
+				<span>{t('footer.rights', { year: moment().year() })}</span>
 				<span>{t('footer.privacyTermsSitemap')}</span>
 			</Stack>
 		</Stack>

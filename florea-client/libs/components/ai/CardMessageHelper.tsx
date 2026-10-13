@@ -7,7 +7,7 @@ import { AI_CARD_MESSAGE } from '../../../apollo/user/mutation';
 import { ProductOccasion } from '../../enums/product.enum';
 import { AiCardTone, AiLanguage } from '../../enums/ai.enum';
 import { AiCardMessageInput } from '../../types/ai/ai.input';
-import { prettyLabel } from '../common/ProductCardView';
+import { useEnumLabel } from '../../i18n/labels';
 import AiNote from './AiNote';
 import { aiErrorMessage } from './aiError';
 
@@ -30,6 +30,7 @@ const LANGUAGE_OF_LOCALE: Record<string, AiLanguage> = {
 // "Write it for me" beside the gift card message: three suggestions, one click puts a suggestion into the field.
 const CardMessageHelper = (props: CardMessageHelperProps) => {
 	const { t } = useTranslation('ai');
+	const enumLabel = useEnumLabel();
 	const { onPick } = props;
 	const router = useRouter();
 	const [open, setOpen] = useState<boolean>(false);
@@ -107,7 +108,7 @@ const CardMessageHelper = (props: CardMessageHelperProps) => {
 							<select value={occasion} onChange={(e) => setOccasion(e.target.value as ProductOccasion)}>
 								{Object.values(ProductOccasion).map((value) => (
 									<option value={value} key={value}>
-										{prettyLabel(value)}
+										{enumLabel('productOccasion', value)}
 									</option>
 								))}
 							</select>
@@ -123,7 +124,7 @@ const CardMessageHelper = (props: CardMessageHelperProps) => {
 								onClick={() => setTone(value)}
 								key={value}
 							>
-								{prettyLabel(value)}
+								{enumLabel('cardTone', value)}
 							</button>
 						))}
 					</div>

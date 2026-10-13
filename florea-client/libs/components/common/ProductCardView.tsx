@@ -1,3 +1,4 @@
+import { useEnumLabel } from '../../i18n/labels';
 import { useFormat } from '../../i18n/format';
 import { useTranslation } from 'next-i18next';
 import React from 'react';
@@ -36,6 +37,7 @@ export const prettyLabel = (value: string): string => formatLabel(value).replace
  */
 const ProductCardView = (props: ProductCardViewProps) => {
 	const { t } = useTranslation('common');
+	const enumLabel = useEnumLabel();
 	const format = useFormat();
 	const { product, className, liked, onOpen, onLike, showStats = true, wholeCardOpens = false } = props;
 	const isTop = Boolean(product && product?.productRank >= topProductRank);
@@ -59,8 +61,8 @@ const ProductCardView = (props: ProductCardViewProps) => {
 					{product?.productTitle}
 				</strong>
 				<div className={'tags'}>
-					<span className={'tag'}>{formatLabel(product?.productOccasion)}</span>
-					<span className={'tag'}>{formatLabel(product?.productSize)}</span>
+					<span className={'tag'}>{enumLabel('productOccasion', product?.productOccasion)}</span>
+					<span className={'tag'}>{enumLabel('productSize', product?.productSize)}</span>
 				</div>
 				<div className={'bott'}>
 					<p className={'price'}>{format.price(product?.productPrice)}</p>

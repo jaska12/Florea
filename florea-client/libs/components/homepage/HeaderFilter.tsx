@@ -1,3 +1,4 @@
+import { EnumGroup, useEnumLabel } from '../../i18n/labels';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Stack, Box } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
@@ -13,7 +14,8 @@ interface HeaderFilterProps {
 }
 
 /** BOUQUET -> bouquet, FLOWER_BOX -> flower box (capitalized in CSS) **/
-const formatLabel = (value: string): string => value.replace(/_/g, ' ').toLowerCase();
+/** which group of labels each of the three selects shows **/
+const GROUP_OF: Record<string, EnumGroup> = { type: 'productType', occasion: 'productOccasion', size: 'productSize' };
 
 /** MOTION **/
 // same curve as $logo-ease in scss/variables.scss, so the search box moves like the logo
@@ -48,6 +50,7 @@ const optionVariants: Variants = {
 const HeaderFilter = (props: HeaderFilterProps) => {
 	const { initialInput } = props;
 	const { t, i18n } = useTranslation('common');
+	const enumLabel = useEnumLabel();
 	const [searchFilter, setSearchFilter] = useState<ProductsInquiry>(initialInput);
 	const selectRef: any = useRef();
 	const typeRef: any = useRef();
@@ -251,7 +254,7 @@ const HeaderFilter = (props: HeaderFilterProps) => {
 							transition={{ duration: 0.24, ease: EASE }}
 							key={filter.key}
 						>
-							<span>{filter.selected ? formatLabel(filter.selected) : filter.placeholder}</span>
+							<span>{filter.selected ? enumLabel(GROUP_OF[filter.key], filter.selected) : filter.placeholder}</span>
 							<motion.i
 								className={'chevron'}
 								animate={{ rotate: filter.open ? 180 : 0 }}
@@ -295,7 +298,7 @@ const HeaderFilter = (props: HeaderFilterProps) => {
 											variants={optionVariants}
 											key={option}
 										>
-											{formatLabel(option)}
+											{enumLabel(GROUP_OF[menu.key], option)}
 										</motion.span>
 									))}
 								</motion.div>

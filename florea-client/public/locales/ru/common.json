@@ -259,5 +259,17 @@
         "desc": "Товары, подписчики и статьи."
       }
     }
+  },
+  "floristCard": {
+    "productsCount_one": "{{count}} товар",
+    "productsCount_few": "{{count}} товара",
+    "productsCount_many": "{{count}} товаров",
+    "productsCount_other": "{{count}} товара"
+  },
+  "addToCart": {
+    "addItem": "Добавить в корзину: {{title}}"
+  },
+  "footer": {
+    "rights": "© {{year}} Florea. Все права защищены."
   }
 }

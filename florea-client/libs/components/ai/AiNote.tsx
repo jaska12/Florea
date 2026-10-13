@@ -1,3 +1,4 @@
+import { useTranslation } from 'next-i18next';
 import React from 'react';
 
 interface AiNoteProps {
@@ -7,9 +8,11 @@ interface AiNoteProps {
 
 // The small line shown wherever the site offers text or picks made by AI.
 const AiNote = (props: AiNoteProps) => {
+	const { t } = useTranslation('ai');
 	return (
 		<small className={'ai-note'}>
-			AI suggestions may not be perfect.{props.children ? <> {props.children}</> : null}
+			{t('shared.note')}
+			{props.children ? <> {props.children}</> : null}
 		</small>
 	);
 };

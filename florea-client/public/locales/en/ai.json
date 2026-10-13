@@ -27,6 +27,19 @@
     "budget": "Budget",
     "describeTheGiftYouAre": "Describe the gift you are looking for",
     "describeWhoTheGiftIs": "Describe who the gift is for…",
-    "askTheAssistant": "Ask the assistant"
+    "askTheAssistant": "Ask the assistant",
+    "example": {
+      "mother": "A birthday gift for my mother who loves tulips",
+      "colleague": "Something small to say thank you to a colleague",
+      "newHome": "A plant for a friend who just moved house"
+    },
+    "upTo": "up to {{amount}}",
+    "ideas_one": "Here is one idea:",
+    "ideas_other": "Here are {{count}} ideas:"
+  },
+  "shared": {
+    "note": "AI suggestions may not be perfect.",
+    "unreachable": "The server could not be reached. Check your connection and try again.",
+    "failed": "That did not work. Please try again in a moment."
   }
 }

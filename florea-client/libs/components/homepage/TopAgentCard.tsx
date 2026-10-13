@@ -1,3 +1,4 @@
+import { useTranslation } from 'next-i18next';
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { Member } from '../../types/member/member';
@@ -15,6 +16,7 @@ const initialsOf = (name: string): string => {
 };
 
 const TopAgentCard = (props: TopAgentProps) => {
+	const { t } = useTranslation('home');
 	const { agent } = props;
 	const [photoFailed, setPhotoFailed] = useState<boolean>(false);
 	const productCount = agent?.memberProducts ?? 0;
@@ -46,7 +48,7 @@ const TopAgentCard = (props: TopAgentProps) => {
 			</span>
 			<strong className={'agent-name'}>{agent?.memberFullName || agent?.memberNick}</strong>
 			<span className={'agent-meta'}>
-				{productCount} {productCount === 1 ? 'product' : 'products'}
+				{t('florists.productsCount', { count: productCount })}
 			</span>
 		</Link>
 	);

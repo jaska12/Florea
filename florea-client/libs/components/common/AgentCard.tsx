@@ -42,7 +42,7 @@ const AgentCard = (props: AgentCardProps) => {
 					}}
 				>
 					<div>
-						{agent?.memberProducts ?? 0} {agent?.memberProducts === 1 ? 'product' : 'products'}
+						{t('floristCard.productsCount', { count: agent?.memberProducts ?? 0 })}
 					</div>
 				</Box>
 			</Link>

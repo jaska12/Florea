@@ -23,7 +23,28 @@
     "addGiftWrap": "add gift wrap",
     "shopNow": "Shop now",
     "howItWorks": "How it works",
-    "howFloreaWorks": "How Florea works"
+    "howFloreaWorks": "How Florea works",
+    "photo": {
+      "tulips": "A bunch of tulips wrapped in a pink knit",
+      "ranunculus": "Pink ranunculus flowers",
+      "gift": "A gift wrapped in pink paper with a ribbon"
+    },
+    "text": "Florists mark the bouquets and gifts they can deliver today. Many can <wrap>add gift wrap</wrap> too.",
+    "stepNumber": "Step {{number}}",
+    "step": {
+      "choose": {
+        "title": "Choose a bouquet or gift",
+        "text": "Browse by occasion, size and price, and add what you like to the cart."
+      },
+      "message": {
+        "title": "Add a card message and address",
+        "text": "Tell us who receives it, where and when. A few words for the card are welcome."
+      },
+      "deliver": {
+        "title": "Delivered with care",
+        "text": "The florist prepares it and brings it to the door. You pay in cash on delivery."
+      }
+    }
   },
   "section": {
     "seeAll": "See all"
@@ -31,11 +52,25 @@
   "shopBy": {
     "shopBy": "Shop by",
     "startFromTheMomentYou": "Start from the moment you are marking, or from what you want to give.",
-    "seeAllProducts": "See all products"
+    "seeAllProducts": "See all products",
+    "tab": {
+      "occasion": "Occasion",
+      "category": "Category"
+    },
+    "category": {
+      "BOUQUET": "Bouquets",
+      "FLOWER_BOX": "Flower boxes",
+      "PLANT": "Plants",
+      "GIFT_BOX": "Gift boxes",
+      "SWEET": "Sweets",
+      "TOY": "Toys"
+    }
   },
   "florists": {
     "topFlorists": "Top florists",
     "theFloristsAndGiftShops": "The florists and gift shops behind the products.",
-    "seeAllFlorists": "See all florists"
+    "seeAllFlorists": "See all florists",
+    "productsCount_one": "{{count}} product",
+    "productsCount_other": "{{count}} products"
   }
 }

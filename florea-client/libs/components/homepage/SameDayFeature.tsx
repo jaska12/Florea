@@ -1,4 +1,4 @@
-import { useTranslation } from 'next-i18next';
+import { Trans, useTranslation } from 'next-i18next';
 import React from 'react';
 import Link from 'next/link';
 import { MotionConfig, motion, Variants } from 'framer-motion';
@@ -31,26 +31,26 @@ const riseVariants: Variants = {
 const inView = { once: true, amount: 0.25 };
 
 const PHOTOS = [
-	{ src: '/img/home/sameday-tulips.jpg', alt: 'A bunch of tulips wrapped in a pink knit', size: 'large' },
-	{ src: '/img/home/sameday-ranunculus.jpg', alt: 'Pink ranunculus flowers', size: 'small' },
-	{ src: '/img/home/sameday-gift.jpg', alt: 'A gift wrapped in pink paper with a ribbon', size: 'small' },
+	{ src: '/img/home/sameday-tulips.jpg', alt: 'sameDay.photo.tulips', size: 'large' },
+	{ src: '/img/home/sameday-ranunculus.jpg', alt: 'sameDay.photo.ranunculus', size: 'small' },
+	{ src: '/img/home/sameday-gift.jpg', alt: 'sameDay.photo.gift', size: 'small' },
 ];
 
 const STEPS = [
 	{
 		icon: <LocalFloristOutlinedIcon />,
-		title: 'Choose a bouquet or gift',
-		text: 'Browse by occasion, size and price, and add what you like to the cart.',
+		title: 'sameDay.step.choose.title',
+		text: 'sameDay.step.choose.text',
 	},
 	{
 		icon: <EditNoteOutlinedIcon />,
-		title: 'Add a card message and address',
-		text: 'Tell us who receives it, where and when. A few words for the card are welcome.',
+		title: 'sameDay.step.message.title',
+		text: 'sameDay.step.message.text',
 	},
 	{
 		icon: <LocalShippingOutlinedIcon />,
-		title: 'Delivered with care',
-		text: 'The florist prepares it and brings it to the door. You pay in cash on delivery.',
+		title: 'sameDay.step.deliver.title',
+		text: 'sameDay.step.deliver.text',
 	},
 ];
 
@@ -78,11 +78,11 @@ const SameDayFeature = () => {
 							<span className={'sameday-kicker'}>{t('sameDay.freshToday')}</span>
 							<h2 className={'sameday-title'}>{t('sameDay.flowersGiftsDeliveredTheSame')}</h2>
 							<p className={'sameday-text'}>
-								Florists mark the bouquets and gifts they can deliver today. Many can{' '}
-								<Link className={'text-link'} href={optionHref('productGiftWrap')}>
-									{t('sameDay.addGiftWrap')}
-								</Link>{' '}
-								too.
+								<Trans
+									t={t}
+									i18nKey={'sameDay.text'}
+									components={{ wrap: <Link className={'text-link'} href={optionHref('productGiftWrap')} /> }}
+								/>
 							</p>
 							<div className={'sameday-actions'}>
 								<Link className={'home-btn primary'} href={optionHref('productSameDay')}>
@@ -104,7 +104,7 @@ const SameDayFeature = () => {
 						>
 							{PHOTOS.map((photo) => (
 								<div className={`bento-photo ${photo.size}`} key={photo.src}>
-									<img src={photo.src} alt={photo.alt} loading={'lazy'} />
+									<img src={photo.src} alt={t(photo.alt)} loading={'lazy'} />
 								</div>
 							))}
 						</motion.div>
@@ -124,9 +124,9 @@ const SameDayFeature = () => {
 									custom={index * 0.1}
 								>
 									<span className={'step-icon'}>{step.icon}</span>
-									<span className={'step-number'}>Step {index + 1}</span>
-									<strong>{step.title}</strong>
-									<p>{step.text}</p>
+									<span className={'step-number'}>{t('sameDay.stepNumber', { number: index + 1 })}</span>
+									<strong>{t(step.title)}</strong>
+									<p>{t(step.text)}</p>
 								</motion.li>
 							))}
 						</ol>

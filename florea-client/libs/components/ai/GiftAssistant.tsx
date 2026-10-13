@@ -12,23 +12,24 @@ import { AI_GIFT_RECOMMEND } from '../../../apollo/user/mutation';
 import { ProductOccasion } from '../../enums/product.enum';
 import { AiGiftRecommendation, GiftTurn } from '../../types/ai/ai';
 import { AiGiftRecommendInput } from '../../types/ai/ai.input';
-import ProductCardView, { prettyLabel } from '../common/ProductCardView';
+import ProductCardView from '../common/ProductCardView';
+import { useEnumLabel } from '../../i18n/labels';
+import { useFormat } from '../../i18n/format';
 import AddToCartButton from '../common/AddToCartButton';
 import AiNote from './AiNote';
 import { aiErrorMessage } from './aiError';
 
 const PROMPT_MIN = 2;
 const PROMPT_MAX = 300;
-const EXAMPLES = [
-	'A birthday gift for my mother who loves tulips',
-	'Something small to say thank you to a colleague',
-	'A plant for a friend who just moved house',
-];
+/** requests to start from: the keys of their texts in ai.json **/
+const EXAMPLES = ['assistant.example.mother', 'assistant.example.colleague', 'assistant.example.newHome'];
 
 // The gift assistant: a floating button that opens a panel where a member describes who the gift is for
 // and gets products of the shop back, each with the assistant's reason.
 const GiftAssistant = () => {
 	const { t } = useTranslation('ai');
+	const enumLabel = useEnumLabel();
+	const format = useFormat();
 	const router = useRouter();
 	const user = useReactiveVar(userVar);
 	const open = useReactiveVar(giftAssistantOpenVar);
@@ -162,8 +163,8 @@ const GiftAssistant = () => {
 									<ul>
 										{EXAMPLES.map((example) => (
 											<li key={example}>
-												<button type={'button'} onClick={() => setPrompt(example)}>
-													{example}
+												<button type={'button'} onClick={() => setPrompt(t(example))}>
+													{t(example)}
 												</button>
 											</li>
 										))}
@@ -177,7 +178,10 @@ const GiftAssistant = () => {
 										<p>{turn.prompt}</p>
 										{(turn.budgetMax || turn.occasion) && (
 											<span className={'ga-ask-meta'}>
-												{[turn.occasion && prettyLabel(turn.occasion), turn.budgetMax && `up to $${turn.budgetMax}`]
+												{[
+													turn.occasion && enumLabel('productOccasion', turn.occasion),
+													turn.budgetMax && t('assistant.upTo', { amount: format.price(turn.budgetMax) }),
+												]
 													.filter(Boolean)
 													.join(' · ')}
 											</span>
@@ -207,7 +211,7 @@ const GiftAssistant = () => {
 												<p className={'ga-line'}>{turn.result.message}</p>
 											) : (
 												<p className={'ga-line'}>
-													{turn.result.list.length === 1 ? t('assistant.hereIsOneIdea') : `Here are ${turn.result.list.length} ideas:`}
+													{t('assistant.ideas', { count: turn.result.list.length })}
 												</p>
 											)}
 											<ul className={'ga-picks'}>
@@ -243,7 +247,7 @@ const GiftAssistant = () => {
 										<option value={''}>{t('assistant.anyOccasion')}</option>
 										{Object.values(ProductOccasion).map((value) => (
 											<option value={value} key={value}>
-												{prettyLabel(value)}
+												{enumLabel('productOccasion', value)}
 											</option>
 										))}
 									</select>
