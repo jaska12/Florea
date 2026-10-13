@@ -1,13 +1,49 @@
 {
   "detail": {
     "boards": "Разделы",
-    "commentsCount": "Комментарии ({{count}})"
+    "commentsCount": "Комментарии ({{count}})",
+    "success": "Готово",
+    "communityBoardArticle": "Статья сообщества",
+    "freeBoard": "Свободная тема",
+    "recommendation": "Рекомендации",
+    "news": "Новости",
+    "humor": "Юмор",
+    "expressYourOpinionsFreelyHere": "Делитесь мыслями о цветах и подарках",
+    "write": "Написать",
+    "leaveAComment": "Оставьте комментарий",
+    "comment": "Отправить",
+    "comments": "Комментарии",
+    "updateComment": "Изменить комментарий",
+    "cancel": "Отмена",
+    "update": "Сохранить"
   },
   "list": {
     "boards": "Разделы",
     "articlesTotal_one": "{{count}} статья",
     "articlesTotal_few": "{{count}} статьи",
     "articlesTotal_many": "{{count}} статей",
-    "articlesTotal_other": "{{count}} статьи"
+    "articlesTotal_other": "{{count}} статьи",
+    "success": "Готово",
+    "floreaCommunity": "Сообщество Florea",
+    "freeBoard": "Свободная тема",
+    "recommendation": "Рекомендации",
+    "news": "Новости",
+    "humor": "Юмор",
+    "expressYourOpinionsFreelyHere": "Делитесь мыслями о цветах и подарках",
+    "write": "Написать",
+    "noArticleFound": "Статей пока нет."
+  },
+  "editor": {
+    "articleCreatedSuccessfully": "Статья опубликована.",
+    "category": "Раздел",
+    "withoutLabel": "Выберите раздел",
+    "free": "Свободная тема",
+    "humor": "Юмор",
+    "news": "Новости",
+    "recommendation": "Рекомендации",
+    "title": "Заголовок",
+    "typeTitle": "Введите заголовок",
+    "typeHere": "Напишите текст",
+    "register": "Опубликовать"
   }
 }

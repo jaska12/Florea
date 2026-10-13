@@ -1,9 +1,26 @@
 {
   "detail": {
     "productsTotal_other": "판매 중인 상품 {{count}}개",
-    "reviewsCount_other": "후기 {{count}}개"
+    "reviewsCount_other": "후기 {{count}}개",
+    "cannotWriteAReviewFor": "본인에게는 후기를 남길 수 없습니다",
+    "success": "완료되었습니다",
+    "noProductsFound": "등록된 상품이 없습니다.",
+    "reviews": "후기",
+    "weAreGladToSee": "이 플로리스트를 만나 본 분들의 이야기",
+    "leaveAReview": "후기 남기기",
+    "review": "후기",
+    "submitReview": "후기 등록"
   },
   "list": {
-    "floristsTotal_other": "Florea의 플로리스트 {{count}}곳"
+    "floristsTotal_other": "Florea의 플로리스트 {{count}}곳",
+    "success": "완료되었습니다",
+    "oldestOrder": "오래된순",
+    "searchForAFlorist": "플로리스트 검색",
+    "sortBy": "정렬",
+    "recent": "최신순",
+    "oldest": "오래된순",
+    "likes": "좋아요순",
+    "views": "조회순",
+    "noAgentsFound": "플로리스트를 찾을 수 없습니다."
   }
 }

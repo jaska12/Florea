@@ -1,10 +1,46 @@
 {
   "detail": {
     "boards": "게시판",
-    "commentsCount": "댓글 ({{count}})"
+    "commentsCount": "댓글 ({{count}})",
+    "success": "완료되었습니다",
+    "communityBoardArticle": "커뮤니티 게시글",
+    "freeBoard": "자유게시판",
+    "recommendation": "추천",
+    "news": "소식",
+    "humor": "유머",
+    "expressYourOpinionsFreelyHere": "꽃과 선물에 관한 이야기를 자유롭게 나눠 보세요",
+    "write": "글쓰기",
+    "leaveAComment": "댓글을 남겨 보세요",
+    "comment": "등록",
+    "comments": "댓글",
+    "updateComment": "댓글 수정",
+    "cancel": "취소",
+    "update": "수정"
   },
   "list": {
     "boards": "게시판",
-    "articlesTotal_other": "게시글 {{count}}개"
+    "articlesTotal_other": "게시글 {{count}}개",
+    "success": "완료되었습니다",
+    "floreaCommunity": "Florea 커뮤니티",
+    "freeBoard": "자유게시판",
+    "recommendation": "추천",
+    "news": "소식",
+    "humor": "유머",
+    "expressYourOpinionsFreelyHere": "꽃과 선물에 관한 이야기를 자유롭게 나눠 보세요",
+    "write": "글쓰기",
+    "noArticleFound": "아직 게시글이 없습니다."
+  },
+  "editor": {
+    "articleCreatedSuccessfully": "게시글이 등록되었습니다.",
+    "category": "카테고리",
+    "withoutLabel": "카테고리 선택",
+    "free": "자유게시판",
+    "humor": "유머",
+    "news": "소식",
+    "recommendation": "추천",
+    "title": "제목",
+    "typeTitle": "제목을 입력하세요",
+    "typeHere": "내용을 입력하세요",
+    "register": "등록"
   }
 }

@@ -7,12 +7,29 @@
     "reviewsCount_one": "{{count}} отзыв",
     "reviewsCount_few": "{{count}} отзыва",
     "reviewsCount_many": "{{count}} отзывов",
-    "reviewsCount_other": "{{count}} отзыва"
+    "reviewsCount_other": "{{count}} отзыва",
+    "cannotWriteAReviewFor": "Нельзя оставить отзыв самому себе",
+    "success": "Готово",
+    "noProductsFound": "Товаров пока нет.",
+    "reviews": "Отзывы",
+    "weAreGladToSee": "что говорят покупатели",
+    "leaveAReview": "Оставить отзыв",
+    "review": "Отзыв",
+    "submitReview": "Отправить отзыв"
   },
   "list": {
     "floristsTotal_one": "{{count}} флорист на Florea",
     "floristsTotal_few": "{{count}} флориста на Florea",
     "floristsTotal_many": "{{count}} флористов на Florea",
-    "floristsTotal_other": "{{count}} флориста на Florea"
+    "floristsTotal_other": "{{count}} флориста на Florea",
+    "success": "Готово",
+    "oldestOrder": "Сначала старые",
+    "searchForAFlorist": "Найти флориста",
+    "sortBy": "Сортировка",
+    "recent": "Сначала новые",
+    "oldest": "Сначала старые",
+    "likes": "По лайкам",
+    "views": "По просмотрам",
+    "noAgentsFound": "Флористы не найдены."
   }
 }

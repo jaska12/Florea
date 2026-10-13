@@ -261,12 +261,48 @@
     }
   },
   "floristCard": {
-    "productsCount_other": "상품 {{count}}개"
+    "productsCount_other": "상품 {{count}}개",
+    "florist": "플로리스트"
   },
   "addToCart": {
-    "addItem": "{{title}} 장바구니에 담기"
+    "addItem": "{{title}} 장바구니에 담기",
+    "addToCart": "장바구니에 담기",
+    "outOfStock": "품절"
   },
   "footer": {
-    "rights": "© {{year}} Florea. All rights reserved."
+    "rights": "© {{year}} Florea. All rights reserved.",
+    "customerCare": "고객센터",
+    "needHelpWithAnOrder": "주문에 도움이 필요하신가요?",
+    "weReplyWithinADay": "하루 안에 답변드립니다.",
+    "followUsOnSocialMedia": "소셜 미디어에서 만나요",
+    "seasonalBouquetsAndGiftIdeas": "계절 꽃다발과 선물 아이디어를 이메일로 받아 보세요",
+    "yourEmail": "이메일 주소",
+    "subscribe": "구독하기",
+    "shop": "쇼핑",
+    "sameDayDelivery": "당일 배송",
+    "giftWrappedItems": "선물 포장 상품",
+    "quickLinks": "바로가기",
+    "termsOfUse": "이용약관",
+    "privacyPolicy": "개인정보 처리방침",
+    "deliveryInformation": "배송 안내",
+    "ourServices": "서비스 소개",
+    "contactSupport": "문의하기",
+    "faqs": "자주 묻는 질문",
+    "deliveryAreas": "배송 지역",
+    "seoul": "서울",
+    "gyeongido": "경기도",
+    "busan": "부산",
+    "jejudo": "제주도",
+    "privacyTermsSitemap": "개인정보 · 약관 · 사이트맵"
+  },
+  "review": {
+    "reply": "답글"
+  },
+  "productCard": {
+    "top": "인기",
+    "sameDay": "당일 배송",
+    "giftWrap": "선물 포장",
+    "removeFromFavorites": "찜 해제",
+    "addToFavorites": "찜하기"
   }
 }

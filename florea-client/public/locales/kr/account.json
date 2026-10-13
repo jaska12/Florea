@@ -3,6 +3,21 @@
     "loginWord": "로그인",
     "signupWord": "회원가입",
     "loginHint": "다시 오신 것을 환영합니다. 로그인하고 주문과 배송을 확인해 보세요.",
-    "signupHint": "계정을 만들고 꽃과 선물을 주문하고, 좋아하는 플로리스트를 팔로우해 보세요."
+    "signupHint": "계정을 만들고 꽃과 선물을 주문하고, 좋아하는 플로리스트를 팔로우해 보세요.",
+    "nickname": "닉네임",
+    "enterNickname": "닉네임을 입력하세요",
+    "password": "비밀번호",
+    "enterPassword": "비밀번호를 입력하세요",
+    "phone": "전화번호",
+    "enterPhone": "전화번호를 입력하세요",
+    "iWantToBeRegistered": "가입 유형:",
+    "user": "일반 회원",
+    "agent": "플로리스트",
+    "rememberMe": "로그인 상태 유지",
+    "lostYourPassword": "비밀번호를 잊으셨나요?",
+    "login": "로그인",
+    "signup": "회원가입",
+    "notRegisteredYet": "아직 회원이 아니신가요?",
+    "haveAccount": "이미 계정이 있으신가요?"
   }
 }

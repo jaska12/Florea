@@ -25,14 +25,14 @@
   "page": {
     "customerCare": "Customer care",
     "noticesAndAnswersToCommon": "Notices and answers to common questions",
-    "notice": "Notice",
+    "notice": "Notices",
     "faq": "FAQ"
   },
   "faq": {
     "noQuestionsInThisGroup": "No questions in this group yet."
   },
   "notice": {
-    "notice": "Notice",
+    "notice": "Notices",
     "number": "number",
     "title": "title",
     "date": "date",

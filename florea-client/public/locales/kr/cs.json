@@ -1,0 +1,42 @@
+{
+  "about": {
+    "flowersAndGiftsFromThe": "가까운 플로리스트가 전하는 꽃과 선물.",
+    "floreaBringsLocalFloristsAnd": "Florea는 동네 플로리스트와 선물 가게를 한곳에 모았습니다. 생일 꽃다발도, 집들이 식물도, 기념일 선물 박스도 몇 분이면 고를 수 있어요.",
+    "chooseByOccasionSizeAnd": "기념일, 사이즈, 예산에 맞춰 고르고, 누가 만들었는지 확인한 뒤 소중한 사람에게 보내세요. 당일 배송과 선물 포장이 가능한 상품도 많습니다.",
+    "madeByLocalFlorists": "동네 플로리스트의 손길",
+    "eachProductShowsTheShop": "모든 상품에 만든 가게가 표시됩니다.",
+    "chosenByOccasion": "기념일에 맞춰 고르기",
+    "birthdayWeddingAnniversaryAndMore": "생일, 결혼, 기념일 그리고 더 많은 순간.",
+    "categories": "카테고리",
+    "occasions": "기념일",
+    "sizes": "사이즈",
+    "forFloristsAndGiftShops": "플로리스트와 선물 가게를 위해",
+    "listYourProducts": "상품을 등록하세요",
+    "addBouquetsPlantsAndGift": "꽃다발, 식물, 선물 박스를 사진, 가격, 사이즈, 재고와 함께 등록하세요.",
+    "receiveOrders": "주문을 받으세요",
+    "buyersFindYouByCategory": "고객이 카테고리, 기념일, 지역으로 가게를 찾아 배송 주문을 합니다.",
+    "buildYourFollowing": "단골을 만드세요",
+    "customersCanFollowYourShop": "고객이 가게를 팔로우하고, 상품에 좋아요와 후기를 남길 수 있습니다.",
+    "openYourShop": "가게 열기",
+    "needHelpChoosing": "고르기 어려우신가요?",
+    "askAFloristOnTheir": "플로리스트 페이지에서 직접 문의하거나, 고객센터의 답변을 확인해 보세요.",
+    "customerCare": "고객센터"
+  },
+  "page": {
+    "customerCare": "고객센터",
+    "noticesAndAnswersToCommon": "공지사항과 자주 묻는 질문",
+    "notice": "공지사항",
+    "faq": "자주 묻는 질문"
+  },
+  "faq": {
+    "noQuestionsInThisGroup": "이 주제에는 아직 질문이 없습니다."
+  },
+  "notice": {
+    "notice": "공지사항",
+    "number": "번호",
+    "title": "제목",
+    "date": "날짜",
+    "event": "이벤트",
+    "noNoticesYet": "아직 공지사항이 없습니다."
+  }
+}

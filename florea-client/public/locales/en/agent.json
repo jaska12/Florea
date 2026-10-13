@@ -1,28 +1,28 @@
 {
   "detail": {
-    "cannotWriteAReviewFor": "Cannot write a review for yourself",
-    "success": "success",
-    "noProductsFound": "No products found!",
+    "cannotWriteAReviewFor": "You cannot write a review for yourself",
+    "success": "Done",
+    "noProductsFound": "No products yet.",
     "reviews": "Reviews",
-    "weAreGladToSee": "we are glad to see you again",
-    "leaveAReview": "Leave A Review",
+    "weAreGladToSee": "what customers say",
+    "leaveAReview": "Leave a review",
     "review": "Review",
-    "submitReview": "Submit Review",
+    "submitReview": "Submit review",
     "productsTotal_one": "{{count}} product available",
     "productsTotal_other": "{{count}} products available",
     "reviewsCount_one": "{{count}} review",
     "reviewsCount_other": "{{count}} reviews"
   },
   "list": {
-    "success": "success",
+    "success": "Done",
     "oldestOrder": "Oldest order",
     "searchForAFlorist": "Search for a florist",
     "sortBy": "Sort by",
-    "recent": "Recent",
+    "recent": "Newest",
     "oldest": "Oldest",
     "likes": "Likes",
     "views": "Views",
-    "noAgentsFound": "No Agents found!",
+    "noAgentsFound": "No florists found.",
     "floristsTotal_one": "{{count}} florist on Florea",
     "floristsTotal_other": "{{count}} florists on Florea"
   }

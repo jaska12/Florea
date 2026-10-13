@@ -264,12 +264,48 @@
     "productsCount_one": "{{count}} товар",
     "productsCount_few": "{{count}} товара",
     "productsCount_many": "{{count}} товаров",
-    "productsCount_other": "{{count}} товара"
+    "productsCount_other": "{{count}} товара",
+    "florist": "Флорист"
   },
   "addToCart": {
-    "addItem": "Добавить в корзину: {{title}}"
+    "addItem": "Добавить в корзину: {{title}}",
+    "addToCart": "В корзину",
+    "outOfStock": "Нет в наличии"
   },
   "footer": {
-    "rights": "© {{year}} Florea. Все права защищены."
+    "rights": "© {{year}} Florea. Все права защищены.",
+    "customerCare": "служба поддержки",
+    "needHelpWithAnOrder": "нужна помощь с заказом?",
+    "weReplyWithinADay": "Отвечаем в течение дня.",
+    "followUsOnSocialMedia": "мы в соцсетях",
+    "seasonalBouquetsAndGiftIdeas": "Сезонные букеты и идеи подарков — в вашей почте",
+    "yourEmail": "Ваш e-mail",
+    "subscribe": "Подписаться",
+    "shop": "Каталог",
+    "sameDayDelivery": "Доставка в день заказа",
+    "giftWrappedItems": "С подарочной упаковкой",
+    "quickLinks": "Полезное",
+    "termsOfUse": "Условия использования",
+    "privacyPolicy": "Политика конфиденциальности",
+    "deliveryInformation": "О доставке",
+    "ourServices": "Наши услуги",
+    "contactSupport": "Связаться с нами",
+    "faqs": "Вопросы и ответы",
+    "deliveryAreas": "Куда доставляем",
+    "seoul": "Сеул",
+    "gyeongido": "Кёнгидо",
+    "busan": "Пусан",
+    "jejudo": "Чеджудо",
+    "privacyTermsSitemap": "Конфиденциальность · Условия · Карта сайта"
+  },
+  "review": {
+    "reply": "Ответить"
+  },
+  "productCard": {
+    "top": "Топ",
+    "sameDay": "Сегодня",
+    "giftWrap": "Упаковка",
+    "removeFromFavorites": "Убрать из избранного",
+    "addToFavorites": "В избранное"
   }
 }

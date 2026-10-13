@@ -20,7 +20,13 @@
         "title": "Бережная доставка",
         "text": "Флорист всё подготовит и привезёт к двери. Оплата наличными при получении."
       }
-    }
+    },
+    "freshToday": "Свежее сегодня",
+    "flowersGiftsDeliveredTheSame": "Цветы и подарки с доставкой в день заказа",
+    "addGiftWrap": "подарочную упаковку",
+    "shopNow": "Выбрать",
+    "howItWorks": "Как это работает",
+    "howFloreaWorks": "Как работает Florea"
   },
   "shopBy": {
     "tab": {
@@ -34,12 +40,39 @@
       "GIFT_BOX": "Подарочные наборы",
       "SWEET": "Сладости",
       "TOY": "Игрушки"
-    }
+    },
+    "shopBy": "Каталог",
+    "startFromTheMomentYou": "Начните с повода — или с того, что хочется подарить.",
+    "seeAllProducts": "Смотреть все товары"
   },
   "florists": {
     "productsCount_one": "{{count}} товар",
     "productsCount_few": "{{count}} товара",
     "productsCount_many": "{{count}} товаров",
-    "productsCount_other": "{{count}} товара"
+    "productsCount_other": "{{count}} товара",
+    "topFlorists": "Лучшие флористы",
+    "theFloristsAndGiftShops": "Флористы и мастерские, которые создают эти букеты и подарки.",
+    "seeAllFlorists": "Смотреть всех флористов"
+  },
+  "bestsellers": {
+    "trending": "В тренде",
+    "mostViewed": "Чаще смотрят",
+    "topRated": "Лучшие по рейтингу",
+    "success": "Готово",
+    "bestsellers": "Бестселлеры",
+    "theBouquetsAndGiftsPeople": "Букеты и подарки, которые выбирают и любят чаще всего.",
+    "seeAllProducts": "Смотреть все товары",
+    "previousProducts": "Предыдущие товары",
+    "nextProducts": "Следующие товары"
+  },
+  "community": {
+    "fromTheCommunity": "Из сообщества",
+    "newsAndConversationsFromFlorea": "Новости и разговоры участников Florea.",
+    "seeAllArticles": "Смотреть все статьи",
+    "news": "Новости",
+    "freeBoard": "Свободная тема"
+  },
+  "section": {
+    "seeAll": "Смотреть все"
   }
 }
