@@ -32,5 +32,36 @@
     "itemsCount_other": "상품 {{count}}개",
     "itemsFrom_other": "{{name}}의 상품 {{count}}개",
     "to": "받는 분: {{name}}, {{address}}"
+  },
+  "card": {
+    "moreItems": "외 {{count}}개",
+    "itemsCount_other": "상품 {{count}}개",
+    "fromShop": "판매: {{name}}",
+    "forBuyer": "주문: {{name}}",
+    "markAs": {
+      "CONFIRMED": "주문 확인으로 변경",
+      "PREPARING": "준비 중으로 변경",
+      "OUT_FOR_DELIVERY": "배송 중으로 변경",
+      "DELIVERED": "배송 완료로 변경"
+    }
+  },
+  "panel": {
+    "markedAs": {
+      "CONFIRMED": "주문 확인으로 변경했습니다",
+      "PREPARING": "준비 중으로 변경했습니다",
+      "OUT_FOR_DELIVERY": "배송 중으로 변경했습니다",
+      "DELIVERED": "배송 완료로 변경했습니다"
+    },
+    "noOrders": {
+      "PENDING": "새로 접수된 주문이 없습니다",
+      "CONFIRMED": "확인된 주문이 없습니다",
+      "PREPARING": "준비 중인 주문이 없습니다",
+      "OUT_FOR_DELIVERY": "배송 중인 주문이 없습니다",
+      "DELIVERED": "배송 완료된 주문이 없습니다",
+      "CANCELLED": "취소된 주문이 없습니다"
+    }
+  },
+  "timeline": {
+    "status": "주문 상태: {{status}}"
   }
 }

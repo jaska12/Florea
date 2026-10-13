@@ -1,8 +1,10 @@
-import { Html, Head, Main, NextScript } from 'next/document';
+import { Html, Head, Main, NextScript, DocumentProps } from 'next/document';
+import { htmlLang } from '../libs/i18n/locale';
 
-export default function Document() {
+// The description and the keywords of the site are set by the layouts, in the language of the page.
+export default function Document(props: DocumentProps) {
 	return (
-		<Html lang="en">
+		<Html lang={htmlLang(props.__NEXT_DATA__.locale)}>
 			<Head>
 				<meta name="robots" content="index,follow" />
 				<link rel="icon" type="image/svg+xml" href="/img/logo/florea/favicon.svg" />
@@ -11,16 +13,6 @@ export default function Document() {
 				<link rel="apple-touch-icon" href="/img/logo/florea/apple-touch-icon.png" />
 				<link rel="manifest" href="/manifest.json" />
 
-				{/* SEO */}
-				<meta name="keyword" content={'florea, flowers, bouquets, plants, gift boxes, flower delivery, florist'} />
-				<meta
-					name={'description'}
-					content={
-						'Order bouquets, plants and gift boxes from local florists and have them delivered. | ' +
-						'Заказывайте букеты, растения и подарочные наборы у местных флористов с доставкой. | ' +
-						'지역 플로리스트의 꽃다발, 식물, 선물 박스를 주문하고 배송받으세요.'
-					}
-				/>
 			</Head>
 			<body>
 				<Main />

@@ -1,0 +1,90 @@
+{
+  "orders": {
+    "cancelOrder": "주문 {{number}}을(를) 취소할까요?",
+    "statusOf": "주문 {{number}}의 상태"
+  },
+  "notices": {
+    "error": {
+      "question": "질문을 3자 이상 입력해 주세요.",
+      "title": "제목을 3자 이상 입력해 주세요.",
+      "answer": "답변을 3자 이상 입력해 주세요.",
+      "text": "내용을 3자 이상 입력해 주세요."
+    },
+    "statusOf": "\"{{title}}\"의 상태",
+    "editEntry": "\"{{title}}\" 수정",
+    "removeEntry": "\"{{title}}\" 삭제",
+    "dialogTitle": {
+      "add": {
+        "faq": "질문 추가",
+        "notice": "공지 추가"
+      },
+      "edit": {
+        "faq": "질문 수정",
+        "notice": "공지 수정"
+      }
+    }
+  },
+  "menu": {
+    "item": {
+      "Users": "회원",
+      "Products": "상품",
+      "Orders": "주문",
+      "Community": "커뮤니티",
+      "Cs": "고객센터"
+    },
+    "sub": {
+      "List": "목록",
+      "FAQ": "FAQ",
+      "Notice": "공지사항"
+    }
+  },
+  "users": {
+    "table": {
+      "id": "ID",
+      "nickname": "닉네임",
+      "fullname": "이름",
+      "phone": "전화번호",
+      "type": "회원 유형",
+      "warning": "경고",
+      "block": "차단",
+      "state": "상태"
+    }
+  },
+  "products": {
+    "table": {
+      "id": "ID",
+      "title": "상품명",
+      "price": "가격",
+      "florist": "플로리스트",
+      "location": "지역",
+      "type": "유형",
+      "status": "상태"
+    }
+  },
+  "community": {
+    "table": {
+      "id": "게시글 ID",
+      "title": "제목",
+      "category": "카테고리",
+      "writer": "작성자",
+      "views": "조회",
+      "likes": "좋아요",
+      "date": "등록일",
+      "status": "상태"
+    }
+  },
+  "inquiry": {
+    "table": {
+      "category": "카테고리",
+      "title": "제목",
+      "writer": "작성자",
+      "date": "날짜",
+      "status": "상태"
+    }
+  },
+  "layout": {
+    "openMenu": "메뉴 열기",
+    "openSettings": "계정",
+    "logout": "로그아웃"
+  }
+}

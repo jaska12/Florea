@@ -6,7 +6,8 @@ import moment from 'moment';
 import KeyboardArrowDownRoundedIcon from '@mui/icons-material/KeyboardArrowDownRounded';
 import OrderTimeline from './OrderTimeline';
 import { Order, OrderItem } from '../../types/order/order';
-import { cancellableOrderStatuses, OrderStatus, orderStatusFlow, orderStatusLabels } from '../../enums/order.enum';
+import { cancellableOrderStatuses, OrderStatus, orderStatusFlow } from '../../enums/order.enum';
+import { useEnumLabel } from '../../i18n/labels';
 import { REACT_APP_API_URL } from '../../config';
 
 interface OrderCardProps {
@@ -23,6 +24,7 @@ export const orderNumber = (order: Order): string => `#${order._id.slice(-6).toU
 
 const OrderCard = (props: OrderCardProps) => {
 	const { t } = useTranslation('order');
+	const enumLabel = useEnumLabel();
 	const format = useFormat();
 	const { order, role, defaultOpen = false, busy = false, onChangeStatus } = props;
 	const [open, setOpen] = useState<boolean>(defaultOpen);
@@ -54,16 +56,18 @@ const OrderCard = (props: OrderCardProps) => {
 				<span className={'order-main'}>
 					<strong>
 						{items[0]?.productData?.productTitle ?? t('card.order')}
-						{items.length > 1 && <em> +{items.length - 1} more</em>}
+						{items.length > 1 && <em> {t('card.moreItems', { count: items.length - 1 })}</em>}
 					</strong>
 					<span className={'order-meta'}>
-						{orderNumber(order)} · {format.date(order.createdAt, 'medium')} · {pieces} item{pieces === 1 ? '' : 's'}
+						{orderNumber(order)} · {format.date(order.createdAt, 'medium')} · {t('card.itemsCount', { count: pieces })}
 						{role === 'admin' && ` · ${order.memberData?.memberNick ?? ''} → ${order.agentData?.memberNick ?? ''}`}
-						{role !== 'admin' && other?.memberNick && ` · ${role === 'buyer' ? 'from' : 'for'} ${other.memberNick}`}
+						{role !== 'admin' &&
+							other?.memberNick &&
+							` · ${role === 'buyer' ? t('card.fromShop', { name: other.memberNick }) : t('card.forBuyer', { name: other.memberNick })}`}
 					</span>
 				</span>
 				<span className={'order-side'}>
-					<span className={`order-status ${order.orderStatus.toLowerCase()}`}>{orderStatusLabels[order.orderStatus]}</span>
+					<span className={`order-status ${order.orderStatus.toLowerCase()}`}>{enumLabel('orderStatus', order.orderStatus)}</span>
 					<span className={'order-total'}>{format.price(order.orderTotal)}</span>
 				</span>
 				<KeyboardArrowDownRoundedIcon className={'order-caret'} />
@@ -179,7 +183,7 @@ const OrderCard = (props: OrderCardProps) => {
 							)}
 							{role !== 'buyer' && nextStatus && (
 								<button type={'button'} className={'order-btn'} disabled={busy} onClick={() => onChangeStatus(order, nextStatus)}>
-									Mark as {orderStatusLabels[nextStatus].toLowerCase()}
+									{t(`card.markAs.${nextStatus}`)}
 								</button>
 							)}
 						</div>

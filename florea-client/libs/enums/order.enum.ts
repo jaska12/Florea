@@ -23,11 +23,4 @@ export const cancellableOrderStatuses: OrderStatus[] = [
 	OrderStatus.PREPARING,
 ];
 
-export const orderStatusLabels: Record<OrderStatus, string> = {
-	[OrderStatus.PENDING]: 'Placed',
-	[OrderStatus.CONFIRMED]: 'Confirmed',
-	[OrderStatus.PREPARING]: 'Preparing',
-	[OrderStatus.OUT_FOR_DELIVERY]: 'Out for delivery',
-	[OrderStatus.DELIVERED]: 'Delivered',
-	[OrderStatus.CANCELLED]: 'Cancelled',
-};
+// The names of the statuses are translated: useEnumLabel()('orderStatus', value), from common.json.

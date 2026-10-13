@@ -1,3 +1,4 @@
+import { useTranslation } from 'next-i18next';
 import React, { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
@@ -15,6 +16,7 @@ import 'swiper/css/navigation';
 
 const withLayoutFull = (Component: any) => {
 	return (props: any) => {
+		const { t } = useTranslation('common');
 		const router = useRouter();
 		const user = useReactiveVar(userVar);
 
@@ -31,6 +33,8 @@ const withLayoutFull = (Component: any) => {
 				<Head>
 					<title>Florea</title>
 					<meta name={'title'} content={`Florea`} />
+					<meta name={'description'} content={t('page.metaDescription')} />
+					<meta name={'keywords'} content={t('page.metaKeywords')} />
 				</Head>
 				<Stack id="pc-wrap">
 					<Stack id={'top'}>

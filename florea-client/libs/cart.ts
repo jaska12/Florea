@@ -1,3 +1,4 @@
+import { tr } from './i18n/tr';
 import { cartVar } from '../apollo/store';
 import { deliveryFee, freeDeliveryFrom } from './config';
 import { ProductStatus } from './enums/product.enum';
@@ -36,7 +37,7 @@ export const canBuy = (product?: Product | null): boolean =>
 
 /** Adds a product, or raises its quantity. Returns the message to show the buyer. */
 export const addToCart = (product: Product, quantity: number = 1): { added: boolean; message: string } => {
-	if (!canBuy(product)) return { added: false, message: 'This product is out of stock' };
+	if (!canBuy(product)) return { added: false, message: tr('common:cart.outOfStock', 'This product is out of stock') };
 
 	const items: CartItem[] = cartVar();
 	const existing = items.find((item) => item.productId === product._id);
@@ -44,7 +45,10 @@ export const addToCart = (product: Product, quantity: number = 1): { added: bool
 	const wanted = (existing?.quantity ?? 0) + quantity;
 
 	if (existing && existing.quantity >= limit) {
-		return { added: false, message: `Only ${limit} available, and all of them are in your cart` };
+		return {
+			added: false,
+			message: tr('common:cart.allInCart', 'Only {{limit}} available, and all of them are in your cart', { limit }),
+		};
 	}
 
 	const line: CartItem = {
@@ -59,7 +63,13 @@ export const addToCart = (product: Product, quantity: number = 1): { added: bool
 	};
 	save(existing ? items.map((item) => (item.productId === product._id ? line : item)) : [...items, line]);
 
-	return { added: true, message: wanted > limit ? `Only ${limit} available; your cart has all of them` : 'Added to cart' };
+	return {
+		added: true,
+		message:
+			wanted > limit
+				? tr('common:cart.cartHasAll', 'Only {{limit}} available; your cart has all of them', { limit })
+				: tr('common:cart.added', 'Added to cart'),
+	};
 };
 
 export const setCartQuantity = (productId: string, quantity: number) => {

@@ -1,3 +1,4 @@
+import { useEnumLabel } from '../../../libs/i18n/labels';
 import { useFormat } from '../../../libs/i18n/format';
 import { useTranslation } from 'next-i18next';
 import React, { useState } from 'react';
@@ -29,7 +30,6 @@ import {
 	cancellableOrderStatuses,
 	OrderStatus,
 	orderStatusFlow,
-	orderStatusLabels,
 } from '../../../libs/enums/order.enum';
 import { orderNumber } from '../../../libs/components/order/OrderCard';
 import { sweetConfirmAlert, sweetErrorHandling, sweetTopSmallSuccessAlert } from '../../../libs/sweetAlert';
@@ -45,6 +45,7 @@ const nextStatuses = (orderStatus: OrderStatus): OrderStatus[] => {
 
 const AdminOrders: NextPage = () => {
 	const { t } = useTranslation('admin');
+	const enumLabel = useEnumLabel();
 	const format = useFormat();
 	const [tab, setTab] = useState<OrderStatus | 'ALL'>('ALL');
 	const [page, setPage] = useState<number>(0);
@@ -71,14 +72,14 @@ const AdminOrders: NextPage = () => {
 
 	const statusChangeHandler = async (order: Order, orderStatus: OrderStatus) => {
 		try {
-			if (orderStatus === OrderStatus.CANCELLED && !(await sweetConfirmAlert(`Cancel order ${orderNumber(order)}?`))) return;
+			if (orderStatus === OrderStatus.CANCELLED && !(await sweetConfirmAlert(t('orders.cancelOrder', { number: orderNumber(order) })))) return;
 
 			await updateOrderByAdmin({
 				variables: { input: { _id: order._id, orderStatus: orderStatus } },
 				context: { silentError: true },
 			});
 			await getOrdersRefetch({ input: inquiry });
-			await sweetTopSmallSuccessAlert(`${orderNumber(order)}: ${orderStatusLabels[orderStatus]}`, 1400);
+			await sweetTopSmallSuccessAlert(`${orderNumber(order)}: ${enumLabel('orderStatus', orderStatus)}`, 1400);
 		} catch (err: any) {
 			sweetErrorHandling(err).then();
 		}
@@ -94,7 +95,7 @@ const AdminOrders: NextPage = () => {
 					<List className={'tab-menu'}>
 						{TABS.map((value) => (
 							<ListItem onClick={() => tabChangeHandler(value)} className={tab === value ? 'li on' : 'li'} key={value}>
-								{value === 'ALL' ? t('orders.all') : orderStatusLabels[value]}
+								{value === 'ALL' ? t('orders.all') : enumLabel('orderStatus', value)}
 							</ListItem>
 						))}
 					</List>
@@ -143,7 +144,7 @@ const AdminOrders: NextPage = () => {
 											<TableCell>
 												{options.length === 0 ? (
 													<span className={`badge ${order.orderStatus === OrderStatus.DELIVERED ? 'success' : 'delete'}`}>
-														{orderStatusLabels[order.orderStatus]}
+														{enumLabel('orderStatus', order.orderStatus)}
 													</span>
 												) : (
 													<Select
@@ -151,14 +152,14 @@ const AdminOrders: NextPage = () => {
 														value={order.orderStatus}
 														sx={{ minWidth: 170 }}
 														onChange={(e) => statusChangeHandler(order, e.target.value as OrderStatus)}
-														inputProps={{ 'aria-label': `Status of order ${orderNumber(order)}` }}
+														inputProps={{ 'aria-label': t('orders.statusOf', { number: orderNumber(order) }) }}
 													>
 														<MenuItem value={order.orderStatus} disabled>
-															{orderStatusLabels[order.orderStatus]}
+															{enumLabel('orderStatus', order.orderStatus)}
 														</MenuItem>
 														{options.map((status: OrderStatus) => (
 															<MenuItem value={status} key={status}>
-																{orderStatusLabels[status]}
+																{enumLabel('orderStatus', status)}
 															</MenuItem>
 														))}
 													</Select>

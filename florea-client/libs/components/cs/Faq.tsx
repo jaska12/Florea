@@ -9,7 +9,8 @@ import { useQuery } from '@apollo/client';
 import { GET_NOTICES } from '../../../apollo/user/query';
 import { Notice } from '../../types/notice/notice';
 import { NoticesInquiry } from '../../types/notice/notice.input';
-import { NoticeCategory, NoticeTopic, noticeTopicLabels } from '../../enums/notice.enum';
+import { NoticeCategory, NoticeTopic, noticeTopics } from '../../enums/notice.enum';
+import { useEnumLabel } from '../../i18n/labels';
 import { Direction } from '../../enums/common.enum';
 
 const Accordion = styled((props: AccordionProps) => <MuiAccordion disableGutters elevation={0} square {...props} />)(
@@ -42,10 +43,11 @@ const inquiry: NoticesInquiry = {
 	direction: Direction.ASC,
 	search: { noticeCategory: NoticeCategory.FAQ },
 };
-const TOPICS = Object.keys(noticeTopicLabels) as NoticeTopic[];
+const TOPICS = noticeTopics;
 
 const Faq = () => {
 	const { t } = useTranslation('cs');
+	const enumLabel = useEnumLabel();
 	const [topic, setTopic] = useState<NoticeTopic>(NoticeTopic.PRODUCT);
 	const [expanded, setExpanded] = useState<string | false>(false);
 
@@ -72,7 +74,7 @@ const Faq = () => {
 			<Box className={'categories'} component={'div'}>
 				{TOPICS.map((value: NoticeTopic) => (
 					<div className={topic === value ? 'active' : ''} onClick={() => changeTopicHandler(value)} key={value}>
-						{noticeTopicLabels[value]}
+						{enumLabel('noticeTopic', value)}
 					</div>
 				))}
 			</Box>

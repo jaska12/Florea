@@ -1,3 +1,4 @@
+import { useTranslation } from 'next-i18next';
 import React, { useEffect } from 'react';
 import Head from 'next/head';
 import Top from '../Top';
@@ -15,6 +16,7 @@ import 'swiper/css/navigation';
 
 const withLayoutMain = (Component: any) => {
 	return (props: any) => {
+		const { t } = useTranslation('common');
 		const user = useReactiveVar(userVar);
 
 		/** LIFECYCLES **/
@@ -30,6 +32,8 @@ const withLayoutMain = (Component: any) => {
 				<Head>
 					<title>Florea</title>
 					<meta name={'title'} content={`Florea`} />
+					<meta name={'description'} content={t('page.metaDescription')} />
+					<meta name={'keywords'} content={t('page.metaKeywords')} />
 				</Head>
 				<Stack id="pc-wrap">
 					<Stack id={'top'}>

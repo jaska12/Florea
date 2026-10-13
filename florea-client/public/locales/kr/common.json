@@ -199,5 +199,65 @@
       "PLAYFUL": "유쾌하게",
       "FORMAL": "격식 있게"
     }
+  },
+  "cart": {
+    "outOfStock": "품절된 상품입니다",
+    "allInCart": "재고가 {{limit}}개뿐이며, 이미 모두 장바구니에 담겨 있습니다",
+    "cartHasAll": "재고가 {{limit}}개뿐이라 모두 장바구니에 담았습니다",
+    "added": "장바구니에 담았습니다"
+  },
+  "page": {
+    "metaDescription": "동네 플로리스트의 꽃다발, 식물, 선물 박스를 주문하고 배송받으세요.",
+    "metaKeywords": "florea, 꽃, 꽃다발, 식물, 선물 박스, 꽃 배달, 플로리스트",
+    "header": {
+      "product": {
+        "title": "꽃과 선물",
+        "desc": "카테고리, 기념일, 사이즈, 배송 조건으로 찾아보세요."
+      },
+      "florists": {
+        "title": "플로리스트",
+        "desc": "Florea와 함께하는 플로리스트와 선물 가게."
+      },
+      "florist": {
+        "title": "플로리스트",
+        "desc": "상품, 후기, 연락처를 확인해 보세요."
+      },
+      "myPage": {
+        "title": "마이 페이지",
+        "desc": "내 상품, 찜한 상품, 프로필."
+      },
+      "community": {
+        "title": "커뮤니티",
+        "desc": "Florea 회원들의 소식과 이야기."
+      },
+      "help": {
+        "title": "고객센터",
+        "desc": "공지사항과 자주 묻는 질문."
+      },
+      "join": {
+        "title": "Florea에 오신 것을 환영합니다",
+        "desc": "로그인하거나 계정을 만들어 보세요."
+      },
+      "about": {
+        "title": "Florea 소개",
+        "desc": "동네 플로리스트와 선물 가게를 한곳에서."
+      },
+      "cart": {
+        "title": "장바구니",
+        "desc": "고르신 꽃과 선물."
+      },
+      "checkout": {
+        "title": "주문하기",
+        "desc": "어디로, 언제 보내 드릴지 알려 주세요."
+      },
+      "orderPlaced": {
+        "title": "감사합니다",
+        "desc": "주문이 접수되었습니다."
+      },
+      "member": {
+        "title": "회원",
+        "desc": "상품, 팔로워, 게시글."
+      }
+    }
   }
 }

@@ -241,5 +241,65 @@
       "PLAYFUL": "Playful",
       "FORMAL": "Formal"
     }
+  },
+  "cart": {
+    "outOfStock": "This product is out of stock",
+    "allInCart": "Only {{limit}} available, and all of them are in your cart",
+    "cartHasAll": "Only {{limit}} available; your cart has all of them",
+    "added": "Added to cart"
+  },
+  "page": {
+    "metaDescription": "Order bouquets, plants and gift boxes from local florists and have them delivered.",
+    "metaKeywords": "florea, flowers, bouquets, plants, gift boxes, flower delivery, florist",
+    "header": {
+      "product": {
+        "title": "Flowers and gifts",
+        "desc": "Filter by category, occasion, size and delivery."
+      },
+      "florists": {
+        "title": "Florists",
+        "desc": "The florists and gift shops on Florea."
+      },
+      "florist": {
+        "title": "Florist",
+        "desc": "Their products, reviews and contact details."
+      },
+      "myPage": {
+        "title": "My page",
+        "desc": "Your products, favourites and profile."
+      },
+      "community": {
+        "title": "Community",
+        "desc": "News and conversations from Florea members."
+      },
+      "help": {
+        "title": "Customer care",
+        "desc": "Notices and answers to common questions."
+      },
+      "join": {
+        "title": "Welcome to Florea",
+        "desc": "Log in or create an account."
+      },
+      "about": {
+        "title": "About Florea",
+        "desc": "Local florists and gift shops in one place."
+      },
+      "cart": {
+        "title": "Your cart",
+        "desc": "Flowers and gifts you have chosen."
+      },
+      "checkout": {
+        "title": "Checkout",
+        "desc": "Tell us where and when to deliver."
+      },
+      "orderPlaced": {
+        "title": "Thank you",
+        "desc": "Your order has been placed."
+      },
+      "member": {
+        "title": "Member",
+        "desc": "Their products, followers and articles."
+      }
+    }
   }
 }

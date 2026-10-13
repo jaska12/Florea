@@ -56,5 +56,39 @@
     "itemsFrom_many": "{{count}} товаров от {{name}}",
     "itemsFrom_other": "{{count}} товара от {{name}}",
     "to": "Получатель: {{name}}, {{address}}"
+  },
+  "card": {
+    "moreItems": "ещё {{count}}",
+    "itemsCount_one": "{{count}} товар",
+    "itemsCount_few": "{{count}} товара",
+    "itemsCount_many": "{{count}} товаров",
+    "itemsCount_other": "{{count}} товара",
+    "fromShop": "от {{name}}",
+    "forBuyer": "для {{name}}",
+    "markAs": {
+      "CONFIRMED": "Подтвердить заказ",
+      "PREPARING": "Начать подготовку",
+      "OUT_FOR_DELIVERY": "Передать в доставку",
+      "DELIVERED": "Отметить доставленным"
+    }
+  },
+  "panel": {
+    "markedAs": {
+      "CONFIRMED": "Заказ подтверждён",
+      "PREPARING": "Заказ готовится",
+      "OUT_FOR_DELIVERY": "Заказ передан в доставку",
+      "DELIVERED": "Заказ доставлен"
+    },
+    "noOrders": {
+      "PENDING": "Новых заказов нет",
+      "CONFIRMED": "Подтверждённых заказов нет",
+      "PREPARING": "Заказов в подготовке нет",
+      "OUT_FOR_DELIVERY": "Заказов в доставке нет",
+      "DELIVERED": "Доставленных заказов нет",
+      "CANCELLED": "Отменённых заказов нет"
+    }
+  },
+  "timeline": {
+    "status": "Статус заказа: {{status}}"
   }
 }

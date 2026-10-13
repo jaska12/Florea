@@ -1,3 +1,4 @@
+import { useEnumLabel } from '../../../i18n/labels';
 import { useFormat } from '../../../i18n/format';
 import { useTranslation } from 'next-i18next';
 import React, { useState } from 'react';
@@ -46,9 +47,9 @@ import { AllNoticesInquiry } from '../../../types/notice/notice.input';
 import {
 	NoticeCategory,
 	NoticeStatus,
-	noticeStatusLabels,
+	noticeStatuses,
 	NoticeTopic,
-	noticeTopicLabels,
+	noticeTopics,
 } from '../../../enums/notice.enum';
 import { sweetConfirmAlert, sweetErrorHandling, sweetTopSmallSuccessAlert } from '../../../sweetAlert';
 
@@ -67,8 +68,8 @@ interface NoticeForm {
 }
 
 const TABS: (NoticeStatus | 'ALL')[] = ['ALL', NoticeStatus.ACTIVE, NoticeStatus.HOLD, NoticeStatus.DELETE];
-const TOPICS = Object.keys(noticeTopicLabels) as NoticeTopic[];
-const STATUSES = Object.keys(noticeStatusLabels) as NoticeStatus[];
+const TOPICS = noticeTopics;
+const STATUSES = noticeStatuses;
 const emptyForm: NoticeForm = {
 	noticeTitle: '',
 	noticeContent: '',
@@ -80,6 +81,7 @@ const emptyForm: NoticeForm = {
 // The admin screen for notices and for the FAQ: list, search, add, edit, change status, remove.
 const NoticePanel = (props: NoticePanelProps) => {
 	const { t } = useTranslation('admin');
+	const enumLabel = useEnumLabel();
 	const format = useFormat();
 	const { category } = props;
 	const faq = category === NoticeCategory.FAQ;
@@ -151,8 +153,8 @@ const NoticePanel = (props: NoticePanelProps) => {
 		const noticeTitle = form.noticeTitle.trim();
 		const noticeContent = form.noticeContent.trim();
 
-		if (noticeTitle.length < 3) return setFormError(`Write the ${faq ? 'question' : 'title'} (at least 3 characters).`);
-		if (noticeContent.length < 3) return setFormError(`Write the ${faq ? 'answer' : 'text'} (at least 3 characters).`);
+		if (noticeTitle.length < 3) return setFormError(faq ? t('notices.error.question') : t('notices.error.title'));
+		if (noticeContent.length < 3) return setFormError(faq ? t('notices.error.answer') : t('notices.error.text'));
 		if (faq && !form.noticeTopic) return setFormError(t('notices.chooseTheTopicThisQuestion'));
 
 		try {
@@ -219,7 +221,7 @@ const NoticePanel = (props: NoticePanelProps) => {
 					<List className={'tab-menu'}>
 						{TABS.map((value) => (
 							<ListItem onClick={() => tabChangeHandler(value)} className={tab === value ? 'li on' : 'li'} key={value}>
-								{value === 'ALL' ? t('notices.all') : noticeStatusLabels[value]}
+								{value === 'ALL' ? t('notices.all') : enumLabel('noticeStatus', value)}
 							</ListItem>
 						))}
 					</List>
@@ -238,7 +240,7 @@ const NoticePanel = (props: NoticePanelProps) => {
 								<MenuItem value={'ALL'}>{t('notices.allTopics')}</MenuItem>
 								{TOPICS.map((value) => (
 									<MenuItem value={value} key={value}>
-										{noticeTopicLabels[value]}
+										{enumLabel('noticeTopic', value)}
 									</MenuItem>
 								))}
 							</Select>
@@ -294,7 +296,7 @@ const NoticePanel = (props: NoticePanelProps) => {
 								{notices.map((notice: Notice) => (
 									<TableRow hover key={notice._id}>
 										<TableCell>
-											{faq ? noticeTopicLabels[notice.noticeTopic as NoticeTopic] ?? '' : notice.noticeEvent ? t('notices.event') : ''}
+											{faq ? enumLabel('noticeTopic', notice.noticeTopic) : notice.noticeEvent ? t('notices.event') : ''}
 										</TableCell>
 										<TableCell sx={{ maxWidth: 420 }}>
 											<strong>{notice.noticeTitle}</strong>
@@ -309,21 +311,21 @@ const NoticePanel = (props: NoticePanelProps) => {
 												value={notice.noticeStatus}
 												sx={{ minWidth: 120 }}
 												onChange={(e) => statusChangeHandler(notice, e.target.value as NoticeStatus)}
-												inputProps={{ 'aria-label': `Status of "${notice.noticeTitle}"` }}
+												inputProps={{ 'aria-label': t('notices.statusOf', { title: notice.noticeTitle }) }}
 											>
 												{STATUSES.map((value) => (
 													<MenuItem value={value} key={value}>
-														{noticeStatusLabels[value]}
+														{enumLabel('noticeStatus', value)}
 													</MenuItem>
 												))}
 											</Select>
 										</TableCell>
 										<TableCell align="center" sx={{ whiteSpace: 'nowrap' }}>
-											<IconButton aria-label={`Edit "${notice.noticeTitle}"`} onClick={() => editHandler(notice)}>
+											<IconButton aria-label={t('notices.editEntry', { title: notice.noticeTitle })} onClick={() => editHandler(notice)}>
 												<EditOutlinedIcon fontSize="small" />
 											</IconButton>
 											{notice.noticeStatus === NoticeStatus.DELETE && (
-												<IconButton aria-label={`Remove "${notice.noticeTitle}"`} onClick={() => removeHandler(notice)}>
+												<IconButton aria-label={t('notices.removeEntry', { title: notice.noticeTitle })} onClick={() => removeHandler(notice)}>
 													<DeleteIcon fontSize="small" />
 												</IconButton>
 											)}
@@ -350,7 +352,7 @@ const NoticePanel = (props: NoticePanelProps) => {
 
 			<Dialog open={Boolean(form)} onClose={() => !saving && setForm(null)} fullWidth maxWidth={'sm'}>
 				<DialogTitle>
-					{form?._id ? 'Edit' : 'Add'} {faq ? 'a question' : 'a notice'}
+					{t(`notices.dialogTitle.${form?._id ? 'edit' : 'add'}.${faq ? 'faq' : 'notice'}`)}
 				</DialogTitle>
 				{form && (
 					<DialogContent>
@@ -367,7 +369,7 @@ const NoticePanel = (props: NoticePanelProps) => {
 									</MenuItem>
 									{TOPICS.map((value) => (
 										<MenuItem value={value} key={value}>
-											{noticeTopicLabels[value]}
+											{enumLabel('noticeTopic', value)}
 										</MenuItem>
 									))}
 								</Select>
@@ -398,7 +400,7 @@ const NoticePanel = (props: NoticePanelProps) => {
 								>
 									{STATUSES.map((value) => (
 										<MenuItem value={value} key={value}>
-											{noticeStatusLabels[value]}
+											{enumLabel('noticeStatus', value)}
 										</MenuItem>
 									))}
 								</Select>

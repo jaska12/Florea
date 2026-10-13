@@ -1,3 +1,4 @@
+import { useTranslation } from 'next-i18next';
 import React, { useEffect, useState } from 'react';
 import { useRouter, withRouter } from 'next/router';
 import Link from 'next/link';
@@ -11,6 +12,7 @@ import cookies from 'js-cookie';
 import useDeviceDetect from '../../hooks/useDeviceDetect';
 
 const AdminMenuList = (props: any) => {
+	const { t } = useTranslation('admin');
 	const router = useRouter();
 	const device = useDeviceDetect();
 	const [mobileLayout, setMobileLayout] = useState(false);
@@ -142,7 +144,7 @@ const AdminMenuList = (props: any) => {
 						>
 							{item.icon}
 						</ListItemIcon>
-						<ListItemText>{item.title}</ListItemText>
+						<ListItemText>{t(`menu.item.${item.title}`, { defaultValue: item.title })}</ListItemText>
 						{clickMenu.find((menu: string) => item.title === menu) ? <ExpandLess /> : <ExpandMore />}
 					</ListItemButton>
 					<Collapse
@@ -161,7 +163,7 @@ const AdminMenuList = (props: any) => {
 											className={clickMenu[0] === item.title && clickSubMenu === sub.title ? 'li on' : 'li'}
 										>
 											<Typography variant={sub.title} component={'span'}>
-												{sub.title}
+												{t(`menu.sub.${sub.title}`, { defaultValue: sub.title })}
 											</Typography>
 										</ListItemButton>
 									</Link>

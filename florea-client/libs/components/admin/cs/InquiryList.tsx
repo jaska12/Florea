@@ -42,31 +42,31 @@ const headCells: readonly HeadCell[] = [
 		id: 'category',
 		numeric: true,
 		disablePadding: false,
-		label: 'CATEGORY',
+		label: 'inquiry.table.category',
 	},
 	{
 		id: 'title',
 		numeric: true,
 		disablePadding: false,
-		label: 'TITLE',
+		label: 'inquiry.table.title',
 	},
 	{
 		id: 'writer',
 		numeric: true,
 		disablePadding: false,
-		label: 'WRITER',
+		label: 'inquiry.table.writer',
 	},
 	{
 		id: 'date',
 		numeric: true,
 		disablePadding: false,
-		label: 'DATE',
+		label: 'inquiry.table.date',
 	},
 	{
 		id: 'qna_case_status',
 		numeric: false,
 		disablePadding: false,
-		label: 'QNA STATUS',
+		label: 'inquiry.table.status',
 	},
 ];
 
@@ -80,6 +80,7 @@ interface EnhancedTableProps {
 }
 
 function EnhancedTableHead(props: EnhancedTableProps) {
+	const { t } = useTranslation('admin');
 	const { onSelectAllClick } = props;
 
 	return (
@@ -91,7 +92,7 @@ function EnhancedTableHead(props: EnhancedTableProps) {
 						align={headCell.numeric ? 'left' : 'center'}
 						padding={headCell.disablePadding ? 'none' : 'normal'}
 					>
-						{headCell.label}
+						{t(headCell.label)}
 					</TableCell>
 				))}
 			</TableRow>

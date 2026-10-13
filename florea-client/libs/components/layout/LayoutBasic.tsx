@@ -14,6 +14,23 @@ import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
 
+/** the page headers: the address of a page and the key of its header under page.header in common.json **/
+const PAGE_HEADERS: Record<string, string> = {
+	'/product': 'product',
+	'/agent': 'florists',
+	'/agent/detail': 'florist',
+	'/mypage': 'myPage',
+	'/community': 'community',
+	'/community/detail': 'community',
+	'/cs': 'help',
+	'/account/join': 'join',
+	'/about': 'about',
+	'/cart': 'cart',
+	'/checkout': 'checkout',
+	'/order/complete': 'orderPlaced',
+	'/member': 'member',
+};
+
 const withLayoutBasic = (Component: any) => {
 	return (props: any) => {
 		const router = useRouter();
@@ -21,77 +38,26 @@ const withLayoutBasic = (Component: any) => {
 		const [authHeader, setAuthHeader] = useState<boolean>(false);
 		const user = useReactiveVar(userVar);
 
-		const memoizedValues = useMemo(() => {
-			let title = '',
-				desc = '',
-				bgImage = '/img/home/hero.jpg';
-
-			switch (router.pathname) {
-				case '/product':
-					title = 'Flowers and gifts';
-					desc = 'Filter by category, occasion, size and delivery.';
-					break;
-				case '/agent':
-					title = 'Florists';
-					desc = 'The florists and gift shops on Florea.';
-					break;
-				case '/agent/detail':
-					title = 'Florist';
-					desc = 'Their products, reviews and contact details.';
-					break;
-				case '/mypage':
-					title = 'My page';
-					desc = 'Your products, favourites and profile.';
-					break;
-				case '/community':
-					title = 'Community';
-					desc = 'News and conversations from Florea members.';
-					break;
-				case '/community/detail':
-					title = 'Community';
-					desc = 'News and conversations from Florea members.';
-					break;
-				case '/cs':
-					title = 'Customer care';
-					desc = 'Notices and answers to common questions.';
-					break;
-				case '/account/join':
-					title = 'Welcome to Florea';
-					desc = 'Log in or create an account.';
-					setAuthHeader(true);
-					break;
-				case '/about':
-					title = 'About Florea';
-					desc = 'Local florists and gift shops in one place.';
-					break;
-				case '/cart':
-					title = 'Your cart';
-					desc = 'Flowers and gifts you have chosen.';
-					break;
-				case '/checkout':
-					title = 'Checkout';
-					desc = 'Tell us where and when to deliver.';
-					break;
-				case '/order/complete':
-					title = 'Thank you';
-					desc = 'Your order has been placed.';
-					break;
-				case '/member':
-					title = 'Member';
-					desc = 'Their products, followers and articles.';
-					break;
-				default:
-					break;
-			}
-
-			return { title, desc, bgImage };
-		}, [router.pathname]);
+		// the header of each page: title and one line under it, from common.json (page.header)
+		const headerKey = PAGE_HEADERS[router.pathname];
+		const memoizedValues = useMemo(
+			() => ({
+				title: headerKey ? t(`page.header.${headerKey}.title`) : '',
+				desc: headerKey ? t(`page.header.${headerKey}.desc`) : '',
+				bgImage: '/img/home/hero.jpg',
+			}),
+			[headerKey, t],
+		);
 
 		/** LIFECYCLES **/
 		useEffect(() => {
 			const jwt = getJwtToken();
 			if (jwt) updateUserInfo(jwt);
 		}, []);
+
+		useEffect(() => {
+			setAuthHeader(router.pathname === '/account/join');
+		}, [router.pathname]);
 
 		/** HANDLERS **/
 
@@ -100,6 +66,8 @@ const withLayoutBasic = (Component: any) => {
 				<Head>
 					<title>Florea</title>
 					<meta name={'title'} content={`Florea`} />
+					<meta name={'description'} content={t('page.metaDescription')} />
+					<meta name={'keywords'} content={t('page.metaKeywords')} />
 				</Head>
 				<Stack id="pc-wrap">
 					<Stack id={'top'}>

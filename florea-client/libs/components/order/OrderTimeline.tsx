@@ -1,7 +1,8 @@
 import { useTranslation } from 'next-i18next';
 import React from 'react';
 import CheckRoundedIcon from '@mui/icons-material/CheckRounded';
-import { OrderStatus, orderStatusFlow, orderStatusLabels } from '../../enums/order.enum';
+import { OrderStatus, orderStatusFlow } from '../../enums/order.enum';
+import { useEnumLabel } from '../../i18n/labels';
 
 interface OrderTimelineProps {
 	orderStatus: OrderStatus;
@@ -10,6 +11,7 @@ interface OrderTimelineProps {
 // Placed → Confirmed → Preparing → Out for delivery → Delivered
 const OrderTimeline = (props: OrderTimelineProps) => {
 	const { t } = useTranslation('order');
+	const enumLabel = useEnumLabel();
 	const { orderStatus } = props;
 
 	if (orderStatus === OrderStatus.CANCELLED) {
@@ -19,13 +21,13 @@ const OrderTimeline = (props: OrderTimelineProps) => {
 	const current = orderStatusFlow.indexOf(orderStatus);
 
 	return (
-		<ol className={'order-timeline'} aria-label={`Order status: ${orderStatusLabels[orderStatus]}`}>
+		<ol className={'order-timeline'} aria-label={t('timeline.status', { status: enumLabel('orderStatus', orderStatus) })}>
 			{orderStatusFlow.map((step: OrderStatus, index: number) => {
 				const state = index < current ? 'done' : index === current ? 'current' : 'todo';
 				return (
 					<li className={`step ${state}`} key={step} aria-current={state === 'current' ? 'step' : undefined}>
 						<span className={'dot'}>{index <= current && <CheckRoundedIcon />}</span>
-						<span className={'label'}>{orderStatusLabels[step]}</span>
+						<span className={'label'}>{enumLabel('orderStatus', step)}</span>
 					</li>
 				);
 			})}

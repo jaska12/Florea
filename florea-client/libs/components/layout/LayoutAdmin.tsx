@@ -1,3 +1,4 @@
+import { useTranslation } from 'next-i18next';
 import type { ComponentType } from 'react';
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
@@ -23,6 +24,7 @@ const drawerWidth = 280;
 
 const withAdminLayout = (Component: ComponentType) => {
 	return (props: object) => {
+		const { t } = useTranslation('admin');
 		const router = useRouter();
 		const user = useReactiveVar(userVar);
 		const [settingsState, setSettingsStateState] = useState(false);
@@ -81,12 +83,12 @@ const withAdminLayout = (Component: ComponentType) => {
 						}}
 					>
 						{narrow && (
-							<IconButton className={'aside-toggle'} aria-label={'Open menu'} onClick={() => setAsideOpen(true)}>
+							<IconButton className={'aside-toggle'} aria-label={t('layout.openMenu')} onClick={() => setAsideOpen(true)}>
 								<MenuRoundedIcon />
 							</IconButton>
 						)}
 						<Toolbar>
-							<Tooltip title="Open settings">
+							<Tooltip title={t('layout.openSettings')}>
 								<IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
 									<Avatar
 										src={
@@ -131,7 +133,7 @@ const withAdminLayout = (Component: ComponentType) => {
 									<Box component={'div'} sx={{ p: 1, py: '6px' }} onClick={logoutHandler}>
 										<MenuItem sx={{ px: '16px', py: '6px' }}>
 											<Typography variant={'subtitle1'} component={'span'}>
-												Logout
+												{t('layout.logout')}
 											</Typography>
 										</MenuItem>
 									</Box>

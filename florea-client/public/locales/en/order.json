@@ -98,7 +98,18 @@
     "florist": "Florist",
     "buyer": "Buyer",
     "cancelOrder": "Cancel order",
-    "theFloristIsWorkingOn": "The florist is working on this order. To change or cancel it, call the florist."
+    "theFloristIsWorkingOn": "The florist is working on this order. To change or cancel it, call the florist.",
+    "moreItems": "+{{count}} more",
+    "itemsCount_one": "{{count}} item",
+    "itemsCount_other": "{{count}} items",
+    "fromShop": "from {{name}}",
+    "forBuyer": "for {{name}}",
+    "markAs": {
+      "CONFIRMED": "Mark as confirmed",
+      "PREPARING": "Mark as preparing",
+      "OUT_FOR_DELIVERY": "Mark as out for delivery",
+      "DELIVERED": "Mark as delivered"
+    }
   },
   "panel": {
     "cancelThisOrder": "Cancel this order?",
@@ -109,9 +120,24 @@
     "followYourOrdersFromThe": "Follow your orders from the shop to the door.",
     "all": "All",
     "noOrdersYet": "No orders yet",
-    "browseFlowersAndGifts": "Browse flowers and gifts"
+    "browseFlowersAndGifts": "Browse flowers and gifts",
+    "markedAs": {
+      "CONFIRMED": "Marked as confirmed",
+      "PREPARING": "Marked as preparing",
+      "OUT_FOR_DELIVERY": "Marked as out for delivery",
+      "DELIVERED": "Marked as delivered"
+    },
+    "noOrders": {
+      "PENDING": "No newly placed orders",
+      "CONFIRMED": "No confirmed orders",
+      "PREPARING": "No orders in preparation",
+      "OUT_FOR_DELIVERY": "No orders out for delivery",
+      "DELIVERED": "No delivered orders",
+      "CANCELLED": "No cancelled orders"
+    }
   },
   "timeline": {
-    "thisOrderWasCancelledThe": "This order was cancelled. The products went back to the shop."
+    "thisOrderWasCancelledThe": "This order was cancelled. The products went back to the shop.",
+    "status": "Order status: {{status}}"
   }
 }

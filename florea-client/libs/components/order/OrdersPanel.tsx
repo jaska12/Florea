@@ -10,7 +10,8 @@ import { GET_AGENT_ORDERS, GET_MY_ORDERS } from '../../../apollo/user/query';
 import { UPDATE_ORDER, UPDATE_ORDER_BY_AGENT } from '../../../apollo/user/mutation';
 import { Order } from '../../types/order/order';
 import { OrdersInquiry } from '../../types/order/order.input';
-import { OrderStatus, orderStatusLabels } from '../../enums/order.enum';
+import { OrderStatus } from '../../enums/order.enum';
+import { useEnumLabel } from '../../i18n/labels';
 import { sweetConfirmAlert, sweetErrorHandling, sweetTopSmallSuccessAlert } from '../../sweetAlert';
 
 interface OrdersPanelProps {
@@ -31,6 +32,7 @@ const TABS: (OrderStatus | 'ALL')[] = [
 
 const OrdersPanel = (props: OrdersPanelProps) => {
 	const { t } = useTranslation('order');
+	const enumLabel = useEnumLabel();
 	const { role } = props;
 	const router = useRouter();
 	const ping = useReactiveVar(notificationPingVar);
@@ -87,7 +89,7 @@ const OrdersPanel = (props: OrdersPanelProps) => {
 			await updateOrder({ variables: { input: { _id: order._id, orderStatus: orderStatus } }, context: { silentError: true } });
 			await getOrdersRefetch({ input: inquiry });
 			await sweetTopSmallSuccessAlert(
-				orderStatus === OrderStatus.CANCELLED ? t('panel.orderCancelled') : `Marked as ${orderStatusLabels[orderStatus].toLowerCase()}`,
+				orderStatus === OrderStatus.CANCELLED ? t('panel.orderCancelled') : t(`panel.markedAs.${orderStatus}`),
 				1400,
 			);
 		} catch (err: any) {
@@ -119,7 +121,7 @@ const OrdersPanel = (props: OrdersPanelProps) => {
 						onClick={() => tabHandler(value)}
 						key={value}
 					>
-						{value === 'ALL' ? t('panel.all') : orderStatusLabels[value]}
+						{value === 'ALL' ? t('panel.all') : enumLabel('orderStatus', value)}
 					</button>
 				))}
 			</div>
@@ -130,7 +132,7 @@ const OrdersPanel = (props: OrdersPanelProps) => {
 				) : orders.length === 0 ? (
 					<div className={'order-empty'}>
 						<img src="/img/icons/icoAlert.svg" alt="" />
-						<strong>{tab === 'ALL' ? t('panel.noOrdersYet') : `No ${orderStatusLabels[tab as OrderStatus].toLowerCase()} orders`}</strong>
+						<strong>{tab === 'ALL' ? t('panel.noOrdersYet') : t(`panel.noOrders.${tab}`)}</strong>
 						{!agent && tab === 'ALL' && (
 							<Link href={'/product'} className={'order-btn'}>
 								{t('panel.browseFlowersAndGifts')}

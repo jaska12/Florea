@@ -23,19 +23,16 @@ export enum NoticeTopic {
 	OTHER = 'OTHER',
 }
 
-// the order and the names of the FAQ groups, on the customer-care page and in the admin panel
-export const noticeTopicLabels: Record<NoticeTopic, string> = {
-	[NoticeTopic.PRODUCT]: 'Product',
-	[NoticeTopic.PAYMENT]: 'Payment',
-	[NoticeTopic.ORDER]: 'Orders',
-	[NoticeTopic.FLORIST]: 'For Florists',
-	[NoticeTopic.ACCOUNT]: 'Account',
-	[NoticeTopic.COMMUNITY]: 'Community',
-	[NoticeTopic.OTHER]: 'Other',
-};
+// The order of the FAQ groups, on the customer-care page and in the admin panel.
+// Their names are translated: useEnumLabel()('noticeTopic', value), from common.json.
+export const noticeTopics: NoticeTopic[] = [
+	NoticeTopic.PRODUCT,
+	NoticeTopic.PAYMENT,
+	NoticeTopic.ORDER,
+	NoticeTopic.FLORIST,
+	NoticeTopic.ACCOUNT,
+	NoticeTopic.COMMUNITY,
+	NoticeTopic.OTHER,
+];
 
-export const noticeStatusLabels: Record<NoticeStatus, string> = {
-	[NoticeStatus.HOLD]: 'On hold',
-	[NoticeStatus.ACTIVE]: 'Active',
-	[NoticeStatus.DELETE]: 'Deleted',
-};
+export const noticeStatuses: NoticeStatus[] = [NoticeStatus.HOLD, NoticeStatus.ACTIVE, NoticeStatus.DELETE];

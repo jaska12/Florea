@@ -7,7 +7,17 @@
     "delete": "Delete",
     "all2": "ALL",
     "dataNotFound": "data not found!",
-    "openWindow": "Open window"
+    "openWindow": "Open window",
+    "table": {
+      "id": "ARTICLE ID",
+      "title": "TITLE",
+      "category": "CATEGORY",
+      "writer": "WRITER",
+      "views": "VIEWS",
+      "likes": "LIKES",
+      "date": "DATE",
+      "status": "STATUS"
+    }
   },
   "inquiry": {
     "11InquiryManagement": "1:1 Inquiry Management",
@@ -16,7 +26,14 @@
     "blocked0": "Blocked (0)",
     "deleted0": "Deleted (0)",
     "searchUserName": "Search user name",
-    "dataNotFound": "data not found!"
+    "dataNotFound": "data not found!",
+    "table": {
+      "category": "CATEGORY",
+      "title": "TITLE",
+      "writer": "WRITER",
+      "date": "DATE",
+      "status": "STATUS"
+    }
   },
   "orders": {
     "orderList": "Order List",
@@ -29,7 +46,9 @@
     "total": "TOTAL",
     "delivery": "DELIVERY",
     "status": "STATUS",
-    "dataNotFound": "data not found!"
+    "dataNotFound": "data not found!",
+    "cancelOrder": "Cancel order {{number}}?",
+    "statusOf": "Status of order {{number}}"
   },
   "products": {
     "areYouSureToRemove": "Are you sure to remove?",
@@ -39,7 +58,16 @@
     "sold": "Sold",
     "delete": "Delete",
     "all2": "ALL",
-    "dataNotFound": "data not found!"
+    "dataNotFound": "data not found!",
+    "table": {
+      "id": "ID",
+      "title": "TITLE",
+      "price": "PRICE",
+      "florist": "FLORIST",
+      "location": "LOCATION",
+      "type": "TYPE",
+      "status": "STATUS"
+    }
   },
   "users": {
     "memberList": "Member List",
@@ -51,7 +79,17 @@
     "user": "User",
     "agent": "Agent",
     "admin": "Admin",
-    "dataNotFound": "data not found!"
+    "dataNotFound": "data not found!",
+    "table": {
+      "id": "ID",
+      "nickname": "NICKNAME",
+      "fullname": "FULL NAME",
+      "phone": "PHONE",
+      "type": "MEMBER TYPE",
+      "warning": "WARNINGS",
+      "block": "BLOCKS",
+      "state": "STATUS"
+    }
   },
   "notices": {
     "chooseTheTopicThisQuestion": "Choose the topic this question belongs to.",
@@ -86,6 +124,44 @@
     "showWithTheEventMark": "Show with the \"event\" mark",
     "cancel": "Cancel",
     "saving": "Saving…",
-    "save": "Save"
+    "save": "Save",
+    "error": {
+      "question": "Write the question (at least 3 characters).",
+      "title": "Write the title (at least 3 characters).",
+      "answer": "Write the answer (at least 3 characters).",
+      "text": "Write the text (at least 3 characters)."
+    },
+    "statusOf": "Status of \"{{title}}\"",
+    "editEntry": "Edit \"{{title}}\"",
+    "removeEntry": "Remove \"{{title}}\"",
+    "dialogTitle": {
+      "add": {
+        "faq": "Add a question",
+        "notice": "Add a notice"
+      },
+      "edit": {
+        "faq": "Edit the question",
+        "notice": "Edit the notice"
+      }
+    }
+  },
+  "menu": {
+    "item": {
+      "Users": "Members",
+      "Products": "Products",
+      "Orders": "Orders",
+      "Community": "Community",
+      "Cs": "Customer care"
+    },
+    "sub": {
+      "List": "List",
+      "FAQ": "FAQ",
+      "Notice": "Notices"
+    }
+  },
+  "layout": {
+    "openMenu": "Open menu",
+    "openSettings": "Account",
+    "logout": "Log out"
   }
 }
