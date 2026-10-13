@@ -7,7 +7,11 @@
     "weAreGladToSee": "we are glad to see you again",
     "leaveAReview": "Leave A Review",
     "review": "Review",
-    "submitReview": "Submit Review"
+    "submitReview": "Submit Review",
+    "productsTotal_one": "{{count}} product available",
+    "productsTotal_other": "{{count}} products available",
+    "reviewsCount_one": "{{count}} review",
+    "reviewsCount_other": "{{count}} reviews"
   },
   "list": {
     "success": "success",
@@ -18,6 +22,8 @@
     "oldest": "Oldest",
     "likes": "Likes",
     "views": "Views",
-    "noAgentsFound": "No Agents found!"
+    "noAgentsFound": "No Agents found!",
+    "floristsTotal_one": "{{count}} florist on Florea",
+    "floristsTotal_other": "{{count}} florists on Florea"
   }
 }

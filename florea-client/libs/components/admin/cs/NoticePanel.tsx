@@ -1,3 +1,4 @@
+import { useFormat } from '../../../i18n/format';
 import { useTranslation } from 'next-i18next';
 import React, { useState } from 'react';
 import moment from 'moment';
@@ -79,6 +80,7 @@ const emptyForm: NoticeForm = {
 // The admin screen for notices and for the FAQ: list, search, add, edit, change status, remove.
 const NoticePanel = (props: NoticePanelProps) => {
 	const { t } = useTranslation('admin');
+	const format = useFormat();
 	const { category } = props;
 	const faq = category === NoticeCategory.FAQ;
 	const [tab, setTab] = useState<NoticeStatus | 'ALL'>('ALL');
@@ -300,7 +302,7 @@ const NoticePanel = (props: NoticePanelProps) => {
 											<span style={{ color: '#7c6470' }}>{notice.noticeContent}</span>
 										</TableCell>
 										<TableCell>{notice.memberData?.memberNick}</TableCell>
-										<TableCell>{moment(notice.createdAt).format('DD.MM.YY')}</TableCell>
+										<TableCell>{format.date(notice.createdAt, 'short')}</TableCell>
 										<TableCell>
 											<Select
 												size={'small'}

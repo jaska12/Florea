@@ -1,0 +1,10 @@
+{
+  "detail": {
+    "boards": "게시판",
+    "commentsCount": "댓글 ({{count}})"
+  },
+  "list": {
+    "boards": "게시판",
+    "articlesTotal_other": "게시글 {{count}}개"
+  }
+}

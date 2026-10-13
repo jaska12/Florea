@@ -40,7 +40,8 @@ const ProductList: NextPage = ({ initialInput, ...props }: any) => {
 	const [currentPage, setCurrentPage] = useState<number>(1);
 	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 	const [sortingOpen, setSortingOpen] = useState(false);
-	const [filterSortName, setFilterSortName] = useState('New');
+	// which order is chosen; its name is looked up in the chosen language when it is shown
+	const [filterSortName, setFilterSortName] = useState<'new' | 'lowest' | 'highest'>('new');
 	// on phones and tablets the filter is a panel that slides up from the bottom
 	const [filterOpen, setFilterOpen] = useState<boolean>(false);
 	const user = useReactiveVar(userVar);
@@ -105,15 +106,15 @@ const ProductList: NextPage = ({ initialInput, ...props }: any) => {
 		switch (e.currentTarget.id) {
 			case 'new':
 				setSearchFilter({ ...searchFilter, sort: 'createdAt', direction: Direction.ASC });
-				setFilterSortName('New');
+				setFilterSortName('new');
 				break;
 			case 'lowest':
 				setSearchFilter({ ...searchFilter, sort: 'productPrice', direction: Direction.ASC });
-				setFilterSortName(t('list.lowestPrice'));
+				setFilterSortName('lowest');
 				break;
 			case 'highest':
 				setSearchFilter({ ...searchFilter, sort: 'productPrice', direction: Direction.DESC });
-				setFilterSortName(t('list.highestPrice'));
+				setFilterSortName('highest');
 		}
 		setSortingOpen(false);
 		setAnchorEl(null);
@@ -147,7 +148,7 @@ const ProductList: NextPage = ({ initialInput, ...props }: any) => {
 					<span>{t('list.sortBy')}</span>
 					<div>
 						<Button onClick={sortingClickHandler} endIcon={<KeyboardArrowDownRoundedIcon />}>
-							{filterSortName}
+							{{ new: t('list.new'), lowest: t('list.lowestPrice'), highest: t('list.highestPrice') }[filterSortName]}
 						</Button>
 						<Menu anchorEl={anchorEl} open={sortingOpen} onClose={sortingCloseHandler} sx={{ paddingTop: '5px' }}>
 							<MenuItem
@@ -190,7 +191,7 @@ const ProductList: NextPage = ({ initialInput, ...props }: any) => {
 						<Filter searchFilter={searchFilter} setSearchFilter={setSearchFilter} initialInput={initialInput} />
 						<div className={'sheet-foot'}>
 							<button type={'button'} onClick={() => setFilterOpen(false)}>
-								Show {total} product{total === 1 ? '' : 's'}
+								{t('list.showProducts', { count: total })}
 							</button>
 						</div>
 					</Stack>
@@ -223,7 +224,7 @@ const ProductList: NextPage = ({ initialInput, ...props }: any) => {
 							{products.length !== 0 && (
 								<Stack className="total-result">
 									<Typography>
-										Total {total} product{total > 1 ? 's' : ''} available
+										{t('list.productsTotal', { count: total })}
 									</Typography>
 								</Stack>
 							)}

@@ -1,3 +1,4 @@
+import { useFormat } from '../../i18n/format';
 import { useTranslation } from 'next-i18next';
 import React from 'react';
 import { Stack, Box, Typography } from '@mui/material';
@@ -7,7 +8,6 @@ import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
 import { Product } from '../../types/product/product';
 import { REACT_APP_API_URL, topProductRank } from '../../config';
-import { formatterStr } from '../../utils';
 import AddToCartButton from './AddToCartButton';
 
 interface ProductCardViewProps {
@@ -36,6 +36,7 @@ export const prettyLabel = (value: string): string => formatLabel(value).replace
  */
 const ProductCardView = (props: ProductCardViewProps) => {
 	const { t } = useTranslation('common');
+	const format = useFormat();
 	const { product, className, liked, onOpen, onLike, showStats = true, wholeCardOpens = false } = props;
 	const isTop = Boolean(product && product?.productRank >= topProductRank);
 	const photo = product?.productImages?.[0];
@@ -62,7 +63,7 @@ const ProductCardView = (props: ProductCardViewProps) => {
 					<span className={'tag'}>{formatLabel(product?.productSize)}</span>
 				</div>
 				<div className={'bott'}>
-					<p className={'price'}>${formatterStr(product?.productPrice)}</p>
+					<p className={'price'}>{format.price(product?.productPrice)}</p>
 					{showStats && (
 						<div className="view-like-box">
 							<VisibilityOutlinedIcon className={'view-icon'} />

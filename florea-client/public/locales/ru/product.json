@@ -1,0 +1,19 @@
+{
+  "detail": {
+    "inStock": "В наличии: {{count}}",
+    "reviewsCount_one": "{{count}} отзыв",
+    "reviewsCount_few": "{{count}} отзыва",
+    "reviewsCount_many": "{{count}} отзывов",
+    "reviewsCount_other": "{{count}} отзыва"
+  },
+  "list": {
+    "showProducts_one": "Показать {{count}} товар",
+    "showProducts_few": "Показать {{count}} товара",
+    "showProducts_many": "Показать {{count}} товаров",
+    "showProducts_other": "Показать {{count}} товара",
+    "productsTotal_one": "Найден {{count}} товар",
+    "productsTotal_few": "Найдено {{count}} товара",
+    "productsTotal_many": "Найдено {{count}} товаров",
+    "productsTotal_other": "Найдено {{count}} товара"
+  }
+}

@@ -1,3 +1,4 @@
+import { useFormat } from '../../i18n/format';
 import { useTranslation } from 'next-i18next';
 import { Menu, MenuItem, Stack, Typography } from '@mui/material';
 import React, { useState } from 'react';
@@ -5,8 +6,6 @@ import IconButton from '@mui/material/IconButton';
 import ModeIcon from '@mui/icons-material/Mode';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { Product } from '../../types/product/product';
-import { formatterStr } from '../../utils';
-import Moment from 'react-moment';
 import { useRouter } from 'next/router';
 import { ProductStatus } from '../../enums/product.enum';
 
@@ -19,6 +18,7 @@ interface ProductCardProps {
 
 export const ProductCard = (props: ProductCardProps) => {
 	const { t } = useTranslation('mypage');
+	const format = useFormat();
 	const { product, deleteProductHandler, memberPage, updateProductHandler } = props;
 	const router = useRouter();
 	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -59,12 +59,12 @@ export const ProductCard = (props: ProductCardProps) => {
 				<Typography className="name">{product.productTitle}</Typography>
 				<Typography className="address">{product.productAddress}</Typography>
 				<Typography className="price">
-					<strong>${formatterStr(product?.productPrice)}</strong>
+					<strong>{format.price(product?.productPrice)}</strong>
 				</Typography>
 			</Stack>
 			<Stack className="date-box">
 				<Typography className="date">
-					<Moment format="DD MMMM, YYYY">{product.createdAt}</Moment>
+					{format.date(product.createdAt, 'long')}
 				</Typography>
 			</Stack>
 			<Stack className="status-box">

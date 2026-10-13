@@ -235,7 +235,7 @@ const AgentDetail: NextPage = ({ initialInput, initialComment, ...props }: any) 
 									/>
 								</Stack>
 								<span>
-									Total {productTotal} product{productTotal > 1 ? 's' : ''} available
+									{t('detail.productsTotal', { count: productTotal })}
 								</span>
 							</>
 						) : (
@@ -256,7 +256,7 @@ const AgentDetail: NextPage = ({ initialInput, initialComment, ...props }: any) 
 							<Box component={'div'} className={'title-box'}>
 								<StarIcon />
 								<span>
-									{commentTotal} review{commentTotal > 1 ? 's' : ''}
+									{t('detail.reviewsCount', { count: commentTotal })}
 								</span>
 							</Box>
 							{agentComments?.map((comment: Comment) => {

@@ -1,3 +1,4 @@
+import { useFormat } from '../../libs/i18n/format';
 import { useTranslation } from 'next-i18next';
 import React from 'react';
 import { NextPage } from 'next';
@@ -12,7 +13,6 @@ import { orderNumber } from '../../libs/components/order/OrderCard';
 import { userVar } from '../../apollo/store';
 import { GET_MY_ORDERS } from '../../apollo/user/query';
 import { Order } from '../../libs/types/order/order';
-import { formatterStr } from '../../libs/utils';
 
 export const getStaticProps = async ({ locale }: any) => ({
 	props: {
@@ -23,6 +23,7 @@ export const getStaticProps = async ({ locale }: any) => ({
 // The page a buyer lands on right after placing an order: what was ordered, and where to follow it.
 const OrderComplete: NextPage = () => {
 	const { t } = useTranslation('order');
+	const format = useFormat();
 	const router = useRouter();
 	const user = useReactiveVar(userVar);
 	const ids: string[] = typeof router.query.ids === 'string' ? router.query.ids.split(',').filter(Boolean) : [];
@@ -45,12 +46,9 @@ const OrderComplete: NextPage = () => {
 					<span className={'complete-icon'}>
 						<CheckRoundedIcon />
 					</span>
-					<h2>{ids.length > 1 ? 'Your orders are placed' : 'Your order is placed'}</h2>
+					<h2>{t('complete.title', { count: ids.length })}</h2>
 					<p>
-						{ids.length > 1
-							? 'Each florist will confirm their part and deliver it separately.'
-							: 'The florist will confirm it soon.'}{' '}
-						We will notify you at every step.
+						{t('complete.note', { count: ids.length })}
 					</p>
 
 					{getOrdersLoading && orders.length === 0 && <div className={'complete-order skeleton'} />}
@@ -60,27 +58,28 @@ const OrderComplete: NextPage = () => {
 						return (
 							<div className={'complete-order'} key={order._id}>
 								<div>
-									<strong>Order {orderNumber(order)}</strong>
+									<strong>{t('complete.orderNumber', { number: orderNumber(order) })}</strong>
 									<span>
-										{pieces} item{pieces === 1 ? '' : 's'}
-										{order.agentData?.memberNick ? ` from ${order.agentData.memberNick}` : ''}
+										{order.agentData?.memberNick
+											? t('complete.itemsFrom', { count: pieces, name: order.agentData.memberNick })
+											: t('complete.itemsCount', { count: pieces })}
 									</span>
 									<span>
-										{moment(order.deliveryDate).format('dddd, D MMMM')}
+										{format.weekday(order.deliveryDate)}
 										{order.deliveryTime ? `, ${order.deliveryTime.replace('-', ' – ')}` : ''}
 									</span>
 									<span>
-										To {order.recipientName}, {order.deliveryAddress}
+										{t('complete.to', { name: order.recipientName, address: order.deliveryAddress })}
 									</span>
 								</div>
-								<em>${formatterStr(order.orderTotal)}</em>
+								<em>{format.price(order.orderTotal)}</em>
 							</div>
 						);
 					})}
 
 					{orders.length > 0 && (
 						<p className={'complete-total'}>
-							{t('complete.toPayOnDelivery')} <strong>${formatterStr(total)}</strong>
+							{t('complete.toPayOnDelivery')} <strong>{format.price(total)}</strong>
 						</p>
 					)}
 

@@ -1,3 +1,4 @@
+import { useFormat } from '../../../libs/i18n/format';
 import { useTranslation } from 'next-i18next';
 import React, { useState } from 'react';
 import type { NextPage } from 'next';
@@ -32,7 +33,6 @@ import {
 } from '../../../libs/enums/order.enum';
 import { orderNumber } from '../../../libs/components/order/OrderCard';
 import { sweetConfirmAlert, sweetErrorHandling, sweetTopSmallSuccessAlert } from '../../../libs/sweetAlert';
-import { formatterStr } from '../../../libs/utils';
 
 const TABS: (OrderStatus | 'ALL')[] = ['ALL', ...orderStatusFlow, OrderStatus.CANCELLED];
 
@@ -45,6 +45,7 @@ const nextStatuses = (orderStatus: OrderStatus): OrderStatus[] => {
 
 const AdminOrders: NextPage = () => {
 	const { t } = useTranslation('admin');
+	const format = useFormat();
 	const [tab, setTab] = useState<OrderStatus | 'ALL'>('ALL');
 	const [page, setPage] = useState<number>(0);
 	const [limit, setLimit] = useState<number>(10);
@@ -126,15 +127,15 @@ const AdminOrders: NextPage = () => {
 									return (
 										<TableRow hover key={order._id}>
 											<TableCell>{orderNumber(order)}</TableCell>
-											<TableCell>{moment(order.createdAt).format('DD.MM.YY HH:mm')}</TableCell>
+											<TableCell>{format.dateTime(order.createdAt)}</TableCell>
 											<TableCell>{order.memberData?.memberNick}</TableCell>
 											<TableCell>{order.agentData?.memberNick}</TableCell>
 											<TableCell>
 												{items.map((item) => `${item.itemQuantity} × ${item.productData?.productTitle ?? 'Product'}`).join(', ')}
 											</TableCell>
-											<TableCell>${formatterStr(order.orderTotal)}</TableCell>
+											<TableCell>{format.price(order.orderTotal)}</TableCell>
 											<TableCell>
-												{moment(order.deliveryDate).format('DD.MM.YY')}
+												{format.date(order.deliveryDate, 'short')}
 												{order.deliveryTime ? `, ${order.deliveryTime}` : ''}
 												<br />
 												{order.recipientName}, {order.deliveryAddress}

@@ -12,7 +12,19 @@
     "free": "Free",
     "total": "Total",
     "checkout": "Checkout",
-    "cashOnDeliveryYouPay": "Cash on delivery. You pay when the order arrives."
+    "cashOnDeliveryYouPay": "Cash on delivery. You pay when the order arrives.",
+    "fromFlorist": "From <shop>{{name}}</shop>",
+    "addMoreForFreeDelivery": "Add {{amount}} more for free delivery",
+    "priceEach": "{{price}} each",
+    "quantityOf": "Quantity of {{title}}",
+    "removeItem": "Remove {{title}}",
+    "itemsCount_one": "{{count}} item",
+    "itemsCount_other": "{{count}} items",
+    "delivery": "Delivery",
+    "deliveryFromFlorists_one": "Delivery ({{count}} florist)",
+    "deliveryFromFlorists_other": "Delivery ({{count}} florists)",
+    "separateOrdersNote_one": "Your cart has products from {{count}} florist, so this becomes {{count}} order.",
+    "separateOrdersNote_other": "Your cart has products from {{count}} florists. Each florist delivers separately, so this becomes {{count}} orders."
   },
   "checkout": {
     "theOrderCouldNotBe": "The order could not be placed. Please try again.",
@@ -42,12 +54,35 @@
     "editTheCart": "Edit the cart",
     "placingYourOrder": "Placing your order…",
     "placeOrder": "Place order",
-    "cashOnDeliveryYouPay": "Cash on delivery. You pay when the order arrives."
+    "cashOnDeliveryYouPay": "Cash on delivery. You pay when the order arrives.",
+    "error": {
+      "recipientName": "Enter the recipient's name.",
+      "recipientPhone": "Enter a phone number the courier can call, for example 010 1234 5678.",
+      "deliveryAddress": "Enter the full delivery address: street, building and unit.",
+      "deliveryDate": "Choose the delivery date.",
+      "deliveryDatePast": "The delivery date cannot be in the past.",
+      "deliveryTime": "Choose a delivery time."
+    },
+    "fromFlorist": "From {{name}}",
+    "thisFlorist": "this florist",
+    "delivery": "Delivery",
+    "deliveryFromFlorists_one": "Delivery ({{count}} florist)",
+    "deliveryFromFlorists_other": "Delivery ({{count}} florists)"
   },
   "complete": {
     "toPayOnDelivery": "To pay on delivery:",
     "followMyOrders": "Follow my orders",
-    "continueShopping": "Continue shopping"
+    "continueShopping": "Continue shopping",
+    "title_one": "Your order is placed",
+    "title_other": "Your orders are placed",
+    "note_one": "The florist will confirm it soon. We will notify you at every step.",
+    "note_other": "Each florist will confirm their part and deliver it separately. We will notify you at every step.",
+    "orderNumber": "Order {{number}}",
+    "itemsCount_one": "{{count}} item",
+    "itemsCount_other": "{{count}} items",
+    "itemsFrom_one": "{{count}} item from {{name}}",
+    "itemsFrom_other": "{{count}} items from {{name}}",
+    "to": "To {{name}}, {{address}}"
   },
   "card": {
     "order": "Order",

@@ -1,3 +1,4 @@
+import { useEnumLabel } from '../../libs/i18n/labels';
 import { useTranslation } from 'next-i18next';
 import React, { useEffect, useState } from 'react';
 import { NextPage } from 'next';
@@ -25,6 +26,7 @@ export const getStaticProps = async ({ locale }: any) => ({
 
 const Community: NextPage = ({ initialInput, ...props }: T) => {
 	const { t } = useTranslation('community');
+	const enumLabel = useEnumLabel();
 	const router = useRouter();
 	const { query } = router;
 	const articleCategory = query?.articleCategory as string;
@@ -119,7 +121,7 @@ const Community: NextPage = ({ initialInput, ...props }: T) => {
 
 							<TabList
 								orientation="vertical"
-								aria-label="lab API tabs example"
+								aria-label={t('list.boards')}
 								TabIndicatorProps={{
 									style: { display: 'none' },
 								}}
@@ -151,7 +153,7 @@ const Community: NextPage = ({ initialInput, ...props }: T) => {
 							<Stack className="panel-config">
 								<Stack className="title-box">
 									<Stack className="left">
-										<Typography className="title">{searchCommunity.search.articleCategory} BOARD</Typography>
+										<Typography className="title">{enumLabel('articleCategory', searchCommunity.search.articleCategory)}</Typography>
 										<Typography className="sub-title">
 											{t('list.expressYourOpinionsFreelyHere')}
 										</Typography>
@@ -269,7 +271,7 @@ const Community: NextPage = ({ initialInput, ...props }: T) => {
 						</Stack>
 						<Stack className="total-result">
 							<Typography>
-								Total {totalCount} article{totalCount > 1 ? 's' : ''} available
+								{t('list.articlesTotal', { count: totalCount })}
 							</Typography>
 						</Stack>
 					</Stack>

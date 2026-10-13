@@ -1,3 +1,5 @@
+import { useEnumLabel } from '../../libs/i18n/labels';
+import { useFormat } from '../../libs/i18n/format';
 import { useTranslation } from 'next-i18next';
 import React, { useEffect, useState } from 'react';
 import { NextPage } from 'next';
@@ -6,7 +8,6 @@ import withLayoutBasic from '../../libs/components/layout/LayoutBasic';
 import { Button, Stack, Typography, Tab, Tabs, IconButton, Backdrop, Pagination } from '@mui/material';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import { useMutation, useQuery, useReactiveVar } from '@apollo/client';
-import Moment from 'react-moment';
 import { userVar } from '../../apollo/store';
 import ThumbUpOffAltIcon from '@mui/icons-material/ThumbUpOffAlt';
 import ThumbUpAltIcon from '@mui/icons-material/ThumbUpAlt';
@@ -36,6 +37,8 @@ export const getStaticProps = async ({ locale }: any) => ({
 
 const CommunityDetail: NextPage = ({ initialInput, ...props }: T) => {
 	const { t } = useTranslation('community');
+	const enumLabel = useEnumLabel();
+	const format = useFormat();
 	const router = useRouter();
 	const { query } = router;
 
@@ -227,7 +230,7 @@ const CommunityDetail: NextPage = ({ initialInput, ...props }: T) => {
 						</Stack>
 						<Tabs
 							orientation="vertical"
-							aria-label="lab API tabs example"
+							aria-label={t('detail.boards')}
 							TabIndicatorProps={{
 								style: { display: 'none' },
 							}}
@@ -259,7 +262,7 @@ const CommunityDetail: NextPage = ({ initialInput, ...props }: T) => {
 					<div className="community-detail-config">
 						<Stack className="title-box">
 							<Stack className="left">
-								<Typography className="title">{articleCategory} BOARD</Typography>
+								<Typography className="title">{enumLabel('articleCategory', articleCategory)}</Typography>
 								<Typography className="sub-title">
 									{t('detail.expressYourOpinionsFreelyHere')}
 								</Typography>
@@ -294,9 +297,7 @@ const CommunityDetail: NextPage = ({ initialInput, ...props }: T) => {
 												{boardArticle?.memberData?.memberNick}
 											</Typography>
 											<Stack className="divider"></Stack>
-											<Moment className={'time-added'} format={'DD.MM.YY HH:mm'}>
-												{boardArticle?.createdAt}
-											</Moment>
+											<span className={'time-added'}>{format.dateTime(boardArticle?.createdAt)}</span>
 										</Stack>
 									</Stack>
 									<Stack className="info">
@@ -350,7 +351,7 @@ const CommunityDetail: NextPage = ({ initialInput, ...props }: T) => {
 								className="second-box-config"
 								sx={{ borderBottom: total > 0 ? 'none' : '1px solid #eee', border: '1px solid #eee' }}
 							>
-								<Typography className="title-text">Comments ({total})</Typography>
+								<Typography className="title-text">{t('detail.commentsCount', { count: total })}</Typography>
 								<Stack className="leave-comment">
 									<input
 										type="text"
@@ -386,9 +387,7 @@ const CommunityDetail: NextPage = ({ initialInput, ...props }: T) => {
 													<Stack className="name-date-column">
 														<Typography className="name">{commentData?.memberData?.memberNick}</Typography>
 														<Typography className="date">
-															<Moment className={'time-added'} format={'DD.MM.YY HH:mm'}>
-																{commentData?.createdAt}
-															</Moment>
+															<span className={'time-added'}>{format.dateTime(commentData?.createdAt)}</span>
 														</Typography>
 													</Stack>
 												</Stack>

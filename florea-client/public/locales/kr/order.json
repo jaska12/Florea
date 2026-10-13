@@ -1,0 +1,36 @@
+{
+  "cart": {
+    "fromFlorist": "<shop>{{name}}</shop>의 상품",
+    "thisFlorist": "이 플로리스트",
+    "addMoreForFreeDelivery": "{{amount}} 더 담으면 무료 배송",
+    "priceEach": "개당 {{price}}",
+    "quantityOf": "{{title}} 수량",
+    "removeItem": "{{title}} 삭제",
+    "itemsCount_other": "상품 {{count}}개",
+    "delivery": "배송비",
+    "deliveryFromFlorists_other": "배송비 (플로리스트 {{count}}곳)",
+    "separateOrdersNote_other": "장바구니에 플로리스트 {{count}}곳의 상품이 담겨 있습니다. 플로리스트마다 따로 배송하므로 주문이 {{count}}건으로 나뉩니다."
+  },
+  "checkout": {
+    "error": {
+      "recipientName": "받는 분의 이름을 입력해 주세요.",
+      "recipientPhone": "배송 기사가 연락할 수 있는 전화번호를 입력해 주세요. 예: 010 1234 5678",
+      "deliveryAddress": "도로명, 건물, 호수까지 배송 주소를 모두 입력해 주세요.",
+      "deliveryDate": "배송일을 선택해 주세요.",
+      "deliveryDatePast": "배송일은 지난 날짜로 지정할 수 없습니다.",
+      "deliveryTime": "배송 시간을 선택해 주세요."
+    },
+    "fromFlorist": "{{name}}의 상품",
+    "thisFlorist": "이 플로리스트",
+    "delivery": "배송비",
+    "deliveryFromFlorists_other": "배송비 (플로리스트 {{count}}곳)"
+  },
+  "complete": {
+    "title_other": "주문이 완료되었습니다",
+    "note_other": "플로리스트가 곧 주문을 확인합니다. 진행 상황은 단계마다 알려 드릴게요.",
+    "orderNumber": "주문 {{number}}",
+    "itemsCount_other": "상품 {{count}}개",
+    "itemsFrom_other": "{{name}}의 상품 {{count}}개",
+    "to": "받는 분: {{name}}, {{address}}"
+  }
+}

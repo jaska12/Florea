@@ -1,3 +1,4 @@
+import { useFormat } from '../../i18n/format';
 import { useTranslation } from 'next-i18next';
 import React, { useState } from 'react';
 import Link from 'next/link';
@@ -7,7 +8,6 @@ import OrderTimeline from './OrderTimeline';
 import { Order, OrderItem } from '../../types/order/order';
 import { cancellableOrderStatuses, OrderStatus, orderStatusFlow, orderStatusLabels } from '../../enums/order.enum';
 import { REACT_APP_API_URL } from '../../config';
-import { formatterStr } from '../../utils';
 
 interface OrderCardProps {
 	order: Order;
@@ -23,6 +23,7 @@ export const orderNumber = (order: Order): string => `#${order._id.slice(-6).toU
 
 const OrderCard = (props: OrderCardProps) => {
 	const { t } = useTranslation('order');
+	const format = useFormat();
 	const { order, role, defaultOpen = false, busy = false, onChangeStatus } = props;
 	const [open, setOpen] = useState<boolean>(defaultOpen);
 	const items: OrderItem[] = order.orderItems ?? [];
@@ -56,14 +57,14 @@ const OrderCard = (props: OrderCardProps) => {
 						{items.length > 1 && <em> +{items.length - 1} more</em>}
 					</strong>
 					<span className={'order-meta'}>
-						{orderNumber(order)} · {moment(order.createdAt).format('D MMM YYYY')} · {pieces} item{pieces === 1 ? '' : 's'}
+						{orderNumber(order)} · {format.date(order.createdAt, 'medium')} · {pieces} item{pieces === 1 ? '' : 's'}
 						{role === 'admin' && ` · ${order.memberData?.memberNick ?? ''} → ${order.agentData?.memberNick ?? ''}`}
 						{role !== 'admin' && other?.memberNick && ` · ${role === 'buyer' ? 'from' : 'for'} ${other.memberNick}`}
 					</span>
 				</span>
 				<span className={'order-side'}>
 					<span className={`order-status ${order.orderStatus.toLowerCase()}`}>{orderStatusLabels[order.orderStatus]}</span>
-					<span className={'order-total'}>${formatterStr(order.orderTotal)}</span>
+					<span className={'order-total'}>{format.price(order.orderTotal)}</span>
 				</span>
 				<KeyboardArrowDownRoundedIcon className={'order-caret'} />
 			</button>
@@ -86,25 +87,25 @@ const OrderCard = (props: OrderCardProps) => {
 										<span className={'name'}>
 											<Link href={`/product/detail?id=${item.productId}`}>{item.productData?.productTitle ?? t('card.product')}</Link>
 											<span>
-												{item.itemQuantity} × ${formatterStr(item.itemPrice)}
+												{item.itemQuantity} × {format.price(item.itemPrice)}
 											</span>
 										</span>
-										<span className={'sum'}>${formatterStr(item.itemQuantity * item.itemPrice)}</span>
+										<span className={'sum'}>{format.price(item.itemQuantity * item.itemPrice)}</span>
 									</div>
 								);
 							})}
 							<dl className={'order-sums'}>
 								<div>
 									<dt>{t('card.items')}</dt>
-									<dd>${formatterStr(itemsTotal)}</dd>
+									<dd>{format.price(itemsTotal)}</dd>
 								</div>
 								<div>
 									<dt>{t('card.delivery')}</dt>
-									<dd>{order.orderDelivery ? `$${formatterStr(order.orderDelivery)}` : t('card.free')}</dd>
+									<dd>{order.orderDelivery ? format.price(order.orderDelivery) : t('card.free')}</dd>
 								</div>
 								<div className={'total'}>
 									<dt>{t('card.totalCashOnDelivery')}</dt>
-									<dd>${formatterStr(order.orderTotal)}</dd>
+									<dd>{format.price(order.orderTotal)}</dd>
 								</div>
 							</dl>
 						</section>
@@ -127,7 +128,7 @@ const OrderCard = (props: OrderCardProps) => {
 								<div>
 									<dt>{t('card.when')}</dt>
 									<dd>
-										{moment(order.deliveryDate).format('dddd, D MMMM YYYY')}
+										{format.weekday(order.deliveryDate, true)}
 										{order.deliveryTime && (
 											<>
 												<br />

@@ -1,3 +1,4 @@
+import { useFormat } from '../../libs/i18n/format';
 import { useTranslation } from 'next-i18next';
 import React, { ChangeEvent, useEffect, useState } from 'react';
 import { Box, Button, Checkbox, CircularProgress, Stack, Typography } from '@mui/material';
@@ -7,7 +8,7 @@ import Review from '../../libs/components/product/Review';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import SwiperCore, { Autoplay, Navigation, Pagination } from 'swiper';
 import ProductBigCard from '../../libs/components/common/ProductBigCard';
-import { prettyLabel } from '../../libs/components/common/ProductCardView';
+import { useEnumLabel } from '../../libs/i18n/labels';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import WestIcon from '@mui/icons-material/West';
@@ -15,8 +16,6 @@ import EastIcon from '@mui/icons-material/East';
 import { useMutation, useQuery, useReactiveVar } from '@apollo/client';
 import { useRouter } from 'next/router';
 import { Product } from '../../libs/types/product/product';
-import moment from 'moment';
-import { formatterStr } from '../../libs/utils';
 import { REACT_APP_API_URL } from '../../libs/config';
 import { userVar } from '../../apollo/store';
 import { CommentInput, CommentsInquiry } from '../../libs/types/comment/comment.input';
@@ -46,6 +45,8 @@ export const getStaticProps = async ({ locale }: any) => ({
 
 const ProductDetail: NextPage = ({ initialComment, ...props }: any) => {
 	const { t } = useTranslation('product');
+	const enumLabel = useEnumLabel();
+	const format = useFormat();
 	const router = useRouter();
 	const user = useReactiveVar(userVar);
 	const [productId, setProductId] = useState<string | null>(null);
@@ -209,7 +210,7 @@ const ProductDetail: NextPage = ({ initialComment, ...props }: any) => {
 							<Stack className={'left-box'}>
 								<Typography className={'title-main'}>{product?.productTitle}</Typography>
 								<Stack className={'top-box'}>
-									<Typography className={'city'}>{prettyLabel(product?.productLocation as string)}</Typography>
+									<Typography className={'city'}>{enumLabel('productLocation', product?.productLocation)}</Typography>
 									<Stack className={'divider'}></Stack>
 									<Stack className={'buy-rent-box'}>
 										{product?.productGiftWrap && (
@@ -252,17 +253,17 @@ const ProductDetail: NextPage = ({ initialComment, ...props }: any) => {
 											</clipPath>
 										</defs>
 									</svg>
-									<Typography className={'date'}>{moment().diff(product?.createdAt, 'days')} days ago</Typography>
+									<Typography className={'date'}>{format.ago(product?.createdAt)}</Typography>
 								</Stack>
 								<Stack className={'bottom-box'}>
 									<Stack className="option">
-										<Typography>{prettyLabel(product?.productOccasion as string)}</Typography>
+										<Typography>{enumLabel('productOccasion', product?.productOccasion)}</Typography>
 									</Stack>
 									<Stack className="option">
-										<Typography>{prettyLabel(product?.productSize as string)}</Typography>
+										<Typography>{enumLabel('productSize', product?.productSize)}</Typography>
 									</Stack>
 									<Stack className="option">
-										<Typography>{product?.productStock} in stock</Typography>
+										<Typography>{t('detail.inStock', { count: product?.productStock ?? 0 })}</Typography>
 									</Stack>
 								</Stack>
 							</Stack>
@@ -285,7 +286,7 @@ const ProductDetail: NextPage = ({ initialComment, ...props }: any) => {
 										<Typography>{product?.productLikes}</Typography>
 									</Stack>
 								</Stack>
-								<Typography>${formatterStr(product?.productPrice)}</Typography>
+								<Typography>{format.price(product?.productPrice)}</Typography>
 							</Stack>
 						</Stack>
 						{product && user?._id !== product.memberId && (
@@ -338,19 +339,19 @@ const ProductDetail: NextPage = ({ initialComment, ...props }: any) => {
 								<Stack className={'option'}>
 									<Stack className={'option-includes'}>
 										<Typography className={'title'}>{t('detail.occasion')}</Typography>
-										<Typography className={'option-data'}>{prettyLabel(product?.productOccasion as string)}</Typography>
+										<Typography className={'option-data'}>{enumLabel('productOccasion', product?.productOccasion)}</Typography>
 									</Stack>
 								</Stack>
 								<Stack className={'option'}>
 									<Stack className={'option-includes'}>
 										<Typography className={'title'}>{t('detail.size')}</Typography>
-										<Typography className={'option-data'}>{prettyLabel(product?.productSize as string)}</Typography>
+										<Typography className={'option-data'}>{enumLabel('productSize', product?.productSize)}</Typography>
 									</Stack>
 								</Stack>
 								<Stack className={'option'}>
 									<Stack className={'option-includes'}>
 										<Typography className={'title'}>{t('detail.listed')}</Typography>
-										<Typography className={'option-data'}>{moment(product?.createdAt).format('YYYY')}</Typography>
+										<Typography className={'option-data'}>{format.year(product?.createdAt)}</Typography>
 									</Stack>
 								</Stack>
 								<Stack className={'option'}>
@@ -362,7 +363,7 @@ const ProductDetail: NextPage = ({ initialComment, ...props }: any) => {
 								<Stack className={'option'}>
 									<Stack className={'option-includes'}>
 										<Typography className={'title'}>{t('detail.productType')}</Typography>
-										<Typography className={'option-data'}>{prettyLabel(product?.productType as string)}</Typography>
+										<Typography className={'option-data'}>{enumLabel('productType', product?.productType)}</Typography>
 									</Stack>
 								</Stack>
 							</Stack>
@@ -377,7 +378,7 @@ const ProductDetail: NextPage = ({ initialComment, ...props }: any) => {
 										<Stack className={'left'}>
 											<Box component={'div'} className={'info'}>
 												<Typography className={'title'}>{t('detail.price')}</Typography>
-												<Typography className={'data'}>${formatterStr(product?.productPrice)}</Typography>
+												<Typography className={'data'}>{format.price(product?.productPrice)}</Typography>
 											</Box>
 											<Box component={'div'} className={'info'}>
 												<Typography className={'title'}>{t('detail.stock')}</Typography>
@@ -385,21 +386,21 @@ const ProductDetail: NextPage = ({ initialComment, ...props }: any) => {
 											</Box>
 											<Box component={'div'} className={'info'}>
 												<Typography className={'title'}>{t('detail.size')}</Typography>
-												<Typography className={'data'}>{prettyLabel(product?.productSize as string)}</Typography>
+												<Typography className={'data'}>{enumLabel('productSize', product?.productSize)}</Typography>
 											</Box>
 											<Box component={'div'} className={'info'}>
 												<Typography className={'title'}>{t('detail.occasion')}</Typography>
-												<Typography className={'data'}>{prettyLabel(product?.productOccasion as string)}</Typography>
+												<Typography className={'data'}>{enumLabel('productOccasion', product?.productOccasion)}</Typography>
 											</Box>
 										</Stack>
 										<Stack className={'right'}>
 											<Box component={'div'} className={'info'}>
 												<Typography className={'title'}>{t('detail.listed')}</Typography>
-												<Typography className={'data'}>{moment(product?.createdAt).format('YYYY')}</Typography>
+												<Typography className={'data'}>{format.year(product?.createdAt)}</Typography>
 											</Box>
 											<Box component={'div'} className={'info'}>
 												<Typography className={'title'}>{t('detail.productType')}</Typography>
-												<Typography className={'data'}>{prettyLabel(product?.productType as string)}</Typography>
+												<Typography className={'data'}>{enumLabel('productType', product?.productType)}</Typography>
 											</Box>
 											<Box component={'div'} className={'info'}>
 												<Typography className={'title'}>{t('detail.productOptions')}</Typography>
@@ -442,7 +443,7 @@ const ProductDetail: NextPage = ({ initialComment, ...props }: any) => {
 													</clipPath>
 												</defs>
 											</svg>
-											<Typography className={'reviews'}>{commentTotal} reviews</Typography>
+											<Typography className={'reviews'}>{t('detail.reviewsCount', { count: commentTotal })}</Typography>
 										</Stack>
 									</Stack>
 									<Stack className={'review-list'}>

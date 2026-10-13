@@ -1,0 +1,60 @@
+{
+  "cart": {
+    "fromFlorist": "От <shop>{{name}}</shop>",
+    "thisFlorist": "этого флориста",
+    "addMoreForFreeDelivery": "Ещё {{amount}} — и доставка бесплатно",
+    "priceEach": "{{price}} за шт.",
+    "quantityOf": "Количество: {{title}}",
+    "removeItem": "Удалить: {{title}}",
+    "itemsCount_one": "{{count}} товар",
+    "itemsCount_few": "{{count}} товара",
+    "itemsCount_many": "{{count}} товаров",
+    "itemsCount_other": "{{count}} товара",
+    "delivery": "Доставка",
+    "deliveryFromFlorists_one": "Доставка ({{count}} флорист)",
+    "deliveryFromFlorists_few": "Доставка ({{count}} флориста)",
+    "deliveryFromFlorists_many": "Доставка ({{count}} флористов)",
+    "deliveryFromFlorists_other": "Доставка ({{count}} флориста)",
+    "separateOrdersNote_one": "В корзине товары {{count}} флориста, поэтому получится {{count}} заказ.",
+    "separateOrdersNote_few": "В корзине товары {{count}} флористов. Каждый доставляет отдельно, поэтому получится {{count}} заказа.",
+    "separateOrdersNote_many": "В корзине товары {{count}} флористов. Каждый доставляет отдельно, поэтому получится {{count}} заказов.",
+    "separateOrdersNote_other": "В корзине товары {{count}} флористов. Каждый доставляет отдельно, поэтому получится {{count}} заказа."
+  },
+  "checkout": {
+    "error": {
+      "recipientName": "Укажите имя получателя.",
+      "recipientPhone": "Укажите телефон, по которому сможет позвонить курьер, например 010 1234 5678.",
+      "deliveryAddress": "Укажите полный адрес доставки: улицу, дом и квартиру.",
+      "deliveryDate": "Выберите дату доставки.",
+      "deliveryDatePast": "Дата доставки не может быть в прошлом.",
+      "deliveryTime": "Выберите время доставки."
+    },
+    "fromFlorist": "От {{name}}",
+    "thisFlorist": "этого флориста",
+    "delivery": "Доставка",
+    "deliveryFromFlorists_one": "Доставка ({{count}} флорист)",
+    "deliveryFromFlorists_few": "Доставка ({{count}} флориста)",
+    "deliveryFromFlorists_many": "Доставка ({{count}} флористов)",
+    "deliveryFromFlorists_other": "Доставка ({{count}} флориста)"
+  },
+  "complete": {
+    "title_one": "Ваш заказ оформлен",
+    "title_few": "Ваши заказы оформлены",
+    "title_many": "Ваши заказы оформлены",
+    "title_other": "Ваши заказы оформлены",
+    "note_one": "Флорист скоро подтвердит заказ. Мы сообщим вам о каждом шаге.",
+    "note_few": "Каждый флорист подтвердит свою часть и доставит её отдельно. Мы сообщим вам о каждом шаге.",
+    "note_many": "Каждый флорист подтвердит свою часть и доставит её отдельно. Мы сообщим вам о каждом шаге.",
+    "note_other": "Каждый флорист подтвердит свою часть и доставит её отдельно. Мы сообщим вам о каждом шаге.",
+    "orderNumber": "Заказ {{number}}",
+    "itemsCount_one": "{{count}} товар",
+    "itemsCount_few": "{{count}} товара",
+    "itemsCount_many": "{{count}} товаров",
+    "itemsCount_other": "{{count}} товара",
+    "itemsFrom_one": "{{count}} товар от {{name}}",
+    "itemsFrom_few": "{{count}} товара от {{name}}",
+    "itemsFrom_many": "{{count}} товаров от {{name}}",
+    "itemsFrom_other": "{{count}} товара от {{name}}",
+    "to": "Получатель: {{name}}, {{address}}"
+  }
+}

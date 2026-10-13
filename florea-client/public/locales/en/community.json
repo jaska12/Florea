@@ -13,7 +13,9 @@
     "comments": "Comments",
     "updateComment": "Update comment",
     "cancel": "Cancel",
-    "update": "Update"
+    "update": "Update",
+    "boards": "Boards",
+    "commentsCount": "Comments ({{count}})"
   },
   "list": {
     "success": "success",
@@ -24,7 +26,10 @@
     "humor": "Humor",
     "expressYourOpinionsFreelyHere": "Express your opinions freely here without content restrictions",
     "write": "Write",
-    "noArticleFound": "No Article found!"
+    "noArticleFound": "No Article found!",
+    "boards": "Boards",
+    "articlesTotal_one": "{{count}} article",
+    "articlesTotal_other": "{{count}} articles"
   },
   "editor": {
     "articleCreatedSuccessfully": "Article created successfully!",

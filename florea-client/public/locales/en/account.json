@@ -14,6 +14,10 @@
     "login": "LOGIN",
     "signup": "SIGNUP",
     "notRegisteredYet": "Not registered yet?",
-    "haveAccount": "Have account?"
+    "haveAccount": "Have account?",
+    "loginWord": "Log in",
+    "signupWord": "Sign up",
+    "loginHint": "Welcome back. Log in to order, follow your florists and track deliveries.",
+    "signupHint": "Create an account to order flowers and gifts, follow florists and leave reviews."
   }
 }

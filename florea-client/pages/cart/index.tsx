@@ -1,4 +1,5 @@
-import { useTranslation } from 'next-i18next';
+import { useFormat } from '../../libs/i18n/format';
+import { Trans, useTranslation } from 'next-i18next';
 import React, { useEffect, useState } from 'react';
 import { NextPage } from 'next';
 import Link from 'next/link';
@@ -14,7 +15,6 @@ import { cartVar } from '../../apollo/store';
 import { cartGroups, cartTotals, MAX_QUANTITY, removeFromCart, setCartQuantity } from '../../libs/cart';
 import { CartGroup, CartItem } from '../../libs/types/cart/cart';
 import { freeDeliveryFrom, REACT_APP_API_URL } from '../../libs/config';
-import { formatterStr } from '../../libs/utils';
 
 export const getStaticProps = async ({ locale }: any) => ({
 	props: {
@@ -24,6 +24,7 @@ export const getStaticProps = async ({ locale }: any) => ({
 
 const Cart: NextPage = () => {
 	const { t } = useTranslation('order');
+	const format = useFormat();
 	const router = useRouter();
 	const items: CartItem[] = useReactiveVar(cartVar);
 	// the cart is read from the browser after the first paint; until then nothing is claimed about it
@@ -66,12 +67,16 @@ const Cart: NextPage = () => {
 							<section className={'shop-panel cart-group'} key={group.agentId}>
 								<header>
 									<span>
-										From{' '}
-										<Link href={`/agent/detail?agentId=${group.agentId}`}>{group.agentNick ?? t('cart.thisFlorist')}</Link>
+										<Trans
+											t={t}
+											i18nKey={'cart.fromFlorist'}
+											values={{ name: group.agentNick ?? t('cart.thisFlorist') }}
+											components={{ shop: <Link href={`/agent/detail?agentId=${group.agentId}`} /> }}
+										/>
 									</span>
 									<em>
 										{group.delivery
-											? `Add $${formatterStr(freeDeliveryFrom - group.subtotal)} more for free delivery`
+											? t('cart.addMoreForFreeDelivery', { amount: format.price(freeDeliveryFrom - group.subtotal) })
 											: t('cart.freeDelivery')}
 									</em>
 								</header>
@@ -87,9 +92,9 @@ const Cart: NextPage = () => {
 											/>
 											<div className={'cart-name'}>
 												<Link href={`/product/detail?id=${item.productId}`}>{item.productTitle}</Link>
-												<span>${formatterStr(item.productPrice)} each</span>
+												<span>{t('cart.priceEach', { price: format.price(item.productPrice) })}</span>
 											</div>
-											<div className={'qty'} role={'group'} aria-label={`Quantity of ${item.productTitle}`}>
+											<div className={'qty'} role={'group'} aria-label={t('cart.quantityOf', { title: item.productTitle })}>
 												<button
 													type={'button'}
 													aria-label={t('cart.oneLess')}
@@ -108,11 +113,11 @@ const Cart: NextPage = () => {
 													<AddRoundedIcon />
 												</button>
 											</div>
-											<strong className={'cart-sum'}>${formatterStr(item.productPrice * item.quantity)}</strong>
+											<strong className={'cart-sum'}>{format.price(item.productPrice * item.quantity)}</strong>
 											<button
 												type={'button'}
 												className={'cart-remove'}
-												aria-label={`Remove ${item.productTitle}`}
+												aria-label={t('cart.removeItem', { title: item.productTitle })}
 												onClick={() => removeFromCart(item.productId)}
 											>
 												<DeleteOutlineRoundedIcon />
@@ -133,23 +138,22 @@ const Cart: NextPage = () => {
 							<dl>
 								<div>
 									<dt>
-										{totals.count} item{totals.count === 1 ? '' : 's'}
+										{t('cart.itemsCount', { count: totals.count })}
 									</dt>
-									<dd>${formatterStr(totals.subtotal)}</dd>
+									<dd>{format.price(totals.subtotal)}</dd>
 								</div>
 								<div>
-									<dt>Delivery{groups.length > 1 ? ` (${groups.length} florists)` : ''}</dt>
-									<dd>{totals.delivery ? `$${formatterStr(totals.delivery)}` : t('cart.free')}</dd>
+									<dt>{groups.length > 1 ? t('cart.deliveryFromFlorists', { count: groups.length }) : t('cart.delivery')}</dt>
+									<dd>{totals.delivery ? format.price(totals.delivery) : t('cart.free')}</dd>
 								</div>
 								<div className={'total'}>
 									<dt>{t('cart.total')}</dt>
-									<dd>${formatterStr(totals.total)}</dd>
+									<dd>{format.price(totals.total)}</dd>
 								</div>
 							</dl>
 							{groups.length > 1 && (
 								<p className={'shop-note'}>
-									Your cart has products from {groups.length} florists. Each florist delivers separately, so this becomes{' '}
-									{groups.length} orders.
+									{t('cart.separateOrdersNote', { count: groups.length })}
 								</p>
 							)}
 							<button type={'button'} className={'shop-btn'} onClick={() => router.push('/checkout')}>

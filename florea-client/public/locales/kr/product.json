@@ -1,0 +1,10 @@
+{
+  "detail": {
+    "inStock": "재고 {{count}}개",
+    "reviewsCount_other": "후기 {{count}}개"
+  },
+  "list": {
+    "showProducts_other": "상품 {{count}}개 보기",
+    "productsTotal_other": "상품 {{count}}개"
+  }
+}

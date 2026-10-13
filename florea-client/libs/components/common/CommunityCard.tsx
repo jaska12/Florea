@@ -1,8 +1,8 @@
+import { useFormat } from '../../i18n/format';
 import React from 'react';
 import { useRouter } from 'next/router';
 import { Stack, Typography } from '@mui/material';
 import { BoardArticle } from '../../types/board-article/board-article';
-import Moment from 'react-moment';
 import { REACT_APP_API_URL } from '../../config';
 import { useReactiveVar } from '@apollo/client';
 import { userVar } from '../../../apollo/store';
@@ -18,6 +18,7 @@ interface CommunityCardProps {
 }
 
 const CommunityCard = (props: CommunityCardProps) => {
+	const format = useFormat();
 	const { boardArticle, size = 'normal', likeArticleHandler } = props;
 	const router = useRouter();
 	const user = useReactiveVar(userVar);
@@ -80,11 +81,9 @@ const CommunityCard = (props: CommunityCardProps) => {
 				</Stack>
 			</Stack>
 			<Stack className="date-box">
-				<Moment className="month" format={'MMMM'}>
-					{boardArticle?.createdAt}
-				</Moment>
+				<span className="month">{format.month(boardArticle?.createdAt)}</span>
 				<Typography className="day">
-					<Moment format={'DD'}>{boardArticle?.createdAt}</Moment>
+					{format.day(boardArticle?.createdAt)}
 				</Typography>
 			</Stack>
 		</Stack>

@@ -1,8 +1,8 @@
+import { useFormat } from '../../i18n/format';
 import React from 'react';
 import { Stack, Typography } from '@mui/material';
 import { Comment } from '../../types/comment/comment';
 import { REACT_APP_API_URL } from '../../config';
-import Moment from 'react-moment';
 import { useRouter } from 'next/router';
 import { useReactiveVar } from '@apollo/client';
 import { userVar } from '../../../apollo/store';
@@ -12,6 +12,7 @@ interface ReviewProps {
 }
 
 const Review = (props: ReviewProps) => {
+	const format = useFormat();
 	const { comment } = props;
 	const router = useRouter();
 	const user = useReactiveVar(userVar);
@@ -35,7 +36,7 @@ const Review = (props: ReviewProps) => {
 							{comment.memberData?.memberNick}
 						</Typography>
 						<Typography className={'date'}>
-							<Moment format={'DD MMMM, YYYY'}>{comment.createdAt}</Moment>
+							{format.date(comment.createdAt, 'long')}
 						</Typography>
 					</Stack>
 				</Stack>

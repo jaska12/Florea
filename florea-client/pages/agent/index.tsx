@@ -26,7 +26,8 @@ const AgentList: NextPage = ({ initialInput, ...props }: any) => {
 	const { t } = useTranslation('agent');
 	const router = useRouter();
 	const [anchorEl2, setAnchorEl2] = useState<null | HTMLElement>(null);
-	const [filterSortName, setFilterSortName] = useState('Recent');
+	// which order is chosen; its name is looked up in the chosen language when it is shown
+	const [filterSortName, setFilterSortName] = useState<'recent' | 'old' | 'likes' | 'views'>('recent');
 	const [sortingOpen, setSortingOpen] = useState(false);
 	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 	const [searchFilter, setSearchFilter] = useState<any>(
@@ -98,19 +99,19 @@ const AgentList: NextPage = ({ initialInput, ...props }: any) => {
 		switch (e.currentTarget.id) {
 			case 'recent':
 				setSearchFilter({ ...searchFilter, sort: 'createdAt', direction: 'DESC' });
-				setFilterSortName('Recent');
+				setFilterSortName('recent');
 				break;
 			case 'old':
 				setSearchFilter({ ...searchFilter, sort: 'createdAt', direction: 'ASC' });
-				setFilterSortName(t('list.oldestOrder'));
+				setFilterSortName('old');
 				break;
 			case 'likes':
 				setSearchFilter({ ...searchFilter, sort: 'memberLikes', direction: 'DESC' });
-				setFilterSortName('Likes');
+				setFilterSortName('likes');
 				break;
 			case 'views':
 				setSearchFilter({ ...searchFilter, sort: 'memberViews', direction: 'DESC' });
-				setFilterSortName('Views');
+				setFilterSortName('views');
 				break;
 		}
 		setSortingOpen(false);
@@ -149,7 +150,7 @@ const AgentList: NextPage = ({ initialInput, ...props }: any) => {
 						<span>{t('list.sortBy')}</span>
 						<div>
 							<Button onClick={sortingClickHandler} endIcon={<KeyboardArrowDownRoundedIcon />}>
-								{filterSortName}
+								{{ recent: t('list.recent'), old: t('list.oldest'), likes: t('list.likes'), views: t('list.views') }[filterSortName]}
 							</Button>
 							<Menu anchorEl={anchorEl} open={sortingOpen} onClose={sortingCloseHandler} sx={{ paddingTop: '5px' }}>
 								<MenuItem onClick={sortingHandler} id={'recent'} disableRipple>
@@ -197,7 +198,7 @@ const AgentList: NextPage = ({ initialInput, ...props }: any) => {
 
 					{agents.length !== 0 && (
 						<span>
-							{total} florist{total > 1 ? 's' : ''} on Florea
+							{t('list.floristsTotal', { count: total })}
 						</span>
 					)}
 				</Stack>

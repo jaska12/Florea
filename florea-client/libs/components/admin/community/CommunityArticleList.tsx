@@ -1,3 +1,4 @@
+import { useFormat } from '../../../i18n/format';
 import { useTranslation } from 'next-i18next';
 import React from 'react';
 import Link from 'next/link';
@@ -19,7 +20,6 @@ import IconButton from '@mui/material/IconButton';
 import Avatar from '@mui/material/Avatar';
 import Stack from '@mui/material/Stack';
 import OpenInBrowserRoundedIcon from '@mui/icons-material/OpenInBrowserRounded';
-import Moment from 'react-moment';
 import { BoardArticle } from '../../../types/board-article/board-article';
 import { REACT_APP_API_URL } from '../../../config';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -131,6 +131,7 @@ interface CommunityArticleListProps {
 
 const CommunityArticleList = (props: CommunityArticleListProps) => {
 	const { t } = useTranslation('admin');
+	const format = useFormat();
 	const { articles, anchorEl, menuIconClickHandler, menuIconCloseHandler, updateArticleHandler, removeArticleHandler } =
 		props;
 
@@ -186,7 +187,7 @@ const CommunityArticleList = (props: CommunityArticleListProps) => {
 									<TableCell align="center">{article?.articleViews}</TableCell>
 									<TableCell align="center">{article?.articleLikes}</TableCell>
 									<TableCell align="left">
-										<Moment format={'DD.MM.YY HH:mm'}>{article?.createdAt}</Moment>
+										{format.dateTime(article?.createdAt)}
 									</TableCell>
 									<TableCell align="center">
 										{article.articleStatus === 'DELETE' ? (

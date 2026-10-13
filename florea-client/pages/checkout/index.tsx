@@ -1,4 +1,5 @@
-import { useTranslation } from 'next-i18next';
+import { useFormat } from '../../libs/i18n/format';
+import { TFunction, useTranslation } from 'next-i18next';
 import React, { useEffect, useRef, useState } from 'react';
 import { NextPage } from 'next';
 import Link from 'next/link';
@@ -13,7 +14,6 @@ import { cartGroups, cartTotals, clearCart } from '../../libs/cart';
 import { CartGroup, CartItem } from '../../libs/types/cart/cart';
 import { OrderInput } from '../../libs/types/order/order.input';
 import { deliveryTimeSlots, REACT_APP_API_URL } from '../../libs/config';
-import { formatterStr } from '../../libs/utils';
 import CardMessageHelper from '../../libs/components/ai/CardMessageHelper';
 
 export const getStaticProps = async ({ locale }: any) => ({
@@ -36,26 +36,27 @@ type FormErrors = Partial<Record<keyof CheckoutForm, string>>;
 const CARD_MESSAGE_MAX = 300;
 
 /** what is wrong with the form, field by field, in words the buyer can act on **/
-const validate = (form: CheckoutForm): FormErrors => {
+const validate = (form: CheckoutForm, t: TFunction): FormErrors => {
 	const errors: FormErrors = {};
 	const name = form.recipientName.trim();
 	const phone = form.recipientPhone.trim();
 	const address = form.deliveryAddress.trim();
 
-	if (name.length < 2) errors.recipientName = "Enter the recipient's name.";
+	if (name.length < 2) errors.recipientName = t('checkout.error.recipientName');
 	if (!/^[0-9+\-\s()]{5,20}$/.test(phone) || phone.replace(/\D/g, '').length < 7) {
-		errors.recipientPhone = 'Enter a phone number the courier can call, for example 010 1234 5678.';
+		errors.recipientPhone = t('checkout.error.recipientPhone');
 	}
-	if (address.length < 5) errors.deliveryAddress = 'Enter the full delivery address: street, building and unit.';
-	if (!form.deliveryDate) errors.deliveryDate = 'Choose the delivery date.';
-	else if (moment(form.deliveryDate).isBefore(moment().startOf('day'))) errors.deliveryDate = 'The delivery date cannot be in the past.';
-	if (!form.deliveryTime) errors.deliveryTime = 'Choose a delivery time.';
+	if (address.length < 5) errors.deliveryAddress = t('checkout.error.deliveryAddress');
+	if (!form.deliveryDate) errors.deliveryDate = t('checkout.error.deliveryDate');
+	else if (moment(form.deliveryDate).isBefore(moment().startOf('day'))) errors.deliveryDate = t('checkout.error.deliveryDatePast');
+	if (!form.deliveryTime) errors.deliveryTime = t('checkout.error.deliveryTime');
 
 	return errors;
 };
 
 const Checkout: NextPage = () => {
 	const { t } = useTranslation('order');
+	const format = useFormat();
 	const router = useRouter();
 	const user = useReactiveVar(userVar);
 	const items: CartItem[] = useReactiveVar(cartVar);
@@ -101,7 +102,7 @@ const Checkout: NextPage = () => {
 		e.preventDefault();
 		if (placing) return;
 
-		const found = validate(form);
+		const found = validate(form, t);
 		setErrors(found);
 		setServerError('');
 		const firstWrong = Object.keys(found)[0];
@@ -290,7 +291,7 @@ const Checkout: NextPage = () => {
 							<h3>{t('checkout.yourOrder')}</h3>
 							{groups.map((group: CartGroup) => (
 								<div className={'summary-group'} key={group.agentId}>
-									<span className={'summary-shop'}>From {group.agentNick ?? 'this florist'}</span>
+									<span className={'summary-shop'}>{t('checkout.fromFlorist', { name: group.agentNick ?? t('checkout.thisFlorist') })}</span>
 									{group.items.map((item: CartItem) => (
 										<div className={'summary-item'} key={item.productId}>
 											<span
@@ -300,10 +301,10 @@ const Checkout: NextPage = () => {
 											<span className={'name'}>
 												{item.productTitle}
 												<small>
-													{item.quantity} × ${formatterStr(item.productPrice)}
+													{item.quantity} × {format.price(item.productPrice)}
 												</small>
 											</span>
-											<span className={'sum'}>${formatterStr(item.productPrice * item.quantity)}</span>
+											<span className={'sum'}>{format.price(item.productPrice * item.quantity)}</span>
 										</div>
 									))}
 								</div>
@@ -311,15 +312,15 @@ const Checkout: NextPage = () => {
 							<dl>
 								<div>
 									<dt>{t('checkout.items')}</dt>
-									<dd>${formatterStr(totals.subtotal)}</dd>
+									<dd>{format.price(totals.subtotal)}</dd>
 								</div>
 								<div>
-									<dt>Delivery{groups.length > 1 ? ` (${groups.length} florists)` : ''}</dt>
-									<dd>{totals.delivery ? `$${formatterStr(totals.delivery)}` : t('checkout.free')}</dd>
+									<dt>{groups.length > 1 ? t('checkout.deliveryFromFlorists', { count: groups.length }) : t('checkout.delivery')}</dt>
+									<dd>{totals.delivery ? format.price(totals.delivery) : t('checkout.free')}</dd>
 								</div>
 								<div className={'total'}>
 									<dt>{t('checkout.total')}</dt>
-									<dd>${formatterStr(totals.total)}</dd>
+									<dd>{format.price(totals.total)}</dd>
 								</div>
 							</dl>
 							{serverError && (

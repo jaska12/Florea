@@ -1,6 +1,6 @@
+import { useFormat } from '../../i18n/format';
 import React from 'react';
 import Link from 'next/link';
-import Moment from 'react-moment';
 import LocalFloristOutlinedIcon from '@mui/icons-material/LocalFloristOutlined';
 import { BoardArticle } from '../../types/board-article/board-article';
 
@@ -11,6 +11,7 @@ interface CommunityCardProps {
 }
 
 const CommunityCard = (props: CommunityCardProps) => {
+	const format = useFormat();
 	const { vertical, article, index } = props;
 	// an article without a picture gets a quiet tinted block, not a stock photo
 	const articleImage = article?.articleImage ? `${process.env.REACT_APP_API_URL}/${article?.articleImage}` : null;
@@ -29,7 +30,7 @@ const CommunityCard = (props: CommunityCardProps) => {
 				</span>
 				<strong className={'community-title'}>{article?.articleTitle}</strong>
 				<span className={'community-date'}>
-					<Moment format="DD.MM.YY">{article?.createdAt}</Moment>
+					{format.date(article?.createdAt, 'short')}
 				</span>
 			</Link>
 		);
@@ -46,7 +47,7 @@ const CommunityCard = (props: CommunityCardProps) => {
 				<span className={'community-row-text'}>
 					<strong className={'community-title'}>{article.articleTitle}</strong>
 					<span className={'community-date'}>
-						<Moment format="DD.MM.YY">{article?.createdAt}</Moment>
+						{format.date(article?.createdAt, 'short')}
 					</span>
 				</span>
 			</Link>

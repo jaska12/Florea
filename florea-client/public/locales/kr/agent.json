@@ -1,0 +1,9 @@
+{
+  "detail": {
+    "productsTotal_other": "판매 중인 상품 {{count}}개",
+    "reviewsCount_other": "후기 {{count}}개"
+  },
+  "list": {
+    "floristsTotal_other": "Florea의 플로리스트 {{count}}곳"
+  }
+}

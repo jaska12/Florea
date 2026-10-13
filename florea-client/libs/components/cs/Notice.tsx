@@ -1,3 +1,4 @@
+import { useFormat } from '../../i18n/format';
 import { useTranslation } from 'next-i18next';
 import React, { useState } from 'react';
 import { Stack, Box, Pagination } from '@mui/material';
@@ -12,6 +13,7 @@ const LIMIT = 10;
 
 const Notice = () => {
 	const { t } = useTranslation('cs');
+	const format = useFormat();
 	const [page, setPage] = useState<number>(1);
 	const inquiry: NoticesInquiry = { page: page, limit: LIMIT, search: { noticeCategory: NoticeCategory.NOTICE } };
 
@@ -51,7 +53,7 @@ const Notice = () => {
 								{notice.noticeTitle}
 								<small>{notice.noticeContent}</small>
 							</span>
-							<span className={'notice-date'}>{moment(notice.createdAt).format('DD.MM.YYYY')}</span>
+							<span className={'notice-date'}>{format.date(notice.createdAt, 'short')}</span>
 						</div>
 					))}
 					{notices.length === 0 && !getNoticesLoading && (

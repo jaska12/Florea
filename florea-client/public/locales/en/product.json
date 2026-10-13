@@ -32,7 +32,10 @@
     "helloIAmInterestedIn": "Hello, I am interested in this product.",
     "sendMessage": "Send Message",
     "youMayAlsoLike": "You may also like",
-    "moreBouquetsAndGiftsFrom": "More bouquets and gifts from Florea florists."
+    "moreBouquetsAndGiftsFrom": "More bouquets and gifts from Florea florists.",
+    "inStock": "{{count}} in stock",
+    "reviewsCount_one": "{{count}} review",
+    "reviewsCount_other": "{{count}} reviews"
   },
   "list": {
     "lowestPrice": "Lowest Price",
@@ -42,7 +45,11 @@
     "sortBy": "Sort by",
     "new": "New",
     "closeFilters": "Close filters",
-    "noProductsFound": "No Products found!"
+    "noProductsFound": "No Products found!",
+    "showProducts_one": "Show {{count}} product",
+    "showProducts_other": "Show {{count}} products",
+    "productsTotal_one": "{{count}} product available",
+    "productsTotal_other": "{{count}} products available"
   },
   "filter": {
     "findYourGift": "Find Your Gift",

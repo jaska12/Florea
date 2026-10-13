@@ -74,8 +74,8 @@ const Join: NextPage = () => {
 							<span>Florea</span>
 						</Box>
 						<Box className={'info'}>
-							<span>{loginView ? 'login' : 'signup'}</span>
-							<p>{loginView ? 'Login' : 'Sign'} in with this account across the following sites.</p>
+							<span>{loginView ? t('join.loginWord') : t('join.signupWord')}</span>
+							<p>{loginView ? t('join.loginHint') : t('join.signupHint')}</p>
 						</Box>
 						<Box className={'input-wrap'}>
 							<div className={'input-box'}>

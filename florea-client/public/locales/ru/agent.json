@@ -1,0 +1,18 @@
+{
+  "detail": {
+    "productsTotal_one": "{{count}} товар в продаже",
+    "productsTotal_few": "{{count}} товара в продаже",
+    "productsTotal_many": "{{count}} товаров в продаже",
+    "productsTotal_other": "{{count}} товара в продаже",
+    "reviewsCount_one": "{{count}} отзыв",
+    "reviewsCount_few": "{{count}} отзыва",
+    "reviewsCount_many": "{{count}} отзывов",
+    "reviewsCount_other": "{{count}} отзыва"
+  },
+  "list": {
+    "floristsTotal_one": "{{count}} флорист на Florea",
+    "floristsTotal_few": "{{count}} флориста на Florea",
+    "floristsTotal_many": "{{count}} флористов на Florea",
+    "floristsTotal_other": "{{count}} флориста на Florea"
+  }
+}

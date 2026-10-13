@@ -3,6 +3,7 @@ import { useRouter } from 'next/router';
 import { languageTag } from './locale';
 
 export type DateStyle = 'short' | 'medium' | 'long' | 'full';
+export type DateValue = Date | string | number | null | undefined;
 
 /** numbers, prices and dates written the way the chosen language writes them **/
 export const formatters = (locale?: string) => {
@@ -16,17 +17,18 @@ export const formatters = (locale?: string) => {
 		minimumFractionDigits: 0,
 		maximumFractionDigits: 2,
 	});
-	const toDate = (value: Date | string | number) => (value instanceof Date ? value : new Date(value));
+	// a missing value becomes an invalid date, which every formatter below shows as an empty text
+	const toDate = (value: DateValue) => (value instanceof Date ? value : new Date(value ?? NaN));
 	const valid = (value: Date) => !Number.isNaN(value.getTime());
 	return {
 		number: (value?: number | null): string => whole.format(value ?? 0),
 		price: (value?: number | null): string => money.format(value ?? 0),
-		date: (value: Date | string | number, style: DateStyle = 'medium'): string => {
+		date: (value: DateValue, style: DateStyle = 'medium'): string => {
 			const date = toDate(value);
 			return valid(date) ? new Intl.DateTimeFormat(tag, { dateStyle: style }).format(date) : '';
 		},
 		/** a date with its weekday and no year: "Tuesday, 13 October" **/
-		weekday: (value: Date | string | number, withYear = false): string => {
+		weekday: (value: DateValue, withYear = false): string => {
 			const date = toDate(value);
 			if (!valid(date)) return '';
 			return new Intl.DateTimeFormat(tag, {
@@ -37,7 +39,7 @@ export const formatters = (locale?: string) => {
 			}).format(date);
 		},
 		/** "3 hours ago", "yesterday", in the chosen language **/
-		ago: (value: Date | string | number): string => {
+		ago: (value: DateValue): string => {
 			const date = toDate(value);
 			if (!valid(date)) return '';
 			const seconds = Math.round((date.getTime() - Date.now()) / 1000);
@@ -55,7 +57,25 @@ export const formatters = (locale?: string) => {
 			}
 			return relative.format(0, 'second');
 		},
-		year: (value: Date | string | number): string => {
+		/** a short date with the time: "10/13/26, 2:05 PM" **/
+		dateTime: (value: DateValue): string => {
+			const date = toDate(value);
+			return valid(date) ? new Intl.DateTimeFormat(tag, { dateStyle: 'short', timeStyle: 'short' }).format(date) : '';
+		},
+		/** the day and the month, without the year: "13 October" **/
+		dayMonth: (value: DateValue): string => {
+			const date = toDate(value);
+			return valid(date) ? new Intl.DateTimeFormat(tag, { day: 'numeric', month: 'long' }).format(date) : '';
+		},
+		month: (value: DateValue): string => {
+			const date = toDate(value);
+			return valid(date) ? new Intl.DateTimeFormat(tag, { month: 'long' }).format(date) : '';
+		},
+		day: (value: DateValue): string => {
+			const date = toDate(value);
+			return valid(date) ? String(date.getDate()).padStart(2, '0') : '';
+		},
+		year: (value: DateValue): string => {
 			const date = toDate(value);
 			return valid(date) ? String(date.getFullYear()) : '';
 		},

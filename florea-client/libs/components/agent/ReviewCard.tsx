@@ -1,8 +1,8 @@
+import { useFormat } from '../../i18n/format';
 import { useTranslation } from 'next-i18next';
 import React from 'react';
 import { Stack, Box, Typography } from '@mui/material';
 import { Comment } from '../../types/comment/comment';
-import Moment from 'react-moment';
 import { REACT_APP_API_URL } from '../../config';
 
 interface ReviewCardProps {
@@ -11,6 +11,7 @@ interface ReviewCardProps {
 }
 const ReviewCard = (props: ReviewCardProps) => {
 	const { t } = useTranslation('common');
+	const format = useFormat();
 	const { fromMyPage, comment } = props;
 	const imagePath: string = comment?.memberData?.memberImage
 		? `${REACT_APP_API_URL}/${comment?.memberData?.memberImage}`
@@ -24,7 +25,7 @@ const ReviewCard = (props: ReviewCardProps) => {
 					<div>
 						<strong>{comment.memberData?.memberNick}</strong>
 						<span>
-							<Moment format={'DD MMMM'}>{comment.createdAt}</Moment>
+							{format.dayMonth(comment.createdAt)}
 						</span>
 					</div>
 				</div>

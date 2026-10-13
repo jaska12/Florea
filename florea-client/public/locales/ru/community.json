@@ -1,0 +1,13 @@
+{
+  "detail": {
+    "boards": "Разделы",
+    "commentsCount": "Комментарии ({{count}})"
+  },
+  "list": {
+    "boards": "Разделы",
+    "articlesTotal_one": "{{count}} статья",
+    "articlesTotal_few": "{{count}} статьи",
+    "articlesTotal_many": "{{count}} статей",
+    "articlesTotal_other": "{{count}} статьи"
+  }
+}
