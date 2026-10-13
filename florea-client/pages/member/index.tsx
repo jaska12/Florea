@@ -12,13 +12,13 @@ import { useMutation, useReactiveVar } from '@apollo/client';
 import { sweetErrorHandling, sweetTopSmallSuccessAlert } from '../../libs/sweetAlert';
 import MemberFollowings from '../../libs/components/member/MemberFollowings';
 import { userVar } from '../../apollo/store';
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import { pageTranslations } from '../../libs/i18n/server';
 import { LIKE_TARGET_MEMBER, SUBSCRIBE, UNSUBSCRIBE } from '../../apollo/user/mutation';
 import { Messages } from '../../libs/config';
 
 export const getStaticProps = async ({ locale }: any) => ({
 	props: {
-		...(await serverSideTranslations(locale, ['common'])),
+		...(await pageTranslations(locale, ['member', 'mypage'])),
 	},
 });
 

@@ -7,7 +7,9 @@
   "articles": {
     "success": "success",
     "articles": "Articles",
-    "noArticlesFound": "No Articles found!"
+    "noArticlesFound": "No Articles found!",
+    "total_one": "{{count}} article",
+    "total_other": "{{count}} articles"
   },
   "follows": {
     "followers": "Followers",
@@ -19,7 +21,11 @@
     "following": "Following",
     "unfollow": "Unfollow",
     "follow": "Follow",
-    "noFollowingsYet": "No Followings yet!"
+    "noFollowingsYet": "No Followings yet!",
+    "followersTotal_one": "{{count}} follower",
+    "followersTotal_other": "{{count}} followers",
+    "followingsTotal_one": "Following {{count}} member",
+    "followingsTotal_other": "Following {{count}} members"
   },
   "menu": {
     "unfollow": "Unfollow",
@@ -38,6 +44,8 @@
     "datePublished": "Date Published",
     "status": "Status",
     "view": "View",
-    "noProductFound": "No Product found!"
+    "noProductFound": "No Product found!",
+    "total_one": "{{count}} product",
+    "total_other": "{{count}} products"
   }
 }

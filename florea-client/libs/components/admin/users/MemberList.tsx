@@ -1,3 +1,4 @@
+import { useEnumLabel } from '../../../i18n/labels';
 import { useTranslation } from 'next-i18next';
 import React from 'react';
 import Link from 'next/link';
@@ -141,6 +142,7 @@ interface MemberPanelListType {
 
 export const MemberPanelList = (props: MemberPanelListType) => {
 	const { t } = useTranslation('admin');
+	const enumLabel = useEnumLabel();
 	const { members, anchorEl, menuIconClickHandler, menuIconCloseHandler, updateMemberHandler } = props;
 
 	return (
@@ -185,7 +187,7 @@ export const MemberPanelList = (props: MemberPanelListType) => {
 
 										<TableCell align="center">
 											<Button onClick={(e: any) => menuIconClickHandler(e, index)} className={'badge success'}>
-												{member.memberType}
+												{enumLabel('memberType', member.memberType)}
 											</Button>
 
 											<Menu
@@ -207,7 +209,7 @@ export const MemberPanelList = (props: MemberPanelListType) => {
 															key={type}
 														>
 															<Typography variant={'subtitle1'} component={'span'}>
-																{type}
+																{enumLabel('memberType', type)}
 															</Typography>
 														</MenuItem>
 													))}
@@ -218,7 +220,7 @@ export const MemberPanelList = (props: MemberPanelListType) => {
 										<TableCell align="center">{member.memberBlocks}</TableCell>
 										<TableCell align="center">
 											<Button onClick={(e: any) => menuIconClickHandler(e, member._id)} className={'badge success'}>
-												{member.memberStatus}
+												{enumLabel('memberStatus', member.memberStatus)}
 											</Button>
 
 											<Menu
@@ -240,7 +242,7 @@ export const MemberPanelList = (props: MemberPanelListType) => {
 															key={status}
 														>
 															<Typography variant={'subtitle1'} component={'span'}>
-																{status}
+																{enumLabel('memberStatus', status)}
 															</Typography>
 														</MenuItem>
 													))}

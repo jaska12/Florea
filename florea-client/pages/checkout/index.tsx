@@ -4,7 +4,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { NextPage } from 'next';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import { pageTranslations } from '../../libs/i18n/server';
 import { useMutation, useReactiveVar } from '@apollo/client';
 import moment from 'moment';
 import withLayoutBasic from '../../libs/components/layout/LayoutBasic';
@@ -18,7 +18,7 @@ import CardMessageHelper from '../../libs/components/ai/CardMessageHelper';
 
 export const getStaticProps = async ({ locale }: any) => ({
 	props: {
-		...(await serverSideTranslations(locale, ['common'])),
+		...(await pageTranslations(locale, ['order'])),
 	},
 });
 

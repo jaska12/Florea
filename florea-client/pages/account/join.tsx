@@ -6,11 +6,11 @@ import { Box, Button, Checkbox, FormControlLabel, FormGroup, Stack } from '@mui/
 import { useRouter } from 'next/router';
 import { logIn, signUp } from '../../libs/auth';
 import { sweetMixinErrorAlert } from '../../libs/sweetAlert';
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import { pageTranslations } from '../../libs/i18n/server';
 
 export const getStaticProps = async ({ locale }: any) => ({
 	props: {
-		...(await serverSideTranslations(locale, ['common'])),
+		...(await pageTranslations(locale, ['account'])),
 	},
 });
 

@@ -1,3 +1,4 @@
+import { useEnumLabel } from '../../../i18n/labels';
 import { useTranslation } from 'next-i18next';
 import React from 'react';
 import Link from 'next/link';
@@ -126,6 +127,7 @@ interface ProductPanelListType {
 
 export const ProductPanelList = (props: ProductPanelListType) => {
 	const { t } = useTranslation('admin');
+	const enumLabel = useEnumLabel();
 	const {
 		products,
 		anchorEl,
@@ -180,8 +182,8 @@ export const ProductPanelList = (props: ProductPanelListType) => {
 										</TableCell>
 										<TableCell align="center">{product.productPrice}</TableCell>
 										<TableCell align="center">{product.memberData?.memberNick}</TableCell>
-										<TableCell align="center">{product.productLocation}</TableCell>
-										<TableCell align="center">{product.productType}</TableCell>
+										<TableCell align="center">{enumLabel('productLocation', product.productLocation)}</TableCell>
+										<TableCell align="center">{enumLabel('productType', product.productType)}</TableCell>
 										<TableCell align="center">
 											{product.productStatus === ProductStatus.DELETE && (
 												<Button
@@ -194,13 +196,13 @@ export const ProductPanelList = (props: ProductPanelListType) => {
 											)}
 
 											{product.productStatus === ProductStatus.SOLD && (
-												<Button className={'badge warning'}>{product.productStatus}</Button>
+												<Button className={'badge warning'}>{enumLabel('productStatus', product.productStatus)}</Button>
 											)}
 
 											{product.productStatus === ProductStatus.ACTIVE && (
 												<>
 													<Button onClick={(e: any) => menuIconClickHandler(e, index)} className={'badge success'}>
-														{product.productStatus}
+														{enumLabel('productStatus', product.productStatus)}
 													</Button>
 
 													<Menu
@@ -222,7 +224,7 @@ export const ProductPanelList = (props: ProductPanelListType) => {
 																	key={status}
 																>
 																	<Typography variant={'subtitle1'} component={'span'}>
-																		{status}
+																		{enumLabel('productStatus', status)}
 																	</Typography>
 																</MenuItem>
 															))}

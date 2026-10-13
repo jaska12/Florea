@@ -13,6 +13,13 @@ import OutlinedInput from '@mui/material/OutlinedInput';
 import TablePagination from '@mui/material/TablePagination';
 import CancelRoundedIcon from '@mui/icons-material/CancelRounded';
 import { InquiryList } from '../../../libs/components/admin/cs/InquiryList';
+import { pageTranslations } from '../../../libs/i18n/server';
+
+export const getStaticProps = async ({ locale }: any) => ({
+	props: {
+		...(await pageTranslations(locale, ['admin'])),
+	},
+});
 
 const InquiryArticles: NextPage = (props: any) => {
 	const { t } = useTranslation('admin');

@@ -1,0 +1,24 @@
+{
+  "articles": {
+    "total_one": "{{count}} статья",
+    "total_few": "{{count}} статьи",
+    "total_many": "{{count}} статей",
+    "total_other": "{{count}} статьи"
+  },
+  "follows": {
+    "followersTotal_one": "{{count}} подписчик",
+    "followersTotal_few": "{{count}} подписчика",
+    "followersTotal_many": "{{count}} подписчиков",
+    "followersTotal_other": "{{count}} подписчика",
+    "followingsTotal_one": "{{count}} подписка",
+    "followingsTotal_few": "{{count}} подписки",
+    "followingsTotal_many": "{{count}} подписок",
+    "followingsTotal_other": "{{count}} подписки"
+  },
+  "products": {
+    "total_one": "{{count}} товар",
+    "total_few": "{{count}} товара",
+    "total_many": "{{count}} товаров",
+    "total_other": "{{count}} товара"
+  }
+}

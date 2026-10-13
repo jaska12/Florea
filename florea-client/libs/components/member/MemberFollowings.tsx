@@ -138,7 +138,7 @@ const MemberFollowings = (props: MemberFollowingsProps) => {
 						/>
 					</Stack>
 					<Stack className="total-result">
-						<Typography>{total} followings</Typography>
+						<Typography>{t('follows.followingsTotal', { count: total })}</Typography>
 					</Stack>
 				</Stack>
 			)}

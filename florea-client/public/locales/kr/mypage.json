@@ -1,0 +1,15 @@
+{
+  "articles": {
+    "total_other": "게시글 {{count}}개"
+  },
+  "favorites": {
+    "total_other": "찜한 상품 {{count}}개"
+  },
+  "visited": {
+    "total_other": "최근 본 상품 {{count}}개"
+  },
+  "products": {
+    "total_other": "상품 {{count}}개",
+    "confirmStatus": "상태를 \"{{status}}\"(으)로 변경할까요?"
+  }
+}

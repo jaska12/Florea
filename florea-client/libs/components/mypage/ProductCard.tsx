@@ -1,3 +1,4 @@
+import { useEnumLabel } from '../../i18n/labels';
 import { useFormat } from '../../i18n/format';
 import { useTranslation } from 'next-i18next';
 import { Menu, MenuItem, Stack, Typography } from '@mui/material';
@@ -18,6 +19,7 @@ interface ProductCardProps {
 
 export const ProductCard = (props: ProductCardProps) => {
 	const { t } = useTranslation('mypage');
+	const enumLabel = useEnumLabel();
 	const format = useFormat();
 	const { product, deleteProductHandler, memberPage, updateProductHandler } = props;
 	const router = useRouter();
@@ -70,7 +72,7 @@ export const ProductCard = (props: ProductCardProps) => {
 			<Stack className="status-box">
 				<Stack className="coloured-box" sx={{ background: '#E5F0FD' }} onClick={handleClick}>
 					<Typography className="status" sx={{ color: '#3554d1' }}>
-						{product.productStatus}
+						{enumLabel('productStatus', product.productStatus)}
 					</Typography>
 				</Stack>
 			</Stack>

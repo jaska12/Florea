@@ -1,3 +1,4 @@
+import { useEnumLabel } from '../../../libs/i18n/labels';
 import { useTranslation } from 'next-i18next';
 import React, { useEffect, useState } from 'react';
 import type { NextPage } from 'next';
@@ -20,9 +21,17 @@ import { useMutation, useQuery } from '@apollo/client';
 import { GET_ALL_PRODUCTS_BY_ADMIN } from '../../../apollo/admin/query';
 import { REMOVE_PRODUCT_BY_ADMIN, UPDATE_PRODUCT_BY_ADMIN } from '../../../apollo/admin/mutation';
 import { T } from '../../../libs/types/common';
+import { pageTranslations } from '../../../libs/i18n/server';
+
+export const getStaticProps = async ({ locale }: any) => ({
+	props: {
+		...(await pageTranslations(locale, ['admin'])),
+	},
+});
 
 const AdminProducts: NextPage = ({ initialInquiry, ...props }: any) => {
 	const { t } = useTranslation('admin');
+	const enumLabel = useEnumLabel();
 	const [anchorEl, setAnchorEl] = useState<any>({});
 	const [productsInquiry, setProductsInquiry] = useState<AllProductsInquiry>(initialInquiry);
 	const [products, setProducts] = useState<Product[]>([]);
@@ -202,7 +211,7 @@ const AdminProducts: NextPage = ({ initialInquiry, ...props }: any) => {
 									</MenuItem>
 									{Object.values(ProductLocation).map((location: string) => (
 										<MenuItem value={location} onClick={() => searchTypeHandler(location)} key={location}>
-											{location}
+											{enumLabel('productLocation', location)}
 										</MenuItem>
 									))}
 								</Select>

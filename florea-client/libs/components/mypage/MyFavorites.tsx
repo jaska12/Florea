@@ -95,7 +95,7 @@ const MyFavorites: NextPage = () => {
 					</Stack>
 					<Stack className="total-result">
 						<Typography>
-							Total {total} favorite product{total > 1 ? 's' : ''}
+							{t('favorites.total', { count: total })}
 						</Typography>
 					</Stack>
 				</Stack>

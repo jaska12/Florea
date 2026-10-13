@@ -1,0 +1,12 @@
+{
+  "articles": {
+    "total_other": "게시글 {{count}}개"
+  },
+  "follows": {
+    "followersTotal_other": "팔로워 {{count}}명",
+    "followingsTotal_other": "팔로잉 {{count}}명"
+  },
+  "products": {
+    "total_other": "상품 {{count}}개"
+  }
+}

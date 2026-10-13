@@ -1,3 +1,4 @@
+import { useEnumLabel } from '../../i18n/labels';
 import { useTranslation } from 'next-i18next';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/router';
@@ -18,6 +19,7 @@ import { aiErrorMessage } from '../ai/aiError';
 
 const AddProduct = ({ initialValues, ...props }: any) => {
 	const { t } = useTranslation('mypage');
+	const enumLabel = useEnumLabel();
 	const router = useRouter();
 	const inputRef = useRef<any>(null);
 	const [insertProductData, setInsertProductData] = useState<ProductInput>(initialValues);
@@ -278,7 +280,7 @@ const AddProduct = ({ initialValues, ...props }: any) => {
 										</option>
 										{productType.map((type: any) => (
 											<option value={`${type}`} key={type}>
-												{type}
+												{enumLabel('productType', type)}
 											</option>
 										))}
 									</>
@@ -306,7 +308,7 @@ const AddProduct = ({ initialValues, ...props }: any) => {
 										</option>
 										{productLocation.map((location: any) => (
 											<option value={`${location}`} key={location}>
-												{location}
+												{enumLabel('productLocation', location)}
 											</option>
 										))}
 									</>
@@ -386,7 +388,7 @@ const AddProduct = ({ initialValues, ...props }: any) => {
 									</option>
 									{productOccasion.map((occasion: any) => (
 										<option value={`${occasion}`} key={occasion}>
-											{occasion}
+											{enumLabel('productOccasion', occasion)}
 										</option>
 									))}
 								</select>
@@ -409,7 +411,7 @@ const AddProduct = ({ initialValues, ...props }: any) => {
 									</option>
 									{productSize.map((size: any) => (
 										<option value={`${size}`} key={size}>
-											{size}
+											{enumLabel('productSize', size)}
 										</option>
 									))}
 								</select>

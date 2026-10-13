@@ -108,7 +108,7 @@ const MemberArticles: NextPage = ({ initialInput, ...props }: any) => {
 						/>
 					</Stack>
 					<Stack className="total-result">
-						<Typography>{total} product available</Typography>
+						<Typography>{t('articles.total', { count: total })}</Typography>
 					</Stack>
 				</Stack>
 			)}

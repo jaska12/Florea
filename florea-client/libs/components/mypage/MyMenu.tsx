@@ -1,3 +1,4 @@
+import { useEnumLabel } from '../../i18n/labels';
 import { useTranslation } from 'next-i18next';
 import React from 'react';
 import { useRouter } from 'next/router';
@@ -15,6 +16,7 @@ import StorefrontOutlinedIcon from '@mui/icons-material/StorefrontOutlined';
 
 const MyMenu = () => {
 	const { t } = useTranslation('mypage');
+	const enumLabel = useEnumLabel();
 	const router = useRouter();
 	const pathname = router.query.category ?? 'myProfile';
 	const category: any = router.query?.category ?? 'myProfile';
@@ -50,10 +52,10 @@ const MyMenu = () => {
 					</Box>
 					{user?.memberType === 'ADMIN' ? (
 						<a href="/_admin/users" target={'_blank'}>
-							<Typography className={'view-list'}>{user?.memberType}</Typography>
+							<Typography className={'view-list'}>{enumLabel('memberType', user?.memberType)}</Typography>
 						</a>
 					) : (
-						<Typography className={'view-list'}>{user?.memberType}</Typography>
+						<Typography className={'view-list'}>{enumLabel('memberType', user?.memberType)}</Typography>
 					)}
 				</Stack>
 			</Stack>

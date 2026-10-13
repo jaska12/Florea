@@ -1,3 +1,4 @@
+import { useEnumLabel } from '../../i18n/labels';
 import { useTranslation } from 'next-i18next';
 import React, { useState } from 'react';
 import { NextPage } from 'next';
@@ -16,6 +17,7 @@ import { sweetConfirmAlert, sweetErrorHandling } from '../../sweetAlert';
 
 const MyProducts: NextPage = ({ initialInput, ...props }: any) => {
 	const { t } = useTranslation('mypage');
+	const enumLabel = useEnumLabel();
 	const [searchFilter, setSearchFilter] = useState<AgentProductsInquiry>(initialInput);
 	const [agentProducts, setAgentProducts] = useState<Product[]>([]);
 	const [total, setTotal] = useState<number>(0);
@@ -69,7 +71,7 @@ const MyProducts: NextPage = ({ initialInput, ...props }: any) => {
 
 	const updateProductHandler = async (status: string, id: string) => {
 		try {
-			if (await sweetConfirmAlert(`are you sure change to ${status} status?`)) {
+			if (await sweetConfirmAlert(t('products.confirmStatus', { status: enumLabel('productStatus', status) }))) {
 				await updateProduct({
 					variables: {
 						input: {
@@ -151,7 +153,7 @@ const MyProducts: NextPage = ({ initialInput, ...props }: any) => {
 								/>
 							</Stack>
 							<Stack className="total-result">
-								<Typography>{total} product available</Typography>
+								<Typography>{t('products.total', { count: total })}</Typography>
 							</Stack>
 						</Stack>
 					)}

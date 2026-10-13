@@ -7,6 +7,7 @@ import { ApolloProvider } from '@apollo/client';
 import { useApollo } from '../apollo/client';
 import { appWithTranslation } from 'next-i18next';
 import { loadCart } from '../libs/cart';
+import { useLocaleMemory } from '../libs/i18n/memory';
 import '../scss/app.scss';
 import '../scss/pc/main.scss';
 import '../scss/theme/florea.scss';
@@ -20,6 +21,8 @@ const App = ({ Component, pageProps }: AppProps) => {
 	// @ts-ignore
 	const [theme, setTheme] = useState(createTheme(light));
 	const client = useApollo(pageProps.initialApolloState);
+	// the language chosen last time is used when the site is opened at an address without one
+	useLocaleMemory();
 
 	useEffect(() => {
 		loadCart();

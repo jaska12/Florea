@@ -4,7 +4,7 @@ import React from 'react';
 import { NextPage } from 'next';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import { pageTranslations } from '../../libs/i18n/server';
 import { useQuery, useReactiveVar } from '@apollo/client';
 import moment from 'moment';
 import CheckRoundedIcon from '@mui/icons-material/CheckRounded';
@@ -16,7 +16,7 @@ import { Order } from '../../libs/types/order/order';
 
 export const getStaticProps = async ({ locale }: any) => ({
 	props: {
-		...(await serverSideTranslations(locale, ['common'])),
+		...(await pageTranslations(locale, ['order'])),
 	},
 });
 

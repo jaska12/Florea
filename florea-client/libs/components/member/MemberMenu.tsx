@@ -1,3 +1,4 @@
+import { useEnumLabel } from '../../i18n/labels';
 import { useTranslation } from 'next-i18next';
 import React, { useState } from 'react';
 import { useRouter } from 'next/router';
@@ -15,6 +16,7 @@ interface MemberMenuProps {
 
 const MemberMenu = (props: MemberMenuProps) => {
 	const { t } = useTranslation('member');
+	const enumLabel = useEnumLabel();
 	const { subscribeHandler, unsubscribeHandler } = props;
 	const router = useRouter();
 	const category: any = router.query?.category;
@@ -52,7 +54,7 @@ const MemberMenu = (props: MemberMenuProps) => {
 						<img src={'/img/icons/call.svg'} alt={'icon'} />
 						<Typography className={'p-number'}>{member?.memberPhone}</Typography>
 					</Box>
-					<Typography className={'view-list'}>{member?.memberType}</Typography>
+					<Typography className={'view-list'}>{enumLabel('memberType', member?.memberType)}</Typography>
 				</Stack>
 			</Stack>
 			<Stack className="follow-button-box">

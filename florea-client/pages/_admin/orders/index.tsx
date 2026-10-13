@@ -33,6 +33,13 @@ import {
 } from '../../../libs/enums/order.enum';
 import { orderNumber } from '../../../libs/components/order/OrderCard';
 import { sweetConfirmAlert, sweetErrorHandling, sweetTopSmallSuccessAlert } from '../../../libs/sweetAlert';
+import { pageTranslations } from '../../../libs/i18n/server';
+
+export const getStaticProps = async ({ locale }: any) => ({
+	props: {
+		...(await pageTranslations(locale, ['admin', 'order'])),
+	},
+});
 
 const TABS: (OrderStatus | 'ALL')[] = ['ALL', ...orderStatusFlow, OrderStatus.CANCELLED];
 

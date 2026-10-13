@@ -42,13 +42,17 @@
     "weAreGladToSee": "We are glad to see you again!",
     "noArticlesFound": "No Articles found!",
     "writeAnArticle": "Write an Article",
-    "feelFreeToWriteYour": "Feel free to write your ideas!"
+    "feelFreeToWriteYour": "Feel free to write your ideas!",
+    "total_one": "{{count}} article",
+    "total_other": "{{count}} articles"
   },
   "favorites": {
     "success": "success",
     "myFavorites": "My Favorites",
     "weAreGladToSee": "We are glad to see you again!",
-    "noFavoritesFound": "No Favorites found!"
+    "noFavoritesFound": "No Favorites found!",
+    "total_one": "{{count}} favourite product",
+    "total_other": "{{count}} favourite products"
   },
   "menu": {
     "doYouWantToLogout": "Do you want to logout?",
@@ -80,7 +84,10 @@
     "view": "View",
     "action": "Action",
     "noProductFound": "No Product found!",
-    "sold": "Sold"
+    "sold": "Sold",
+    "total_one": "{{count}} product",
+    "total_other": "{{count}} products",
+    "confirmStatus": "Change the status to \"{{status}}\"?"
   },
   "profile": {
     "informationUpdatedSuccessfully": "Information updated successfully.",
@@ -100,6 +107,8 @@
   "visited": {
     "recentlyVisited": "Recently Visited",
     "weAreGladToSee": "We are glad to see you again!",
-    "noRecentlyVisitedProductsFound": "No Recently Visited Products found!"
+    "noRecentlyVisitedProductsFound": "No Recently Visited Products found!",
+    "total_one": "{{count}} recently visited product",
+    "total_other": "{{count}} recently visited products"
   }
 }

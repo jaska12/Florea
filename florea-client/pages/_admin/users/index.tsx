@@ -22,6 +22,13 @@ import { useMutation, useQuery } from '@apollo/client';
 import { GET_ALL_MEMBERS_BY_ADMIN } from '../../../apollo/admin/query';
 import { UPDATE_MEMBER_BY_ADMIN } from '../../../apollo/admin/mutation';
 import { T } from '../../../libs/types/common';
+import { pageTranslations } from '../../../libs/i18n/server';
+
+export const getStaticProps = async ({ locale }: any) => ({
+	props: {
+		...(await pageTranslations(locale, ['admin'])),
+	},
+});
 
 const AdminUsers: NextPage = ({ initialInquiry, ...props }: any) => {
 	const { t } = useTranslation('admin');

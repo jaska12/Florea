@@ -1,3 +1,4 @@
+import { useEnumLabel } from '../../../libs/i18n/labels';
 import { useTranslation } from 'next-i18next';
 import React, { useEffect, useState } from 'react';
 import type { NextPage } from 'next';
@@ -20,9 +21,17 @@ import { useMutation, useQuery } from '@apollo/client';
 import { GET_ALL_BOARD_ARTICLES_BY_ADMIN } from '../../../apollo/admin/query';
 import { REMOVE_BOARD_ARTICLE_BY_ADMIN, UPDATE_BOARD_ARTICLE_BY_ADMIN } from '../../../apollo/admin/mutation';
 import { T } from '../../../libs/types/common';
+import { pageTranslations } from '../../../libs/i18n/server';
+
+export const getStaticProps = async ({ locale }: any) => ({
+	props: {
+		...(await pageTranslations(locale, ['admin'])),
+	},
+});
 
 const AdminCommunity: NextPage = ({ initialInquiry, ...props }: any) => {
 	const { t } = useTranslation('admin');
+	const enumLabel = useEnumLabel();
 	const [anchorEl, setAnchorEl] = useState<any>({});
 	const [communityInquiry, setCommunityInquiry] = useState<AllBoardArticlesInquiry>(initialInquiry);
 	const [articles, setArticles] = useState<BoardArticle[]>([]);
@@ -195,7 +204,7 @@ const AdminCommunity: NextPage = ({ initialInquiry, ...props }: any) => {
 									</MenuItem>
 									{Object.values(BoardArticleCategory).map((category: string) => (
 										<MenuItem value={category} onClick={() => searchTypeHandler(category)} key={category}>
-											{category}
+											{enumLabel('articleCategory', category)}
 										</MenuItem>
 									))}
 								</Select>

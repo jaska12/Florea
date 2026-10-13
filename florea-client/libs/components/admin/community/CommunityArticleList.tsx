@@ -1,3 +1,4 @@
+import { useEnumLabel } from '../../../i18n/labels';
 import { useFormat } from '../../../i18n/format';
 import { useTranslation } from 'next-i18next';
 import React from 'react';
@@ -132,6 +133,7 @@ interface CommunityArticleListProps {
 
 const CommunityArticleList = (props: CommunityArticleListProps) => {
 	const { t } = useTranslation('admin');
+	const enumLabel = useEnumLabel();
 	const format = useFormat();
 	const { articles, anchorEl, menuIconClickHandler, menuIconCloseHandler, updateArticleHandler, removeArticleHandler } =
 		props;
@@ -170,7 +172,7 @@ const CommunityArticleList = (props: CommunityArticleListProps) => {
 											</Link>
 										</Box>
 									</TableCell>
-									<TableCell align="left">{article.articleCategory}</TableCell>
+									<TableCell align="left">{enumLabel('articleCategory', article.articleCategory)}</TableCell>
 									<TableCell align="left" className={'name'}>
 										<Link href={`/member?memberId=${article?.memberData?._id}`}>
 											<Avatar
@@ -202,7 +204,7 @@ const CommunityArticleList = (props: CommunityArticleListProps) => {
 										) : (
 											<>
 												<Button onClick={(e: any) => menuIconClickHandler(e, index)} className={'badge success'}>
-													{article.articleStatus}
+													{enumLabel('articleStatus', article.articleStatus)}
 												</Button>
 
 												<Menu
@@ -224,7 +226,7 @@ const CommunityArticleList = (props: CommunityArticleListProps) => {
 																key={status}
 															>
 																<Typography variant={'subtitle1'} component={'span'}>
-																	{status}
+																	{enumLabel('articleStatus', status)}
 																</Typography>
 															</MenuItem>
 														))}

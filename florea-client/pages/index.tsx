@@ -5,11 +5,11 @@ import Bestsellers from '../libs/components/homepage/Bestsellers';
 import SameDayFeature from '../libs/components/homepage/SameDayFeature';
 import TopAgents from '../libs/components/homepage/TopAgents';
 import CommunityBoards from '../libs/components/homepage/CommunityBoards';
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import { pageTranslations } from '../libs/i18n/server';
 
 export const getStaticProps = async ({ locale }: any) => ({
 	props: {
-		...(await serverSideTranslations(locale, ['common'])),
+		...(await pageTranslations(locale, ['home'])),
 	},
 });
 
