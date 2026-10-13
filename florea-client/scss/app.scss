@@ -8,6 +8,13 @@ html[lang='ru'] {
 	--title-case: none;
 }
 
+// Korean text may be broken between any two syllables, which splits a word and its particle ("꽃 / 과").
+// Lines break at spaces instead; a word longer than its box may still be broken.
+html[lang='ko'] body {
+	word-break: keep-all;
+	overflow-wrap: break-word;
+}
+
 a {
 	white-space: nowrap;
 	text-decoration: none;
