@@ -18,7 +18,19 @@
     "separateOrdersNote_one": "В корзине товары {{count}} флориста, поэтому получится {{count}} заказ.",
     "separateOrdersNote_few": "В корзине товары {{count}} флористов. Каждый доставляет отдельно, поэтому получится {{count}} заказа.",
     "separateOrdersNote_many": "В корзине товары {{count}} флористов. Каждый доставляет отдельно, поэтому получится {{count}} заказов.",
-    "separateOrdersNote_other": "В корзине товары {{count}} флористов. Каждый доставляет отдельно, поэтому получится {{count}} заказа."
+    "separateOrdersNote_other": "В корзине товары {{count}} флористов. Каждый доставляет отдельно, поэтому получится {{count}} заказа.",
+    "yourCartIsEmpty": "Корзина пуста",
+    "chooseABouquetAPlant": "Выберите букет, растение или подарочный набор — они будут ждать вас здесь.",
+    "browseFlowersAndGifts": "Смотреть цветы и подарки",
+    "freeDelivery": "Бесплатная доставка",
+    "oneLess": "Уменьшить",
+    "oneMore": "Увеличить",
+    "continueShopping": "← Продолжить покупки",
+    "summary": "Ваш заказ",
+    "free": "Бесплатно",
+    "total": "Итого",
+    "checkout": "Оформить заказ",
+    "cashOnDeliveryYouPay": "Оплата при получении: вы платите, когда заказ доставлен."
   },
   "checkout": {
     "error": {
@@ -35,7 +47,35 @@
     "deliveryFromFlorists_one": "Доставка ({{count}} флорист)",
     "deliveryFromFlorists_few": "Доставка ({{count}} флориста)",
     "deliveryFromFlorists_many": "Доставка ({{count}} флористов)",
-    "deliveryFromFlorists_other": "Доставка ({{count}} флориста)"
+    "deliveryFromFlorists_other": "Доставка ({{count}} флориста)",
+    "theOrderCouldNotBe": "Не удалось оформить заказ. Попробуйте ещё раз.",
+    "logInToPlaceYour": "Войдите, чтобы оформить заказ",
+    "yourCartIsSavedIn": "Корзина сохранена в этом браузере и никуда не денется, пока вы входите.",
+    "logInOrSignUp": "Войти или зарегистрироваться",
+    "thereIsNothingToCheck": "Оформлять пока нечего",
+    "yourCartIsEmpty": "Ваша корзина пуста.",
+    "browseFlowersAndGifts": "Смотреть цветы и подарки",
+    "whoReceivesIt": "Получатель",
+    "recipientName": "Имя получателя",
+    "thePersonWhoWillReceive": "Кто получит заказ",
+    "recipientPhone": "Телефон получателя",
+    "whereAndWhen": "Куда и когда",
+    "deliveryAddress": "Адрес доставки",
+    "streetBuildingUnit": "Улица, дом, квартира",
+    "deliveryDate": "Дата доставки",
+    "deliveryTime": "Время доставки",
+    "giftCardMessage": "Текст открытки",
+    "optional": "необязательно",
+    "aFewWordsToPrint": "Несколько слов, которые напечатают на открытке",
+    "backToCart": "← Назад в корзину",
+    "yourOrder": "Ваш заказ",
+    "items": "Товары",
+    "free": "Бесплатно",
+    "total": "Итого",
+    "editTheCart": "Изменить корзину",
+    "placingYourOrder": "Оформляем заказ…",
+    "placeOrder": "Оформить заказ",
+    "cashOnDeliveryYouPay": "Оплата при получении: вы платите, когда заказ доставлен."
   },
   "complete": {
     "title_one": "Ваш заказ оформлен",
@@ -55,7 +95,10 @@
     "itemsFrom_few": "{{count}} товара от {{name}}",
     "itemsFrom_many": "{{count}} товаров от {{name}}",
     "itemsFrom_other": "{{count}} товара от {{name}}",
-    "to": "Получатель: {{name}}, {{address}}"
+    "to": "Получатель: {{name}}, {{address}}",
+    "toPayOnDelivery": "К оплате при получении:",
+    "followMyOrders": "Мои заказы",
+    "continueShopping": "Продолжить покупки"
   },
   "card": {
     "moreItems": "ещё {{count}}",
@@ -70,7 +113,21 @@
       "PREPARING": "Начать подготовку",
       "OUT_FOR_DELIVERY": "Передать в доставку",
       "DELIVERED": "Отметить доставленным"
-    }
+    },
+    "order": "Заказ",
+    "items": "Товары",
+    "product": "Товар",
+    "delivery": "Доставка",
+    "free": "Бесплатно",
+    "totalCashOnDelivery": "Итого · оплата при получении",
+    "recipient": "Получатель",
+    "address": "Адрес",
+    "when": "Когда",
+    "cardMessage": "Текст открытки",
+    "florist": "Флорист",
+    "buyer": "Покупатель",
+    "cancelOrder": "Отменить заказ",
+    "theFloristIsWorkingOn": "Флорист уже собирает этот заказ. Чтобы изменить или отменить его, позвоните флористу."
   },
   "panel": {
     "markedAs": {
@@ -86,9 +143,19 @@
       "OUT_FOR_DELIVERY": "Заказов в доставке нет",
       "DELIVERED": "Доставленных заказов нет",
       "CANCELLED": "Отменённых заказов нет"
-    }
+    },
+    "cancelThisOrder": "Отменить этот заказ?",
+    "orderCancelled": "Заказ отменён",
+    "shopOrders": "Заказы магазина",
+    "myOrders": "Мои заказы",
+    "ordersPlacedForYourProducts": "Заказы на ваши товары. Меняйте статус по мере работы.",
+    "followYourOrdersFromThe": "Следите за заказом — от мастерской до двери.",
+    "all": "Все",
+    "noOrdersYet": "Заказов пока нет",
+    "browseFlowersAndGifts": "Смотреть цветы и подарки"
   },
   "timeline": {
-    "status": "Статус заказа: {{status}}"
+    "status": "Статус заказа: {{status}}",
+    "thisOrderWasCancelledThe": "Заказ отменён. Товары вернулись в магазин."
   }
 }

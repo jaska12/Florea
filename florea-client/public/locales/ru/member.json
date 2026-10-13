@@ -3,7 +3,10 @@
     "total_one": "{{count}} статья",
     "total_few": "{{count}} статьи",
     "total_many": "{{count}} статей",
-    "total_other": "{{count}} статьи"
+    "total_other": "{{count}} статьи",
+    "success": "Готово",
+    "articles": "Статьи",
+    "noArticlesFound": "Статей пока нет."
   },
   "follows": {
     "followersTotal_one": "{{count}} подписчик",
@@ -13,12 +16,44 @@
     "followingsTotal_one": "{{count}} подписка",
     "followingsTotal_few": "{{count}} подписки",
     "followingsTotal_many": "{{count}} подписок",
-    "followingsTotal_other": "{{count}} подписки"
+    "followingsTotal_other": "{{count}} подписки",
+    "followers": "Подписчики",
+    "followings": "Подписки",
+    "name": "Имя",
+    "details": "Информация",
+    "subscription": "Подписка",
+    "noFollowersYet": "Подписчиков пока нет.",
+    "following": "Вы подписаны",
+    "unfollow": "Отписаться",
+    "follow": "Подписаться",
+    "noFollowingsYet": "Подписок пока нет."
   },
   "products": {
     "total_one": "{{count}} товар",
     "total_few": "{{count}} товара",
     "total_many": "{{count}} товаров",
-    "total_other": "{{count}} товара"
+    "total_other": "{{count}} товара",
+    "products": "Товары",
+    "listingTitle": "Название",
+    "datePublished": "Дата публикации",
+    "status": "Статус",
+    "view": "Просмотры",
+    "noProductFound": "Товаров пока нет."
+  },
+  "page": {
+    "subscribed": "Вы подписались!",
+    "unsubscribed": "Вы отписались!",
+    "liked": "Добавлено в избранное!"
+  },
+  "menu": {
+    "unfollow": "Отписаться",
+    "following": "Вы подписаны",
+    "follow": "Подписаться",
+    "details": "Информация",
+    "products": "Товары",
+    "followers": "Подписчики",
+    "followings": "Подписки",
+    "community": "Сообщество",
+    "articles": "Статьи"
   }
 }

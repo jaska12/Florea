@@ -1,27 +1,27 @@
 {
   "page": {
-    "subscribed": "Subscribed!",
-    "unsubscribed": "Unsubscribed!",
+    "subscribed": "You are now following!",
+    "unsubscribed": "You no longer follow!",
     "liked": "Liked!"
   },
   "articles": {
-    "success": "success",
+    "success": "Done",
     "articles": "Articles",
-    "noArticlesFound": "No Articles found!",
+    "noArticlesFound": "No articles yet.",
     "total_one": "{{count}} article",
     "total_other": "{{count}} articles"
   },
   "follows": {
     "followers": "Followers",
-    "followings": "Followings",
+    "followings": "Following",
     "name": "Name",
     "details": "Details",
     "subscription": "Subscription",
-    "noFollowersYet": "No Followers yet!",
+    "noFollowersYet": "No followers yet.",
     "following": "Following",
     "unfollow": "Unfollow",
     "follow": "Follow",
-    "noFollowingsYet": "No Followings yet!",
+    "noFollowingsYet": "Not following anyone yet.",
     "followersTotal_one": "{{count}} follower",
     "followersTotal_other": "{{count}} followers",
     "followingsTotal_one": "Following {{count}} member",
@@ -34,17 +34,17 @@
     "details": "Details",
     "products": "Products",
     "followers": "Followers",
-    "followings": "Followings",
+    "followings": "Following",
     "community": "Community",
     "articles": "Articles"
   },
   "products": {
     "products": "Products",
-    "listingTitle": "Listing title",
-    "datePublished": "Date Published",
+    "listingTitle": "Product",
+    "datePublished": "Date published",
     "status": "Status",
-    "view": "View",
-    "noProductFound": "No Product found!",
+    "view": "Views",
+    "noProductFound": "No products yet.",
     "total_one": "{{count}} product",
     "total_other": "{{count}} products"
   }

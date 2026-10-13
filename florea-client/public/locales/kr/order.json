@@ -9,7 +9,19 @@
     "itemsCount_other": "상품 {{count}}개",
     "delivery": "배송비",
     "deliveryFromFlorists_other": "배송비 (플로리스트 {{count}}곳)",
-    "separateOrdersNote_other": "장바구니에 플로리스트 {{count}}곳의 상품이 담겨 있습니다. 플로리스트마다 따로 배송하므로 주문이 {{count}}건으로 나뉩니다."
+    "separateOrdersNote_other": "장바구니에 플로리스트 {{count}}곳의 상품이 담겨 있습니다. 플로리스트마다 따로 배송하므로 주문이 {{count}}건으로 나뉩니다.",
+    "yourCartIsEmpty": "장바구니가 비어 있습니다",
+    "chooseABouquetAPlant": "꽃다발, 식물, 선물 박스를 담아 두면 이곳에서 기다리고 있을게요.",
+    "browseFlowersAndGifts": "꽃과 선물 둘러보기",
+    "freeDelivery": "무료 배송",
+    "oneLess": "하나 줄이기",
+    "oneMore": "하나 늘리기",
+    "continueShopping": "← 쇼핑 계속하기",
+    "summary": "주문 요약",
+    "free": "무료",
+    "total": "합계",
+    "checkout": "주문하기",
+    "cashOnDeliveryYouPay": "수령 시 결제. 주문이 도착하면 결제하시면 됩니다."
   },
   "checkout": {
     "error": {
@@ -23,7 +35,35 @@
     "fromFlorist": "{{name}}의 상품",
     "thisFlorist": "이 플로리스트",
     "delivery": "배송비",
-    "deliveryFromFlorists_other": "배송비 (플로리스트 {{count}}곳)"
+    "deliveryFromFlorists_other": "배송비 (플로리스트 {{count}}곳)",
+    "theOrderCouldNotBe": "주문을 완료하지 못했습니다. 다시 시도해 주세요.",
+    "logInToPlaceYour": "주문하려면 로그인해 주세요",
+    "yourCartIsSavedIn": "장바구니는 이 브라우저에 저장되어 있어, 돌아오셔도 그대로 남아 있습니다.",
+    "logInOrSignUp": "로그인 또는 회원가입",
+    "thereIsNothingToCheck": "주문할 상품이 없습니다",
+    "yourCartIsEmpty": "장바구니가 비어 있습니다.",
+    "browseFlowersAndGifts": "꽃과 선물 둘러보기",
+    "whoReceivesIt": "받는 분",
+    "recipientName": "받는 분 이름",
+    "thePersonWhoWillReceive": "주문을 받으실 분",
+    "recipientPhone": "받는 분 전화번호",
+    "whereAndWhen": "배송지와 시간",
+    "deliveryAddress": "배송 주소",
+    "streetBuildingUnit": "도로명, 건물, 호수",
+    "deliveryDate": "배송 날짜",
+    "deliveryTime": "배송 시간",
+    "giftCardMessage": "카드 메시지",
+    "optional": "선택",
+    "aFewWordsToPrint": "카드에 인쇄할 짧은 메시지",
+    "backToCart": "← 장바구니로 돌아가기",
+    "yourOrder": "주문 내역",
+    "items": "상품",
+    "free": "무료",
+    "total": "합계",
+    "editTheCart": "장바구니 수정",
+    "placingYourOrder": "주문 처리 중…",
+    "placeOrder": "주문 완료하기",
+    "cashOnDeliveryYouPay": "수령 시 결제. 주문이 도착하면 결제하시면 됩니다."
   },
   "complete": {
     "title_other": "주문이 완료되었습니다",
@@ -31,7 +71,10 @@
     "orderNumber": "주문 {{number}}",
     "itemsCount_other": "상품 {{count}}개",
     "itemsFrom_other": "{{name}}의 상품 {{count}}개",
-    "to": "받는 분: {{name}}, {{address}}"
+    "to": "받는 분: {{name}}, {{address}}",
+    "toPayOnDelivery": "수령 시 결제 금액:",
+    "followMyOrders": "내 주문 확인하기",
+    "continueShopping": "쇼핑 계속하기"
   },
   "card": {
     "moreItems": "외 {{count}}개",
@@ -43,7 +86,21 @@
       "PREPARING": "준비 중으로 변경",
       "OUT_FOR_DELIVERY": "배송 중으로 변경",
       "DELIVERED": "배송 완료로 변경"
-    }
+    },
+    "order": "주문",
+    "items": "상품",
+    "product": "상품",
+    "delivery": "배송비",
+    "free": "무료",
+    "totalCashOnDelivery": "합계 · 수령 시 결제",
+    "recipient": "받는 분",
+    "address": "주소",
+    "when": "배송 일시",
+    "cardMessage": "카드 메시지",
+    "florist": "플로리스트",
+    "buyer": "주문자",
+    "cancelOrder": "주문 취소",
+    "theFloristIsWorkingOn": "플로리스트가 이 주문을 준비하고 있습니다. 변경이나 취소는 플로리스트에게 전화로 문의해 주세요."
   },
   "panel": {
     "markedAs": {
@@ -59,9 +116,19 @@
       "OUT_FOR_DELIVERY": "배송 중인 주문이 없습니다",
       "DELIVERED": "배송 완료된 주문이 없습니다",
       "CANCELLED": "취소된 주문이 없습니다"
-    }
+    },
+    "cancelThisOrder": "이 주문을 취소할까요?",
+    "orderCancelled": "주문이 취소되었습니다",
+    "shopOrders": "가게 주문",
+    "myOrders": "내 주문",
+    "ordersPlacedForYourProducts": "내 상품에 들어온 주문입니다. 작업 단계에 맞춰 상태를 바꿔 주세요.",
+    "followYourOrdersFromThe": "가게에서 문 앞까지, 주문 진행 상황을 확인하세요.",
+    "all": "전체",
+    "noOrdersYet": "아직 주문이 없습니다",
+    "browseFlowersAndGifts": "꽃과 선물 둘러보기"
   },
   "timeline": {
-    "status": "주문 상태: {{status}}"
+    "status": "주문 상태: {{status}}",
+    "thisOrderWasCancelledThe": "취소된 주문입니다. 상품은 가게 재고로 돌아갔습니다."
   }
 }

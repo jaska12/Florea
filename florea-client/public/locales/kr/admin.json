@@ -1,7 +1,18 @@
 {
   "orders": {
     "cancelOrder": "주문 {{number}}을(를) 취소할까요?",
-    "statusOf": "주문 {{number}}의 상태"
+    "statusOf": "주문 {{number}}의 상태",
+    "orderList": "주문 목록",
+    "all": "전체",
+    "order": "주문",
+    "placed": "주문일",
+    "buyer": "주문자",
+    "florist": "플로리스트",
+    "items": "상품",
+    "total": "합계",
+    "delivery": "배송",
+    "status": "상태",
+    "dataNotFound": "데이터가 없습니다."
   },
   "notices": {
     "error": {
@@ -22,7 +33,40 @@
         "faq": "질문 수정",
         "notice": "공지 수정"
       }
-    }
+    },
+    "chooseTheTopicThisQuestion": "이 질문이 속한 주제를 선택해 주세요.",
+    "saved": "저장되었습니다",
+    "added": "추가되었습니다",
+    "itCouldNotBeSaved": "저장하지 못했습니다. 다시 시도해 주세요.",
+    "removeThisEntryForGood": "이 항목을 완전히 삭제할까요?",
+    "faqManagement": "자주 묻는 질문 관리",
+    "noticeManagement": "공지사항 관리",
+    "add": "추가",
+    "all": "전체",
+    "topic": "주제",
+    "allTopics": "모든 주제",
+    "searchInQuestions": "질문에서 검색",
+    "searchInTitles": "제목에서 검색",
+    "topic2": "주제",
+    "mark": "표시",
+    "question": "질문",
+    "title": "제목",
+    "writer": "작성자",
+    "date": "날짜",
+    "status": "상태",
+    "action": "관리",
+    "dataNotFound": "데이터가 없습니다.",
+    "event": "이벤트",
+    "chooseATopic": "주제 선택",
+    "question2": "질문",
+    "title2": "제목",
+    "answer": "답변",
+    "text": "내용",
+    "status2": "상태",
+    "showWithTheEventMark": "“이벤트” 표시와 함께 보여 주기",
+    "cancel": "취소",
+    "saving": "저장 중…",
+    "save": "저장"
   },
   "menu": {
     "item": {
@@ -48,7 +92,17 @@
       "warning": "경고",
       "block": "차단",
       "state": "상태"
-    }
+    },
+    "memberList": "회원 목록",
+    "all": "전체",
+    "active": "활성",
+    "blocked": "차단",
+    "deleted": "삭제",
+    "searchUserName": "회원 이름 검색",
+    "user": "일반 회원",
+    "agent": "플로리스트",
+    "admin": "관리자",
+    "dataNotFound": "데이터가 없습니다."
   },
   "products": {
     "table": {
@@ -59,7 +113,15 @@
       "location": "지역",
       "type": "유형",
       "status": "상태"
-    }
+    },
+    "areYouSureToRemove": "정말 삭제할까요?",
+    "productList": "상품 목록",
+    "all": "전체",
+    "active": "판매 중",
+    "sold": "판매 완료",
+    "delete": "삭제됨",
+    "all2": "전체",
+    "dataNotFound": "데이터가 없습니다."
   },
   "community": {
     "table": {
@@ -71,7 +133,15 @@
       "likes": "좋아요",
       "date": "등록일",
       "status": "상태"
-    }
+    },
+    "areYouSureToRemove": "정말 삭제할까요?",
+    "arricleList": "게시글 목록",
+    "all": "전체",
+    "active": "게시 중",
+    "delete": "삭제됨",
+    "all2": "전체",
+    "dataNotFound": "데이터가 없습니다.",
+    "openWindow": "새 창에서 열기"
   },
   "inquiry": {
     "table": {
@@ -80,7 +150,14 @@
       "writer": "작성자",
       "date": "날짜",
       "status": "상태"
-    }
+    },
+    "11InquiryManagement": "1:1 문의 관리",
+    "all0": "전체 (0)",
+    "active0": "활성 (0)",
+    "blocked0": "차단 (0)",
+    "deleted0": "삭제 (0)",
+    "searchUserName": "회원 이름 검색",
+    "dataNotFound": "데이터가 없습니다."
   },
   "layout": {
     "openMenu": "메뉴 열기",

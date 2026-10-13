@@ -1,7 +1,18 @@
 {
   "orders": {
     "cancelOrder": "Отменить заказ {{number}}?",
-    "statusOf": "Статус заказа {{number}}"
+    "statusOf": "Статус заказа {{number}}",
+    "orderList": "Заказы",
+    "all": "Все",
+    "order": "ЗАКАЗ",
+    "placed": "ОФОРМЛЕН",
+    "buyer": "ПОКУПАТЕЛЬ",
+    "florist": "ФЛОРИСТ",
+    "items": "ТОВАРЫ",
+    "total": "ИТОГО",
+    "delivery": "ДОСТАВКА",
+    "status": "СТАТУС",
+    "dataNotFound": "Ничего не найдено."
   },
   "notices": {
     "error": {
@@ -22,7 +33,40 @@
         "faq": "Изменить вопрос",
         "notice": "Изменить объявление"
       }
-    }
+    },
+    "chooseTheTopicThisQuestion": "Выберите тему, к которой относится вопрос.",
+    "saved": "Сохранено",
+    "added": "Добавлено",
+    "itCouldNotBeSaved": "Не удалось сохранить. Попробуйте ещё раз.",
+    "removeThisEntryForGood": "Удалить эту запись навсегда?",
+    "faqManagement": "Вопросы и ответы",
+    "noticeManagement": "Объявления",
+    "add": "ДОБАВИТЬ",
+    "all": "Все",
+    "topic": "Тема",
+    "allTopics": "Все темы",
+    "searchInQuestions": "Поиск по вопросам",
+    "searchInTitles": "Поиск по заголовкам",
+    "topic2": "ТЕМА",
+    "mark": "МЕТКА",
+    "question": "ВОПРОС",
+    "title": "ЗАГОЛОВОК",
+    "writer": "АВТОР",
+    "date": "ДАТА",
+    "status": "СТАТУС",
+    "action": "ДЕЙСТВИЕ",
+    "dataNotFound": "Ничего не найдено.",
+    "event": "Акция",
+    "chooseATopic": "Выберите тему",
+    "question2": "Вопрос",
+    "title2": "Заголовок",
+    "answer": "Ответ",
+    "text": "Текст",
+    "status2": "Статус",
+    "showWithTheEventMark": "Показывать с меткой «акция»",
+    "cancel": "Отмена",
+    "saving": "Сохраняем…",
+    "save": "Сохранить"
   },
   "menu": {
     "item": {
@@ -48,7 +92,17 @@
       "warning": "ПРЕДУПРЕЖДЕНИЯ",
       "block": "БЛОКИРОВКИ",
       "state": "СТАТУС"
-    }
+    },
+    "memberList": "Пользователи",
+    "all": "Все",
+    "active": "Активные",
+    "blocked": "Заблокированные",
+    "deleted": "Удалённые",
+    "searchUserName": "Поиск по имени",
+    "user": "Покупатель",
+    "agent": "Флорист",
+    "admin": "Администратор",
+    "dataNotFound": "Ничего не найдено."
   },
   "products": {
     "table": {
@@ -59,7 +113,15 @@
       "location": "ГОРОД",
       "type": "ТИП",
       "status": "СТАТУС"
-    }
+    },
+    "areYouSureToRemove": "Удалить окончательно?",
+    "productList": "Товары",
+    "all": "Все",
+    "active": "В продаже",
+    "sold": "Проданы",
+    "delete": "Удалены",
+    "all2": "ВСЕ",
+    "dataNotFound": "Ничего не найдено."
   },
   "community": {
     "table": {
@@ -71,7 +133,15 @@
       "likes": "ЛАЙКИ",
       "date": "ДАТА",
       "status": "СТАТУС"
-    }
+    },
+    "areYouSureToRemove": "Удалить окончательно?",
+    "arricleList": "Статьи",
+    "all": "Все",
+    "active": "Опубликованы",
+    "delete": "Удалены",
+    "all2": "ВСЕ",
+    "dataNotFound": "Ничего не найдено.",
+    "openWindow": "Открыть в новом окне"
   },
   "inquiry": {
     "table": {
@@ -80,7 +150,14 @@
       "writer": "АВТОР",
       "date": "ДАТА",
       "status": "СТАТУС"
-    }
+    },
+    "11InquiryManagement": "Обращения 1:1",
+    "all0": "Все (0)",
+    "active0": "Активные (0)",
+    "blocked0": "Заблокированные (0)",
+    "deleted0": "Удалённые (0)",
+    "searchUserName": "Поиск по имени",
+    "dataNotFound": "Ничего не найдено."
   },
   "layout": {
     "openMenu": "Открыть меню",
