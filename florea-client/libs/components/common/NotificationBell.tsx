@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-import { useTranslation } from 'next-i18next';
+import { Trans, useTranslation } from 'next-i18next';
+import { useFormat } from '../../i18n/format';
+import { notificationTitle } from '../../i18n/serverText';
 import { useApolloClient, useMutation, useQuery, useReactiveVar } from '@apollo/client';
 import { Badge, Box, IconButton, Popover, Stack, useMediaQuery } from '@mui/material';
 import NotificationsOutlinedIcon from '@mui/icons-material/NotificationsOutlined';
@@ -9,7 +11,6 @@ import ChatBubbleOutlineRoundedIcon from '@mui/icons-material/ChatBubbleOutlineR
 import PersonAddAlt1RoundedIcon from '@mui/icons-material/PersonAddAlt1Rounded';
 import LocalMallOutlinedIcon from '@mui/icons-material/LocalMallOutlined';
 import CampaignOutlinedIcon from '@mui/icons-material/CampaignOutlined';
-import Moment from 'react-moment';
 import { notificationPingVar, userVar } from '../../../apollo/store';
 import { GET_BOARD_ARTICLE, GET_NOTIFICATIONS } from '../../../apollo/user/query';
 import { READ_ALL_NOTIFICATIONS, READ_NOTIFICATION } from '../../../apollo/user/mutation';
@@ -35,16 +36,16 @@ const TYPE_ICONS: Record<string, { tone: string; icon: JSX.Element }> = {
 // order notifications that go to the florist; the others go to the buyer
 const SHOP_ORDER_TITLES = ['New order', 'An order was cancelled'];
 
-// What the author did, written after their name. Keys are in the locale files.
-const ACTION_TEXT: Record<string, string> = {
-	LIKE_PRODUCT: 'liked your product',
-	LIKE_ARTICLE: 'liked your article',
-	LIKE_MEMBER: 'liked your profile',
-	COMMENT_PRODUCT: 'commented on your product',
-	COMMENT_ARTICLE: 'commented on your article',
-	COMMENT_MEMBER: 'left a review on your profile',
-	SUBSCRIBE_MEMBER: 'started following you',
-};
+// What the author did, written after their name: the keys under notifications.action in common.json.
+const ACTIONS = [
+	'LIKE_PRODUCT',
+	'LIKE_ARTICLE',
+	'LIKE_MEMBER',
+	'COMMENT_PRODUCT',
+	'COMMENT_ARTICLE',
+	'COMMENT_MEMBER',
+	'SUBSCRIBE_MEMBER',
+];
 
 interface NotificationBellProps {
 	// 'dark' sits on the wine navbar, 'light' on a pale surface
@@ -54,6 +55,7 @@ interface NotificationBellProps {
 const NotificationBell = (props: NotificationBellProps) => {
 	const { tone = 'dark' } = props;
 	const { t } = useTranslation('common');
+	const format = useFormat();
 	const router = useRouter();
 	const client = useApolloClient();
 	const user = useReactiveVar(userVar);
@@ -172,7 +174,7 @@ const NotificationBell = (props: NotificationBellProps) => {
 		<>
 			<IconButton
 				className={`notify-bell ${tone} ${open ? 'open' : ''}`}
-				aria-label={unreadCount ? `${t('Notifications')} (${unreadCount})` : t('Notifications')}
+				aria-label={unreadCount ? t('notifications.titleWithCount', { count: unreadCount }) : t('notifications.title')}
 				aria-haspopup={'true'}
 				aria-expanded={open}
 				onClick={openHandler}
@@ -193,15 +195,15 @@ const NotificationBell = (props: NotificationBellProps) => {
 				PaperProps={{ className: 'florea-notify' }}
 			>
 				<Stack className={'notify-head'}>
-					<strong>{t('Notifications')}</strong>
+					<strong>{t('notifications.title')}</strong>
 					{unreadCount > 0 && (
 						<span className={'notify-count'}>
-							{unreadCount} {t('new')}
+							{t('notifications.newCount', { count: unreadCount })}
 						</span>
 					)}
 					{unreadCount > 0 && (
 						<button type={'button'} className={'notify-read-all'} onClick={readAllHandler}>
-							{t('Mark all as read')}
+							{t('notifications.markAllRead')}
 						</button>
 					)}
 				</Stack>
@@ -223,14 +225,15 @@ const NotificationBell = (props: NotificationBellProps) => {
 						<span className={'notify-empty-icon'}>
 							<NotificationsOutlinedIcon />
 						</span>
-						<strong>{t('No notifications yet')}</strong>
-						<p>{t('Likes, comments and new followers will appear here.')}</p>
+						<strong>{t('notifications.empty')}</strong>
+						<p>{t('notifications.emptyHint')}</p>
 					</Stack>
 				) : (
 					<Stack className={'notify-list'} component={'ul'}>
 						{notifications.map((notification, index) => {
 							const type = TYPE_ICONS[notification.notificationType] ?? TYPE_ICONS.SYSTEM;
-							const action = ACTION_TEXT[`${notification.notificationType}_${notification.notificationGroup}`];
+							const actionId = `${notification.notificationType}_${notification.notificationGroup}`;
+							const action = ACTIONS.includes(actionId) ? actionId : null;
 							const author = notification.authorData?.memberNick;
 							const unread = notification.notificationStatus === NotificationStatus.WAIT;
 							return (
@@ -244,21 +247,22 @@ const NotificationBell = (props: NotificationBellProps) => {
 										<Box component={'div'} className={'notify-body'}>
 											<span className={'notify-title'}>
 												{author && action ? (
-													<>
-														<b>{author}</b> {t(action)}
-													</>
+													<Trans
+														t={t}
+														i18nKey={`notifications.action.${action}`}
+														values={{ name: author }}
+														components={{ b: <b /> }}
+													/>
 												) : (
-													t(notification.notificationTitle)
+													notificationTitle(notification.notificationTitle)
 												)}
 											</span>
 											{notification.notificationDesc && (
 												<span className={'notify-desc'}>{notification.notificationDesc}</span>
 											)}
-											<Moment className={'notify-time'} fromNow>
-												{notification.createdAt}
-											</Moment>
+											<span className={'notify-time'}>{format.ago(notification.createdAt)}</span>
 										</Box>
-										{unread && <span className={'notify-dot'} aria-label={t('Unread')} />}
+										{unread && <span className={'notify-dot'} aria-label={t('notifications.unread')} />}
 									</button>
 								</li>
 							);
@@ -266,7 +270,7 @@ const NotificationBell = (props: NotificationBellProps) => {
 						{total > notifications.length && (
 							<li className={'notify-more'}>
 								<button type={'button'} onClick={showMoreHandler} disabled={getNotificationsLoading}>
-									{t('Show more')}
+									{t('notifications.showMore')}
 								</button>
 							</li>
 						)}

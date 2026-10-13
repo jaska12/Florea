@@ -1,3 +1,4 @@
+import { useTranslation } from 'next-i18next';
 import React, { useState } from 'react';
 import { Stack, Box, Pagination } from '@mui/material';
 import moment from 'moment';
@@ -10,6 +11,7 @@ import { NoticeCategory } from '../../enums/notice.enum';
 const LIMIT = 10;
 
 const Notice = () => {
+	const { t } = useTranslation('cs');
 	const [page, setPage] = useState<number>(1);
 	const inquiry: NoticesInquiry = { page: page, limit: LIMIT, search: { noticeCategory: NoticeCategory.NOTICE } };
 
@@ -29,18 +31,18 @@ const Notice = () => {
 
 	return (
 		<Stack className={'notice-content'}>
-			<span className={'title'}>Notice</span>
+			<span className={'title'}>{t('notice.notice')}</span>
 			<Stack className={'main'}>
 				<Box component={'div'} className={'top'}>
-					<span>number</span>
-					<span>title</span>
-					<span>date</span>
+					<span>{t('notice.number')}</span>
+					<span>{t('notice.title')}</span>
+					<span>{t('notice.date')}</span>
 				</Box>
 				<Stack className={'bottom'}>
 					{notices.map((notice: NoticeEntry, index: number) => (
 						<div className={`notice-card ${notice.noticeEvent ? 'event' : ''}`} key={notice._id}>
 							{notice.noticeEvent ? (
-								<div>event</div>
+								<div>{t('notice.event')}</div>
 							) : (
 								// the newest notice has the highest number
 								<span className={'notice-number'}>{total - (page - 1) * LIMIT - index}</span>
@@ -55,7 +57,7 @@ const Notice = () => {
 					{notices.length === 0 && !getNoticesLoading && (
 						<div className={'no-data'}>
 							<img src="/img/icons/icoAlert.svg" alt="" />
-							<p>No notices yet.</p>
+							<p>{t('notice.noNoticesYet')}</p>
 						</div>
 					)}
 				</Stack>

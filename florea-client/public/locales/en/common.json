@@ -1,59 +1,245 @@
 {
-  "Home": "Home",
-  "Products": "Products",
-  "Agents": "Florists",
-  "Community": "Community",
-  "My Page": "My Page",
-  "CS": "CS",
-  "Login": "Login",
-  "Register": "Register",
-  "Location": "Location",
-  "Product type": "Product type",
-  "Occasion": "Occasion",
-  "Fresh bouquets, plants and curated gift boxes from local florists and gift shops. Choose by occasion and send them to someone you love.": "Fresh bouquets, plants and curated gift boxes from local florists and gift shops. Choose by occasion and send them to someone you love.",
-  "Popular occasions": "Popular occasions",
-  "Find your perfect Florea flowers & gifts": "Find your perfect Florea flowers & gifts",
-  "Category": "Category",
-  "Size": "Size",
-  "Advanced": "Advanced",
-  "Product Search": "Product Search",
-  "We are glad to see you again!": "We are glad to see you again!",
-  "Agent Page": "Agent Page",
-  "my page": "my page",
-  "Community Detail": "Community Detail",
-  "Login/Signup": "Login/Signup",
-  "Member Page": "Member Page",
-  "Notifications": "Notifications",
-  "new": "new",
-  "Mark all as read": "Mark all as read",
-  "No notifications yet": "No notifications yet",
-  "Unread": "Unread",
-  "Likes, comments and new followers will appear here.": "Likes, comments and new followers will appear here.",
-  "Show more": "Show more",
-  "liked your product": "liked your product",
-  "liked your article": "liked your article",
-  "liked your profile": "liked your profile",
-  "commented on your product": "commented on your product",
-  "commented on your article": "commented on your article",
-  "left a review on your profile": "left a review on your profile",
-  "started following you": "started following you",
-  "Live chat": "Live chat",
-  "Close chat": "Close chat",
-  "online": "online",
-  "Connecting...": "Connecting...",
-  "Welcome to Live chat!": "Welcome to Live chat!",
-  "Type message": "Type message",
-  "Send": "Send",
-  "Guest": "Guest",
-  "Menu": "Menu",
-  "Close menu": "Close menu",
-  "Logout": "Logout",
-  "Cart": "Cart",
-  "New order": "New order",
-  "An order was cancelled": "An order was cancelled",
-  "Your order is confirmed": "Your order is confirmed",
-  "Your order is being prepared": "Your order is being prepared",
-  "Your order is out for delivery": "Your order is out for delivery",
-  "Your order has been delivered": "Your order has been delivered",
-  "Your order was cancelled": "Your order was cancelled"
+  "review": {
+    "reply": "Reply"
+  },
+  "addToCart": {
+    "addToCart": "Add to cart",
+    "outOfStock": "Out of stock"
+  },
+  "floristCard": {
+    "florist": "Florist"
+  },
+  "productCard": {
+    "top": "Top",
+    "sameDay": "Same day",
+    "giftWrap": "Gift wrap",
+    "removeFromFavorites": "Remove from favorites",
+    "addToFavorites": "Add to favorites"
+  },
+  "footer": {
+    "customerCare": "customer care",
+    "needHelpWithAnOrder": "need help with an order?",
+    "weReplyWithinADay": "We reply within a day.",
+    "followUsOnSocialMedia": "follow us on social media",
+    "seasonalBouquetsAndGiftIdeas": "Seasonal bouquets and gift ideas, by email",
+    "yourEmail": "Your Email",
+    "subscribe": "Subscribe",
+    "shop": "Shop",
+    "sameDayDelivery": "Same-day delivery",
+    "giftWrappedItems": "Gift-wrapped items",
+    "quickLinks": "Quick Links",
+    "termsOfUse": "Terms of Use",
+    "privacyPolicy": "Privacy Policy",
+    "deliveryInformation": "Delivery information",
+    "ourServices": "Our Services",
+    "contactSupport": "Contact Support",
+    "faqs": "FAQs",
+    "deliveryAreas": "Delivery areas",
+    "seoul": "Seoul",
+    "gyeongido": "Gyeongido",
+    "busan": "Busan",
+    "jejudo": "Jejudo",
+    "privacyTermsSitemap": "Privacy · Terms · Sitemap"
+  },
+  "hero": {
+    "popularOccasions": "Popular occasions",
+    "title": "Find your perfect Florea flowers & gifts",
+    "subtitle": "Fresh bouquets, plants and curated gift boxes from local florists and gift shops. Choose by occasion and send them to someone you love.",
+    "category": "Category",
+    "occasion": "Occasion",
+    "size": "Size"
+  },
+  "nav": {
+    "logout": "Log out",
+    "home": "Home",
+    "products": "Products",
+    "florists": "Florists",
+    "community": "Community",
+    "myPage": "My Page",
+    "cs": "Help",
+    "loginRegister": "Login / Register",
+    "menu": "Menu",
+    "closeMenu": "Close menu",
+    "language": "Language",
+    "languageName": {
+      "en": "English",
+      "kr": "한국어",
+      "ru": "Русский"
+    }
+  },
+  "chat": {
+    "title": "Live chat",
+    "close": "Close chat",
+    "online": "{{count}} online",
+    "connecting": "Connecting…",
+    "welcome": "Welcome to the live chat!",
+    "typeMessage": "Type a message",
+    "send": "Send",
+    "guest": "Guest"
+  },
+  "cartIcon": {
+    "cart": "Cart",
+    "cartWithCount": "Cart ({{count}})"
+  },
+  "notifications": {
+    "title": "Notifications",
+    "titleWithCount": "Notifications ({{count}})",
+    "newCount": "{{count}} new",
+    "markAllRead": "Mark all as read",
+    "empty": "No notifications yet",
+    "emptyHint": "Likes, comments and new followers will appear here.",
+    "unread": "Unread",
+    "showMore": "Show more",
+    "action": {
+      "LIKE_PRODUCT": "<b>{{name}}</b> liked your product",
+      "LIKE_ARTICLE": "<b>{{name}}</b> liked your article",
+      "LIKE_MEMBER": "<b>{{name}}</b> liked your profile",
+      "COMMENT_PRODUCT": "<b>{{name}}</b> commented on your product",
+      "COMMENT_ARTICLE": "<b>{{name}}</b> commented on your article",
+      "COMMENT_MEMBER": "<b>{{name}}</b> left a review on your profile",
+      "SUBSCRIBE_MEMBER": "<b>{{name}}</b> started following you"
+    },
+    "serverTitle": {
+      "newOrder": "New order",
+      "orderCancelledForShop": "An order was cancelled",
+      "orderConfirmed": "Your order is confirmed",
+      "orderPreparing": "Your order is being prepared",
+      "orderOutForDelivery": "Your order is out for delivery",
+      "orderDelivered": "Your order has been delivered",
+      "orderCancelled": "Your order was cancelled",
+      "likeProduct": "New like on your product",
+      "likeArticle": "New like on your article",
+      "likeProfile": "New like on your profile",
+      "comment": "New comment",
+      "follower": "New follower"
+    }
+  },
+  "alert": {
+    "ok": "OK",
+    "cancel": "Cancel",
+    "login": "Log in"
+  },
+  "serverError": {
+    "somethingWentWrong": "Something went wrong. Please try again.",
+    "noDataFound": "Nothing was found.",
+    "createFailed": "It could not be created. Please try again.",
+    "updateFailed": "It could not be updated. Please try again.",
+    "removeFailed": "It could not be removed. Please try again.",
+    "uploadFailed": "The upload failed. Please try again.",
+    "badRequest": "Please check what you entered and try again.",
+    "nickOrPhoneUsed": "This nickname or phone number is already in use.",
+    "noMemberNick": "There is no member with this nickname.",
+    "blocked": "This account has been blocked.",
+    "wrongPassword": "Wrong password. Please try again.",
+    "notAuthenticated": "Please log in first.",
+    "rolesOnly": "This is not available for your account type.",
+    "notAllowed": "This request is not allowed.",
+    "imageFormat": "Please use JPG, JPEG or PNG images.",
+    "selfSubscription": "You cannot follow yourself.",
+    "productNotAvailable": "One of the products is no longer available.",
+    "ownProductOrder": "You cannot order your own product.",
+    "deliveryDatePassed": "The delivery date cannot be in the past.",
+    "orderCannotBeCancelled": "This order can no longer be cancelled.",
+    "orderStatusNotAllowed": "This status change is not allowed.",
+    "noticeTopicRequired": "Choose a topic for the FAQ entry.",
+    "aiTooManyRequests": "You are asking too fast. Please wait a minute and try again.",
+    "aiUnavailable": "The assistant is not available right now. Please try again in a moment.",
+    "loginFailed": "We could not log you in. Please try again.",
+    "fillAllInputs": "Please fill in all the fields.",
+    "messageEmpty": "The message is empty."
+  },
+  "enum": {
+    "productType": {
+      "BOUQUET": "Bouquet",
+      "FLOWER_BOX": "Flower box",
+      "PLANT": "Plant",
+      "GIFT_BOX": "Gift box",
+      "SWEET": "Sweets",
+      "TOY": "Toy"
+    },
+    "productOccasion": {
+      "BIRTHDAY": "Birthday",
+      "WEDDING": "Wedding",
+      "ANNIVERSARY": "Anniversary",
+      "LOVE": "Love",
+      "CONGRATS": "Congrats",
+      "SYMPATHY": "Sympathy"
+    },
+    "productSize": {
+      "SMALL": "Small",
+      "MEDIUM": "Medium",
+      "LARGE": "Large"
+    },
+    "productStatus": {
+      "ACTIVE": "On sale",
+      "SOLD": "Sold",
+      "DELETE": "Deleted"
+    },
+    "productLocation": {
+      "SEOUL": "Seoul",
+      "BUSAN": "Busan",
+      "INCHEON": "Incheon",
+      "DAEGU": "Daegu",
+      "GYEONGJU": "Gyeongju",
+      "GWANGJU": "Gwangju",
+      "CHONJU": "Jeonju",
+      "DAEJON": "Daejeon",
+      "JEJU": "Jeju"
+    },
+    "orderStatus": {
+      "PENDING": "Placed",
+      "CONFIRMED": "Confirmed",
+      "PREPARING": "Preparing",
+      "OUT_FOR_DELIVERY": "Out for delivery",
+      "DELIVERED": "Delivered",
+      "CANCELLED": "Cancelled"
+    },
+    "memberType": {
+      "USER": "Customer",
+      "AGENT": "Florist",
+      "ADMIN": "Admin"
+    },
+    "memberStatus": {
+      "ACTIVE": "Active",
+      "BLOCK": "Blocked",
+      "DELETE": "Deleted"
+    },
+    "notificationType": {
+      "LIKE": "Like",
+      "COMMENT": "Comment",
+      "SUBSCRIBE": "Follow",
+      "ORDER": "Order",
+      "SYSTEM": "Notice"
+    },
+    "noticeTopic": {
+      "PRODUCT": "Products",
+      "PAYMENT": "Payment",
+      "ORDER": "Orders",
+      "FLORIST": "For florists",
+      "ACCOUNT": "Account",
+      "COMMUNITY": "Community",
+      "OTHER": "Other"
+    },
+    "noticeStatus": {
+      "HOLD": "On hold",
+      "ACTIVE": "Active",
+      "DELETE": "Deleted"
+    },
+    "articleCategory": {
+      "FREE": "Free board",
+      "RECOMMEND": "Recommendations",
+      "NEWS": "News",
+      "HUMOR": "Humor"
+    },
+    "articleStatus": {
+      "ACTIVE": "Active",
+      "DELETE": "Deleted"
+    },
+    "cardTone": {
+      "WARM": "Warm",
+      "ROMANTIC": "Romantic",
+      "PLAYFUL": "Playful",
+      "FORMAL": "Formal"
+    }
+  }
 }

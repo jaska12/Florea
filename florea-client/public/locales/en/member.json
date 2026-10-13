@@ -1,0 +1,43 @@
+{
+  "page": {
+    "subscribed": "Subscribed!",
+    "unsubscribed": "Unsubscribed!",
+    "liked": "Liked!"
+  },
+  "articles": {
+    "success": "success",
+    "articles": "Articles",
+    "noArticlesFound": "No Articles found!"
+  },
+  "follows": {
+    "followers": "Followers",
+    "followings": "Followings",
+    "name": "Name",
+    "details": "Details",
+    "subscription": "Subscription",
+    "noFollowersYet": "No Followers yet!",
+    "following": "Following",
+    "unfollow": "Unfollow",
+    "follow": "Follow",
+    "noFollowingsYet": "No Followings yet!"
+  },
+  "menu": {
+    "unfollow": "Unfollow",
+    "following": "Following",
+    "follow": "Follow",
+    "details": "Details",
+    "products": "Products",
+    "followers": "Followers",
+    "followings": "Followings",
+    "community": "Community",
+    "articles": "Articles"
+  },
+  "products": {
+    "products": "Products",
+    "listingTitle": "Listing title",
+    "datePublished": "Date Published",
+    "status": "Status",
+    "view": "View",
+    "noProductFound": "No Product found!"
+  }
+}

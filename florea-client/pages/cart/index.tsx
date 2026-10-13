@@ -1,3 +1,4 @@
+import { useTranslation } from 'next-i18next';
 import React, { useEffect, useState } from 'react';
 import { NextPage } from 'next';
 import Link from 'next/link';
@@ -22,6 +23,7 @@ export const getStaticProps = async ({ locale }: any) => ({
 });
 
 const Cart: NextPage = () => {
+	const { t } = useTranslation('order');
 	const router = useRouter();
 	const items: CartItem[] = useReactiveVar(cartVar);
 	// the cart is read from the browser after the first paint; until then nothing is claimed about it
@@ -44,10 +46,10 @@ const Cart: NextPage = () => {
 						<span className={'shop-empty-icon'}>
 							<ShoppingBagOutlinedIcon />
 						</span>
-						<strong>Your cart is empty</strong>
-						<p>Choose a bouquet, a plant or a gift box, and it will wait for you here.</p>
+						<strong>{t('cart.yourCartIsEmpty')}</strong>
+						<p>{t('cart.chooseABouquetAPlant')}</p>
 						<Link href={'/product'} className={'shop-btn'}>
-							Browse flowers and gifts
+							{t('cart.browseFlowersAndGifts')}
 						</Link>
 					</div>
 				</div>
@@ -65,12 +67,12 @@ const Cart: NextPage = () => {
 								<header>
 									<span>
 										From{' '}
-										<Link href={`/agent/detail?agentId=${group.agentId}`}>{group.agentNick ?? 'this florist'}</Link>
+										<Link href={`/agent/detail?agentId=${group.agentId}`}>{group.agentNick ?? t('cart.thisFlorist')}</Link>
 									</span>
 									<em>
 										{group.delivery
 											? `Add $${formatterStr(freeDeliveryFrom - group.subtotal)} more for free delivery`
-											: 'Free delivery'}
+											: t('cart.freeDelivery')}
 									</em>
 								</header>
 								{group.items.map((item: CartItem) => {
@@ -90,7 +92,7 @@ const Cart: NextPage = () => {
 											<div className={'qty'} role={'group'} aria-label={`Quantity of ${item.productTitle}`}>
 												<button
 													type={'button'}
-													aria-label={'One less'}
+													aria-label={t('cart.oneLess')}
 													disabled={item.quantity <= 1}
 													onClick={() => setCartQuantity(item.productId, item.quantity - 1)}
 												>
@@ -99,7 +101,7 @@ const Cart: NextPage = () => {
 												<span aria-live={'polite'}>{item.quantity}</span>
 												<button
 													type={'button'}
-													aria-label={'One more'}
+													aria-label={t('cart.oneMore')}
 													disabled={item.quantity >= limit}
 													onClick={() => setCartQuantity(item.productId, item.quantity + 1)}
 												>
@@ -121,13 +123,13 @@ const Cart: NextPage = () => {
 							</section>
 						))}
 						<Link href={'/product'} className={'shop-link'}>
-							← Continue shopping
+							{t('cart.continueShopping')}
 						</Link>
 					</div>
 
 					<aside className={'shop-side'}>
 						<section className={'shop-panel shop-summary'}>
-							<h3>Summary</h3>
+							<h3>{t('cart.summary')}</h3>
 							<dl>
 								<div>
 									<dt>
@@ -137,10 +139,10 @@ const Cart: NextPage = () => {
 								</div>
 								<div>
 									<dt>Delivery{groups.length > 1 ? ` (${groups.length} florists)` : ''}</dt>
-									<dd>{totals.delivery ? `$${formatterStr(totals.delivery)}` : 'Free'}</dd>
+									<dd>{totals.delivery ? `$${formatterStr(totals.delivery)}` : t('cart.free')}</dd>
 								</div>
 								<div className={'total'}>
-									<dt>Total</dt>
+									<dt>{t('cart.total')}</dt>
 									<dd>${formatterStr(totals.total)}</dd>
 								</div>
 							</dl>
@@ -151,9 +153,9 @@ const Cart: NextPage = () => {
 								</p>
 							)}
 							<button type={'button'} className={'shop-btn'} onClick={() => router.push('/checkout')}>
-								Checkout
+								{t('cart.checkout')}
 							</button>
-							<p className={'shop-pay'}>Cash on delivery. You pay when the order arrives.</p>
+							<p className={'shop-pay'}>{t('cart.cashOnDeliveryYouPay')}</p>
 						</section>
 					</aside>
 				</div>

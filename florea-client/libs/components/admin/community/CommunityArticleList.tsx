@@ -1,3 +1,4 @@
+import { useTranslation } from 'next-i18next';
 import React from 'react';
 import Link from 'next/link';
 import {
@@ -129,6 +130,7 @@ interface CommunityArticleListProps {
 }
 
 const CommunityArticleList = (props: CommunityArticleListProps) => {
+	const { t } = useTranslation('admin');
 	const { articles, anchorEl, menuIconClickHandler, menuIconCloseHandler, updateArticleHandler, removeArticleHandler } =
 		props;
 
@@ -142,7 +144,7 @@ const CommunityArticleList = (props: CommunityArticleListProps) => {
 						{articles.length === 0 && (
 							<TableRow>
 								<TableCell align="center" colSpan={8}>
-									<span className={'no-data'}>data not found!</span>
+									<span className={'no-data'}>{t('community.dataNotFound')}</span>
 								</TableCell>
 							</TableRow>
 						)}
@@ -159,7 +161,7 @@ const CommunityArticleList = (props: CommunityArticleListProps) => {
 												className={'img_box'}
 											>
 												<IconButton className="btn_window">
-													<Tooltip title={'Open window'}>
+													<Tooltip title={t('community.openWindow')}>
 														<OpenInBrowserRoundedIcon />
 													</Tooltip>
 												</IconButton>

@@ -1,3 +1,4 @@
+import { useTranslation } from 'next-i18next';
 import React, { ChangeEvent, useEffect, useState } from 'react';
 import { NextPage } from 'next';
 import withLayoutBasic from '../../libs/components/layout/LayoutBasic';
@@ -28,6 +29,7 @@ export const getStaticProps = async ({ locale }: any) => ({
 });
 
 const AgentDetail: NextPage = ({ initialInput, initialComment, ...props }: any) => {
+	const { t } = useTranslation('agent');
 	const router = useRouter();
 	const user = useReactiveVar(userVar);
 	const [agentId, setAgentId] = useState<string | null>(null);
@@ -162,7 +164,7 @@ const AgentDetail: NextPage = ({ initialInput, initialComment, ...props }: any) 
 	const createCommentHandler = async () => {
 		try {
 			if (!user._id) throw new Error(Messages.error2);
-			if (user._id === agentId) throw new Error('Cannot write a review for yourself');
+			if (user._id === agentId) throw new Error(t('detail.cannotWriteAReviewFor'));
 
 			await createComment({
 				variables: {
@@ -187,7 +189,7 @@ const AgentDetail: NextPage = ({ initialInput, initialComment, ...props }: any) 
 			});
 			await getProductsRefetch({ input: searchFilter });
 
-			await sweetTopSmallSuccessAlert('success', 800);
+			await sweetTopSmallSuccessAlert(t('detail.success'), 800);
 		} catch (err: any) {
 			console.log('ERROR, likeProductHandler:', err.message);
 			sweetMixinErrorAlert(err.message).then();
@@ -239,15 +241,15 @@ const AgentDetail: NextPage = ({ initialInput, initialComment, ...props }: any) 
 						) : (
 							<div className={'no-data'}>
 								<img src="/img/icons/icoAlert.svg" alt="" />
-								<p>No products found!</p>
+								<p>{t('detail.noProductsFound')}</p>
 							</div>
 						)}
 					</Stack>
 				</Stack>
 				<Stack className={'review-box'}>
 					<Stack className={'main-intro'}>
-						<span>Reviews</span>
-						<p>we are glad to see you again</p>
+						<span>{t('detail.reviews')}</span>
+						<p>{t('detail.weAreGladToSee')}</p>
 					</Stack>
 					{commentTotal !== 0 && (
 						<Stack className={'review-wrap'}>
@@ -273,8 +275,8 @@ const AgentDetail: NextPage = ({ initialInput, initialComment, ...props }: any) 
 					)}
 
 					<Stack className={'leave-review-config'}>
-						<Typography className={'main-title'}>Leave A Review</Typography>
-						<Typography className={'review-title'}>Review</Typography>
+						<Typography className={'main-title'}>{t('detail.leaveAReview')}</Typography>
+						<Typography className={'review-title'}>{t('detail.review')}</Typography>
 						<textarea
 							onChange={({ target: { value } }: any) => {
 								setInsertCommentData({ ...insertCommentData, commentContent: value });
@@ -287,7 +289,7 @@ const AgentDetail: NextPage = ({ initialInput, initialComment, ...props }: any) 
 								disabled={insertCommentData.commentContent === '' || user?._id === ''}
 								onClick={createCommentHandler}
 							>
-								<Typography className={'title'}>Submit Review</Typography>
+								<Typography className={'title'}>{t('detail.submitReview')}</Typography>
 								<svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 17 17" fill="none">
 									<g clipPath="url(#clip0_6975_3642)">
 										<path

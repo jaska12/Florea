@@ -1,3 +1,4 @@
+import { useTranslation } from 'next-i18next';
 import React, { useState } from 'react';
 import { useRouter } from 'next/router';
 import { useMutation } from '@apollo/client';
@@ -28,6 +29,7 @@ const LANGUAGE_OF_LOCALE: Record<string, AiLanguage> = {
 
 // "Write it for me" beside the gift card message: three suggestions, one click puts a suggestion into the field.
 const CardMessageHelper = (props: CardMessageHelperProps) => {
+	const { t } = useTranslation('ai');
 	const { onPick } = props;
 	const router = useRouter();
 	const [open, setOpen] = useState<boolean>(false);
@@ -77,18 +79,18 @@ const CardMessageHelper = (props: CardMessageHelperProps) => {
 		<div className={'ai-helper'}>
 			<button type={'button'} className={'ai-helper-toggle'} aria-expanded={open} onClick={() => setOpen(!open)}>
 				<AutoAwesomeRoundedIcon />
-				Write it for me
+				{t('cardHelper.writeItForMe')}
 			</button>
 
 			{open && (
 				<div className={'ai-helper-body'}>
 					<div className={'ai-helper-row'}>
 						<label className={'ai-helper-field'}>
-							<span>Who is it for?</span>
+							<span>{t('cardHelper.whoIsItFor')}</span>
 							<input
 								type={'text'}
 								maxLength={RECIPIENT_MAX}
-								placeholder={'my mother, a colleague who is leaving…'}
+								placeholder={t('cardHelper.myMotherAColleagueWho')}
 								value={recipient}
 								onChange={(e) => setRecipient(e.target.value)}
 								onKeyDown={(e) => {
@@ -101,7 +103,7 @@ const CardMessageHelper = (props: CardMessageHelperProps) => {
 							/>
 						</label>
 						<label className={'ai-helper-field'}>
-							<span>Occasion</span>
+							<span>{t('cardHelper.occasion')}</span>
 							<select value={occasion} onChange={(e) => setOccasion(e.target.value as ProductOccasion)}>
 								{Object.values(ProductOccasion).map((value) => (
 									<option value={value} key={value}>
@@ -112,7 +114,7 @@ const CardMessageHelper = (props: CardMessageHelperProps) => {
 						</label>
 					</div>
 
-					<div className={'ai-helper-tones'} role={'group'} aria-label={'Tone'}>
+					<div className={'ai-helper-tones'} role={'group'} aria-label={t('cardHelper.tone')}>
 						{Object.values(AiCardTone).map((value) => (
 							<button
 								type={'button'}
@@ -127,7 +129,7 @@ const CardMessageHelper = (props: CardMessageHelperProps) => {
 					</div>
 
 					<button type={'button'} className={'ai-helper-go'} onClick={suggestHandler} disabled={!ready || loading}>
-						{loading ? 'Writing…' : suggestions.length > 0 ? 'Suggest three more' : 'Suggest three messages'}
+						{loading ? t('cardHelper.writing') : suggestions.length > 0 ? t('cardHelper.suggestThreeMore') : t('cardHelper.suggestThreeMessages')}
 					</button>
 
 					{error && (
@@ -137,7 +139,7 @@ const CardMessageHelper = (props: CardMessageHelperProps) => {
 					)}
 
 					{suggestions.length > 0 && (
-						<ul className={'ai-helper-list'} aria-label={'Suggested messages'}>
+						<ul className={'ai-helper-list'} aria-label={t('cardHelper.suggestedMessages')}>
 							{suggestions.map((message) => (
 								<li key={message}>
 									<button
@@ -153,7 +155,7 @@ const CardMessageHelper = (props: CardMessageHelperProps) => {
 						</ul>
 					)}
 
-					<AiNote>Choose one and edit it as you like.</AiNote>
+					<AiNote>{t('cardHelper.chooseOneAndEditIt')}</AiNote>
 				</div>
 			)}
 		</div>

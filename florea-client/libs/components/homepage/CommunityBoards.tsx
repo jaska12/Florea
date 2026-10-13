@@ -1,3 +1,4 @@
+import { useTranslation } from 'next-i18next';
 import React from 'react';
 import Link from 'next/link';
 import CommunityCard from './CommunityCard';
@@ -14,6 +15,7 @@ const searchCommunity = {
 };
 
 const CommunityBoards = () => {
+	const { t } = useTranslation('home');
 	/** APOLLO REQUESTS **/
 	const { data: getNewsArticlesData } = useQuery(GET_BOARD_ARTICLES, {
 		fetchPolicy: 'network-only',
@@ -35,15 +37,15 @@ const CommunityBoards = () => {
 		<section className={'home-section home-community'}>
 			<div className={'home-shell'}>
 				<SectionHeader
-					title={'From the community'}
-					subtitle={'News and conversations from Florea members.'}
-					seeAll={{ href: '/community', label: 'See all articles' }}
+					title={t('community.fromTheCommunity')}
+					subtitle={t('community.newsAndConversationsFromFlorea')}
+					seeAll={{ href: '/community', label: t('community.seeAllArticles') }}
 				/>
 				<div className={news.length > 0 && free.length > 0 ? 'community-layout' : 'community-layout single'}>
 					{news.length > 0 && (
 						<div className={'community-column'}>
 							<Link className={'community-column-title'} href={'/community?articleCategory=NEWS'}>
-								News
+								{t('community.news')}
 							</Link>
 							<div className={'community-grid'}>
 								{news.map((article, index) => {
@@ -55,7 +57,7 @@ const CommunityBoards = () => {
 					{free.length > 0 && (
 						<div className={'community-column side'}>
 							<Link className={'community-column-title'} href={'/community?articleCategory=FREE'}>
-								Free board
+								{t('community.freeBoard')}
 							</Link>
 							<div className={'community-list'}>
 								{free.map((article, index) => {

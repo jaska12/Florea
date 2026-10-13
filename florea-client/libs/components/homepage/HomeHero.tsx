@@ -47,10 +47,10 @@ const HomeHero = () => {
 				<MotionConfig reducedMotion="user">
 					<div className={'hero-copy'}>
 						<motion.h1 className={'hero-title'} variants={riseVariants} initial="hidden" animate="visible" custom={0}>
-							{t('Find your perfect Florea flowers & gifts')}
+							{t('hero.title')}
 						</motion.h1>
 						<motion.p className={'hero-sub'} variants={riseVariants} initial="hidden" animate="visible" custom={0.1}>
-							{t('Fresh bouquets, plants and curated gift boxes from local florists and gift shops. Choose by occasion and send them to someone you love.')}
+							{t('hero.subtitle')}
 						</motion.p>
 					</div>
 					<div className={'hero-search'}>
@@ -58,13 +58,13 @@ const HomeHero = () => {
 					</div>
 					<motion.nav
 						className={'hero-shortcuts'}
-						aria-label={'Popular occasions'}
+						aria-label={t('hero.popularOccasions')}
 						variants={riseVariants}
 						initial="hidden"
 						animate="visible"
 						custom={0.34}
 					>
-						<span className={'shortcuts-label'}>{t('Popular occasions')}</span>
+						<span className={'shortcuts-label'}>{t('hero.popularOccasions')}</span>
 						{occasionShortcuts.map((occasion) => (
 							<Link className={'shortcut'} href={occasionHref(occasion)} key={occasion}>
 								{occasion.toLowerCase()}

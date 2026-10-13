@@ -1,3 +1,4 @@
+import { useTranslation } from 'next-i18next';
 import React from 'react';
 import { useRouter } from 'next/router';
 import { Stack, Typography, Box, List, ListItem } from '@mui/material';
@@ -13,6 +14,7 @@ import LocalMallOutlinedIcon from '@mui/icons-material/LocalMallOutlined';
 import StorefrontOutlinedIcon from '@mui/icons-material/StorefrontOutlined';
 
 const MyMenu = () => {
+	const { t } = useTranslation('mypage');
 	const router = useRouter();
 	const pathname = router.query.category ?? 'myProfile';
 	const category: any = router.query?.category ?? 'myProfile';
@@ -21,7 +23,7 @@ const MyMenu = () => {
 	/** HANDLERS **/
 	const logoutHandler = async () => {
 		try {
-			if (await sweetConfirmAlert('Do you want to logout?')) logOut();
+			if (await sweetConfirmAlert(t('menu.doYouWantToLogout'))) logOut();
 		} catch (err: any) {
 			console.log('ERROR, logoutHandler:', err.message);
 		}
@@ -58,7 +60,7 @@ const MyMenu = () => {
 			<Stack className={'sections'}>
 				<Stack className={'section'} style={{ height: user.memberType === 'AGENT' ? '306px' : '192px' }}>
 					<Typography className="title" variant={'h5'}>
-						MANAGE PRODUCTS
+						{t('menu.manageProducts')}
 					</Typography>
 					<List className={'sub-section'}>
 						{user.memberType === 'AGENT' && (
@@ -78,7 +80,7 @@ const MyMenu = () => {
 												<img className={'com-icon'} src={'/img/icons/newTab.svg'} alt={'com_icon'} />
 											)}
 											<Typography className={'sub-title'} variant={'subtitle1'} component={'p'}>
-												Add Product
+												{t('menu.addProduct')}
 											</Typography>
 											<IconButton aria-label="delete" sx={{ ml: '40px' }}>
 												<PortraitIcon style={{ color: 'red' }} />
@@ -101,7 +103,7 @@ const MyMenu = () => {
 												<img className={'com-icon'} src={'/img/icons/home.svg'} alt={'com-icon'} />
 											)}
 											<Typography className={'sub-title'} variant={'subtitle1'} component={'p'}>
-												My Products
+												{t('menu.myProducts')}
 											</Typography>
 											<IconButton aria-label="delete" sx={{ ml: '36px' }}>
 												<PortraitIcon style={{ color: 'red' }} />
@@ -123,7 +125,7 @@ const MyMenu = () => {
 									<div className={'flex-box'}>
 										<StorefrontOutlinedIcon className={'com-icon'} sx={{ fontSize: 18, color: category === 'shopOrders' ? '#ffffff' : '#2b1420' }} />
 										<Typography className={'sub-title'} variant={'subtitle1'} component={'p'}>
-											Shop Orders
+											{t('menu.shopOrders')}
 										</Typography>
 									</div>
 								</Link>
@@ -140,7 +142,7 @@ const MyMenu = () => {
 								<div className={'flex-box'}>
 									<LocalMallOutlinedIcon className={'com-icon'} sx={{ fontSize: 18, color: category === 'myOrders' ? '#ffffff' : '#2b1420' }} />
 									<Typography className={'sub-title'} variant={'subtitle1'} component={'p'}>
-										My Orders
+										{t('menu.myOrders')}
 									</Typography>
 								</div>
 							</Link>
@@ -161,7 +163,7 @@ const MyMenu = () => {
 									)}
 
 									<Typography className={'sub-title'} variant={'subtitle1'} component={'p'}>
-										My Favorites
+										{t('menu.myFavorites')}
 									</Typography>
 								</div>
 							</Link>
@@ -182,7 +184,7 @@ const MyMenu = () => {
 									)}
 
 									<Typography className={'sub-title'} variant={'subtitle1'} component={'p'}>
-										Recently Visited
+										{t('menu.recentlyVisited')}
 									</Typography>
 								</div>
 							</Link>
@@ -229,7 +231,7 @@ const MyMenu = () => {
 										</g>
 									</svg>
 									<Typography className={'sub-title'} variant={'subtitle1'} component={'p'}>
-										My Followers
+										{t('menu.myFollowers')}
 									</Typography>
 								</div>
 							</Link>
@@ -277,7 +279,7 @@ const MyMenu = () => {
 									</svg>
 
 									<Typography className={'sub-title'} variant={'subtitle1'} component={'p'}>
-										My Followings
+										{t('menu.myFollowings')}
 									</Typography>
 								</div>
 							</Link>
@@ -287,7 +289,7 @@ const MyMenu = () => {
 				<Stack className={'section'} sx={{ marginTop: '10px' }}>
 					<div>
 						<Typography className="title" variant={'h5'}>
-							Community
+							{t('menu.community')}
 						</Typography>
 						<List className={'sub-section'}>
 							<ListItem className={pathname === 'myArticles' ? 'focus' : ''}>
@@ -306,7 +308,7 @@ const MyMenu = () => {
 										)}
 
 										<Typography className={'sub-title'} variant={'subtitle1'} component={'p'}>
-											Articles
+											{t('menu.articles')}
 										</Typography>
 									</div>
 								</Link>
@@ -326,7 +328,7 @@ const MyMenu = () => {
 											<img className={'com-icon'} src={'/img/icons/newTab.svg'} alt={'com_icon'} />
 										)}
 										<Typography className={'sub-title'} variant={'subtitle1'} component={'p'}>
-											Write Article
+											{t('menu.writeArticle')}
 										</Typography>
 									</div>
 								</Link>
@@ -336,7 +338,7 @@ const MyMenu = () => {
 				</Stack>
 				<Stack className={'section'} sx={{ marginTop: '30px' }}>
 					<Typography className="title" variant={'h5'}>
-						MANAGE ACCOUNT
+						{t('menu.manageAccount')}
 					</Typography>
 					<List className={'sub-section'}>
 						<ListItem className={pathname === 'myProfile' ? 'focus' : ''}>
@@ -354,7 +356,7 @@ const MyMenu = () => {
 										<img className={'com-icon'} src={'/img/icons/user.svg'} alt={'com-icon'} />
 									)}
 									<Typography className={'sub-title'} variant={'subtitle1'} component={'p'}>
-										My Profile
+										{t('menu.myProfile')}
 									</Typography>
 								</div>
 							</Link>
@@ -363,7 +365,7 @@ const MyMenu = () => {
 							<div className={'flex-box'}>
 								<img className={'com-icon'} src={'/img/icons/logout.svg'} alt={'com-icon'} />
 								<Typography className={'sub-title'} variant={'subtitle1'} component={'p'}>
-									Logout
+									{t('menu.logout')}
 								</Typography>
 							</div>
 						</ListItem>

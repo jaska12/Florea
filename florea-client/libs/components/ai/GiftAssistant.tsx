@@ -1,3 +1,4 @@
+import { useTranslation } from 'next-i18next';
 import React, { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
@@ -27,6 +28,7 @@ const EXAMPLES = [
 // The gift assistant: a floating button that opens a panel where a member describes who the gift is for
 // and gets products of the shop back, each with the assistant's reason.
 const GiftAssistant = () => {
+	const { t } = useTranslation('ai');
 	const router = useRouter();
 	const user = useReactiveVar(userVar);
 	const open = useReactiveVar(giftAssistantOpenVar);
@@ -122,33 +124,33 @@ const GiftAssistant = () => {
 				aria-haspopup={'dialog'}
 			>
 				<AutoAwesomeRoundedIcon />
-				<span>Find a gift</span>
+				<span>{t('assistant.findAGift')}</span>
 			</button>
 
 			<Drawer
 				anchor={'right'}
 				open={open}
 				onClose={() => giftAssistantOpenVar(false)}
-				PaperProps={{ className: 'gift-assistant', 'aria-label': 'Gift assistant' } as object}
+				PaperProps={{ className: 'gift-assistant', 'aria-label': t('assistant.giftAssistant') } as object}
 			>
 				<header className={'ga-head'}>
 					<span className={'ga-mark'}>
 						<AutoAwesomeRoundedIcon />
 					</span>
 					<div className={'ga-heading'}>
-						<strong>Gift assistant</strong>
-						<span>Tell me who it is for, and I will look through the shop.</span>
+						<strong>{t('assistant.giftAssistant')}</strong>
+						<span>{t('assistant.tellMeWhoItIs')}</span>
 					</div>
-					<button type={'button'} className={'ga-close'} onClick={() => giftAssistantOpenVar(false)} aria-label={'Close'}>
+					<button type={'button'} className={'ga-close'} onClick={() => giftAssistantOpenVar(false)} aria-label={t('assistant.close')}>
 						<CloseRoundedIcon />
 					</button>
 				</header>
 
 				{!loggedIn ? (
 					<div className={'ga-login'}>
-						<p>Log in to use the gift assistant. It looks through the products of Florea florists and suggests a few that fit.</p>
+						<p>{t('assistant.logInToUseThe')}</p>
 						<Link className={'ga-login-btn'} href={'/account/join'}>
-							Log in or sign up
+							{t('assistant.logInOrSignUp')}
 						</Link>
 					</div>
 				) : (
@@ -156,7 +158,7 @@ const GiftAssistant = () => {
 						<div className={'ga-thread'} ref={threadRef} aria-live={'polite'}>
 							{turns.length === 0 && (
 								<div className={'ga-welcome'}>
-									<p>Hello! Who is the gift for, and what is the occasion? A budget helps too.</p>
+									<p>{t('assistant.helloWhoIsTheGift')}</p>
 									<ul>
 										{EXAMPLES.map((example) => (
 											<li key={example}>
@@ -189,7 +191,7 @@ const GiftAssistant = () => {
 												<i />
 												<i />
 											</span>
-											Looking through the shop…
+											{t('assistant.lookingThroughTheShop')}
 										</div>
 									)}
 
@@ -205,7 +207,7 @@ const GiftAssistant = () => {
 												<p className={'ga-line'}>{turn.result.message}</p>
 											) : (
 												<p className={'ga-line'}>
-													{turn.result.list.length === 1 ? 'Here is one idea:' : `Here are ${turn.result.list.length} ideas:`}
+													{turn.result.list.length === 1 ? t('assistant.hereIsOneIdea') : `Here are ${turn.result.list.length} ideas:`}
 												</p>
 											)}
 											<ul className={'ga-picks'}>
@@ -236,9 +238,9 @@ const GiftAssistant = () => {
 						<form className={'ga-form'} onSubmit={askHandler}>
 							<div className={'ga-filters'}>
 								<label>
-									<span className={'sr-only'}>Occasion</span>
+									<span className={'sr-only'}>{t('assistant.occasion')}</span>
 									<select value={occasion} onChange={(e) => setOccasion(e.target.value)}>
-										<option value={''}>Any occasion</option>
+										<option value={''}>{t('assistant.anyOccasion')}</option>
 										{Object.values(ProductOccasion).map((value) => (
 											<option value={value} key={value}>
 												{prettyLabel(value)}
@@ -247,13 +249,13 @@ const GiftAssistant = () => {
 									</select>
 								</label>
 								<label className={'ga-budget'}>
-									<span className={'sr-only'}>Budget in dollars</span>
+									<span className={'sr-only'}>{t('assistant.budgetInDollars')}</span>
 									<i aria-hidden={true}>$</i>
 									<input
 										type={'number'}
 										inputMode={'numeric'}
 										min={1}
-										placeholder={'Budget'}
+										placeholder={t('assistant.budget')}
 										value={budget}
 										onChange={(e) => setBudget(e.target.value)}
 									/>
@@ -261,18 +263,18 @@ const GiftAssistant = () => {
 							</div>
 							<div className={'ga-input'}>
 								<label className={'sr-only'} htmlFor={'gift-assistant-prompt'}>
-									Describe the gift you are looking for
+									{t('assistant.describeTheGiftYouAre')}
 								</label>
 								<textarea
 									id={'gift-assistant-prompt'}
 									rows={2}
 									maxLength={PROMPT_MAX}
-									placeholder={'Describe who the gift is for…'}
+									placeholder={t('assistant.describeWhoTheGiftIs')}
 									value={prompt}
 									onChange={(e) => setPrompt(e.target.value)}
 									onKeyDown={keyHandler}
 								/>
-								<button type={'submit'} disabled={!ready} aria-label={'Ask the assistant'}>
+								<button type={'submit'} disabled={!ready} aria-label={t('assistant.askTheAssistant')}>
 									<ArrowUpwardRoundedIcon />
 								</button>
 							</div>

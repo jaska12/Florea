@@ -1,0 +1,82 @@
+{
+  "cart": {
+    "yourCartIsEmpty": "Your cart is empty",
+    "chooseABouquetAPlant": "Choose a bouquet, a plant or a gift box, and it will wait for you here.",
+    "browseFlowersAndGifts": "Browse flowers and gifts",
+    "thisFlorist": "this florist",
+    "freeDelivery": "Free delivery",
+    "oneLess": "One less",
+    "oneMore": "One more",
+    "continueShopping": "← Continue shopping",
+    "summary": "Summary",
+    "free": "Free",
+    "total": "Total",
+    "checkout": "Checkout",
+    "cashOnDeliveryYouPay": "Cash on delivery. You pay when the order arrives."
+  },
+  "checkout": {
+    "theOrderCouldNotBe": "The order could not be placed. Please try again.",
+    "logInToPlaceYour": "Log in to place your order",
+    "yourCartIsSavedIn": "Your cart is saved in this browser and will still be here when you come back.",
+    "logInOrSignUp": "Log in or sign up",
+    "thereIsNothingToCheck": "There is nothing to check out",
+    "yourCartIsEmpty": "Your cart is empty.",
+    "browseFlowersAndGifts": "Browse flowers and gifts",
+    "whoReceivesIt": "Who receives it",
+    "recipientName": "Recipient name",
+    "thePersonWhoWillReceive": "The person who will receive the order",
+    "recipientPhone": "Recipient phone",
+    "whereAndWhen": "Where and when",
+    "deliveryAddress": "Delivery address",
+    "streetBuildingUnit": "Street, building, unit",
+    "deliveryDate": "Delivery date",
+    "deliveryTime": "Delivery time",
+    "giftCardMessage": "Gift card message",
+    "optional": "optional",
+    "aFewWordsToPrint": "A few words to print on the card",
+    "backToCart": "← Back to cart",
+    "yourOrder": "Your order",
+    "items": "Items",
+    "free": "Free",
+    "total": "Total",
+    "editTheCart": "Edit the cart",
+    "placingYourOrder": "Placing your order…",
+    "placeOrder": "Place order",
+    "cashOnDeliveryYouPay": "Cash on delivery. You pay when the order arrives."
+  },
+  "complete": {
+    "toPayOnDelivery": "To pay on delivery:",
+    "followMyOrders": "Follow my orders",
+    "continueShopping": "Continue shopping"
+  },
+  "card": {
+    "order": "Order",
+    "items": "Items",
+    "product": "Product",
+    "delivery": "Delivery",
+    "free": "Free",
+    "totalCashOnDelivery": "Total · cash on delivery",
+    "recipient": "Recipient",
+    "address": "Address",
+    "when": "When",
+    "cardMessage": "Card message",
+    "florist": "Florist",
+    "buyer": "Buyer",
+    "cancelOrder": "Cancel order",
+    "theFloristIsWorkingOn": "The florist is working on this order. To change or cancel it, call the florist."
+  },
+  "panel": {
+    "cancelThisOrder": "Cancel this order?",
+    "orderCancelled": "Order cancelled",
+    "shopOrders": "Shop orders",
+    "myOrders": "My orders",
+    "ordersPlacedForYourProducts": "Orders placed for your products. Move each one on as you work.",
+    "followYourOrdersFromThe": "Follow your orders from the shop to the door.",
+    "all": "All",
+    "noOrdersYet": "No orders yet",
+    "browseFlowersAndGifts": "Browse flowers and gifts"
+  },
+  "timeline": {
+    "thisOrderWasCancelledThe": "This order was cancelled. The products went back to the shop."
+  }
+}

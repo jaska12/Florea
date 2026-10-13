@@ -1,3 +1,4 @@
+import { useTranslation } from 'next-i18next';
 import React, { useState } from 'react';
 import Link from 'next/link';
 import SectionHeader from './SectionHeader';
@@ -51,6 +52,7 @@ const tileHref = (tile: ShopTile) => ({
 
 // "Shop by" on the homepage: the occasion tiles and the category tiles behind two tabs.
 const ShopBy = () => {
+	const { t } = useTranslation('home');
 	const [active, setActive] = useState<string>('occasion');
 	const tiles = active === 'occasion' ? occasions : categories;
 
@@ -58,11 +60,11 @@ const ShopBy = () => {
 		<section className={'home-section home-shopby'}>
 			<div className={'home-shell'}>
 				<SectionHeader
-					title={'Shop by'}
-					subtitle={'Start from the moment you are marking, or from what you want to give.'}
-					seeAll={{ href: '/product', label: 'See all products' }}
+					title={t('shopBy.shopBy')}
+					subtitle={t('shopBy.startFromTheMomentYou')}
+					seeAll={{ href: '/product', label: t('shopBy.seeAllProducts') }}
 				/>
-				<HomeTabs name={'shopby'} label={'Shop by'} tabs={TABS} active={active} onChange={setActive} />
+				<HomeTabs name={'shopby'} label={t('shopBy.shopBy')} tabs={TABS} active={active} onChange={setActive} />
 				<ul
 					className={'category-grid home-panel'}
 					role={'tabpanel'}

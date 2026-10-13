@@ -1,3 +1,4 @@
+import { useTranslation } from 'next-i18next';
 import React, { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { NextPage } from 'next';
@@ -29,6 +30,7 @@ export const getStaticProps = async ({ locale }: any) => ({
 });
 
 const MyPage: NextPage = () => {
+	const { t } = useTranslation('mypage');
 	const user = useReactiveVar(userVar);
 	const router = useRouter();
 	const category: any = router.query?.category ?? 'myProfile';
@@ -56,7 +58,7 @@ const MyPage: NextPage = () => {
 					input: id,
 				},
 			});
-			await sweetTopSmallSuccessAlert('Subscribed!', 800);
+			await sweetTopSmallSuccessAlert(t('page.subscribed'), 800);
 			await refetch({ input: query });
 		} catch (err: any) {
 			sweetErrorHandling(err).then();
@@ -73,7 +75,7 @@ const MyPage: NextPage = () => {
 					input: id,
 				},
 			});
-			await sweetTopSmallSuccessAlert('Unsubscribed!', 800);
+			await sweetTopSmallSuccessAlert(t('page.unsubscribed'), 800);
 			await refetch({ input: query });
 		} catch (err: any) {
 			sweetErrorHandling(err).then();
@@ -90,7 +92,7 @@ const MyPage: NextPage = () => {
 					input: id,
 				},
 			});
-			await sweetTopSmallSuccessAlert('Liked!', 800);
+			await sweetTopSmallSuccessAlert(t('page.liked'), 800);
 			await refetch({ input: query });
 		} catch (err: any) {
 			sweetErrorHandling(err).then();

@@ -1,0 +1,42 @@
+{
+  "about": {
+    "flowersAndGiftsFromThe": "Flowers and gifts from the florists near you.",
+    "floreaBringsLocalFloristsAnd": "Florea brings local florists and gift shops into one place, so a bouquet for a birthday, a plant for a new home or a gift box for an anniversary is a few minutes away.",
+    "chooseByOccasionSizeAnd": "Choose by occasion, size and budget, see who made it, and send it to someone you love. Many items can be delivered the same day, and many can be gift wrapped.",
+    "madeByLocalFlorists": "Made by local florists",
+    "eachProductShowsTheShop": "Each product shows the shop behind it.",
+    "chosenByOccasion": "Chosen by occasion",
+    "birthdayWeddingAnniversaryAndMore": "Birthday, wedding, anniversary and more.",
+    "categories": "Categories",
+    "occasions": "Occasions",
+    "sizes": "Sizes",
+    "forFloristsAndGiftShops": "For florists and gift shops",
+    "listYourProducts": "List your products",
+    "addBouquetsPlantsAndGift": "Add bouquets, plants and gift boxes with photos, price, size and stock.",
+    "receiveOrders": "Receive orders",
+    "buyersFindYouByCategory": "Buyers find you by category, occasion and location, and order for delivery.",
+    "buildYourFollowing": "Build your following",
+    "customersCanFollowYourShop": "Customers can follow your shop, like your products and leave reviews.",
+    "openYourShop": "Open your shop",
+    "needHelpChoosing": "Need help choosing?",
+    "askAFloristOnTheir": "Ask a florist on their page, or read the answers in customer care.",
+    "customerCare": "Customer care"
+  },
+  "page": {
+    "customerCare": "Customer care",
+    "noticesAndAnswersToCommon": "Notices and answers to common questions",
+    "notice": "Notice",
+    "faq": "FAQ"
+  },
+  "faq": {
+    "noQuestionsInThisGroup": "No questions in this group yet."
+  },
+  "notice": {
+    "notice": "Notice",
+    "number": "number",
+    "title": "title",
+    "date": "date",
+    "event": "event",
+    "noNoticesYet": "No notices yet."
+  }
+}

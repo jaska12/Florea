@@ -1,3 +1,4 @@
+import { useTranslation } from 'next-i18next';
 import React from 'react';
 import Link from 'next/link';
 import { MotionConfig, motion, Variants } from 'framer-motion';
@@ -55,6 +56,7 @@ const STEPS = [
 
 // The same-day delivery section of the homepage: a collage with the offer, then how ordering works.
 const SameDayFeature = () => {
+	const { t } = useTranslation('home');
 	/** HANDLERS **/
 	const stepsHandler = () => {
 		const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -73,21 +75,21 @@ const SameDayFeature = () => {
 							whileInView="visible"
 							viewport={inView}
 						>
-							<span className={'sameday-kicker'}>Fresh today</span>
-							<h2 className={'sameday-title'}>Flowers &amp; gifts, delivered the same day</h2>
+							<span className={'sameday-kicker'}>{t('sameDay.freshToday')}</span>
+							<h2 className={'sameday-title'}>{t('sameDay.flowersGiftsDeliveredTheSame')}</h2>
 							<p className={'sameday-text'}>
 								Florists mark the bouquets and gifts they can deliver today. Many can{' '}
 								<Link className={'text-link'} href={optionHref('productGiftWrap')}>
-									add gift wrap
+									{t('sameDay.addGiftWrap')}
 								</Link>{' '}
 								too.
 							</p>
 							<div className={'sameday-actions'}>
 								<Link className={'home-btn primary'} href={optionHref('productSameDay')}>
-									Shop now
+									{t('sameDay.shopNow')}
 								</Link>
 								<button type={'button'} className={'home-btn'} onClick={stepsHandler}>
-									How it works
+									{t('sameDay.howItWorks')}
 								</button>
 							</div>
 						</motion.div>
@@ -109,7 +111,7 @@ const SameDayFeature = () => {
 					</div>
 
 					<div className={'sameday-steps'} id={'how-florea-works'}>
-						<h3 className={'steps-title'}>How Florea works</h3>
+						<h3 className={'steps-title'}>{t('sameDay.howFloreaWorks')}</h3>
 						<ol className={'steps-list'}>
 							{STEPS.map((step, index) => (
 								<motion.li

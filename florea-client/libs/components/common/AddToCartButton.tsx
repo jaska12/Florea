@@ -1,3 +1,4 @@
+import { useTranslation } from 'next-i18next';
 import React from 'react';
 import { useReactiveVar } from '@apollo/client';
 import AddShoppingCartRoundedIcon from '@mui/icons-material/AddShoppingCartRounded';
@@ -14,6 +15,7 @@ interface AddToCartButtonProps {
 }
 
 const AddToCartButton = (props: AddToCartButtonProps) => {
+	const { t } = useTranslation('common');
 	const { product, variant = 'icon', quantity = 1 } = props;
 	const user = useReactiveVar(userVar);
 	const available = canBuy(product);
@@ -34,12 +36,12 @@ const AddToCartButton = (props: AddToCartButtonProps) => {
 		return (
 			<button type={'button'} className={'add-to-cart full'} onClick={addHandler} disabled={!available}>
 				<AddShoppingCartRoundedIcon />
-				{available ? 'Add to cart' : 'Out of stock'}
+				{available ? t('addToCart.addToCart') : t('addToCart.outOfStock')}
 			</button>
 		);
 	}
 
-	if (!available) return <span className={'card-soldout'}>Out of stock</span>;
+	if (!available) return <span className={'card-soldout'}>{t('addToCart.outOfStock')}</span>;
 
 	return (
 		<button

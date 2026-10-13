@@ -1,3 +1,4 @@
+import { useTranslation } from 'next-i18next';
 import React from 'react';
 import Link from 'next/link';
 import {
@@ -138,6 +139,7 @@ interface MemberPanelListType {
 }
 
 export const MemberPanelList = (props: MemberPanelListType) => {
+	const { t } = useTranslation('admin');
 	const { members, anchorEl, menuIconClickHandler, menuIconCloseHandler, updateMemberHandler } = props;
 
 	return (
@@ -150,7 +152,7 @@ export const MemberPanelList = (props: MemberPanelListType) => {
 						{members.length === 0 && (
 							<TableRow>
 								<TableCell align="center" colSpan={8}>
-									<span className={'no-data'}>data not found!</span>
+									<span className={'no-data'}>{t('users.dataNotFound')}</span>
 								</TableCell>
 							</TableRow>
 						)}

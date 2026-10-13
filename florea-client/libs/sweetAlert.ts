@@ -1,3 +1,5 @@
+import { tr } from './i18n/tr';
+import { serverText } from './i18n/serverText';
 import Swal, { SweetAlertIcon } from 'sweetalert2';
 import { Messages } from './config';
 
@@ -16,6 +18,12 @@ const ICONS: Record<SweetAlertIcon, string> = {
 };
 
 const withIcon = (icon: SweetAlertIcon) => ({ icon, iconHtml: ICONS[icon] });
+
+/** the buttons of a confirm dialog, in the chosen language **/
+const buttons = () => ({
+	confirmButtonText: tr('common:alert.ok', 'OK'),
+	cancelButtonText: tr('common:alert.cancel', 'Cancel'),
+});
 
 const FloreaAlert = Swal.mixin({
 	buttonsStyling: false,
@@ -55,7 +63,7 @@ const FloreaToast = Swal.mixin({
 export const sweetErrorHandling = async (err: any) => {
 	await FloreaAlert.fire({
 		...withIcon('error'),
-		text: err.message,
+		text: serverText(err.message),
 		showConfirmButton: false,
 		showCloseButton: true,
 	});
@@ -65,7 +73,7 @@ export const sweetTopSuccessAlert = async (msg: string, duration: number = 2000)
 	await FloreaAlert.fire({
 		position: 'center',
 		...withIcon('success'),
-		title: msg.replace('Definer: ', ''),
+		title: serverText(msg.replace('Definer: ', '')),
 		showConfirmButton: false,
 		timer: duration,
 	});
@@ -83,9 +91,10 @@ export const sweetConfirmAlert = (msg: string) => {
 	return new Promise(async (resolve, reject) => {
 		await FloreaAlert.fire({
 			...withIcon('question'),
-			text: msg,
+			text: serverText(msg),
 			showCancelButton: true,
 			showConfirmButton: true,
+			...buttons(),
 		}).then((response) => {
 			if (response?.isConfirmed) resolve(true);
 			else resolve(false);
@@ -96,10 +105,11 @@ export const sweetConfirmAlert = (msg: string) => {
 export const sweetLoginConfirmAlert = (msg: string) => {
 	return new Promise(async (resolve, reject) => {
 		await FloreaAlert.fire({
-			text: msg,
+			text: serverText(msg),
 			showCancelButton: true,
 			showConfirmButton: true,
-			confirmButtonText: 'Login',
+			...buttons(),
+			confirmButtonText: tr('common:alert.login', 'Login'),
 		}).then((response) => {
 			if (response?.isConfirmed) resolve(true);
 			else resolve(false);
@@ -110,7 +120,7 @@ export const sweetLoginConfirmAlert = (msg: string) => {
 export const sweetErrorAlert = async (msg: string, duration: number = 3000) => {
 	await FloreaAlert.fire({
 		...withIcon('error'),
-		title: msg,
+		title: serverText(msg),
 		showConfirmButton: false,
 		timer: duration,
 	});
@@ -119,7 +129,7 @@ export const sweetErrorAlert = async (msg: string, duration: number = 3000) => {
 export const sweetMixinErrorAlert = async (msg: string, duration: number = 3000) => {
 	await FloreaAlert.fire({
 		...withIcon('error'),
-		title: msg,
+		title: serverText(msg),
 		showConfirmButton: false,
 		timer: duration,
 	});
@@ -128,18 +138,18 @@ export const sweetMixinErrorAlert = async (msg: string, duration: number = 3000)
 export const sweetMixinSuccessAlert = async (msg: string, duration: number = 2000) => {
 	await FloreaAlert.fire({
 		...withIcon('success'),
-		title: msg,
+		title: serverText(msg),
 		showConfirmButton: false,
 		timer: duration,
 	});
 };
 
 export const sweetBasicAlert = async (text: string) => {
-	FloreaAlert.fire(text);
+	FloreaAlert.fire(serverText(text));
 };
 
 export const sweetErrorHandlingForAdmin = async (err: any) => {
-	const errorMessage = err.message ?? Messages.error1;
+	const errorMessage = serverText(err.message ?? Messages.error1);
 	await FloreaAlert.fire({
 		...withIcon('error'),
 		text: errorMessage,
@@ -155,7 +165,7 @@ export const sweetTopSmallSuccessAlert = async (
 ) => {
 	FloreaToast.fire({
 		...withIcon('success'),
-		title: msg,
+		title: serverText(msg),
 		timer: duration,
 	}).then((data) => {
 		if (enable_forward) {

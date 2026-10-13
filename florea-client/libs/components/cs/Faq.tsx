@@ -1,3 +1,4 @@
+import { useTranslation } from 'next-i18next';
 import React, { SyntheticEvent, useState } from 'react';
 import MuiAccordion, { AccordionProps } from '@mui/material/Accordion';
 import { AccordionDetails, Box, Stack, Typography } from '@mui/material';
@@ -44,6 +45,7 @@ const inquiry: NoticesInquiry = {
 const TOPICS = Object.keys(noticeTopicLabels) as NoticeTopic[];
 
 const Faq = () => {
+	const { t } = useTranslation('cs');
 	const [topic, setTopic] = useState<NoticeTopic>(NoticeTopic.PRODUCT);
 	const [expanded, setExpanded] = useState<string | false>(false);
 
@@ -96,7 +98,7 @@ const Faq = () => {
 				{entries.length === 0 && !getNoticesLoading && (
 					<div className={'no-data'}>
 						<img src="/img/icons/icoAlert.svg" alt="" />
-						<p>No questions in this group yet.</p>
+						<p>{t('faq.noQuestionsInThisGroup')}</p>
 					</div>
 				)}
 			</Box>

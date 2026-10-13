@@ -1,3 +1,4 @@
+import { useTranslation } from 'next-i18next';
 import React from 'react';
 import TopAgentCard from './TopAgentCard';
 import SectionHeader from './SectionHeader';
@@ -14,6 +15,7 @@ interface TopAgentsProps {
 const AGENT_COUNT = 4;
 
 const TopAgents = (props: TopAgentsProps) => {
+	const { t } = useTranslation('home');
 	const { initialInput } = props;
 
 	/** APOLLO REQUESTS **/
@@ -29,9 +31,9 @@ const TopAgents = (props: TopAgentsProps) => {
 		<section className={'home-section home-agents tinted'}>
 			<div className={'home-shell'}>
 				<SectionHeader
-					title={'Top florists'}
-					subtitle={'The florists and gift shops behind the products.'}
-					seeAll={{ href: '/agent', label: 'See all florists' }}
+					title={t('florists.topFlorists')}
+					subtitle={t('florists.theFloristsAndGiftShops')}
+					seeAll={{ href: '/agent', label: t('florists.seeAllFlorists') }}
 				/>
 				<ul className={'agent-grid'}>
 					{topAgents.slice(0, AGENT_COUNT).map((agent: Member) => {

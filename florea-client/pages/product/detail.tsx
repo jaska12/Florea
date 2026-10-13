@@ -1,3 +1,4 @@
+import { useTranslation } from 'next-i18next';
 import React, { ChangeEvent, useEffect, useState } from 'react';
 import { Box, Button, Checkbox, CircularProgress, Stack, Typography } from '@mui/material';
 import withLayoutFull from '../../libs/components/layout/LayoutFull';
@@ -44,6 +45,7 @@ export const getStaticProps = async ({ locale }: any) => ({
 });
 
 const ProductDetail: NextPage = ({ initialComment, ...props }: any) => {
+	const { t } = useTranslation('product');
 	const router = useRouter();
 	const user = useReactiveVar(userVar);
 	const [productId, setProductId] = useState<string | null>(null);
@@ -183,7 +185,7 @@ const ProductDetail: NextPage = ({ initialComment, ...props }: any) => {
 				},
 			});
 
-			await sweetTopSmallSuccessAlert('success', 800);
+			await sweetTopSmallSuccessAlert(t('detail.success'), 800);
 		} catch (err: any) {
 			console.log('ERROR, likeProductHandler:', err.message);
 			sweetMixinErrorAlert(err.message).then();
@@ -217,7 +219,7 @@ const ProductDetail: NextPage = ({ initialComment, ...props }: any) => {
 														<circle cx="3" cy="3" r="3" fill="#b4235f" />
 													</svg>
 												</Stack>
-												<Typography className={'buy-rent'}>Gift wrap</Typography>
+												<Typography className={'buy-rent'}>{t('detail.giftWrap')}</Typography>
 											</>
 										)}
 
@@ -228,7 +230,7 @@ const ProductDetail: NextPage = ({ initialComment, ...props }: any) => {
 														<circle cx="3" cy="3" r="3" fill="#b4235f" />
 													</svg>
 												</Stack>
-												<Typography className={'buy-rent'}>Same day</Typography>
+												<Typography className={'buy-rent'}>{t('detail.sameDay')}</Typography>
 											</>
 										)}
 									</Stack>
@@ -289,10 +291,10 @@ const ProductDetail: NextPage = ({ initialComment, ...props }: any) => {
 						{product && user?._id !== product.memberId && (
 							<div className={'detail-cart'}>
 								{canBuy(product) && (
-									<div className={'qty'} role={'group'} aria-label={'Quantity'}>
+									<div className={'qty'} role={'group'} aria-label={t('detail.quantity')}>
 										<button
 											type={'button'}
-											aria-label={'One less'}
+											aria-label={t('detail.oneLess')}
 											disabled={cartQuantity <= 1}
 											onClick={() => setCartQuantity(cartQuantity - 1)}
 										>
@@ -301,7 +303,7 @@ const ProductDetail: NextPage = ({ initialComment, ...props }: any) => {
 										<span aria-live={'polite'}>{cartQuantity}</span>
 										<button
 											type={'button'}
-											aria-label={'One more'}
+											aria-label={t('detail.oneMore')}
 											disabled={cartQuantity >= Math.min(product.productStock, MAX_QUANTITY)}
 											onClick={() => setCartQuantity(cartQuantity + 1)}
 										>
@@ -315,7 +317,7 @@ const ProductDetail: NextPage = ({ initialComment, ...props }: any) => {
 						<Stack className={'images'}>
 							<Stack className={'main-image'}>
 								{slideImage && (
-									<img src={`${REACT_APP_API_URL}/${slideImage}`} alt={product?.productTitle ?? 'Product photo'} />
+									<img src={`${REACT_APP_API_URL}/${slideImage}`} alt={product?.productTitle ?? t('detail.productPhoto')} />
 								)}
 							</Stack>
 							<Stack className={'sub-images'}>
@@ -335,74 +337,74 @@ const ProductDetail: NextPage = ({ initialComment, ...props }: any) => {
 							<Stack className={'options-config'}>
 								<Stack className={'option'}>
 									<Stack className={'option-includes'}>
-										<Typography className={'title'}>Occasion</Typography>
+										<Typography className={'title'}>{t('detail.occasion')}</Typography>
 										<Typography className={'option-data'}>{prettyLabel(product?.productOccasion as string)}</Typography>
 									</Stack>
 								</Stack>
 								<Stack className={'option'}>
 									<Stack className={'option-includes'}>
-										<Typography className={'title'}>Size</Typography>
+										<Typography className={'title'}>{t('detail.size')}</Typography>
 										<Typography className={'option-data'}>{prettyLabel(product?.productSize as string)}</Typography>
 									</Stack>
 								</Stack>
 								<Stack className={'option'}>
 									<Stack className={'option-includes'}>
-										<Typography className={'title'}>Listed</Typography>
+										<Typography className={'title'}>{t('detail.listed')}</Typography>
 										<Typography className={'option-data'}>{moment(product?.createdAt).format('YYYY')}</Typography>
 									</Stack>
 								</Stack>
 								<Stack className={'option'}>
 									<Stack className={'option-includes'}>
-										<Typography className={'title'}>Stock</Typography>
+										<Typography className={'title'}>{t('detail.stock')}</Typography>
 										<Typography className={'option-data'}>{product?.productStock}</Typography>
 									</Stack>
 								</Stack>
 								<Stack className={'option'}>
 									<Stack className={'option-includes'}>
-										<Typography className={'title'}>Product Type</Typography>
+										<Typography className={'title'}>{t('detail.productType')}</Typography>
 										<Typography className={'option-data'}>{prettyLabel(product?.productType as string)}</Typography>
 									</Stack>
 								</Stack>
 							</Stack>
 							<Stack className={'prop-desc-config'}>
 								<Stack className={'top'}>
-									<Typography className={'title'}>Product Description</Typography>
-									<Typography className={'desc'}>{product?.productDesc ?? 'No Description!'}</Typography>
+									<Typography className={'title'}>{t('detail.productDescription')}</Typography>
+									<Typography className={'desc'}>{product?.productDesc ?? t('detail.noDescription')}</Typography>
 								</Stack>
 								<Stack className={'bottom'}>
-									<Typography className={'title'}>Product Details</Typography>
+									<Typography className={'title'}>{t('detail.productDetails')}</Typography>
 									<Stack className={'info-box'}>
 										<Stack className={'left'}>
 											<Box component={'div'} className={'info'}>
-												<Typography className={'title'}>Price</Typography>
+												<Typography className={'title'}>{t('detail.price')}</Typography>
 												<Typography className={'data'}>${formatterStr(product?.productPrice)}</Typography>
 											</Box>
 											<Box component={'div'} className={'info'}>
-												<Typography className={'title'}>Stock</Typography>
+												<Typography className={'title'}>{t('detail.stock')}</Typography>
 												<Typography className={'data'}>{product?.productStock}</Typography>
 											</Box>
 											<Box component={'div'} className={'info'}>
-												<Typography className={'title'}>Size</Typography>
+												<Typography className={'title'}>{t('detail.size')}</Typography>
 												<Typography className={'data'}>{prettyLabel(product?.productSize as string)}</Typography>
 											</Box>
 											<Box component={'div'} className={'info'}>
-												<Typography className={'title'}>Occasion</Typography>
+												<Typography className={'title'}>{t('detail.occasion')}</Typography>
 												<Typography className={'data'}>{prettyLabel(product?.productOccasion as string)}</Typography>
 											</Box>
 										</Stack>
 										<Stack className={'right'}>
 											<Box component={'div'} className={'info'}>
-												<Typography className={'title'}>Listed</Typography>
+												<Typography className={'title'}>{t('detail.listed')}</Typography>
 												<Typography className={'data'}>{moment(product?.createdAt).format('YYYY')}</Typography>
 											</Box>
 											<Box component={'div'} className={'info'}>
-												<Typography className={'title'}>Product Type</Typography>
+												<Typography className={'title'}>{t('detail.productType')}</Typography>
 												<Typography className={'data'}>{prettyLabel(product?.productType as string)}</Typography>
 											</Box>
 											<Box component={'div'} className={'info'}>
-												<Typography className={'title'}>Product Options</Typography>
+												<Typography className={'title'}>{t('detail.productOptions')}</Typography>
 												<Typography className={'data'}>
-													{product?.productSameDay && 'Same day'} {product?.productGiftWrap && 'Gift wrap'}
+													{product?.productSameDay && t('detail.sameDay')} {product?.productGiftWrap && t('detail.giftWrap')}
 												</Typography>
 											</Box>
 										</Stack>
@@ -410,7 +412,7 @@ const ProductDetail: NextPage = ({ initialComment, ...props }: any) => {
 								</Stack>
 							</Stack>
 							<Stack className={'address-config'}>
-								<Typography className={'title'}>Address</Typography>
+								<Typography className={'title'}>{t('detail.address')}</Typography>
 								<Stack className={'map-box'}>
 									<iframe
 										src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d25867.098915951767!2d128.68632810247993!3d35.86402299180927!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x35660bba427bf179%3A0x1fc02da732b9072f!2sGeumhogangbyeon-ro%2C%20Dong-gu%2C%20Daegu!5e0!3m2!1suz!2skr!4v1695537640704!5m2!1suz!2skr"
@@ -460,8 +462,8 @@ const ProductDetail: NextPage = ({ initialComment, ...props }: any) => {
 								</Stack>
 							)}
 							<Stack className={'leave-review-config'}>
-								<Typography className={'main-title'}>Leave A Review</Typography>
-								<Typography className={'review-title'}>Review</Typography>
+								<Typography className={'main-title'}>{t('detail.leaveAReview')}</Typography>
+								<Typography className={'review-title'}>{t('detail.review')}</Typography>
 								<textarea
 									onChange={({ target: { value } }: any) => {
 										setInsertCommentData({ ...insertCommentData, commentContent: value });
@@ -474,7 +476,7 @@ const ProductDetail: NextPage = ({ initialComment, ...props }: any) => {
 										disabled={insertCommentData.commentContent === '' || user?._id === ''}
 										onClick={createCommentHandler}
 									>
-										<Typography className={'title'}>Submit Review</Typography>
+										<Typography className={'title'}>{t('detail.submitReview')}</Typography>
 										<svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 17 17" fill="none">
 											<g clipPath="url(#clip0_6975_3642)">
 												<path
@@ -494,7 +496,7 @@ const ProductDetail: NextPage = ({ initialComment, ...props }: any) => {
 						</Stack>
 						<Stack className={'right-config'}>
 							<Stack className={'info-box'}>
-								<Typography className={'main-title'}>Ask the florist</Typography>
+								<Typography className={'main-title'}>{t('detail.askTheFlorist')}</Typography>
 								<Stack className={'image-info'}>
 									<img
 										className={'member-image'}
@@ -524,29 +526,29 @@ const ProductDetail: NextPage = ({ initialComment, ...props }: any) => {
 											</svg>
 											<Typography className={'number'}>{product?.memberData?.memberPhone}</Typography>
 										</Stack>
-										<Typography className={'listings'}>View shop</Typography>
+										<Typography className={'listings'}>{t('detail.viewShop')}</Typography>
 									</Stack>
 								</Stack>
 							</Stack>
 							<Stack className={'info-box'}>
-								<Typography className={'sub-title'}>Name</Typography>
-								<input type={'text'} placeholder={'Enter your name'} />
+								<Typography className={'sub-title'}>{t('detail.name')}</Typography>
+								<input type={'text'} placeholder={t('detail.enterYourName')} />
 							</Stack>
 							<Stack className={'info-box'}>
-								<Typography className={'sub-title'}>Phone</Typography>
-								<input type={'text'} placeholder={'Enter your phone'} />
+								<Typography className={'sub-title'}>{t('detail.phone')}</Typography>
+								<input type={'text'} placeholder={t('detail.enterYourPhone')} />
 							</Stack>
 							<Stack className={'info-box'}>
-								<Typography className={'sub-title'}>Email</Typography>
+								<Typography className={'sub-title'}>{t('detail.email')}</Typography>
 								<input type={'text'} placeholder={'creativelayers088'} />
 							</Stack>
 							<Stack className={'info-box'}>
-								<Typography className={'sub-title'}>Message</Typography>
-								<textarea placeholder={'Hello, I am interested in this product.'}></textarea>
+								<Typography className={'sub-title'}>{t('detail.message')}</Typography>
+								<textarea placeholder={t('detail.helloIAmInterestedIn')}></textarea>
 							</Stack>
 							<Stack className={'info-box'}>
 								<Button className={'send-message'}>
-									<Typography className={'title'}>Send Message</Typography>
+									<Typography className={'title'}>{t('detail.sendMessage')}</Typography>
 									<svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 17 17" fill="none">
 										<g clipPath="url(#clip0_6975_593)">
 											<path
@@ -568,8 +570,8 @@ const ProductDetail: NextPage = ({ initialComment, ...props }: any) => {
 						<Stack className={'similar-products-config'}>
 							<Stack className={'title-pagination-box'}>
 								<Stack className={'title-box'}>
-									<Typography className={'main-title'}>You may also like</Typography>
-									<Typography className={'sub-title'}>More bouquets and gifts from Florea florists.</Typography>
+									<Typography className={'main-title'}>{t('detail.youMayAlsoLike')}</Typography>
+									<Typography className={'sub-title'}>{t('detail.moreBouquetsAndGiftsFrom')}</Typography>
 								</Stack>
 								<Stack className={'pagination-box'}>
 									<WestIcon className={'swiper-similar-prev'} />

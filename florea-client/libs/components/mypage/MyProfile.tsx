@@ -1,3 +1,4 @@
+import { useTranslation } from 'next-i18next';
 import React, { useCallback, useEffect, useState } from 'react';
 import { NextPage } from 'next';
 import { Button, Stack, Typography } from '@mui/material';
@@ -12,6 +13,7 @@ import { sweetErrorHandling, sweetMixinErrorAlert, sweetMixinSuccessAlert } from
 import { Messages } from '../../config';
 
 const MyProfile: NextPage = ({ initialValues, ...props }: any) => {
+	const { t } = useTranslation('mypage');
 	const token = getJwtToken();
 	const user = useReactiveVar(userVar);
 	const [updateData, setUpdateData] = useState<MemberUpdate>(initialValues);
@@ -91,7 +93,7 @@ const MyProfile: NextPage = ({ initialValues, ...props }: any) => {
 			const jwtToken = result.data.updateMember?.accessToken;
 			await updateStorage({ jwtToken });
 			updateUserInfo(result.data.updateMember?.accessToken);
-			await sweetMixinSuccessAlert('Information updated successfully.');
+			await sweetMixinSuccessAlert(t('profile.informationUpdatedSuccessfully'));
 		} catch (err: any) {
 			sweetErrorHandling(err).then();
 		}
@@ -114,13 +116,13 @@ const MyProfile: NextPage = ({ initialValues, ...props }: any) => {
 		<div id="my-profile-page">
 			<Stack className="main-title-box">
 				<Stack className="right-box">
-					<Typography className="main-title">My Profile</Typography>
-					<Typography className="sub-title">We are glad to see you again!</Typography>
+					<Typography className="main-title">{t('profile.myProfile')}</Typography>
+					<Typography className="sub-title">{t('profile.weAreGladToSee')}</Typography>
 				</Stack>
 			</Stack>
 			<Stack className="top-box">
 				<Stack className="photo-box">
-					<Typography className="title">Photo</Typography>
+					<Typography className="title">{t('profile.photo')}</Typography>
 					<Stack className="image-big-box">
 						<Stack className="image-box">
 							<img
@@ -141,44 +143,44 @@ const MyProfile: NextPage = ({ initialValues, ...props }: any) => {
 								accept="image/jpg, image/jpeg, image/png"
 							/>
 							<label htmlFor="hidden-input" className="labeler">
-								<Typography>Upload Profile Image</Typography>
+								<Typography>{t('profile.uploadProfileImage')}</Typography>
 							</label>
-							<Typography className="upload-text">A photo must be in JPG, JPEG or PNG format!</Typography>
+							<Typography className="upload-text">{t('profile.aPhotoMustBeIn')}</Typography>
 						</Stack>
 					</Stack>
 				</Stack>
 				<Stack className="small-input-box">
 					<Stack className="input-box">
-						<Typography className="title">Username</Typography>
+						<Typography className="title">{t('profile.username')}</Typography>
 						<input
 							type="text"
-							placeholder="Your username"
+							placeholder={t('profile.yourUsername')}
 							value={updateData.memberNick}
 							onChange={({ target: { value } }) => setUpdateData({ ...updateData, memberNick: value })}
 						/>
 					</Stack>
 					<Stack className="input-box">
-						<Typography className="title">Phone</Typography>
+						<Typography className="title">{t('profile.phone')}</Typography>
 						<input
 							type="text"
-							placeholder="Your Phone"
+							placeholder={t('profile.yourPhone')}
 							value={updateData.memberPhone}
 							onChange={({ target: { value } }) => setUpdateData({ ...updateData, memberPhone: value })}
 						/>
 					</Stack>
 				</Stack>
 				<Stack className="address-box">
-					<Typography className="title">Address</Typography>
+					<Typography className="title">{t('profile.address')}</Typography>
 					<input
 						type="text"
-						placeholder="Your address"
+						placeholder={t('profile.yourAddress')}
 						value={updateData.memberAddress}
 						onChange={({ target: { value } }) => setUpdateData({ ...updateData, memberAddress: value })}
 					/>
 				</Stack>
 				<Stack className="about-me-box">
 					<Button className="update-button" onClick={updateProductHandler} disabled={doDisabledCheck()}>
-						<Typography>Update Profile</Typography>
+						<Typography>{t('profile.updateProfile')}</Typography>
 						<svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 13 13" fill="none">
 							<g clipPath="url(#clip0_7065_6985)">
 								<path

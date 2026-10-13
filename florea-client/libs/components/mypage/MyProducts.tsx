@@ -1,3 +1,4 @@
+import { useTranslation } from 'next-i18next';
 import React, { useState } from 'react';
 import { NextPage } from 'next';
 import { Pagination, Stack, Typography } from '@mui/material';
@@ -14,6 +15,7 @@ import { UPDATE_PRODUCT } from '../../../apollo/user/mutation';
 import { sweetConfirmAlert, sweetErrorHandling } from '../../sweetAlert';
 
 const MyProducts: NextPage = ({ initialInput, ...props }: any) => {
+	const { t } = useTranslation('mypage');
 	const [searchFilter, setSearchFilter] = useState<AgentProductsInquiry>(initialInput);
 	const [agentProducts, setAgentProducts] = useState<Product[]>([]);
 	const [total, setTotal] = useState<number>(0);
@@ -49,7 +51,7 @@ const MyProducts: NextPage = ({ initialInput, ...props }: any) => {
 
 	const deleteProductHandler = async (id: string) => {
 		try {
-			if (await sweetConfirmAlert('are you sure to delete this product?')) {
+			if (await sweetConfirmAlert(t('products.areYouSureToDelete'))) {
 				await updateProduct({
 					variables: {
 						input: {
@@ -91,8 +93,8 @@ const MyProducts: NextPage = ({ initialInput, ...props }: any) => {
 		<div id="my-product-page">
 			<Stack className="main-title-box">
 				<Stack className="right-box">
-					<Typography className="main-title">My Products</Typography>
-					<Typography className="sub-title">We are glad to see you again!</Typography>
+					<Typography className="main-title">{t('products.myProducts')}</Typography>
+					<Typography className="sub-title">{t('products.weAreGladToSee')}</Typography>
 				</Stack>
 			</Stack>
 			<Stack className="product-list-box">
@@ -101,28 +103,28 @@ const MyProducts: NextPage = ({ initialInput, ...props }: any) => {
 						onClick={() => changeStatusHandler(ProductStatus.ACTIVE)}
 						className={searchFilter.search.productStatus === 'ACTIVE' ? 'active-tab-name' : 'tab-name'}
 					>
-						On Sale
+						{t('products.onSale')}
 					</Typography>
 					<Typography
 						onClick={() => changeStatusHandler(ProductStatus.SOLD)}
 						className={searchFilter.search.productStatus === 'SOLD' ? 'active-tab-name' : 'tab-name'}
 					>
-						On Sold
+						{t('products.onSold')}
 					</Typography>
 				</Stack>
 				<Stack className="list-box">
 					<Stack className="listing-title-box">
-						<Typography className="title-text">Product</Typography>
-						<Typography className="title-text">Date Published</Typography>
-						<Typography className="title-text">Status</Typography>
-						<Typography className="title-text">View</Typography>
-						<Typography className="title-text">Action</Typography>
+						<Typography className="title-text">{t('products.product')}</Typography>
+						<Typography className="title-text">{t('products.datePublished')}</Typography>
+						<Typography className="title-text">{t('products.status')}</Typography>
+						<Typography className="title-text">{t('products.view')}</Typography>
+						<Typography className="title-text">{t('products.action')}</Typography>
 					</Stack>
 
 					{agentProducts?.length === 0 ? (
 						<div className={'no-data'}>
 							<img src="/img/icons/icoAlert.svg" alt="" />
-							<p>No Product found!</p>
+							<p>{t('products.noProductFound')}</p>
 						</div>
 					) : (
 						agentProducts.map((product: Product) => {

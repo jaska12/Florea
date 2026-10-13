@@ -1,3 +1,4 @@
+import { useTranslation } from 'next-i18next';
 import { Menu, MenuItem, Stack, Typography } from '@mui/material';
 import React, { useState } from 'react';
 import IconButton from '@mui/material/IconButton';
@@ -17,6 +18,7 @@ interface ProductCardProps {
 }
 
 export const ProductCard = (props: ProductCardProps) => {
+	const { t } = useTranslation('mypage');
 	const { product, deleteProductHandler, memberPage, updateProductHandler } = props;
 	const router = useRouter();
 	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -102,7 +104,7 @@ export const ProductCard = (props: ProductCardProps) => {
 									updateProductHandler(ProductStatus.SOLD, product?._id);
 								}}
 							>
-								Sold
+								{t('products.sold')}
 							</MenuItem>
 						</>
 					)}

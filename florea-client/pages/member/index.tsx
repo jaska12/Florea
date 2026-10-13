@@ -1,3 +1,4 @@
+import { useTranslation } from 'next-i18next';
 import React, { useEffect } from 'react';
 import { NextPage } from 'next';
 import withLayoutBasic from '../../libs/components/layout/LayoutBasic';
@@ -22,6 +23,7 @@ export const getStaticProps = async ({ locale }: any) => ({
 });
 
 const MemberPage: NextPage = () => {
+	const { t } = useTranslation('member');
 	const router = useRouter();
 	const category: any = router.query?.category;
 	const user = useReactiveVar(userVar);
@@ -57,7 +59,7 @@ const MemberPage: NextPage = () => {
 					input: id,
 				},
 			});
-			await sweetTopSmallSuccessAlert('Subscribed!', 800);
+			await sweetTopSmallSuccessAlert(t('page.subscribed'), 800);
 			await refetch({ input: query });
 		} catch (err: any) {
 			sweetErrorHandling(err).then();
@@ -74,7 +76,7 @@ const MemberPage: NextPage = () => {
 					input: id,
 				},
 			});
-			await sweetTopSmallSuccessAlert('Unsubscribed!', 800);
+			await sweetTopSmallSuccessAlert(t('page.unsubscribed'), 800);
 			await refetch({ input: query });
 		} catch (err: any) {
 			sweetErrorHandling(err).then();
@@ -91,7 +93,7 @@ const MemberPage: NextPage = () => {
 					input: id,
 				},
 			});
-			await sweetTopSmallSuccessAlert('Liked!', 800);
+			await sweetTopSmallSuccessAlert(t('page.liked'), 800);
 			await refetch({ input: query });
 		} catch (err: any) {
 			sweetErrorHandling(err).then();

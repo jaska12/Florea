@@ -1,3 +1,4 @@
+import { useTranslation } from 'next-i18next';
 import React, { useState } from 'react';
 import type { NextPage } from 'next';
 import moment from 'moment';
@@ -43,6 +44,7 @@ const nextStatuses = (orderStatus: OrderStatus): OrderStatus[] => {
 };
 
 const AdminOrders: NextPage = () => {
+	const { t } = useTranslation('admin');
 	const [tab, setTab] = useState<OrderStatus | 'ALL'>('ALL');
 	const [page, setPage] = useState<number>(0);
 	const [limit, setLimit] = useState<number>(10);
@@ -84,14 +86,14 @@ const AdminOrders: NextPage = () => {
 	return (
 		<Box component={'div'} className={'content'}>
 			<Typography variant={'h2'} className={'tit'} sx={{ mb: '24px' }}>
-				Order List
+				{t('orders.orderList')}
 			</Typography>
 			<Box component={'div'} className={'table-wrap'}>
 				<Box component={'div'} sx={{ width: '100%', typography: 'body1' }}>
 					<List className={'tab-menu'}>
 						{TABS.map((value) => (
 							<ListItem onClick={() => tabChangeHandler(value)} className={tab === value ? 'li on' : 'li'} key={value}>
-								{value === 'ALL' ? 'All' : orderStatusLabels[value]}
+								{value === 'ALL' ? t('orders.all') : orderStatusLabels[value]}
 							</ListItem>
 						))}
 					</List>
@@ -100,21 +102,21 @@ const AdminOrders: NextPage = () => {
 						<Table sx={{ minWidth: 900 }} size={'medium'}>
 							<TableHead>
 								<TableRow>
-									<TableCell>ORDER</TableCell>
-									<TableCell>PLACED</TableCell>
-									<TableCell>BUYER</TableCell>
-									<TableCell>FLORIST</TableCell>
-									<TableCell>ITEMS</TableCell>
-									<TableCell>TOTAL</TableCell>
-									<TableCell>DELIVERY</TableCell>
-									<TableCell>STATUS</TableCell>
+									<TableCell>{t('orders.order')}</TableCell>
+									<TableCell>{t('orders.placed')}</TableCell>
+									<TableCell>{t('orders.buyer')}</TableCell>
+									<TableCell>{t('orders.florist')}</TableCell>
+									<TableCell>{t('orders.items')}</TableCell>
+									<TableCell>{t('orders.total')}</TableCell>
+									<TableCell>{t('orders.delivery')}</TableCell>
+									<TableCell>{t('orders.status')}</TableCell>
 								</TableRow>
 							</TableHead>
 							<TableBody>
 								{orders.length === 0 && (
 									<TableRow>
 										<TableCell align="center" colSpan={8}>
-											<span className={'no-data'}>data not found!</span>
+											<span className={'no-data'}>{t('orders.dataNotFound')}</span>
 										</TableCell>
 									</TableRow>
 								)}

@@ -1,3 +1,4 @@
+import { useTranslation } from 'next-i18next';
 import React from 'react';
 import CheckRoundedIcon from '@mui/icons-material/CheckRounded';
 import { OrderStatus, orderStatusFlow, orderStatusLabels } from '../../enums/order.enum';
@@ -8,10 +9,11 @@ interface OrderTimelineProps {
 
 // Placed → Confirmed → Preparing → Out for delivery → Delivered
 const OrderTimeline = (props: OrderTimelineProps) => {
+	const { t } = useTranslation('order');
 	const { orderStatus } = props;
 
 	if (orderStatus === OrderStatus.CANCELLED) {
-		return <p className={'order-cancelled-note'}>This order was cancelled. The products went back to the shop.</p>;
+		return <p className={'order-cancelled-note'}>{t('timeline.thisOrderWasCancelledThe')}</p>;
 	}
 
 	const current = orderStatusFlow.indexOf(orderStatus);

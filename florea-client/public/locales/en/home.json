@@ -1,0 +1,41 @@
+{
+  "bestsellers": {
+    "trending": "Trending",
+    "mostViewed": "Most viewed",
+    "topRated": "Top rated",
+    "success": "success",
+    "bestsellers": "Bestsellers",
+    "theBouquetsAndGiftsPeople": "The bouquets and gifts people like and look at the most.",
+    "seeAllProducts": "See all products",
+    "previousProducts": "Previous products",
+    "nextProducts": "Next products"
+  },
+  "community": {
+    "fromTheCommunity": "From the community",
+    "newsAndConversationsFromFlorea": "News and conversations from Florea members.",
+    "seeAllArticles": "See all articles",
+    "news": "News",
+    "freeBoard": "Free board"
+  },
+  "sameDay": {
+    "freshToday": "Fresh today",
+    "flowersGiftsDeliveredTheSame": "Flowers & gifts, delivered the same day",
+    "addGiftWrap": "add gift wrap",
+    "shopNow": "Shop now",
+    "howItWorks": "How it works",
+    "howFloreaWorks": "How Florea works"
+  },
+  "section": {
+    "seeAll": "See all"
+  },
+  "shopBy": {
+    "shopBy": "Shop by",
+    "startFromTheMomentYou": "Start from the moment you are marking, or from what you want to give.",
+    "seeAllProducts": "See all products"
+  },
+  "florists": {
+    "topFlorists": "Top florists",
+    "theFloristsAndGiftShops": "The florists and gift shops behind the products.",
+    "seeAllFlorists": "See all florists"
+  }
+}

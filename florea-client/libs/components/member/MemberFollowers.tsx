@@ -1,3 +1,4 @@
+import { useTranslation } from 'next-i18next';
 import React, { ChangeEvent, useEffect, useState } from 'react';
 import { Box, Button, Pagination, Stack, Typography } from '@mui/material';
 import { useRouter } from 'next/router';
@@ -19,6 +20,7 @@ interface MemberFollowsProps {
 }
 
 const MemberFollowers = (props: MemberFollowsProps) => {
+	const { t } = useTranslation('member');
 	const { initialInput, subscribeHandler, unsubscribeHandler, likeMemberHandler, redirectToMemberPageHandler } = props;
 	const router = useRouter();
 	const [total, setTotal] = useState<number>(0);
@@ -50,19 +52,19 @@ const MemberFollowers = (props: MemberFollowsProps) => {
 		<div id="member-follows-page">
 			<Stack className="main-title-box">
 				<Stack className="right-box">
-					<Typography className="main-title">{category === 'followers' ? 'Followers' : 'Followings'}</Typography>
+					<Typography className="main-title">{category === 'followers' ? t('follows.followers') : t('follows.followings')}</Typography>
 				</Stack>
 			</Stack>
 			<Stack className="follows-list-box">
 				<Stack className="listing-title-box">
-					<Typography className="title-text">Name</Typography>
-					<Typography className="title-text">Details</Typography>
-					<Typography className="title-text">Subscription</Typography>
+					<Typography className="title-text">{t('follows.name')}</Typography>
+					<Typography className="title-text">{t('follows.details')}</Typography>
+					<Typography className="title-text">{t('follows.subscription')}</Typography>
 				</Stack>
 				{memberFollowers?.length === 0 && (
 					<div className={'no-data'}>
 						<img src="/img/icons/icoAlert.svg" alt="" />
-						<p>No Followers yet!</p>
+						<p>{t('follows.noFollowersYet')}</p>
 					</div>
 				)}
 				{memberFollowers.map((follower: Follower) => {
@@ -81,11 +83,11 @@ const MemberFollowers = (props: MemberFollowsProps) => {
 							</Stack>
 							<Stack className={'details-box'}>
 								<Box className={'info-box'} component={'div'}>
-									<p>Followers</p>
+									<p>{t('follows.followers')}</p>
 									<span>({follower?.followerData?.memberFollowers})</span>
 								</Box>
 								<Box className={'info-box'} component={'div'}>
-									<p>Followings</p>
+									<p>{t('follows.followings')}</p>
 									<span>({follower?.followerData?.memberFollowings})</span>
 								</Box>
 								<Box className={'info-box'} component={'div'}>
@@ -101,13 +103,13 @@ const MemberFollowers = (props: MemberFollowsProps) => {
 								<Stack className="action-box">
 									{follower.meFollowed && follower.meFollowed[0]?.myFollowing ? (
 										<>
-											<Typography>Following</Typography>
+											<Typography>{t('follows.following')}</Typography>
 											<Button
 												variant="outlined"
 												sx={{ background: '#ed5858', ':hover': { background: '#ee7171' } }}
 												onClick={() => unsubscribeHandler(follower?.followerData?._id, null, followInquiry)}
 											>
-												Unfollow
+												{t('follows.unfollow')}
 											</Button>
 										</>
 									) : (
@@ -116,7 +118,7 @@ const MemberFollowers = (props: MemberFollowsProps) => {
 											sx={{ background: '#60eb60d4', ':hover': { background: '#60eb60d4' } }}
 											onClick={() => subscribeHandler(follower?.followerData?._id, null, followInquiry)}
 										>
-											Follow
+											{t('follows.follow')}
 										</Button>
 									)}
 								</Stack>

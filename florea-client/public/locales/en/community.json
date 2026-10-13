@@ -1,0 +1,42 @@
+{
+  "detail": {
+    "success": "success",
+    "communityBoardArticle": "Community Board Article",
+    "freeBoard": "Free Board",
+    "recommendation": "Recommendation",
+    "news": "News",
+    "humor": "Humor",
+    "expressYourOpinionsFreelyHere": "Express your opinions freely here without content restrictions",
+    "write": "Write",
+    "leaveAComment": "Leave a comment",
+    "comment": "comment",
+    "comments": "Comments",
+    "updateComment": "Update comment",
+    "cancel": "Cancel",
+    "update": "Update"
+  },
+  "list": {
+    "success": "success",
+    "floreaCommunity": "Florea Community",
+    "freeBoard": "Free Board",
+    "recommendation": "Recommendation",
+    "news": "News",
+    "humor": "Humor",
+    "expressYourOpinionsFreelyHere": "Express your opinions freely here without content restrictions",
+    "write": "Write",
+    "noArticleFound": "No Article found!"
+  },
+  "editor": {
+    "articleCreatedSuccessfully": "Article created successfully!",
+    "category": "Category",
+    "withoutLabel": "Without label",
+    "free": "Free",
+    "humor": "Humor",
+    "news": "News",
+    "recommendation": "Recommendation",
+    "title": "Title",
+    "typeTitle": "Type Title",
+    "typeHere": "Type here",
+    "register": "Register"
+  }
+}

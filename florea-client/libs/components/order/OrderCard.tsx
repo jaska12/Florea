@@ -1,3 +1,4 @@
+import { useTranslation } from 'next-i18next';
 import React, { useState } from 'react';
 import Link from 'next/link';
 import moment from 'moment';
@@ -21,6 +22,7 @@ interface OrderCardProps {
 export const orderNumber = (order: Order): string => `#${order._id.slice(-6).toUpperCase()}`;
 
 const OrderCard = (props: OrderCardProps) => {
+	const { t } = useTranslation('order');
 	const { order, role, defaultOpen = false, busy = false, onChangeStatus } = props;
 	const [open, setOpen] = useState<boolean>(defaultOpen);
 	const items: OrderItem[] = order.orderItems ?? [];
@@ -50,7 +52,7 @@ const OrderCard = (props: OrderCardProps) => {
 				</span>
 				<span className={'order-main'}>
 					<strong>
-						{items[0]?.productData?.productTitle ?? 'Order'}
+						{items[0]?.productData?.productTitle ?? t('card.order')}
 						{items.length > 1 && <em> +{items.length - 1} more</em>}
 					</strong>
 					<span className={'order-meta'}>
@@ -72,7 +74,7 @@ const OrderCard = (props: OrderCardProps) => {
 
 					<div className={'order-columns'}>
 						<section className={'order-items'}>
-							<h4>Items</h4>
+							<h4>{t('card.items')}</h4>
 							{items.map((item) => {
 								const image = item.productData?.productImages?.[0];
 								return (
@@ -82,7 +84,7 @@ const OrderCard = (props: OrderCardProps) => {
 											style={image ? { backgroundImage: `url(${REACT_APP_API_URL}/${image})` } : undefined}
 										/>
 										<span className={'name'}>
-											<Link href={`/product/detail?id=${item.productId}`}>{item.productData?.productTitle ?? 'Product'}</Link>
+											<Link href={`/product/detail?id=${item.productId}`}>{item.productData?.productTitle ?? t('card.product')}</Link>
 											<span>
 												{item.itemQuantity} × ${formatterStr(item.itemPrice)}
 											</span>
@@ -93,25 +95,25 @@ const OrderCard = (props: OrderCardProps) => {
 							})}
 							<dl className={'order-sums'}>
 								<div>
-									<dt>Items</dt>
+									<dt>{t('card.items')}</dt>
 									<dd>${formatterStr(itemsTotal)}</dd>
 								</div>
 								<div>
-									<dt>Delivery</dt>
-									<dd>{order.orderDelivery ? `$${formatterStr(order.orderDelivery)}` : 'Free'}</dd>
+									<dt>{t('card.delivery')}</dt>
+									<dd>{order.orderDelivery ? `$${formatterStr(order.orderDelivery)}` : t('card.free')}</dd>
 								</div>
 								<div className={'total'}>
-									<dt>Total · cash on delivery</dt>
+									<dt>{t('card.totalCashOnDelivery')}</dt>
 									<dd>${formatterStr(order.orderTotal)}</dd>
 								</div>
 							</dl>
 						</section>
 
 						<section className={'order-delivery'}>
-							<h4>Delivery</h4>
+							<h4>{t('card.delivery')}</h4>
 							<dl>
 								<div>
-									<dt>Recipient</dt>
+									<dt>{t('card.recipient')}</dt>
 									<dd>
 										{order.recipientName}
 										<br />
@@ -119,11 +121,11 @@ const OrderCard = (props: OrderCardProps) => {
 									</dd>
 								</div>
 								<div>
-									<dt>Address</dt>
+									<dt>{t('card.address')}</dt>
 									<dd>{order.deliveryAddress}</dd>
 								</div>
 								<div>
-									<dt>When</dt>
+									<dt>{t('card.when')}</dt>
 									<dd>
 										{moment(order.deliveryDate).format('dddd, D MMMM YYYY')}
 										{order.deliveryTime && (
@@ -136,13 +138,13 @@ const OrderCard = (props: OrderCardProps) => {
 								</div>
 								{order.cardMessage && (
 									<div>
-										<dt>Card message</dt>
+										<dt>{t('card.cardMessage')}</dt>
 										<dd className={'card-message'}>“{order.cardMessage}”</dd>
 									</div>
 								)}
 								{other?.memberNick && (
 									<div>
-										<dt>{role === 'buyer' ? 'Florist' : 'Buyer'}</dt>
+										<dt>{role === 'buyer' ? t('card.florist') : t('card.buyer')}</dt>
 										<dd>
 											{role === 'buyer' ? (
 												<Link href={`/agent/detail?agentId=${order.agentId}`}>{other.memberNick}</Link>
@@ -171,7 +173,7 @@ const OrderCard = (props: OrderCardProps) => {
 									disabled={busy}
 									onClick={() => onChangeStatus(order, OrderStatus.CANCELLED)}
 								>
-									Cancel order
+									{t('card.cancelOrder')}
 								</button>
 							)}
 							{role !== 'buyer' && nextStatus && (
@@ -182,7 +184,7 @@ const OrderCard = (props: OrderCardProps) => {
 						</div>
 					)}
 					{role === 'buyer' && cancellableOrderStatuses.includes(order.orderStatus) && !canCancel && (
-						<p className={'order-hint'}>The florist is working on this order. To change or cancel it, call the florist.</p>
+						<p className={'order-hint'}>{t('card.theFloristIsWorkingOn')}</p>
 					)}
 				</div>
 			)}

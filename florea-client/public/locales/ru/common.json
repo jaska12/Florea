@@ -1,59 +1,203 @@
 {
-	"Home": "Главная",
-	"Products": "Товары",
-	"Agents": "Флористы",
-	"Community": "Сообщество",
-	"My Page": "Моя страница",
-	"CS": "Обслуживание",
-	"Login": "Логин",
-	"Register": "Регистрация",
-	"Location": "Расположение",
-	"Product type": "Тип товара",
-	"Occasion": "Повод",
-	"Fresh bouquets, plants and curated gift boxes from local florists and gift shops. Choose by occasion and send them to someone you love.": "Свежие букеты, растения и подарочные наборы от местных флористов и магазинов подарков. Выберите повод и отправьте близкому человеку.",
-	"Popular occasions": "Популярные поводы",
-	"Find your perfect Florea flowers & gifts": "Найдите идеальные цветы и подарки Florea",
-	"Category": "Категория",
-	"Size": "Размер",
-	"Advanced": "Расширенные",
-	"Product Search": "Поиск товаров",
-	"We are glad to see you again!": "Мы рады видеть вас снова!",
-	"Agent Page": "Страница флориста",
-	"my page": "моя страница",
-	"Community Detail": "Детали сообщества",
-	"Login/Signup": "Логин/регистрация",
-	"Member Page": "Страница участника",
-	"Notifications": "Уведомления",
-	"new": "новых",
-	"Mark all as read": "Отметить все как прочитанные",
-	"No notifications yet": "Уведомлений пока нет",
-	"Unread": "Не прочитано",
-	"Likes, comments and new followers will appear here.": "Здесь появятся лайки, комментарии и новые подписчики.",
-	"Show more": "Показать ещё",
-	"liked your product": "оценил(а) ваш товар",
-	"liked your article": "оценил(а) вашу статью",
-	"liked your profile": "оценил(а) ваш профиль",
-	"commented on your product": "оставил(а) комментарий к вашему товару",
-	"commented on your article": "оставил(а) комментарий к вашей статье",
-	"left a review on your profile": "оставил(а) отзыв в вашем профиле",
-	"started following you": "подписался(ась) на вас",
-	"Live chat": "Онлайн-чат",
-	"Close chat": "Закрыть чат",
-	"online": "онлайн",
-	"Connecting...": "Подключение...",
-	"Welcome to Live chat!": "Добро пожаловать в онлайн-чат!",
-	"Type message": "Введите сообщение",
-	"Send": "Отправить",
-	"Guest": "Гость",
-	"Menu": "Меню",
-	"Close menu": "Закрыть меню",
-	"Logout": "Выйти",
-	"Cart": "Корзина",
-	"New order": "Новый заказ",
-	"An order was cancelled": "Заказ отменён",
-	"Your order is confirmed": "Ваш заказ подтверждён",
-	"Your order is being prepared": "Ваш заказ готовится",
-	"Your order is out for delivery": "Ваш заказ передан в доставку",
-	"Your order has been delivered": "Ваш заказ доставлен",
-	"Your order was cancelled": "Ваш заказ отменён"
+  "nav": {
+    "home": "Главная",
+    "products": "Каталог",
+    "florists": "Флористы",
+    "community": "Сообщество",
+    "myPage": "Мой кабинет",
+    "cs": "Помощь",
+    "loginRegister": "Вход / Регистрация",
+    "logout": "Выйти",
+    "menu": "Меню",
+    "closeMenu": "Закрыть меню",
+    "language": "Язык",
+    "languageName": {
+      "en": "English",
+      "kr": "한국어",
+      "ru": "Русский"
+    }
+  },
+  "hero": {
+    "title": "Цветы и подарки Florea — для самых важных слов",
+    "subtitle": "Свежие букеты, растения и подарочные наборы от местных флористов. Выберите по поводу и отправьте тому, кто вам дорог.",
+    "popularOccasions": "Популярные поводы",
+    "category": "Категория",
+    "occasion": "Повод",
+    "size": "Размер"
+  },
+  "chat": {
+    "title": "Онлайн-чат",
+    "close": "Закрыть чат",
+    "online": "В сети: {{count}}",
+    "connecting": "Подключение…",
+    "welcome": "Добро пожаловать в онлайн-чат!",
+    "typeMessage": "Введите сообщение",
+    "send": "Отправить",
+    "guest": "Гость"
+  },
+  "cartIcon": {
+    "cart": "Корзина",
+    "cartWithCount": "Корзина ({{count}})"
+  },
+  "notifications": {
+    "title": "Уведомления",
+    "titleWithCount": "Уведомления ({{count}})",
+    "newCount": "Новых: {{count}}",
+    "markAllRead": "Отметить все прочитанными",
+    "empty": "Уведомлений пока нет",
+    "emptyHint": "Здесь появятся лайки, комментарии и новые подписчики.",
+    "unread": "Не прочитано",
+    "showMore": "Показать ещё",
+    "action": {
+      "LIKE_PRODUCT": "<b>{{name}}</b>: нравится ваш товар",
+      "LIKE_ARTICLE": "<b>{{name}}</b>: нравится ваша статья",
+      "LIKE_MEMBER": "<b>{{name}}</b>: нравится ваш профиль",
+      "COMMENT_PRODUCT": "<b>{{name}}</b>: новый комментарий к вашему товару",
+      "COMMENT_ARTICLE": "<b>{{name}}</b>: новый комментарий к вашей статье",
+      "COMMENT_MEMBER": "<b>{{name}}</b>: новый отзыв в вашем профиле",
+      "SUBSCRIBE_MEMBER": "<b>{{name}}</b>: новый подписчик"
+    },
+    "serverTitle": {
+      "newOrder": "Новый заказ",
+      "orderCancelledForShop": "Заказ отменён",
+      "orderConfirmed": "Ваш заказ подтверждён",
+      "orderPreparing": "Ваш заказ готовится",
+      "orderOutForDelivery": "Ваш заказ передан в доставку",
+      "orderDelivered": "Ваш заказ доставлен",
+      "orderCancelled": "Ваш заказ отменён",
+      "likeProduct": "Новый лайк вашему товару",
+      "likeArticle": "Новый лайк вашей статье",
+      "likeProfile": "Новый лайк вашему профилю",
+      "comment": "Новый комментарий",
+      "follower": "Новый подписчик"
+    }
+  },
+  "alert": {
+    "ok": "ОК",
+    "cancel": "Отмена",
+    "login": "Войти"
+  },
+  "serverError": {
+    "somethingWentWrong": "Что-то пошло не так. Попробуйте ещё раз.",
+    "noDataFound": "Ничего не найдено.",
+    "createFailed": "Не удалось создать. Попробуйте ещё раз.",
+    "updateFailed": "Не удалось обновить. Попробуйте ещё раз.",
+    "removeFailed": "Не удалось удалить. Попробуйте ещё раз.",
+    "uploadFailed": "Не удалось загрузить файл. Попробуйте ещё раз.",
+    "badRequest": "Проверьте введённые данные и попробуйте ещё раз.",
+    "nickOrPhoneUsed": "Этот никнейм или номер телефона уже используется.",
+    "noMemberNick": "Участника с таким никнеймом нет.",
+    "blocked": "Этот аккаунт заблокирован.",
+    "wrongPassword": "Неверный пароль. Попробуйте ещё раз.",
+    "notAuthenticated": "Сначала войдите в аккаунт.",
+    "rolesOnly": "Это недоступно для вашего типа аккаунта.",
+    "notAllowed": "Этот запрос не разрешён.",
+    "imageFormat": "Используйте изображения JPG, JPEG или PNG.",
+    "selfSubscription": "Нельзя подписаться на себя.",
+    "productNotAvailable": "Один из товаров больше недоступен.",
+    "ownProductOrder": "Нельзя заказать собственный товар.",
+    "deliveryDatePassed": "Дата доставки не может быть в прошлом.",
+    "orderCannotBeCancelled": "Этот заказ уже нельзя отменить.",
+    "orderStatusNotAllowed": "Такое изменение статуса недоступно.",
+    "noticeTopicRequired": "Выберите тему для вопроса.",
+    "aiTooManyRequests": "Слишком много запросов. Подождите минуту и попробуйте снова.",
+    "aiUnavailable": "Ассистент сейчас недоступен. Попробуйте чуть позже.",
+    "loginFailed": "Не удалось войти. Попробуйте ещё раз.",
+    "fillAllInputs": "Заполните все поля.",
+    "messageEmpty": "Сообщение пустое."
+  },
+  "enum": {
+    "productType": {
+      "BOUQUET": "Букет",
+      "FLOWER_BOX": "Цветы в коробке",
+      "PLANT": "Растение",
+      "GIFT_BOX": "Подарочный набор",
+      "SWEET": "Сладости",
+      "TOY": "Игрушка"
+    },
+    "productOccasion": {
+      "BIRTHDAY": "День рождения",
+      "WEDDING": "Свадьба",
+      "ANNIVERSARY": "Годовщина",
+      "LOVE": "Любовь",
+      "CONGRATS": "Поздравление",
+      "SYMPATHY": "Соболезнование"
+    },
+    "productSize": {
+      "SMALL": "Маленький",
+      "MEDIUM": "Средний",
+      "LARGE": "Большой"
+    },
+    "productStatus": {
+      "ACTIVE": "В продаже",
+      "SOLD": "Продано",
+      "DELETE": "Удалён"
+    },
+    "productLocation": {
+      "SEOUL": "Сеул",
+      "BUSAN": "Пусан",
+      "INCHEON": "Инчхон",
+      "DAEGU": "Тэгу",
+      "GYEONGJU": "Кёнджу",
+      "GWANGJU": "Кванджу",
+      "CHONJU": "Чонджу",
+      "DAEJON": "Тэджон",
+      "JEJU": "Чеджу"
+    },
+    "orderStatus": {
+      "PENDING": "Оформлен",
+      "CONFIRMED": "Подтверждён",
+      "PREPARING": "Готовится",
+      "OUT_FOR_DELIVERY": "В доставке",
+      "DELIVERED": "Доставлен",
+      "CANCELLED": "Отменён"
+    },
+    "memberType": {
+      "USER": "Покупатель",
+      "AGENT": "Флорист",
+      "ADMIN": "Администратор"
+    },
+    "memberStatus": {
+      "ACTIVE": "Активен",
+      "BLOCK": "Заблокирован",
+      "DELETE": "Удалён"
+    },
+    "notificationType": {
+      "LIKE": "Лайк",
+      "COMMENT": "Комментарий",
+      "SUBSCRIBE": "Подписка",
+      "ORDER": "Заказ",
+      "SYSTEM": "Уведомление"
+    },
+    "noticeTopic": {
+      "PRODUCT": "Товары",
+      "PAYMENT": "Оплата",
+      "ORDER": "Заказы",
+      "FLORIST": "Флористам",
+      "ACCOUNT": "Аккаунт",
+      "COMMUNITY": "Сообщество",
+      "OTHER": "Другое"
+    },
+    "noticeStatus": {
+      "HOLD": "На паузе",
+      "ACTIVE": "Опубликовано",
+      "DELETE": "Удалено"
+    },
+    "articleCategory": {
+      "FREE": "Свободная тема",
+      "RECOMMEND": "Рекомендации",
+      "NEWS": "Новости",
+      "HUMOR": "Юмор"
+    },
+    "articleStatus": {
+      "ACTIVE": "Опубликована",
+      "DELETE": "Удалена"
+    },
+    "cardTone": {
+      "WARM": "Тёплый",
+      "ROMANTIC": "Романтичный",
+      "PLAYFUL": "Игривый",
+      "FORMAL": "Официальный"
+    }
+  }
 }

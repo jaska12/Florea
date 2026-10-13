@@ -1,3 +1,4 @@
+import { useTranslation } from 'next-i18next';
 import React from 'react';
 import { Stack, Box, Typography } from '@mui/material';
 import { Comment } from '../../types/comment/comment';
@@ -9,6 +10,7 @@ interface ReviewCardProps {
 	comment: Comment;
 }
 const ReviewCard = (props: ReviewCardProps) => {
+	const { t } = useTranslation('common');
 	const { fromMyPage, comment } = props;
 	const imagePath: string = comment?.memberData?.memberImage
 		? `${REACT_APP_API_URL}/${comment?.memberData?.memberImage}`
@@ -43,7 +45,7 @@ const ReviewCard = (props: ReviewCardProps) => {
 							</clipPath>
 						</defs>
 					</svg>
-					<Typography className="reply-text">Reply</Typography>
+					<Typography className="reply-text">{t('review.reply')}</Typography>
 				</Stack>
 			)}
 		</Box>

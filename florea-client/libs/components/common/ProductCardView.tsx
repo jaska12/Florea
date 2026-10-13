@@ -1,3 +1,4 @@
+import { useTranslation } from 'next-i18next';
 import React from 'react';
 import { Stack, Box, Typography } from '@mui/material';
 import IconButton from '@mui/material/IconButton';
@@ -34,6 +35,7 @@ export const prettyLabel = (value: string): string => formatLabel(value).replace
  * It only draws; the component that uses it keeps its own data and like logic.
  */
 const ProductCardView = (props: ProductCardViewProps) => {
+	const { t } = useTranslation('common');
 	const { product, className, liked, onOpen, onLike, showStats = true, wholeCardOpens = false } = props;
 	const isTop = Boolean(product && product?.productRank >= topProductRank);
 	const photo = product?.productImages?.[0];
@@ -42,11 +44,11 @@ const ProductCardView = (props: ProductCardViewProps) => {
 		<Stack className={`${className} florea-card`} onClick={wholeCardOpens ? onOpen : undefined}>
 			<Box component={'div'} className={'card-img'} onClick={wholeCardOpens ? undefined : onOpen}>
 				{photo && <div className={'card-photo'} style={{ backgroundImage: `url(${REACT_APP_API_URL}/${photo})` }} />}
-				{isTop && <span className={'card-badge'}>Top</span>}
+				{isTop && <span className={'card-badge'}>{t('productCard.top')}</span>}
 				{(product?.productSameDay || product?.productGiftWrap) && (
 					<span className={'card-flags'}>
-						{product?.productSameDay && <span className={'flag'}>Same day</span>}
-						{product?.productGiftWrap && <span className={'flag'}>Gift wrap</span>}
+						{product?.productSameDay && <span className={'flag'}>{t('productCard.sameDay')}</span>}
+						{product?.productGiftWrap && <span className={'flag'}>{t('productCard.giftWrap')}</span>}
 					</span>
 				)}
 				<AddToCartButton product={product} />
@@ -69,7 +71,7 @@ const ProductCardView = (props: ProductCardViewProps) => {
 								<IconButton
 									className={`like-btn ${liked ? 'liked' : ''}`}
 									color={'default'}
-									aria-label={liked ? 'Remove from favorites' : 'Add to favorites'}
+									aria-label={liked ? t('productCard.removeFromFavorites') : t('productCard.addToFavorites')}
 									onClick={onLike}
 								>
 									{liked ? <FavoriteIcon /> : <FavoriteBorderIcon />}

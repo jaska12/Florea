@@ -1,3 +1,4 @@
+import { useTranslation } from 'next-i18next';
 import FacebookOutlinedIcon from '@mui/icons-material/FacebookOutlined';
 import InstagramIcon from '@mui/icons-material/Instagram';
 import TelegramIcon from '@mui/icons-material/Telegram';
@@ -6,6 +7,7 @@ import { Stack, Box } from '@mui/material';
 import moment from 'moment';
 
 const Footer = () => {
+	const { t } = useTranslation('common');
 
 	return (
 		<Stack className={'footer-container'}>
@@ -15,16 +17,16 @@ const Footer = () => {
 						<img src="/img/logo/florea/florea-logo-on-dark.svg" alt="Florea" className={'logo'} />
 					</Box>
 					<Box component={'div'} className={'footer-box'}>
-						<span>customer care</span>
+						<span>{t('footer.customerCare')}</span>
 						<p>+82 10 4867 2909</p>
 					</Box>
 					<Box component={'div'} className={'footer-box'}>
-						<span>need help with an order?</span>
+						<span>{t('footer.needHelpWithAnOrder')}</span>
 						<p>+82 10 4867 2909</p>
-						<span>We reply within a day.</span>
+						<span>{t('footer.weReplyWithinADay')}</span>
 					</Box>
 					<Box component={'div'} className={'footer-box'}>
-						<p>follow us on social media</p>
+						<p>{t('footer.followUsOnSocialMedia')}</p>
 						<div className={'media-box'}>
 							<FacebookOutlinedIcon />
 							<TelegramIcon />
@@ -35,40 +37,40 @@ const Footer = () => {
 				</Stack>
 				<Stack className={'right'}>
 					<Box component={'div'} className={'top'}>
-						<strong>Seasonal bouquets and gift ideas, by email</strong>
+						<strong>{t('footer.seasonalBouquetsAndGiftIdeas')}</strong>
 						<div>
-							<input type="text" placeholder={'Your Email'} />
-							<span>Subscribe</span>
+							<input type="text" placeholder={t('footer.yourEmail')} />
+							<span>{t('footer.subscribe')}</span>
 						</div>
 					</Box>
 					<Box component={'div'} className={'bottom'}>
 						<div>
-							<strong>Shop</strong>
-							<span>Same-day delivery</span>
-							<span>Gift-wrapped items</span>
+							<strong>{t('footer.shop')}</strong>
+							<span>{t('footer.sameDayDelivery')}</span>
+							<span>{t('footer.giftWrappedItems')}</span>
 						</div>
 						<div>
-							<strong>Quick Links</strong>
-							<span>Terms of Use</span>
-							<span>Privacy Policy</span>
-							<span>Delivery information</span>
-							<span>Our Services</span>
-							<span>Contact Support</span>
-							<span>FAQs</span>
+							<strong>{t('footer.quickLinks')}</strong>
+							<span>{t('footer.termsOfUse')}</span>
+							<span>{t('footer.privacyPolicy')}</span>
+							<span>{t('footer.deliveryInformation')}</span>
+							<span>{t('footer.ourServices')}</span>
+							<span>{t('footer.contactSupport')}</span>
+							<span>{t('footer.faqs')}</span>
 						</div>
 						<div>
-							<strong>Delivery areas</strong>
-							<span>Seoul</span>
-							<span>Gyeongido</span>
-							<span>Busan</span>
-							<span>Jejudo</span>
+							<strong>{t('footer.deliveryAreas')}</strong>
+							<span>{t('footer.seoul')}</span>
+							<span>{t('footer.gyeongido')}</span>
+							<span>{t('footer.busan')}</span>
+							<span>{t('footer.jejudo')}</span>
 						</div>
 					</Box>
 				</Stack>
 			</Stack>
 			<Stack className={'second'}>
 				<span>© Florea - All rights reserved. Florea {moment().year()}</span>
-				<span>Privacy · Terms · Sitemap</span>
+				<span>{t('footer.privacyTermsSitemap')}</span>
 			</Stack>
 		</Stack>
 	);

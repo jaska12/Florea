@@ -1,3 +1,4 @@
+import { useTranslation } from 'next-i18next';
 import React from 'react';
 import { NextPage } from 'next';
 import Link from 'next/link';
@@ -12,36 +13,35 @@ export const getStaticProps = async ({ locale }: any) => ({
 });
 
 const About: NextPage = () => {
+	const { t } = useTranslation('cs');
 	return (
 		<Stack className={'about-page'}>
 			<Stack className={'intro'}>
 				<Stack className={'container'}>
 					<Stack className={'left'}>
-						<strong>Flowers and gifts from the florists near you.</strong>
+						<strong>{t('about.flowersAndGiftsFromThe')}</strong>
 					</Stack>
 					<Stack className={'right'}>
 						<p>
-							Florea brings local florists and gift shops into one place, so a bouquet for a birthday, a plant for a
-							new home or a gift box for an anniversary is a few minutes away.
+							{t('about.floreaBringsLocalFloristsAnd')}
 							<br />
 							<br />
-							Choose by occasion, size and budget, see who made it, and send it to someone you love. Many items can
-							be delivered the same day, and many can be gift wrapped.
+							{t('about.chooseByOccasionSizeAnd')}
 						</p>
 						<Stack className={'boxes'}>
 							<div className={'box'}>
 								<div>
 									<img src="/img/icons/garden.svg" alt="" />
 								</div>
-								<span>Made by local florists</span>
-								<p>Each product shows the shop behind it.</p>
+								<span>{t('about.madeByLocalFlorists')}</span>
+								<p>{t('about.eachProductShowsTheShop')}</p>
 							</div>
 							<div className={'box'}>
 								<div>
 									<img src="/img/icons/securePayment.svg" alt="" />
 								</div>
-								<span>Chosen by occasion</span>
-								<p>Birthday, wedding, anniversary and more.</p>
+								<span>{t('about.chosenByOccasion')}</span>
+								<p>{t('about.birthdayWeddingAnniversaryAndMore')}</p>
 							</div>
 						</Stack>
 					</Stack>
@@ -55,15 +55,15 @@ const About: NextPage = () => {
 					<Stack className={'info'}>
 						<Box component={'div'}>
 							<strong>6</strong>
-							<p>Categories</p>
+							<p>{t('about.categories')}</p>
 						</Box>
 						<Box component={'div'}>
 							<strong>6</strong>
-							<p>Occasions</p>
+							<p>{t('about.occasions')}</p>
 						</Box>
 						<Box component={'div'}>
 							<strong>3</strong>
-							<p>Sizes</p>
+							<p>{t('about.sizes')}</p>
 						</Box>
 					</Stack>
 				</Stack>
@@ -71,14 +71,14 @@ const About: NextPage = () => {
 			<Stack className={'options'}>
 				<img src="/img/home/occ-anniversary.jpg" alt="" className={'about-banner'} />
 				<Stack className={'container'}>
-					<strong>For florists and gift shops</strong>
+					<strong>{t('about.forFloristsAndGiftShops')}</strong>
 					<Stack className={'box'}>
 						<div className={'icon-box'}>
 							<img src="/img/icons/security.svg" alt="" />
 						</div>
 						<div className={'text-box'}>
-							<span>List your products</span>
-							<p>Add bouquets, plants and gift boxes with photos, price, size and stock.</p>
+							<span>{t('about.listYourProducts')}</span>
+							<p>{t('about.addBouquetsPlantsAndGift')}</p>
 						</div>
 					</Stack>
 					<Stack className={'box'}>
@@ -86,8 +86,8 @@ const About: NextPage = () => {
 							<img src="/img/icons/keywording.svg" alt="" />
 						</div>
 						<div className={'text-box'}>
-							<span>Receive orders</span>
-							<p>Buyers find you by category, occasion and location, and order for delivery.</p>
+							<span>{t('about.receiveOrders')}</span>
+							<p>{t('about.buyersFindYouByCategory')}</p>
 						</div>
 					</Stack>
 					<Stack className={'box'}>
@@ -95,12 +95,12 @@ const About: NextPage = () => {
 							<img src="/img/icons/investment.svg" alt="" />
 						</div>
 						<div className={'text-box'}>
-							<span>Build your following</span>
-							<p>Customers can follow your shop, like your products and leave reviews.</p>
+							<span>{t('about.buildYourFollowing')}</span>
+							<p>{t('about.customersCanFollowYourShop')}</p>
 						</div>
 					</Stack>
 					<Link href={'/account/join'} className={'btn'}>
-						Open your shop
+						{t('about.openYourShop')}
 						<img src="/img/icons/rightup.svg" alt="" />
 					</Link>
 				</Stack>
@@ -108,12 +108,12 @@ const About: NextPage = () => {
 			<Stack className={'help'}>
 				<Stack className={'container'}>
 					<Box component={'div'} className={'left'}>
-						<strong>Need help choosing?</strong>
-						<p>Ask a florist on their page, or read the answers in customer care.</p>
+						<strong>{t('about.needHelpChoosing')}</strong>
+						<p>{t('about.askAFloristOnTheir')}</p>
 					</Box>
 					<Box component={'div'} className={'right'}>
 						<Link href={'/cs'} className={'white'}>
-							Customer care
+							{t('about.customerCare')}
 							<img src="/img/icons/rightup.svg" alt="" />
 						</Link>
 						<div className={'black'}>

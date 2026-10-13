@@ -1,3 +1,4 @@
+import { useTranslation } from 'next-i18next';
 import React, { useState } from 'react';
 import { NextPage } from 'next';
 import { Pagination, Stack, Typography } from '@mui/material';
@@ -11,6 +12,7 @@ import { Messages } from '../../config';
 import { sweetMixinErrorAlert, sweetTopSmallSuccessAlert } from '../../sweetAlert';
 
 const MyFavorites: NextPage = () => {
+	const { t } = useTranslation('mypage');
 	const [myFavorites, setMyFavorites] = useState<Product[]>([]);
 	const [total, setTotal] = useState<number>(0);
 	const [searchFavorites, setSearchFavorites] = useState<T>({ page: 1, limit: 6 });
@@ -42,7 +44,7 @@ const MyFavorites: NextPage = () => {
 				variables: { input: id },
 			});
 			await getFavoritesRefetch({ input: searchFavorites });
-			await sweetTopSmallSuccessAlert('success', 800);
+			await sweetTopSmallSuccessAlert(t('favorites.success'), 800);
 		} catch (err: any) {
 			console.log('ERROR, likeProductHandler:', err.message);
 			sweetMixinErrorAlert(err.message).then();
@@ -57,8 +59,8 @@ const MyFavorites: NextPage = () => {
 		<div id="my-favorites-page">
 			<Stack className="main-title-box">
 				<Stack className="right-box">
-					<Typography className="main-title">My Favorites</Typography>
-					<Typography className="sub-title">We are glad to see you again!</Typography>
+					<Typography className="main-title">{t('favorites.myFavorites')}</Typography>
+					<Typography className="sub-title">{t('favorites.weAreGladToSee')}</Typography>
 				</Stack>
 			</Stack>
 			<Stack className="favorites-list-box">
@@ -76,7 +78,7 @@ const MyFavorites: NextPage = () => {
 				) : (
 					<div className={'no-data'}>
 						<img src="/img/icons/icoAlert.svg" alt="" />
-						<p>No Favorites found!</p>
+						<p>{t('favorites.noFavoritesFound')}</p>
 					</div>
 				)}
 			</Stack>

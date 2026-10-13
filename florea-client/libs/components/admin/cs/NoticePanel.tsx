@@ -1,3 +1,4 @@
+import { useTranslation } from 'next-i18next';
 import React, { useState } from 'react';
 import moment from 'moment';
 import { useMutation, useQuery } from '@apollo/client';
@@ -77,6 +78,7 @@ const emptyForm: NoticeForm = {
 
 // The admin screen for notices and for the FAQ: list, search, add, edit, change status, remove.
 const NoticePanel = (props: NoticePanelProps) => {
+	const { t } = useTranslation('admin');
 	const { category } = props;
 	const faq = category === NoticeCategory.FAQ;
 	const [tab, setTab] = useState<NoticeStatus | 'ALL'>('ALL');
@@ -149,7 +151,7 @@ const NoticePanel = (props: NoticePanelProps) => {
 
 		if (noticeTitle.length < 3) return setFormError(`Write the ${faq ? 'question' : 'title'} (at least 3 characters).`);
 		if (noticeContent.length < 3) return setFormError(`Write the ${faq ? 'answer' : 'text'} (at least 3 characters).`);
-		if (faq && !form.noticeTopic) return setFormError('Choose the topic this question belongs to.');
+		if (faq && !form.noticeTopic) return setFormError(t('notices.chooseTheTopicThisQuestion'));
 
 		try {
 			setSaving(true);
@@ -166,9 +168,9 @@ const NoticePanel = (props: NoticePanelProps) => {
 			}
 			setForm(null);
 			await getNoticesRefetch({ input: inquiry });
-			await sweetTopSmallSuccessAlert(form._id ? 'Saved' : 'Added', 1200);
+			await sweetTopSmallSuccessAlert(form._id ? t('notices.saved') : t('notices.added'), 1200);
 		} catch (err: any) {
-			setFormError(err?.graphQLErrors?.[0]?.message ?? 'It could not be saved. Please try again.');
+			setFormError(err?.graphQLErrors?.[0]?.message ?? t('notices.itCouldNotBeSaved'));
 		} finally {
 			setSaving(false);
 		}
@@ -185,7 +187,7 @@ const NoticePanel = (props: NoticePanelProps) => {
 
 	const removeHandler = async (notice: Notice) => {
 		try {
-			if (!(await sweetConfirmAlert('Remove this entry for good?'))) return;
+			if (!(await sweetConfirmAlert(t('notices.removeThisEntryForGood')))) return;
 			await removeNotice({ variables: { input: notice._id }, context: { silentError: true } });
 			await getNoticesRefetch({ input: inquiry });
 		} catch (err: any) {
@@ -196,7 +198,7 @@ const NoticePanel = (props: NoticePanelProps) => {
 	return (
 		<Box component={'div'} className={'content'}>
 			<Box component={'div'} className={'title flex_space'}>
-				<Typography variant={'h2'}>{faq ? 'FAQ Management' : 'Notice Management'}</Typography>
+				<Typography variant={'h2'}>{faq ? t('notices.faqManagement') : t('notices.noticeManagement')}</Typography>
 				<Button
 					className="btn_add"
 					variant={'contained'}
@@ -207,7 +209,7 @@ const NoticePanel = (props: NoticePanelProps) => {
 					}}
 				>
 					<AddRoundedIcon sx={{ mr: '8px' }} />
-					ADD
+					{t('notices.add')}
 				</Button>
 			</Box>
 			<Box component={'div'} className={'table-wrap'}>
@@ -215,7 +217,7 @@ const NoticePanel = (props: NoticePanelProps) => {
 					<List className={'tab-menu'}>
 						{TABS.map((value) => (
 							<ListItem onClick={() => tabChangeHandler(value)} className={tab === value ? 'li on' : 'li'} key={value}>
-								{value === 'ALL' ? 'All' : noticeStatusLabels[value]}
+								{value === 'ALL' ? t('notices.all') : noticeStatusLabels[value]}
 							</ListItem>
 						))}
 					</List>
@@ -229,9 +231,9 @@ const NoticePanel = (props: NoticePanelProps) => {
 									setTopic(e.target.value as NoticeTopic | 'ALL');
 									setPage(0);
 								}}
-								inputProps={{ 'aria-label': 'Topic' }}
+								inputProps={{ 'aria-label': t('notices.topic') }}
 							>
-								<MenuItem value={'ALL'}>All topics</MenuItem>
+								<MenuItem value={'ALL'}>{t('notices.allTopics')}</MenuItem>
 								{TOPICS.map((value) => (
 									<MenuItem value={value} key={value}>
 										{noticeTopicLabels[value]}
@@ -244,7 +246,7 @@ const NoticePanel = (props: NoticePanelProps) => {
 							onChange={(e) => setSearchText(e.target.value)}
 							sx={{ width: '100%' }}
 							className={'search'}
-							placeholder={faq ? 'Search in questions' : 'Search in titles'}
+							placeholder={faq ? t('notices.searchInQuestions') : t('notices.searchInTitles')}
 							onKeyDown={(event) => {
 								if (event.key == 'Enter') searchHandler(searchText);
 							}}
@@ -271,26 +273,26 @@ const NoticePanel = (props: NoticePanelProps) => {
 						<Table sx={{ minWidth: 820 }} size={'medium'}>
 							<TableHead>
 								<TableRow>
-									<TableCell>{faq ? 'TOPIC' : 'MARK'}</TableCell>
-									<TableCell>{faq ? 'QUESTION' : 'TITLE'}</TableCell>
-									<TableCell>WRITER</TableCell>
-									<TableCell>DATE</TableCell>
-									<TableCell>STATUS</TableCell>
-									<TableCell align="center">ACTION</TableCell>
+									<TableCell>{faq ? t('notices.topic2') : t('notices.mark')}</TableCell>
+									<TableCell>{faq ? t('notices.question') : t('notices.title')}</TableCell>
+									<TableCell>{t('notices.writer')}</TableCell>
+									<TableCell>{t('notices.date')}</TableCell>
+									<TableCell>{t('notices.status')}</TableCell>
+									<TableCell align="center">{t('notices.action')}</TableCell>
 								</TableRow>
 							</TableHead>
 							<TableBody>
 								{notices.length === 0 && (
 									<TableRow>
 										<TableCell align="center" colSpan={6}>
-											<span className={'no-data'}>data not found!</span>
+											<span className={'no-data'}>{t('notices.dataNotFound')}</span>
 										</TableCell>
 									</TableRow>
 								)}
 								{notices.map((notice: Notice) => (
 									<TableRow hover key={notice._id}>
 										<TableCell>
-											{faq ? noticeTopicLabels[notice.noticeTopic as NoticeTopic] ?? '' : notice.noticeEvent ? 'Event' : ''}
+											{faq ? noticeTopicLabels[notice.noticeTopic as NoticeTopic] ?? '' : notice.noticeEvent ? t('notices.event') : ''}
 										</TableCell>
 										<TableCell sx={{ maxWidth: 420 }}>
 											<strong>{notice.noticeTitle}</strong>
@@ -356,10 +358,10 @@ const NoticePanel = (props: NoticePanelProps) => {
 									displayEmpty
 									value={form.noticeTopic}
 									onChange={(e) => changeForm({ noticeTopic: e.target.value as NoticeTopic })}
-									inputProps={{ 'aria-label': 'Topic' }}
+									inputProps={{ 'aria-label': t('notices.topic') }}
 								>
 									<MenuItem value={''} disabled>
-										Choose a topic
+										{t('notices.chooseATopic')}
 									</MenuItem>
 									{TOPICS.map((value) => (
 										<MenuItem value={value} key={value}>
@@ -369,14 +371,14 @@ const NoticePanel = (props: NoticePanelProps) => {
 								</Select>
 							)}
 							<TextField
-								label={faq ? 'Question' : 'Title'}
+								label={faq ? t('notices.question2') : t('notices.title2')}
 								value={form.noticeTitle}
 								onChange={(e) => changeForm({ noticeTitle: e.target.value })}
 								inputProps={{ maxLength: 150 }}
 								autoFocus
 							/>
 							<TextField
-								label={faq ? 'Answer' : 'Text'}
+								label={faq ? t('notices.answer') : t('notices.text')}
 								value={form.noticeContent}
 								onChange={(e) => changeForm({ noticeContent: e.target.value })}
 								inputProps={{ maxLength: 2000 }}
@@ -390,7 +392,7 @@ const NoticePanel = (props: NoticePanelProps) => {
 									size={'small'}
 									value={form.noticeStatus}
 									onChange={(e) => changeForm({ noticeStatus: e.target.value as NoticeStatus })}
-									inputProps={{ 'aria-label': 'Status' }}
+									inputProps={{ 'aria-label': t('notices.status2') }}
 								>
 									{STATUSES.map((value) => (
 										<MenuItem value={value} key={value}>
@@ -406,7 +408,7 @@ const NoticePanel = (props: NoticePanelProps) => {
 												onChange={(e) => changeForm({ noticeEvent: e.target.checked })}
 											/>
 										}
-										label={'Show with the "event" mark'}
+										label={t('notices.showWithTheEventMark')}
 									/>
 								)}
 							</Stack>
@@ -420,10 +422,10 @@ const NoticePanel = (props: NoticePanelProps) => {
 				)}
 				<DialogActions sx={{ px: '24px', pb: '20px' }}>
 					<Button onClick={() => setForm(null)} disabled={saving}>
-						Cancel
+						{t('notices.cancel')}
 					</Button>
 					<Button variant={'contained'} onClick={saveHandler} disabled={saving}>
-						{saving ? 'Saving…' : 'Save'}
+						{saving ? t('notices.saving') : t('notices.save')}
 					</Button>
 				</DialogActions>
 			</Dialog>

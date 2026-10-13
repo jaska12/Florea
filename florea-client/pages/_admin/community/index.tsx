@@ -1,3 +1,4 @@
+import { useTranslation } from 'next-i18next';
 import React, { useEffect, useState } from 'react';
 import type { NextPage } from 'next';
 import withAdminLayout from '../../../libs/components/layout/LayoutAdmin';
@@ -21,6 +22,7 @@ import { REMOVE_BOARD_ARTICLE_BY_ADMIN, UPDATE_BOARD_ARTICLE_BY_ADMIN } from '..
 import { T } from '../../../libs/types/common';
 
 const AdminCommunity: NextPage = ({ initialInquiry, ...props }: any) => {
+	const { t } = useTranslation('admin');
 	const [anchorEl, setAnchorEl] = useState<any>({});
 	const [communityInquiry, setCommunityInquiry] = useState<AllBoardArticlesInquiry>(initialInquiry);
 	const [articles, setArticles] = useState<BoardArticle[]>([]);
@@ -136,7 +138,7 @@ const AdminCommunity: NextPage = ({ initialInquiry, ...props }: any) => {
 
 	const removeArticleHandler = async (id: string) => {
 		try {
-			if (await sweetConfirmAlert('are you sure to remove?')) {
+			if (await sweetConfirmAlert(t('community.areYouSureToRemove'))) {
 				await removeBoardArticleByAdmin({
 					variables: {
 						input: id,
@@ -156,7 +158,7 @@ const AdminCommunity: NextPage = ({ initialInquiry, ...props }: any) => {
 	return (
 		<Box component={'div'} className={'content'}>
 			<Typography variant={'h2'} className={'tit'} sx={{ mb: '24px' }}>
-				Arricle List
+				{t('community.arricleList')}
 			</Typography>
 			<Box component={'div'} className={'table-wrap'}>
 				<Box component={'div'} sx={{ width: '100%', typography: 'body1' }}>
@@ -168,28 +170,28 @@ const AdminCommunity: NextPage = ({ initialInquiry, ...props }: any) => {
 									value="ALL"
 									className={value === 'ALL' ? 'li on' : 'li'}
 								>
-									All
+									{t('community.all')}
 								</ListItem>
 								<ListItem
 									onClick={(e: any) => tabChangeHandler(e, 'ACTIVE')}
 									value="ACTIVE"
 									className={value === 'ACTIVE' ? 'li on' : 'li'}
 								>
-									Active
+									{t('community.active')}
 								</ListItem>
 								<ListItem
 									onClick={(e: any) => tabChangeHandler(e, 'DELETE')}
 									value="DELETE"
 									className={value === 'DELETE' ? 'li on' : 'li'}
 								>
-									Delete
+									{t('community.delete')}
 								</ListItem>
 							</List>
 							<Divider />
 							<Stack className={'search-area'} sx={{ m: '24px' }}>
 								<Select sx={{ width: '160px', mr: '20px' }} value={searchType}>
 									<MenuItem value={'ALL'} onClick={() => searchTypeHandler('ALL')}>
-										ALL
+										{t('community.all2')}
 									</MenuItem>
 									{Object.values(BoardArticleCategory).map((category: string) => (
 										<MenuItem value={category} onClick={() => searchTypeHandler(category)} key={category}>

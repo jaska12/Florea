@@ -76,7 +76,7 @@ const Chat = () => {
 				<button
 					className={`chat-button ${unread ? 'unread' : ''}`}
 					onClick={handleOpenChat}
-					aria-label={open ? t('Close chat') : t('Live chat')}
+					aria-label={open ? t('chat.close') : t('chat.title')}
 					aria-expanded={open}
 				>
 					{open ? <CloseFullscreenIcon /> : <ChatBubbleOutlineRoundedIcon />}
@@ -84,15 +84,15 @@ const Chat = () => {
 			) : null}
 			<Stack className={`chat-frame ${open ? 'open' : ''}`} aria-hidden={!open}>
 				<Box className={'chat-top'} component={'div'}>
-					<strong>{t('Live chat')}</strong>
+					<strong>{t('chat.title')}</strong>
 					<span className={`chat-online ${connected ? '' : 'offline'}`}>
-						{connected ? `${onlineUsers} ${t('online')}` : t('Connecting...')}
+						{connected ? t('chat.online', { count: onlineUsers }) : t('chat.connecting')}
 					</span>
 				</Box>
 				<Box className={'chat-content'} id="chat-content" ref={chatContentRef} component={'div'}>
 					<ScrollableFeed>
 						<Stack className={'chat-main'}>
-							<div className={'chat-note'}>{t('Welcome to Live chat!')}</div>
+							<div className={'chat-note'}>{t('chat.welcome')}</div>
 							{messagesList.map((ele: ChatMessage, index: number) => {
 								const mine = Boolean(ele.memberData?._id) && ele.memberData?._id === user?._id;
 								return mine ? (
@@ -101,9 +101,9 @@ const Chat = () => {
 									</Box>
 								) : (
 									<Box className={'msg-row left'} component={'div'} key={index}>
-										<Avatar alt={ele.memberData?.memberNick ?? t('Guest')} src={imageOf(ele)} />
+										<Avatar alt={ele.memberData?.memberNick ?? t('chat.guest')} src={imageOf(ele)} />
 										<div className={'msg-body'}>
-											<span className={'msg-name'}>{ele.memberData?.memberNick ?? t('Guest')}</span>
+											<span className={'msg-name'}>{ele.memberData?.memberNick ?? t('chat.guest')}</span>
 											<div className={'msg-left'}>{ele.text}</div>
 										</div>
 									</Box>
@@ -117,7 +117,7 @@ const Chat = () => {
 						type={'text'}
 						name={'message'}
 						className={'msg-input'}
-						placeholder={t('Type message')}
+						placeholder={t('chat.typeMessage')}
 						value={message}
 						maxLength={MAX_LENGTH}
 						autoComplete={'off'}
@@ -129,7 +129,7 @@ const Chat = () => {
 						className={'send-msg-btn'}
 						onClick={onClickHandler}
 						disabled={!connected || !message.trim()}
-						aria-label={t('Send')}
+						aria-label={t('chat.send')}
 						tabIndex={open ? 0 : -1}
 					>
 						<SendIcon />

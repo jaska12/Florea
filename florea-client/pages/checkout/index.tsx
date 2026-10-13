@@ -1,3 +1,4 @@
+import { useTranslation } from 'next-i18next';
 import React, { useEffect, useRef, useState } from 'react';
 import { NextPage } from 'next';
 import Link from 'next/link';
@@ -54,6 +55,7 @@ const validate = (form: CheckoutForm): FormErrors => {
 };
 
 const Checkout: NextPage = () => {
+	const { t } = useTranslation('order');
 	const router = useRouter();
 	const user = useReactiveVar(userVar);
 	const items: CartItem[] = useReactiveVar(cartVar);
@@ -128,7 +130,7 @@ const Checkout: NextPage = () => {
 			await router.push(`/order/complete?ids=${ids.join(',')}`);
 			clearCart();
 		} catch (err: any) {
-			setServerError(err?.graphQLErrors?.[0]?.message ?? 'The order could not be placed. Please try again.');
+			setServerError(err?.graphQLErrors?.[0]?.message ?? t('checkout.theOrderCouldNotBe'));
 			setPlacing(false);
 		}
 	};
@@ -140,10 +142,10 @@ const Checkout: NextPage = () => {
 			<div id="checkout-page" className={'shop-page'}>
 				<div className={'container'}>
 					<div className={'shop-empty'}>
-						<strong>Log in to place your order</strong>
-						<p>Your cart is saved in this browser and will still be here when you come back.</p>
+						<strong>{t('checkout.logInToPlaceYour')}</strong>
+						<p>{t('checkout.yourCartIsSavedIn')}</p>
 						<Link href={'/account/join'} className={'shop-btn'}>
-							Log in or sign up
+							{t('checkout.logInOrSignUp')}
 						</Link>
 					</div>
 				</div>
@@ -156,10 +158,10 @@ const Checkout: NextPage = () => {
 			<div id="checkout-page" className={'shop-page'}>
 				<div className={'container'}>
 					<div className={'shop-empty'}>
-						<strong>There is nothing to check out</strong>
-						<p>Your cart is empty.</p>
+						<strong>{t('checkout.thereIsNothingToCheck')}</strong>
+						<p>{t('checkout.yourCartIsEmpty')}</p>
 						<Link href={'/product'} className={'shop-btn'}>
-							Browse flowers and gifts
+							{t('checkout.browseFlowersAndGifts')}
 						</Link>
 					</div>
 				</div>
@@ -173,16 +175,16 @@ const Checkout: NextPage = () => {
 				<form className={'shop-columns'} onSubmit={placeOrderHandler} noValidate>
 					<div className={'shop-main'}>
 						<section className={'shop-panel'}>
-							<h3>Who receives it</h3>
+							<h3>{t('checkout.whoReceivesIt')}</h3>
 							<div className={'field-row'}>
 								<label className={`field ${errors.recipientName ? 'wrong' : ''}`}>
-									<span>Recipient name</span>
+									<span>{t('checkout.recipientName')}</span>
 									<input
 										id="checkout-recipientName"
 										type="text"
 										autoComplete="name"
 										maxLength={60}
-										placeholder={'The person who will receive the order'}
+										placeholder={t('checkout.thePersonWhoWillReceive')}
 										value={form.recipientName}
 										onChange={(e) => changeHandler('recipientName', e.target.value)}
 										aria-invalid={Boolean(errors.recipientName)}
@@ -190,7 +192,7 @@ const Checkout: NextPage = () => {
 									{errors.recipientName && <em role={'alert'}>{errors.recipientName}</em>}
 								</label>
 								<label className={`field ${errors.recipientPhone ? 'wrong' : ''}`}>
-									<span>Recipient phone</span>
+									<span>{t('checkout.recipientPhone')}</span>
 									<input
 										id="checkout-recipientPhone"
 										type="tel"
@@ -208,15 +210,15 @@ const Checkout: NextPage = () => {
 						</section>
 
 						<section className={'shop-panel'}>
-							<h3>Where and when</h3>
+							<h3>{t('checkout.whereAndWhen')}</h3>
 							<label className={`field ${errors.deliveryAddress ? 'wrong' : ''}`}>
-								<span>Delivery address</span>
+								<span>{t('checkout.deliveryAddress')}</span>
 								<input
 									id="checkout-deliveryAddress"
 									type="text"
 									autoComplete="street-address"
 									maxLength={200}
-									placeholder={'Street, building, unit'}
+									placeholder={t('checkout.streetBuildingUnit')}
 									value={form.deliveryAddress}
 									onChange={(e) => changeHandler('deliveryAddress', e.target.value)}
 									aria-invalid={Boolean(errors.deliveryAddress)}
@@ -225,7 +227,7 @@ const Checkout: NextPage = () => {
 							</label>
 							<div className={'field-row'}>
 								<label className={`field ${errors.deliveryDate ? 'wrong' : ''}`}>
-									<span>Delivery date</span>
+									<span>{t('checkout.deliveryDate')}</span>
 									<input
 										id="checkout-deliveryDate"
 										type="date"
@@ -237,7 +239,7 @@ const Checkout: NextPage = () => {
 									{errors.deliveryDate && <em role={'alert'}>{errors.deliveryDate}</em>}
 								</label>
 								<fieldset className={`field ${errors.deliveryTime ? 'wrong' : ''}`}>
-									<legend>Delivery time</legend>
+									<legend>{t('checkout.deliveryTime')}</legend>
 									<div className={'slots'}>
 										{deliveryTimeSlots.map((slot: string, index: number) => (
 											<button
@@ -259,16 +261,16 @@ const Checkout: NextPage = () => {
 
 						<section className={'shop-panel'}>
 							<h3>
-								Gift card message <small>optional</small>
+								{t('checkout.giftCardMessage')} <small>{t('checkout.optional')}</small>
 							</h3>
 							<CardMessageHelper onPick={(message) => changeHandler('cardMessage', message)} />
 							<label className={'field'}>
-								<span className={'sr-only'}>Gift card message</span>
+								<span className={'sr-only'}>{t('checkout.giftCardMessage')}</span>
 								<textarea
 									id="checkout-cardMessage"
 									rows={3}
 									maxLength={CARD_MESSAGE_MAX}
-									placeholder={'A few words to print on the card'}
+									placeholder={t('checkout.aFewWordsToPrint')}
 									value={form.cardMessage}
 									onChange={(e) => changeHandler('cardMessage', e.target.value)}
 								/>
@@ -279,13 +281,13 @@ const Checkout: NextPage = () => {
 						</section>
 
 						<Link href={'/cart'} className={'shop-link'}>
-							← Back to cart
+							{t('checkout.backToCart')}
 						</Link>
 					</div>
 
 					<aside className={'shop-side'}>
 						<section className={'shop-panel shop-summary'}>
-							<h3>Your order</h3>
+							<h3>{t('checkout.yourOrder')}</h3>
 							{groups.map((group: CartGroup) => (
 								<div className={'summary-group'} key={group.agentId}>
 									<span className={'summary-shop'}>From {group.agentNick ?? 'this florist'}</span>
@@ -308,27 +310,27 @@ const Checkout: NextPage = () => {
 							))}
 							<dl>
 								<div>
-									<dt>Items</dt>
+									<dt>{t('checkout.items')}</dt>
 									<dd>${formatterStr(totals.subtotal)}</dd>
 								</div>
 								<div>
 									<dt>Delivery{groups.length > 1 ? ` (${groups.length} florists)` : ''}</dt>
-									<dd>{totals.delivery ? `$${formatterStr(totals.delivery)}` : 'Free'}</dd>
+									<dd>{totals.delivery ? `$${formatterStr(totals.delivery)}` : t('checkout.free')}</dd>
 								</div>
 								<div className={'total'}>
-									<dt>Total</dt>
+									<dt>{t('checkout.total')}</dt>
 									<dd>${formatterStr(totals.total)}</dd>
 								</div>
 							</dl>
 							{serverError && (
 								<p className={'shop-error'} role={'alert'}>
-									{serverError} <Link href={'/cart'}>Edit the cart</Link>
+									{serverError} <Link href={'/cart'}>{t('checkout.editTheCart')}</Link>
 								</p>
 							)}
 							<button type={'submit'} className={'shop-btn'} disabled={placing}>
-								{placing ? 'Placing your order…' : 'Place order'}
+								{placing ? t('checkout.placingYourOrder') : t('checkout.placeOrder')}
 							</button>
-							<p className={'shop-pay'}>Cash on delivery. You pay when the order arrives.</p>
+							<p className={'shop-pay'}>{t('checkout.cashOnDeliveryYouPay')}</p>
 						</section>
 					</aside>
 				</form>

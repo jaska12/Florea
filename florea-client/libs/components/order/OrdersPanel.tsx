@@ -1,3 +1,4 @@
+import { useTranslation } from 'next-i18next';
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
@@ -29,6 +30,7 @@ const TABS: (OrderStatus | 'ALL')[] = [
 ];
 
 const OrdersPanel = (props: OrdersPanelProps) => {
+	const { t } = useTranslation('order');
 	const { role } = props;
 	const router = useRouter();
 	const ping = useReactiveVar(notificationPingVar);
@@ -79,13 +81,13 @@ const OrdersPanel = (props: OrdersPanelProps) => {
 
 	const changeStatusHandler = async (order: Order, orderStatus: OrderStatus) => {
 		try {
-			if (orderStatus === OrderStatus.CANCELLED && !(await sweetConfirmAlert('Cancel this order?'))) return;
+			if (orderStatus === OrderStatus.CANCELLED && !(await sweetConfirmAlert(t('panel.cancelThisOrder')))) return;
 
 			setBusyId(order._id);
 			await updateOrder({ variables: { input: { _id: order._id, orderStatus: orderStatus } }, context: { silentError: true } });
 			await getOrdersRefetch({ input: inquiry });
 			await sweetTopSmallSuccessAlert(
-				orderStatus === OrderStatus.CANCELLED ? 'Order cancelled' : `Marked as ${orderStatusLabels[orderStatus].toLowerCase()}`,
+				orderStatus === OrderStatus.CANCELLED ? t('panel.orderCancelled') : `Marked as ${orderStatusLabels[orderStatus].toLowerCase()}`,
 				1400,
 			);
 		} catch (err: any) {
@@ -100,9 +102,9 @@ const OrdersPanel = (props: OrdersPanelProps) => {
 		<div id="orders-page">
 			<div className={'main-title-box'}>
 				<div className={'right-box'}>
-					<p className={'main-title'}>{agent ? 'Shop orders' : 'My orders'}</p>
+					<p className={'main-title'}>{agent ? t('panel.shopOrders') : t('panel.myOrders')}</p>
 					<p className={'sub-title'}>
-						{agent ? 'Orders placed for your products. Move each one on as you work.' : 'Follow your orders from the shop to the door.'}
+						{agent ? t('panel.ordersPlacedForYourProducts') : t('panel.followYourOrdersFromThe')}
 					</p>
 				</div>
 			</div>
@@ -117,7 +119,7 @@ const OrdersPanel = (props: OrdersPanelProps) => {
 						onClick={() => tabHandler(value)}
 						key={value}
 					>
-						{value === 'ALL' ? 'All' : orderStatusLabels[value]}
+						{value === 'ALL' ? t('panel.all') : orderStatusLabels[value]}
 					</button>
 				))}
 			</div>
@@ -128,10 +130,10 @@ const OrdersPanel = (props: OrdersPanelProps) => {
 				) : orders.length === 0 ? (
 					<div className={'order-empty'}>
 						<img src="/img/icons/icoAlert.svg" alt="" />
-						<strong>{tab === 'ALL' ? 'No orders yet' : `No ${orderStatusLabels[tab as OrderStatus].toLowerCase()} orders`}</strong>
+						<strong>{tab === 'ALL' ? t('panel.noOrdersYet') : `No ${orderStatusLabels[tab as OrderStatus].toLowerCase()} orders`}</strong>
 						{!agent && tab === 'ALL' && (
 							<Link href={'/product'} className={'order-btn'}>
-								Browse flowers and gifts
+								{t('panel.browseFlowersAndGifts')}
 							</Link>
 						)}
 					</div>

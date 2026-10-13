@@ -1,3 +1,4 @@
+import { useTranslation } from 'next-i18next';
 import React, { ChangeEvent, MouseEvent, useEffect, useState } from 'react';
 import { NextPage } from 'next';
 import { Box, Button, Menu, MenuItem, Pagination, Stack, Typography } from '@mui/material';
@@ -29,6 +30,7 @@ export const getStaticProps = async ({ locale }: any) => ({
 });
 
 const ProductList: NextPage = ({ initialInput, ...props }: any) => {
+	const { t } = useTranslation('product');
 	const router = useRouter();
 	const [searchFilter, setSearchFilter] = useState<ProductsInquiry>(
 		router?.query?.input ? JSON.parse(router?.query?.input as string) : initialInput,
@@ -107,11 +109,11 @@ const ProductList: NextPage = ({ initialInput, ...props }: any) => {
 				break;
 			case 'lowest':
 				setSearchFilter({ ...searchFilter, sort: 'productPrice', direction: Direction.ASC });
-				setFilterSortName('Lowest Price');
+				setFilterSortName(t('list.lowestPrice'));
 				break;
 			case 'highest':
 				setSearchFilter({ ...searchFilter, sort: 'productPrice', direction: Direction.DESC });
-				setFilterSortName('Highest Price');
+				setFilterSortName(t('list.highestPrice'));
 		}
 		setSortingOpen(false);
 		setAnchorEl(null);
@@ -127,7 +129,7 @@ const ProductList: NextPage = ({ initialInput, ...props }: any) => {
 			});
 			await getProductsRefetch({ input: searchFilter });
 
-			await sweetTopSmallSuccessAlert('success', 800);
+			await sweetTopSmallSuccessAlert(t('list.success'), 800);
 		} catch (err: any) {
 			console.log('ERROR, likeProductHandler:', err.message);
 			sweetMixinErrorAlert(err.message).then();
@@ -140,9 +142,9 @@ const ProductList: NextPage = ({ initialInput, ...props }: any) => {
 				<Box component={'div'} className={'right'}>
 					<button type={'button'} className={'filter-toggle'} onClick={() => setFilterOpen(true)}>
 						<TuneRoundedIcon />
-						Filters
+						{t('list.filters')}
 					</button>
-					<span>Sort by</span>
+					<span>{t('list.sortBy')}</span>
 					<div>
 						<Button onClick={sortingClickHandler} endIcon={<KeyboardArrowDownRoundedIcon />}>
 							{filterSortName}
@@ -154,7 +156,7 @@ const ProductList: NextPage = ({ initialInput, ...props }: any) => {
 								disableRipple
 								sx={{ boxShadow: 'rgba(149, 157, 165, 0.2) 0px 8px 24px' }}
 							>
-								New
+								{t('list.new')}
 							</MenuItem>
 							<MenuItem
 								onClick={sortingHandler}
@@ -162,7 +164,7 @@ const ProductList: NextPage = ({ initialInput, ...props }: any) => {
 								disableRipple
 								sx={{ boxShadow: 'rgba(149, 157, 165, 0.2) 0px 8px 24px' }}
 							>
-								Lowest Price
+								{t('list.lowestPrice')}
 							</MenuItem>
 							<MenuItem
 								onClick={sortingHandler}
@@ -170,7 +172,7 @@ const ProductList: NextPage = ({ initialInput, ...props }: any) => {
 								disableRipple
 								sx={{ boxShadow: 'rgba(149, 157, 165, 0.2) 0px 8px 24px' }}
 							>
-								Highest Price
+								{t('list.highestPrice')}
 							</MenuItem>
 						</Menu>
 					</div>
@@ -179,8 +181,8 @@ const ProductList: NextPage = ({ initialInput, ...props }: any) => {
 					<div className={`filter-backdrop ${filterOpen ? 'open' : ''}`} onClick={() => setFilterOpen(false)} />
 					<Stack className={`filter-config ${filterOpen ? 'open' : ''}`}>
 						<div className={'sheet-head'}>
-							<strong>Filters</strong>
-							<button type={'button'} aria-label={'Close filters'} onClick={() => setFilterOpen(false)}>
+							<strong>{t('list.filters')}</strong>
+							<button type={'button'} aria-label={t('list.closeFilters')} onClick={() => setFilterOpen(false)}>
 								<CloseRoundedIcon />
 							</button>
 						</div>
@@ -197,7 +199,7 @@ const ProductList: NextPage = ({ initialInput, ...props }: any) => {
 							{products?.length === 0 ? (
 								<div className={'no-data'}>
 									<img src="/img/icons/icoAlert.svg" alt="" />
-									<p>No Products found!</p>
+									<p>{t('list.noProductsFound')}</p>
 								</div>
 							) : (
 								products.map((product: Product) => {

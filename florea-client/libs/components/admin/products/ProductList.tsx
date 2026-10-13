@@ -1,3 +1,4 @@
+import { useTranslation } from 'next-i18next';
 import React from 'react';
 import Link from 'next/link';
 import {
@@ -123,6 +124,7 @@ interface ProductPanelListType {
 }
 
 export const ProductPanelList = (props: ProductPanelListType) => {
+	const { t } = useTranslation('admin');
 	const {
 		products,
 		anchorEl,
@@ -142,7 +144,7 @@ export const ProductPanelList = (props: ProductPanelListType) => {
 						{products.length === 0 && (
 							<TableRow>
 								<TableCell align="center" colSpan={8}>
-									<span className={'no-data'}>data not found!</span>
+									<span className={'no-data'}>{t('products.dataNotFound')}</span>
 								</TableCell>
 							</TableRow>
 						)}

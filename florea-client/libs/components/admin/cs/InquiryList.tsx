@@ -1,3 +1,4 @@
+import { useTranslation } from 'next-i18next';
 import React from 'react';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
@@ -109,6 +110,7 @@ interface InquiryPanelListType {
 }
 
 export const InquiryList = (props: InquiryPanelListType) => {
+	const { t } = useTranslation('admin');
 	const {
 		dense,
 		membersData,
@@ -133,7 +135,7 @@ export const InquiryList = (props: InquiryPanelListType) => {
 					<TableBody>
 						<TableRow>
 							<TableCell align="center" colSpan={8}>
-								<span className={'no-data'}>data not found!</span>
+								<span className={'no-data'}>{t('inquiry.dataNotFound')}</span>
 							</TableCell>
 						</TableRow>
 						{/* rows come from the API once customer care has one; nothing is made up meanwhile */}

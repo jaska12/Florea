@@ -1,3 +1,4 @@
+import { useTranslation } from 'next-i18next';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/router';
 import { Button, Stack, Typography } from '@mui/material';
@@ -16,6 +17,7 @@ import AiNote from '../ai/AiNote';
 import { aiErrorMessage } from '../ai/aiError';
 
 const AddProduct = ({ initialValues, ...props }: any) => {
+	const { t } = useTranslation('mypage');
 	const router = useRouter();
 	const inputRef = useRef<any>(null);
 	const [insertProductData, setInsertProductData] = useState<ProductInput>(initialValues);
@@ -77,7 +79,7 @@ const AddProduct = ({ initialValues, ...props }: any) => {
 			const selectedFiles = inputRef.current.files;
 
 			if (selectedFiles.length == 0) return false;
-			if (selectedFiles.length > 5) throw new Error('Cannot upload more than 5 images!');
+			if (selectedFiles.length > 5) throw new Error(t('productForm.cannotUploadMoreThan5'));
 
 			formData.append(
 				'operations',
@@ -126,7 +128,7 @@ const AddProduct = ({ initialValues, ...props }: any) => {
 	const generateDescriptionHandler = async () => {
 		const { productTitle, productType, productOccasion, productSize, productDesc } = insertProductData;
 		if (!productTitle || productTitle.trim().length < 3 || !productType || !productOccasion || !productSize) {
-			setAiError('Fill in the title, type, occasion and size first.');
+			setAiError(t('productForm.fillInTheTitleType'));
 			return;
 		}
 		setAiError('');
@@ -184,7 +186,7 @@ const AddProduct = ({ initialValues, ...props }: any) => {
 					input: insertProductData,
 				},
 			});
-			await sweetMixinSuccessAlert('This product has been created successfully.');
+			await sweetMixinSuccessAlert(t('productForm.thisProductHasBeenCreated'));
 			await router.push({
 				pathname: '/mypage',
 				query: {
@@ -205,7 +207,7 @@ const AddProduct = ({ initialValues, ...props }: any) => {
 					input: insertProductData,
 				},
 			});
-			await sweetMixinSuccessAlert('This product has been updated successfully.');
+			await sweetMixinSuccessAlert(t('productForm.thisProductHasBeenUpdated'));
 			await router.push({
 				pathname: '/mypage',
 				query: {
@@ -226,19 +228,19 @@ const AddProduct = ({ initialValues, ...props }: any) => {
 	return (
 		<div id="add-product-page">
 			<Stack className="main-title-box">
-				<Typography className="main-title">Add New Product</Typography>
-				<Typography className="sub-title">We are glad to see you again!</Typography>
+				<Typography className="main-title">{t('productForm.addNewProduct')}</Typography>
+				<Typography className="sub-title">{t('productForm.weAreGladToSee')}</Typography>
 			</Stack>
 
 			<div>
 				<Stack className="config">
 					<Stack className="description-box">
 						<Stack className="config-column">
-							<Typography className="title">Title</Typography>
+							<Typography className="title">{t('productForm.title')}</Typography>
 							<input
 								type="text"
 								className="description-input"
-								placeholder={'Title'}
+								placeholder={t('productForm.title')}
 								value={insertProductData.productTitle}
 								onChange={({ target: { value } }) =>
 									setInsertProductData({ ...insertProductData, productTitle: value })
@@ -248,11 +250,11 @@ const AddProduct = ({ initialValues, ...props }: any) => {
 
 						<Stack className="config-row">
 							<Stack className="price-year-after-price">
-								<Typography className="title">Price</Typography>
+								<Typography className="title">{t('productForm.price')}</Typography>
 								<input
 									type="text"
 									className="description-input"
-									placeholder={'Price'}
+									placeholder={t('productForm.price')}
 									value={insertProductData.productPrice}
 									onChange={({ target: { value } }) =>
 										setInsertProductData({ ...insertProductData, productPrice: parseInt(value) })
@@ -260,7 +262,7 @@ const AddProduct = ({ initialValues, ...props }: any) => {
 								/>
 							</Stack>
 							<Stack className="price-year-after-price">
-								<Typography className="title">Select Type</Typography>
+								<Typography className="title">{t('productForm.selectType')}</Typography>
 								<select
 									className={'select-description'}
 									defaultValue={insertProductData.productType || 'select'}
@@ -272,7 +274,7 @@ const AddProduct = ({ initialValues, ...props }: any) => {
 								>
 									<>
 										<option selected={true} disabled={true} value={'select'}>
-											Select
+											{t('productForm.select')}
 										</option>
 										{productType.map((type: any) => (
 											<option value={`${type}`} key={type}>
@@ -288,7 +290,7 @@ const AddProduct = ({ initialValues, ...props }: any) => {
 
 						<Stack className="config-row">
 							<Stack className="price-year-after-price">
-								<Typography className="title">Select Location</Typography>
+								<Typography className="title">{t('productForm.selectLocation')}</Typography>
 								<select
 									className={'select-description'}
 									defaultValue={insertProductData.productLocation || 'select'}
@@ -300,7 +302,7 @@ const AddProduct = ({ initialValues, ...props }: any) => {
 								>
 									<>
 										<option selected={true} disabled={true} value={'select'}>
-											Select
+											{t('productForm.select')}
 										</option>
 										{productLocation.map((location: any) => (
 											<option value={`${location}`} key={location}>
@@ -313,11 +315,11 @@ const AddProduct = ({ initialValues, ...props }: any) => {
 								<img src={'/img/icons/Vector.svg'} className={'arrow-down'} />
 							</Stack>
 							<Stack className="price-year-after-price">
-								<Typography className="title">Address</Typography>
+								<Typography className="title">{t('productForm.address')}</Typography>
 								<input
 									type="text"
 									className="description-input"
-									placeholder={'Address'}
+									placeholder={t('productForm.address')}
 									value={insertProductData.productAddress}
 									onChange={({ target: { value } }) =>
 										setInsertProductData({ ...insertProductData, productAddress: value })
@@ -328,7 +330,7 @@ const AddProduct = ({ initialValues, ...props }: any) => {
 
 						<Stack className="config-row">
 							<Stack className="price-year-after-price">
-								<Typography className="title">Gift wrap</Typography>
+								<Typography className="title">{t('productForm.giftWrap')}</Typography>
 								<select
 									className={'select-description'}
 									value={insertProductData.productGiftWrap ? 'yes' : 'no'}
@@ -338,16 +340,16 @@ const AddProduct = ({ initialValues, ...props }: any) => {
 									}
 								>
 									<option disabled={true} selected={true}>
-										Select
+										{t('productForm.select')}
 									</option>
-									<option value={'yes'}>Yes</option>
-									<option value={'no'}>No</option>
+									<option value={'yes'}>{t('productForm.yes')}</option>
+									<option value={'no'}>{t('productForm.no')}</option>
 								</select>
 								<div className={'divider'}></div>
 								<img src={'/img/icons/Vector.svg'} className={'arrow-down'} />
 							</Stack>
 							<Stack className="price-year-after-price">
-								<Typography className="title">Same day delivery</Typography>
+								<Typography className="title">{t('productForm.sameDayDelivery')}</Typography>
 								<select
 									className={'select-description'}
 									value={insertProductData.productSameDay ? 'yes' : 'no'}
@@ -357,10 +359,10 @@ const AddProduct = ({ initialValues, ...props }: any) => {
 									}
 								>
 									<option disabled={true} selected={true}>
-										Select
+										{t('productForm.select')}
 									</option>
-									<option value={'yes'}>Yes</option>
-									<option value={'no'}>No</option>
+									<option value={'yes'}>{t('productForm.yes')}</option>
+									<option value={'no'}>{t('productForm.no')}</option>
 								</select>
 								<div className={'divider'}></div>
 								<img src={'/img/icons/Vector.svg'} className={'arrow-down'} />
@@ -369,7 +371,7 @@ const AddProduct = ({ initialValues, ...props }: any) => {
 
 						<Stack className="config-row">
 							<Stack className="price-year-after-price">
-								<Typography className="title">Occasion</Typography>
+								<Typography className="title">{t('productForm.occasion')}</Typography>
 								<select
 									className={'select-description'}
 									value={insertProductData.productOccasion || 'select'}
@@ -380,7 +382,7 @@ const AddProduct = ({ initialValues, ...props }: any) => {
 									}
 								>
 									<option disabled={true} selected={true} value={'select'}>
-										Select
+										{t('productForm.select')}
 									</option>
 									{productOccasion.map((occasion: any) => (
 										<option value={`${occasion}`} key={occasion}>
@@ -392,7 +394,7 @@ const AddProduct = ({ initialValues, ...props }: any) => {
 								<img src={'/img/icons/Vector.svg'} className={'arrow-down'} />
 							</Stack>
 							<Stack className="price-year-after-price">
-								<Typography className="title">Size</Typography>
+								<Typography className="title">{t('productForm.size')}</Typography>
 								<select
 									className={'select-description'}
 									value={insertProductData.productSize || 'select'}
@@ -403,7 +405,7 @@ const AddProduct = ({ initialValues, ...props }: any) => {
 									}
 								>
 									<option disabled={true} selected={true} value={'select'}>
-										Select
+										{t('productForm.select')}
 									</option>
 									{productSize.map((size: any) => (
 										<option value={`${size}`} key={size}>
@@ -415,12 +417,12 @@ const AddProduct = ({ initialValues, ...props }: any) => {
 								<img src={'/img/icons/Vector.svg'} className={'arrow-down'} />
 							</Stack>
 							<Stack className="price-year-after-price">
-								<Typography className="title">Stock</Typography>
+								<Typography className="title">{t('productForm.stock')}</Typography>
 								<input
 									type="number"
 									min={0}
 									className="description-input"
-									placeholder={'Stock'}
+									placeholder={t('productForm.stock')}
 									value={insertProductData.productStock}
 									onChange={({ target: { value } }) =>
 										setInsertProductData({ ...insertProductData, productStock: parseInt(value) })
@@ -429,10 +431,10 @@ const AddProduct = ({ initialValues, ...props }: any) => {
 							</Stack>
 						</Stack>
 
-						<Typography className="product-title">Product Description</Typography>
+						<Typography className="product-title">{t('productForm.productDescription')}</Typography>
 						<Stack className="config-column">
 							<Stack className="title-row">
-								<Typography className="title">Description</Typography>
+								<Typography className="title">{t('productForm.description')}</Typography>
 								<button
 									type={'button'}
 									className={'ai-generate'}
@@ -440,7 +442,7 @@ const AddProduct = ({ initialValues, ...props }: any) => {
 									disabled={aiLoading}
 								>
 									<AutoAwesomeRoundedIcon />
-									{aiLoading ? 'Writing…' : 'Generate description'}
+									{aiLoading ? t('productForm.writing') : t('productForm.generateDescription')}
 								</button>
 							</Stack>
 							<textarea
@@ -460,15 +462,15 @@ const AddProduct = ({ initialValues, ...props }: any) => {
 								)}
 								{descBeforeAi !== null && !aiError && (
 									<button type={'button'} className={'ai-generate-undo'} onClick={undoDescriptionHandler}>
-										Undo: put my text back
+										{t('productForm.undoPutMyTextBack')}
 									</button>
 								)}
-								<AiNote>Notes typed in the box are used as hints. Check the text before saving.</AiNote>
+								<AiNote>{t('productForm.notesTypedInTheBox')}</AiNote>
 							</div>
 						</Stack>
 					</Stack>
 
-					<Typography className="upload-title">Upload photos of your product</Typography>
+					<Typography className="upload-title">{t('productForm.uploadPhotosOfYourProduct')}</Typography>
 					<Stack className="images-box">
 						<Stack className="upload-box">
 							<svg xmlns="http://www.w3.org/2000/svg" width="121" height="120" viewBox="0 0 121 120" fill="none">
@@ -513,8 +515,8 @@ const AddProduct = ({ initialValues, ...props }: any) => {
 								</defs>
 							</svg>
 							<Stack className="text-box">
-								<Typography className="drag-title">Drag and drop images here</Typography>
-								<Typography className="format-title">Photos must be JPEG or PNG format and least 2048x768</Typography>
+								<Typography className="drag-title">{t('productForm.dragAndDropImagesHere')}</Typography>
+								<Typography className="format-title">{t('productForm.photosMustBeJpegOr')}</Typography>
 							</Stack>
 							<Button
 								className="browse-button"
@@ -522,7 +524,7 @@ const AddProduct = ({ initialValues, ...props }: any) => {
 									inputRef.current.click();
 								}}
 							>
-								<Typography className="browse-button-text">Browse Files</Typography>
+								<Typography className="browse-button-text">{t('productForm.browseFiles')}</Typography>
 								<input
 									ref={inputRef}
 									type="file"
@@ -561,11 +563,11 @@ const AddProduct = ({ initialValues, ...props }: any) => {
 					<Stack className="buttons-row">
 						{router.query.productId ? (
 							<Button className="next-button" disabled={doDisabledCheck()} onClick={updateProductHandler}>
-								<Typography className="next-button-text">Save</Typography>
+								<Typography className="next-button-text">{t('productForm.save')}</Typography>
 							</Button>
 						) : (
 							<Button className="next-button" disabled={doDisabledCheck()} onClick={insertProductHandler}>
-								<Typography className="next-button-text">Save</Typography>
+								<Typography className="next-button-text">{t('productForm.save')}</Typography>
 							</Button>
 						)}
 					</Stack>

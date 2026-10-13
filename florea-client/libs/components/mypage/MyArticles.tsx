@@ -1,3 +1,4 @@
+import { useTranslation } from 'next-i18next';
 import React, { useState } from 'react';
 import { NextPage } from 'next';
 import { Pagination, Stack, Typography } from '@mui/material';
@@ -12,6 +13,7 @@ import { Messages } from '../../config';
 import { sweetMixinErrorAlert, sweetTopSmallSuccessAlert } from '../../sweetAlert';
 
 const MyArticles: NextPage = ({ initialInput, ...props }: T) => {
+	const { t } = useTranslation('mypage');
 	const user = useReactiveVar(userVar);
 	const [searchCommunity, setSearchCommunity] = useState({
 		...initialInput,
@@ -59,7 +61,7 @@ const MyArticles: NextPage = ({ initialInput, ...props }: T) => {
 				variables: { input: id },
 			});
 			await boardArticlesRefetch({ input: searchCommunity });
-			await sweetTopSmallSuccessAlert('success', 800);
+			await sweetTopSmallSuccessAlert(t('articles.success'), 800);
 		} catch (err: any) {
 			console.log('ERROR, likeArticleHandler:', err.message);
 			sweetMixinErrorAlert(err.message).then();
@@ -74,8 +76,8 @@ const MyArticles: NextPage = ({ initialInput, ...props }: T) => {
 		<div id="my-articles-page">
 			<Stack className="main-title-box">
 				<Stack className="right-box">
-					<Typography className="main-title">Article</Typography>
-					<Typography className="sub-title">We are glad to see you again!</Typography>
+					<Typography className="main-title">{t('articles.article')}</Typography>
+					<Typography className="sub-title">{t('articles.weAreGladToSee')}</Typography>
 				</Stack>
 			</Stack>
 			<Stack className="article-list-box">
@@ -86,7 +88,7 @@ const MyArticles: NextPage = ({ initialInput, ...props }: T) => {
 				) : (
 					<div className={'no-data'}>
 						<img src="/img/icons/icoAlert.svg" alt="" />
-						<p>No Articles found!</p>
+						<p>{t('articles.noArticlesFound')}</p>
 					</div>
 				)}
 			</Stack>

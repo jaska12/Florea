@@ -1,3 +1,4 @@
+import { useTranslation } from 'next-i18next';
 import React, { useState } from 'react';
 import { NextPage } from 'next';
 import { Pagination, Stack, Typography } from '@mui/material';
@@ -8,6 +9,7 @@ import { useQuery } from '@apollo/client';
 import { GET_VISITED } from '../../../apollo/user/query';
 
 const RecentlyVisited: NextPage = () => {
+	const { t } = useTranslation('mypage');
 	const [recentlyVisited, setRecentlyVisited] = useState<Product[]>([]);
 	const [total, setTotal] = useState<number>(0);
 	const [searchVisited, setSearchVisited] = useState<T>({ page: 1, limit: 6 });
@@ -37,8 +39,8 @@ const RecentlyVisited: NextPage = () => {
 		<div id="my-favorites-page">
 			<Stack className="main-title-box">
 				<Stack className="right-box">
-					<Typography className="main-title">Recently Visited</Typography>
-					<Typography className="sub-title">We are glad to see you again!</Typography>
+					<Typography className="main-title">{t('visited.recentlyVisited')}</Typography>
+					<Typography className="sub-title">{t('visited.weAreGladToSee')}</Typography>
 				</Stack>
 			</Stack>
 			<Stack className="favorites-list-box">
@@ -49,7 +51,7 @@ const RecentlyVisited: NextPage = () => {
 				) : (
 					<div className={'no-data'}>
 						<img src="/img/icons/icoAlert.svg" alt="" />
-						<p>No Recently Visited Products found!</p>
+						<p>{t('visited.noRecentlyVisitedProductsFound')}</p>
 					</div>
 				)}
 			</Stack>

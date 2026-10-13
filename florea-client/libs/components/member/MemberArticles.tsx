@@ -1,3 +1,4 @@
+import { useTranslation } from 'next-i18next';
 import React, { useEffect, useState } from 'react';
 import { NextPage } from 'next';
 import { Pagination, Stack, Typography } from '@mui/material';
@@ -14,6 +15,7 @@ import { LIKE_TARGET_BOARD_ARTICLE } from '../../../apollo/user/mutation';
 import { userVar } from '../../../apollo/store';
 
 const MemberArticles: NextPage = ({ initialInput, ...props }: any) => {
+	const { t } = useTranslation('member');
 	const router = useRouter();
 	const [total, setTotal] = useState<number>(0);
 	const { memberId } = router.query;
@@ -59,7 +61,7 @@ const MemberArticles: NextPage = ({ initialInput, ...props }: any) => {
 				},
 			});
 			await boardArticlesRefetch({ input: searchFilter });
-			await sweetTopSmallSuccessAlert('success', 800);
+			await sweetTopSmallSuccessAlert(t('articles.success'), 800);
 		} catch (err: any) {
 			sweetMixinErrorAlert(err.message).then();
 		}
@@ -73,14 +75,14 @@ const MemberArticles: NextPage = ({ initialInput, ...props }: any) => {
 		<div id="member-articles-page">
 			<Stack className="main-title-box">
 				<Stack className="right-box">
-					<Typography className="main-title">Articles</Typography>
+					<Typography className="main-title">{t('articles.articles')}</Typography>
 				</Stack>
 			</Stack>
 			<Stack className="articles-list-box">
 				{memberBoArticles?.length === 0 && (
 					<div className={'no-data'}>
 						<img src="/img/icons/icoAlert.svg" alt="" />
-						<p>No Articles found!</p>
+						<p>{t('articles.noArticlesFound')}</p>
 					</div>
 				)}
 				{memberBoArticles?.map((boardArticle: BoardArticle) => {

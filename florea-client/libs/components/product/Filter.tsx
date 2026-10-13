@@ -1,3 +1,4 @@
+import { useTranslation } from 'next-i18next';
 import React, { useCallback, useEffect, useState } from 'react';
 import {
 	Stack,
@@ -24,6 +25,7 @@ interface FilterType {
 }
 
 const Filter = (props: FilterType) => {
+	const { t } = useTranslation('product');
 	const { searchFilter, setSearchFilter, initialInput } = props;
 	const router = useRouter();
 	const [productLocation, setProductLocation] = useState<ProductLocation[]>(Object.values(ProductLocation));
@@ -383,13 +385,13 @@ const Filter = (props: FilterType) => {
 	return (
 		<Stack className={'filter-main'}>
 			<Stack className={'find-your-home'} mb={'40px'}>
-				<Typography className={'title-main'}>Find Your Gift</Typography>
+				<Typography className={'title-main'}>{t('filter.findYourGift')}</Typography>
 				<Stack className={'input-box'}>
 					<OutlinedInput
 						value={searchText}
 						type={'text'}
 						className={'search-input'}
-						placeholder={'What are you looking for?'}
+						placeholder={t('filter.whatAreYouLookingFor')}
 						onChange={(e: any) => setSearchText(e.target.value)}
 						onKeyDown={(event: any) => {
 							if (event.key == 'Enter') {
@@ -414,7 +416,7 @@ const Filter = (props: FilterType) => {
 						}
 					/>
 					<img src={'/img/icons/search_icon.png'} alt={''} />
-					<Tooltip title="Reset">
+					<Tooltip title={t('filter.reset')}>
 						<IconButton onClick={refreshHandler}>
 							<RefreshIcon />
 						</IconButton>
@@ -423,7 +425,7 @@ const Filter = (props: FilterType) => {
 			</Stack>
 			<Stack className={'find-your-home'} mb={'30px'}>
 				<p className={'title'} style={{ textShadow: '0px 3px 4px #cdb9c2' }}>
-					Location
+					{t('filter.location')}
 				</p>
 				<Stack
 					className={`product-location`}
@@ -456,7 +458,7 @@ const Filter = (props: FilterType) => {
 				</Stack>
 			</Stack>
 			<Stack className={'find-your-home'} mb={'30px'}>
-				<Typography className={'title'}>Product Type</Typography>
+				<Typography className={'title'}>{t('filter.productType')}</Typography>
 				{productType.map((type: string) => (
 					<Stack className={'input-box'} key={type}>
 						<Checkbox
@@ -475,7 +477,7 @@ const Filter = (props: FilterType) => {
 				))}
 			</Stack>
 			<Stack className={'find-your-home'} mb={'30px'}>
-				<Typography className={'title'}>Occasion</Typography>
+				<Typography className={'title'}>{t('filter.occasion')}</Typography>
 				{productOccasion.map((occasion: string) => (
 					<Stack className={'input-box'} key={occasion}>
 						<Checkbox
@@ -494,7 +496,7 @@ const Filter = (props: FilterType) => {
 				))}
 			</Stack>
 			<Stack className={'find-your-home'} mb={'30px'}>
-				<Typography className={'title'}>Size</Typography>
+				<Typography className={'title'}>{t('filter.size')}</Typography>
 				<Stack className="button-group">
 					<Button
 						sx={{
@@ -503,7 +505,7 @@ const Filter = (props: FilterType) => {
 						}}
 						onClick={() => productSizeSelectHandler(null)}
 					>
-						Any
+						{t('filter.any')}
 					</Button>
 					{productSize.map((size: ProductSize, index: number) => (
 						<Button
@@ -521,7 +523,7 @@ const Filter = (props: FilterType) => {
 				</Stack>
 			</Stack>
 			<Stack className={'find-your-home'} mb={'30px'}>
-				<Typography className={'title'}>Options</Typography>
+				<Typography className={'title'}>{t('filter.options')}</Typography>
 				<Stack className={'input-box'}>
 					<Checkbox
 						id={'GiftWrap'}
@@ -533,7 +535,7 @@ const Filter = (props: FilterType) => {
 						onChange={productOptionSelectHandler}
 					/>
 					<label htmlFor={'GiftWrap'} style={{ cursor: 'pointer' }}>
-						<Typography className="propert-type">Gift wrap</Typography>
+						<Typography className="propert-type">{t('filter.giftWrap')}</Typography>
 					</label>
 				</Stack>
 				<Stack className={'input-box'}>
@@ -547,16 +549,16 @@ const Filter = (props: FilterType) => {
 						onChange={productOptionSelectHandler}
 					/>
 					<label htmlFor={'SameDay'} style={{ cursor: 'pointer' }}>
-						<Typography className="propert-type">Same day delivery</Typography>
+						<Typography className="propert-type">{t('filter.sameDayDelivery')}</Typography>
 					</label>
 				</Stack>
 			</Stack>
 			<Stack className={'find-your-home'}>
-				<Typography className={'title'}>Price Range</Typography>
+				<Typography className={'title'}>{t('filter.priceRange')}</Typography>
 				<Stack className="square-year-input">
 					<input
 						type="number"
-						placeholder="$ min"
+						placeholder={t('filter.min')}
 						min={0}
 						value={searchFilter?.search?.pricesRange?.start ?? 0}
 						onChange={(e: any) => {
@@ -568,7 +570,7 @@ const Filter = (props: FilterType) => {
 					<div className="central-divider"></div>
 					<input
 						type="number"
-						placeholder="$ max"
+						placeholder={t('filter.max')}
 						value={searchFilter?.search?.pricesRange?.end ?? 0}
 						onChange={(e: any) => {
 							if (e.target.value >= 0) {

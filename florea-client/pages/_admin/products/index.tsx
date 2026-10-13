@@ -1,3 +1,4 @@
+import { useTranslation } from 'next-i18next';
 import React, { useEffect, useState } from 'react';
 import type { NextPage } from 'next';
 import withAdminLayout from '../../../libs/components/layout/LayoutAdmin';
@@ -21,6 +22,7 @@ import { REMOVE_PRODUCT_BY_ADMIN, UPDATE_PRODUCT_BY_ADMIN } from '../../../apoll
 import { T } from '../../../libs/types/common';
 
 const AdminProducts: NextPage = ({ initialInquiry, ...props }: any) => {
+	const { t } = useTranslation('admin');
 	const [anchorEl, setAnchorEl] = useState<any>({});
 	const [productsInquiry, setProductsInquiry] = useState<AllProductsInquiry>(initialInquiry);
 	const [products, setProducts] = useState<Product[]>([]);
@@ -100,7 +102,7 @@ const AdminProducts: NextPage = ({ initialInquiry, ...props }: any) => {
 
 	const removeProductHandler = async (id: string) => {
 		try {
-			if (await sweetConfirmAlert('Are you sure to remove?')) {
+			if (await sweetConfirmAlert(t('products.areYouSureToRemove'))) {
 				await removeProductByAdmin({
 					variables: {
 						input: id,
@@ -156,7 +158,7 @@ const AdminProducts: NextPage = ({ initialInquiry, ...props }: any) => {
 	return (
 		<Box component={'div'} className={'content'}>
 			<Typography variant={'h2'} className={'tit'} sx={{ mb: '24px' }}>
-				Product List
+				{t('products.productList')}
 			</Typography>
 			<Box component={'div'} className={'table-wrap'}>
 				<Box component={'div'} sx={{ width: '100%', typography: 'body1' }}>
@@ -168,35 +170,35 @@ const AdminProducts: NextPage = ({ initialInquiry, ...props }: any) => {
 									value="ALL"
 									className={value === 'ALL' ? 'li on' : 'li'}
 								>
-									All
+									{t('products.all')}
 								</ListItem>
 								<ListItem
 									onClick={(e: any) => tabChangeHandler(e, 'ACTIVE')}
 									value="ACTIVE"
 									className={value === 'ACTIVE' ? 'li on' : 'li'}
 								>
-									Active
+									{t('products.active')}
 								</ListItem>
 								<ListItem
 									onClick={(e: any) => tabChangeHandler(e, 'SOLD')}
 									value="SOLD"
 									className={value === 'SOLD' ? 'li on' : 'li'}
 								>
-									Sold
+									{t('products.sold')}
 								</ListItem>
 								<ListItem
 									onClick={(e: any) => tabChangeHandler(e, 'DELETE')}
 									value="DELETE"
 									className={value === 'DELETE' ? 'li on' : 'li'}
 								>
-									Delete
+									{t('products.delete')}
 								</ListItem>
 							</List>
 							<Divider />
 							<Stack className={'search-area'} sx={{ m: '24px' }}>
 								<Select sx={{ width: '160px', mr: '20px' }} value={searchType}>
 									<MenuItem value={'ALL'} onClick={() => searchTypeHandler('ALL')}>
-										ALL
+										{t('products.all2')}
 									</MenuItem>
 									{Object.values(ProductLocation).map((location: string) => (
 										<MenuItem value={location} onClick={() => searchTypeHandler(location)} key={location}>

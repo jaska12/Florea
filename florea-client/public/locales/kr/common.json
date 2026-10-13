@@ -1,59 +1,203 @@
 {
-  "Home": "홈",
-  "Products": "상품",
-  "Agents": "플로리스트",
-  "Community": "커뮤니티",
-  "My Page": "마이 페이지",
-  "CS": "고객센터",
-  "Login": "로그인",
-  "Register": "가입",
-  "Location": "위치",
-  "Product type": "상품 유형",
-  "Occasion": "기념일",
-  "Fresh bouquets, plants and curated gift boxes from local florists and gift shops. Choose by occasion and send them to someone you love.": "지역 플로리스트와 선물 가게의 신선한 꽃다발, 식물, 엄선된 선물 박스. 기념일에 맞춰 골라 사랑하는 사람에게 보내세요.",
-  "Popular occasions": "인기 기념일",
-  "Find your perfect Florea flowers & gifts": "당신에게 딱 맞는 Florea 꽃과 선물을 찾아보세요",
-  "Category": "카테고리",
-  "Size": "사이즈",
-  "Advanced": "고급 필터",
-  "Product Search": "상품 찾기",
-  "We are glad to see you again!": "다시 만나서 반갑습니다!",
-  "Agent Page": "플로리스트 페이지",
-  "my page": "마이 페이지",
-  "Community Detail": "커뮤니티 디테일",
-  "Login/Signup": "로그인/가입",
-  "Member Page": "멤버 페이지",
-  "Notifications": "알림",
-  "new": "개의 새 알림",
-  "Mark all as read": "모두 읽음으로 표시",
-  "No notifications yet": "아직 알림이 없습니다",
-  "Unread": "읽지 않음",
-  "Likes, comments and new followers will appear here.": "좋아요, 댓글, 새 팔로워 소식이 여기에 표시됩니다.",
-  "Show more": "더 보기",
-  "liked your product": "님이 회원님의 상품을 좋아합니다",
-  "liked your article": "님이 회원님의 게시글을 좋아합니다",
-  "liked your profile": "님이 회원님의 프로필을 좋아합니다",
-  "commented on your product": "님이 회원님의 상품에 댓글을 남겼습니다",
-  "commented on your article": "님이 회원님의 게시글에 댓글을 남겼습니다",
-  "left a review on your profile": "님이 회원님의 프로필에 후기를 남겼습니다",
-  "started following you": "님이 회원님을 팔로우하기 시작했습니다",
-  "Live chat": "실시간 채팅",
-  "Close chat": "채팅 닫기",
-  "online": "명 접속 중",
-  "Connecting...": "연결 중...",
-  "Welcome to Live chat!": "실시간 채팅에 오신 것을 환영합니다!",
-  "Type message": "메시지를 입력하세요",
-  "Send": "보내기",
-  "Guest": "게스트",
-  "Menu": "메뉴",
-  "Close menu": "메뉴 닫기",
-  "Logout": "로그아웃",
-  "Cart": "장바구니",
-  "New order": "새 주문이 들어왔습니다",
-  "An order was cancelled": "주문이 취소되었습니다",
-  "Your order is confirmed": "주문이 확인되었습니다",
-  "Your order is being prepared": "주문을 준비하고 있습니다",
-  "Your order is out for delivery": "주문이 배송 중입니다",
-  "Your order has been delivered": "주문이 배송 완료되었습니다",
-  "Your order was cancelled": "주문이 취소되었습니다"
+  "nav": {
+    "home": "홈",
+    "products": "상품",
+    "florists": "플로리스트",
+    "community": "커뮤니티",
+    "myPage": "마이 페이지",
+    "cs": "고객센터",
+    "loginRegister": "로그인 / 가입",
+    "logout": "로그아웃",
+    "menu": "메뉴",
+    "closeMenu": "메뉴 닫기",
+    "language": "언어",
+    "languageName": {
+      "en": "English",
+      "kr": "한국어",
+      "ru": "Русский"
+    }
+  },
+  "hero": {
+    "title": "마음을 전하는 꽃과 선물, Florea에서 찾아보세요",
+    "subtitle": "동네 플로리스트와 선물 가게가 준비한 싱그러운 꽃다발, 식물, 선물 박스. 기념일에 맞춰 골라 소중한 사람에게 보내세요.",
+    "popularOccasions": "인기 기념일",
+    "category": "카테고리",
+    "occasion": "기념일",
+    "size": "사이즈"
+  },
+  "chat": {
+    "title": "실시간 채팅",
+    "close": "채팅 닫기",
+    "online": "{{count}}명 접속 중",
+    "connecting": "연결 중…",
+    "welcome": "실시간 채팅에 오신 것을 환영합니다!",
+    "typeMessage": "메시지를 입력하세요",
+    "send": "보내기",
+    "guest": "게스트"
+  },
+  "cartIcon": {
+    "cart": "장바구니",
+    "cartWithCount": "장바구니 ({{count}})"
+  },
+  "notifications": {
+    "title": "알림",
+    "titleWithCount": "알림 ({{count}})",
+    "newCount": "새 알림 {{count}}개",
+    "markAllRead": "모두 읽음으로 표시",
+    "empty": "아직 알림이 없습니다",
+    "emptyHint": "좋아요, 댓글, 새 팔로워 소식이 여기에 표시됩니다.",
+    "unread": "읽지 않음",
+    "showMore": "더 보기",
+    "action": {
+      "LIKE_PRODUCT": "<b>{{name}}</b>님이 회원님의 상품을 좋아합니다",
+      "LIKE_ARTICLE": "<b>{{name}}</b>님이 회원님의 게시글을 좋아합니다",
+      "LIKE_MEMBER": "<b>{{name}}</b>님이 회원님의 프로필을 좋아합니다",
+      "COMMENT_PRODUCT": "<b>{{name}}</b>님이 회원님의 상품에 댓글을 남겼습니다",
+      "COMMENT_ARTICLE": "<b>{{name}}</b>님이 회원님의 게시글에 댓글을 남겼습니다",
+      "COMMENT_MEMBER": "<b>{{name}}</b>님이 회원님의 프로필에 후기를 남겼습니다",
+      "SUBSCRIBE_MEMBER": "<b>{{name}}</b>님이 회원님을 팔로우하기 시작했습니다"
+    },
+    "serverTitle": {
+      "newOrder": "새 주문이 들어왔습니다",
+      "orderCancelledForShop": "주문이 취소되었습니다",
+      "orderConfirmed": "주문이 확인되었습니다",
+      "orderPreparing": "주문하신 상품을 준비하고 있습니다",
+      "orderOutForDelivery": "주문하신 상품이 배송 중입니다",
+      "orderDelivered": "주문하신 상품이 배송 완료되었습니다",
+      "orderCancelled": "주문이 취소되었습니다",
+      "likeProduct": "회원님의 상품에 새 좋아요가 있습니다",
+      "likeArticle": "회원님의 게시글에 새 좋아요가 있습니다",
+      "likeProfile": "회원님의 프로필에 새 좋아요가 있습니다",
+      "comment": "새 댓글",
+      "follower": "새 팔로워"
+    }
+  },
+  "alert": {
+    "ok": "확인",
+    "cancel": "취소",
+    "login": "로그인"
+  },
+  "serverError": {
+    "somethingWentWrong": "문제가 발생했습니다. 다시 시도해 주세요.",
+    "noDataFound": "데이터를 찾을 수 없습니다.",
+    "createFailed": "생성하지 못했습니다. 다시 시도해 주세요.",
+    "updateFailed": "수정하지 못했습니다. 다시 시도해 주세요.",
+    "removeFailed": "삭제하지 못했습니다. 다시 시도해 주세요.",
+    "uploadFailed": "업로드에 실패했습니다. 다시 시도해 주세요.",
+    "badRequest": "입력하신 내용을 확인한 후 다시 시도해 주세요.",
+    "nickOrPhoneUsed": "이미 사용 중인 닉네임 또는 전화번호입니다.",
+    "noMemberNick": "해당 닉네임의 회원이 없습니다.",
+    "blocked": "차단된 계정입니다.",
+    "wrongPassword": "비밀번호가 올바르지 않습니다. 다시 시도해 주세요.",
+    "notAuthenticated": "먼저 로그인해 주세요.",
+    "rolesOnly": "회원님의 계정 유형으로는 이용할 수 없습니다.",
+    "notAllowed": "허용되지 않은 요청입니다.",
+    "imageFormat": "JPG, JPEG 또는 PNG 이미지를 사용해 주세요.",
+    "selfSubscription": "자기 자신은 팔로우할 수 없습니다.",
+    "productNotAvailable": "상품 중 하나를 더 이상 구매할 수 없습니다.",
+    "ownProductOrder": "본인의 상품은 주문할 수 없습니다.",
+    "deliveryDatePassed": "배송일은 지난 날짜로 지정할 수 없습니다.",
+    "orderCannotBeCancelled": "이 주문은 더 이상 취소할 수 없습니다.",
+    "orderStatusNotAllowed": "이 상태로는 변경할 수 없습니다.",
+    "noticeTopicRequired": "FAQ 항목의 주제를 선택해 주세요.",
+    "aiTooManyRequests": "요청이 너무 잦습니다. 잠시 후 다시 시도해 주세요.",
+    "aiUnavailable": "지금은 어시스턴트를 이용할 수 없습니다. 잠시 후 다시 시도해 주세요.",
+    "loginFailed": "로그인하지 못했습니다. 다시 시도해 주세요.",
+    "fillAllInputs": "모든 항목을 입력해 주세요.",
+    "messageEmpty": "메시지가 비어 있습니다."
+  },
+  "enum": {
+    "productType": {
+      "BOUQUET": "꽃다발",
+      "FLOWER_BOX": "플라워 박스",
+      "PLANT": "식물",
+      "GIFT_BOX": "선물 박스",
+      "SWEET": "디저트",
+      "TOY": "인형"
+    },
+    "productOccasion": {
+      "BIRTHDAY": "생일",
+      "WEDDING": "결혼",
+      "ANNIVERSARY": "기념일",
+      "LOVE": "사랑",
+      "CONGRATS": "축하",
+      "SYMPATHY": "위로"
+    },
+    "productSize": {
+      "SMALL": "소형",
+      "MEDIUM": "중형",
+      "LARGE": "대형"
+    },
+    "productStatus": {
+      "ACTIVE": "판매 중",
+      "SOLD": "판매 완료",
+      "DELETE": "삭제됨"
+    },
+    "productLocation": {
+      "SEOUL": "서울",
+      "BUSAN": "부산",
+      "INCHEON": "인천",
+      "DAEGU": "대구",
+      "GYEONGJU": "경주",
+      "GWANGJU": "광주",
+      "CHONJU": "전주",
+      "DAEJON": "대전",
+      "JEJU": "제주"
+    },
+    "orderStatus": {
+      "PENDING": "주문 접수",
+      "CONFIRMED": "주문 확인",
+      "PREPARING": "준비 중",
+      "OUT_FOR_DELIVERY": "배송 중",
+      "DELIVERED": "배송 완료",
+      "CANCELLED": "취소됨"
+    },
+    "memberType": {
+      "USER": "일반 회원",
+      "AGENT": "플로리스트",
+      "ADMIN": "관리자"
+    },
+    "memberStatus": {
+      "ACTIVE": "활성",
+      "BLOCK": "차단됨",
+      "DELETE": "삭제됨"
+    },
+    "notificationType": {
+      "LIKE": "좋아요",
+      "COMMENT": "댓글",
+      "SUBSCRIBE": "팔로우",
+      "ORDER": "주문",
+      "SYSTEM": "공지"
+    },
+    "noticeTopic": {
+      "PRODUCT": "상품",
+      "PAYMENT": "결제",
+      "ORDER": "주문",
+      "FLORIST": "플로리스트 안내",
+      "ACCOUNT": "계정",
+      "COMMUNITY": "커뮤니티",
+      "OTHER": "기타"
+    },
+    "noticeStatus": {
+      "HOLD": "보류",
+      "ACTIVE": "게시 중",
+      "DELETE": "삭제됨"
+    },
+    "articleCategory": {
+      "FREE": "자유게시판",
+      "RECOMMEND": "추천",
+      "NEWS": "소식",
+      "HUMOR": "유머"
+    },
+    "articleStatus": {
+      "ACTIVE": "게시 중",
+      "DELETE": "삭제됨"
+    },
+    "cardTone": {
+      "WARM": "따뜻하게",
+      "ROMANTIC": "로맨틱하게",
+      "PLAYFUL": "유쾌하게",
+      "FORMAL": "격식 있게"
+    }
+  }
 }

@@ -1,3 +1,4 @@
+import { useTranslation } from 'next-i18next';
 import React, { useState } from 'react';
 import type { NextPage } from 'next';
 import withAdminLayout from '../../../libs/components/layout/LayoutAdmin';
@@ -14,6 +15,7 @@ import CancelRoundedIcon from '@mui/icons-material/CancelRounded';
 import { InquiryList } from '../../../libs/components/admin/cs/InquiryList';
 
 const InquiryArticles: NextPage = (props: any) => {
+	const { t } = useTranslation('admin');
 	const [anchorEl, setAnchorEl] = useState<[] | HTMLElement[]>([]);
 
 	/** APOLLO REQUESTS **/
@@ -23,7 +25,7 @@ const InquiryArticles: NextPage = (props: any) => {
 	return (
 		<Box component={'div'} className={'content'}>
 			<Typography variant={'h2'} className={'tit'} sx={{ mb: '24px' }}>
-				1:1 Inquiry Management
+				{t('inquiry.11InquiryManagement')}
 			</Typography>
 			<Box component={'div'} className={'table-wrap'}>
 				<Box component={'div'} sx={{ width: '100%', typography: 'body1' }}>
@@ -35,28 +37,28 @@ const InquiryArticles: NextPage = (props: any) => {
 									value="all"
 									className={'all' === 'all' ? 'li on' : 'li'}
 								>
-									All (0)
+									{t('inquiry.all0')}
 								</ListItem>
 								<ListItem
 									// onClick={(e) => handleTabChange(e, 'active')}
 									value="active"
 									className={'all' === 'all' ? 'li on' : 'li'}
 								>
-									Active (0)
+									{t('inquiry.active0')}
 								</ListItem>
 								<ListItem
 									// onClick={(e) => handleTabChange(e, 'blocked')}
 									value="blocked"
 									className={'all' === 'all' ? 'li on' : 'li'}
 								>
-									Blocked (0)
+									{t('inquiry.blocked0')}
 								</ListItem>
 								<ListItem
 									// onClick={(e) => handleTabChange(e, 'deleted')}
 									value="deleted"
 									className={'all' === 'all' ? 'li on' : 'li'}
 								>
-									Deleted (0)
+									{t('inquiry.deleted0')}
 								</ListItem>
 							</List>
 							<Divider />
@@ -71,7 +73,7 @@ const InquiryArticles: NextPage = (props: any) => {
 									// onChange={(e) => handleInput(e.target.value)}
 									sx={{ width: '100%' }}
 									className={'search'}
-									placeholder="Search user name"
+									placeholder={t('inquiry.searchUserName')}
 									onKeyDown={(event) => {
 										// if (event.key == 'Enter') searchTargetHandler().then();
 									}}

@@ -1,3 +1,4 @@
+import { useTranslation } from 'next-i18next';
 import React, { useState } from 'react';
 import WestIcon from '@mui/icons-material/West';
 import EastIcon from '@mui/icons-material/East';
@@ -23,6 +24,7 @@ interface BestsellersProps {
 
 // The three product lists of the homepage (most liked, most viewed, best ranked) behind tabs.
 const Bestsellers = (props: BestsellersProps) => {
+	const { t } = useTranslation('home');
 	const { trendInput, popularInput, topInput } = props;
 	const [active, setActive] = useState<string>('trend');
 
@@ -48,9 +50,9 @@ const Bestsellers = (props: BestsellersProps) => {
 		top: topData?.getProducts?.list ?? [],
 	};
 	const allTabs: HomeTab[] = [
-		{ key: 'trend', label: 'Trending' },
-		{ key: 'popular', label: 'Most viewed' },
-		{ key: 'top', label: 'Top rated' },
+		{ key: 'trend', label: t('bestsellers.trending') },
+		{ key: 'popular', label: t('bestsellers.mostViewed') },
+		{ key: 'top', label: t('bestsellers.topRated') },
 	];
 	// a tab with no products is not offered; with nothing at all the section is left out
 	const tabs = allTabs.filter((tab) => lists[tab.key].length > 0);
@@ -72,7 +74,7 @@ const Bestsellers = (props: BestsellersProps) => {
 				topRefetch({ input: topInput }),
 			]);
 
-			await sweetTopSmallSuccessAlert('success', 800);
+			await sweetTopSmallSuccessAlert(t('bestsellers.success'), 800);
 		} catch (err: any) {
 			console.log('ERROR, likeProductHandler:', err.message);
 			sweetMixinErrorAlert(err.message).then();
@@ -85,19 +87,19 @@ const Bestsellers = (props: BestsellersProps) => {
 		<section className={'home-section home-bestsellers tinted'}>
 			<div className={'home-shell'}>
 				<SectionHeader
-					title={'Bestsellers'}
-					subtitle={'The bouquets and gifts people like and look at the most.'}
-					seeAll={{ href: '/product', label: 'See all products' }}
+					title={t('bestsellers.bestsellers')}
+					subtitle={t('bestsellers.theBouquetsAndGiftsPeople')}
+					seeAll={{ href: '/product', label: t('bestsellers.seeAllProducts') }}
 				>
-					<button type={'button'} className={'nav-btn swiper-best-prev'} aria-label={'Previous products'}>
+					<button type={'button'} className={'nav-btn swiper-best-prev'} aria-label={t('bestsellers.previousProducts')}>
 						<WestIcon />
 					</button>
-					<button type={'button'} className={'nav-btn swiper-best-next'} aria-label={'Next products'}>
+					<button type={'button'} className={'nav-btn swiper-best-next'} aria-label={t('bestsellers.nextProducts')}>
 						<EastIcon />
 					</button>
 				</SectionHeader>
 				{tabs.length > 1 && (
-					<HomeTabs name={'bestsellers'} label={'Bestsellers'} tabs={tabs} active={current} onChange={setActive} />
+					<HomeTabs name={'bestsellers'} label={t('bestsellers.bestsellers')} tabs={tabs} active={current} onChange={setActive} />
 				)}
 				<div
 					className={'home-panel'}

@@ -1,3 +1,4 @@
+import { useTranslation } from 'next-i18next';
 import React from 'react';
 import Link, { LinkProps } from 'next/link';
 
@@ -12,6 +13,7 @@ interface SectionHeaderProps {
 
 // Every homepage section starts with this: title and subtitle on the left, "See all" and arrows on the right.
 const SectionHeader = (props: SectionHeaderProps) => {
+	const { t } = useTranslation('home');
 	const { title, subtitle, seeAll, children } = props;
 
 	return (
@@ -24,7 +26,7 @@ const SectionHeader = (props: SectionHeaderProps) => {
 				<div className={'section-actions'}>
 					{seeAll && (
 						<Link className={'text-link'} href={seeAll.href} aria-label={seeAll.label}>
-							See all
+							{t('section.seeAll')}
 						</Link>
 					)}
 					{children && <div className={'section-arrows'}>{children}</div>}

@@ -14,7 +14,7 @@ const CartIcon = () => {
 	const count = cartTotals(items).count;
 
 	return (
-		<Link href={'/cart'} className={'nav-cart'} aria-label={count ? `${t('Cart')} (${count})` : t('Cart')}>
+		<Link href={'/cart'} className={'nav-cart'} aria-label={count ? t('cartIcon.cartWithCount', { count }) : t('cartIcon.cart')}>
 			<Badge className={'notify-badge'} badgeContent={count} max={99}>
 				<ShoppingBagOutlinedIcon />
 			</Badge>

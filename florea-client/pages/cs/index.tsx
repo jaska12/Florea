@@ -1,3 +1,4 @@
+import { useTranslation } from 'next-i18next';
 import React from 'react';
 import { NextPage } from 'next';
 import { useRouter } from 'next/router';
@@ -14,6 +15,7 @@ export const getStaticProps = async ({ locale }: any) => ({
 });
 
 const CS: NextPage = () => {
+	const { t } = useTranslation('cs');
 	const router = useRouter();
 
 	/** HANDLERS **/
@@ -34,8 +36,8 @@ const CS: NextPage = () => {
 			<Stack className={'container'}>
 				<Box component={'div'} className={'cs-main-info'}>
 					<Box component={'div'} className={'info'}>
-						<span>Customer care</span>
-						<p>Notices and answers to common questions</p>
+						<span>{t('page.customerCare')}</span>
+						<p>{t('page.noticesAndAnswersToCommon')}</p>
 					</Box>
 					<Box component={'div'} className={'btns'}>
 						<div
@@ -44,7 +46,7 @@ const CS: NextPage = () => {
 								changeTabHandler('notice');
 							}}
 						>
-							Notice
+							{t('page.notice')}
 						</div>
 						<div
 							className={tab == 'faq' ? 'active' : ''}
@@ -52,7 +54,7 @@ const CS: NextPage = () => {
 								changeTabHandler('faq');
 							}}
 						>
-							FAQ
+							{t('page.faq')}
 						</div>
 					</Box>
 				</Box>

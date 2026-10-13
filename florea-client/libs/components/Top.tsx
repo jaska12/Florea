@@ -21,13 +21,16 @@ import { useReactiveVar } from '@apollo/client';
 import { userVar } from '../../apollo/store';
 import { Logout } from '@mui/icons-material';
 import { REACT_APP_API_URL } from '../config';
+import { LOCALES } from '../i18n/locale';
+import { rememberLocale } from '../i18n/memory';
 
 const Top = () => {
 	const user = useReactiveVar(userVar);
 	const { t, i18n } = useTranslation('common');
 	const router = useRouter();
 	const [anchorEl2, setAnchorEl2] = useState<null | HTMLElement>(null);
-	const [lang, setLang] = useState<string | null>('en');
+	// the language of the page is the one in the address; the flag follows it
+	const lang = router.locale ?? 'en';
 	const drop = Boolean(anchorEl2);
 	const [colorChange, setColorChange] = useState(false);
 	const [anchorEl, setAnchorEl] = React.useState<any | HTMLElement>(null);
@@ -39,15 +42,6 @@ const Top = () => {
 	const [drawerOpen, setDrawerOpen] = useState<boolean>(false);
 
 	/** LIFECYCLES **/
-	useEffect(() => {
-		if (localStorage.getItem('locale') === null) {
-			localStorage.setItem('locale', 'en');
-			setLang('en');
-		} else {
-			setLang(localStorage.getItem('locale'));
-		}
-	}, [router]);
-
 	useEffect(() => {
 		switch (router.pathname) {
 			case '/product/detail':
@@ -82,11 +76,10 @@ const Top = () => {
 	};
 
 	const langChoice = useCallback(
-		async (e: any) => {
-			setLang(e.target.id);
-			localStorage.setItem('locale', e.target.id);
+		async (code: string) => {
+			rememberLocale(code);
 			setAnchorEl2(null);
-			await router.push(router.asPath, router.asPath, { locale: e.target.id });
+			await router.push(router.asPath, router.asPath, { locale: code });
 		},
 		[router],
 	);
@@ -160,7 +153,7 @@ const Top = () => {
 					<button
 						type={'button'}
 						className={'nav-toggle'}
-						aria-label={t('Menu')}
+						aria-label={t('nav.menu')}
 						aria-expanded={drawerOpen}
 						onClick={() => setDrawerOpen(true)}
 					>
@@ -173,24 +166,24 @@ const Top = () => {
 					</Box>
 					<Box component={'div'} className={'router-box'}>
 						<Link href={'/'}>
-							<div>{t('Home')}</div>
+							<div>{t('nav.home')}</div>
 						</Link>
 						<Link href={'/product'}>
-							<div>{t('Products')}</div>
+							<div>{t('nav.products')}</div>
 						</Link>
 						<Link href={'/agent'}>
-							<div> {t('Agents')} </div>
+							<div> {t('nav.florists')} </div>
 						</Link>
 						<Link href={'/community?articleCategory=FREE'}>
-							<div> {t('Community')} </div>
+							<div> {t('nav.community')} </div>
 						</Link>
 						{user?._id && (
 							<Link href={'/mypage'}>
-								<div> {t('My Page')} </div>
+								<div> {t('nav.myPage')} </div>
 							</Link>
 						)}
 						<Link href={'/cs'}>
-							<div> {t('CS')} </div>
+							<div> {t('nav.cs')} </div>
 						</Link>
 					</Box>
 					<Box component={'div'} className={'user-box'}>
@@ -218,7 +211,7 @@ const Top = () => {
 								>
 									<MenuItem onClick={() => logOut()}>
 										<Logout fontSize="small" style={{ color: 'blue', marginRight: '10px' }} />
-										Logout
+										{t('nav.logout')}
 									</MenuItem>
 								</Menu>
 							</>
@@ -227,7 +220,7 @@ const Top = () => {
 								<div className={'join-box'}>
 									<AccountCircleOutlinedIcon />
 									<span>
-										{t('Login')} / {t('Register')}
+										{t('nav.loginRegister')}
 									</span>
 								</div>
 							</Link>
@@ -243,45 +236,17 @@ const Top = () => {
 								endIcon={<CaretDown size={14} color="#616161" weight="fill" />}
 							>
 								<Box component={'div'} className={'flag'}>
-									{lang !== null ? (
-										<img src={`/img/flag/lang${lang}.png`} alt={'usaFlag'} />
-									) : (
-										<img src={`/img/flag/langen.png`} alt={'usaFlag'} />
-									)}
+									<img src={`/img/flag/lang${lang}.png`} alt={t('nav.language')} />
 								</Box>
 							</Button>
 
 							<StyledMenu anchorEl={anchorEl2} open={drop} onClose={langClose} sx={{ position: 'absolute' }}>
-								<MenuItem disableRipple onClick={langChoice} id="en">
-									<img
-										className="img-flag"
-										src={'/img/flag/langen.png'}
-										onClick={langChoice}
-										id="en"
-										alt={'usaFlag'}
-									/>
-									{t('English')}
-								</MenuItem>
-								<MenuItem disableRipple onClick={langChoice} id="kr">
-									<img
-										className="img-flag"
-										src={'/img/flag/langkr.png'}
-										onClick={langChoice}
-										id="uz"
-										alt={'koreanFlag'}
-									/>
-									{t('Korean')}
-								</MenuItem>
-								<MenuItem disableRipple onClick={langChoice} id="ru">
-									<img
-										className="img-flag"
-										src={'/img/flag/langru.png'}
-										onClick={langChoice}
-										id="ru"
-										alt={'russiaFlag'}
-									/>
-									{t('Russian')}
-								</MenuItem>
+								{LOCALES.map((code) => (
+									<MenuItem disableRipple onClick={() => langChoice(code)} selected={lang === code} key={code}>
+										<img className="img-flag" src={`/img/flag/lang${code}.png`} alt={''} />
+										{t(`nav.languageName.${code}`)}
+									</MenuItem>
+								))}
 							</StyledMenu>
 						</div>
 					</Box>
@@ -298,36 +263,43 @@ const Top = () => {
 					<Link href={'/'}>
 						<img src="/img/logo/florea/florea-logo.svg" alt="Florea" />
 					</Link>
-					<button type={'button'} aria-label={t('Close menu')} onClick={() => setDrawerOpen(false)}>
+					<button type={'button'} aria-label={t('nav.closeMenu')} onClick={() => setDrawerOpen(false)}>
 						<CloseRoundedIcon />
 					</button>
 				</div>
 				<nav className={'drawer-links'}>
 					<Link href={'/'} className={router.pathname === '/' ? 'on' : ''}>
-						{t('Home')}
+						{t('nav.home')}
 					</Link>
 					<Link href={'/product'} className={router.pathname.startsWith('/product') ? 'on' : ''}>
-						{t('Products')}
+						{t('nav.products')}
 					</Link>
 					<Link href={'/agent'} className={router.pathname.startsWith('/agent') ? 'on' : ''}>
-						{t('Agents')}
+						{t('nav.florists')}
 					</Link>
 					<Link href={'/community?articleCategory=FREE'} className={router.pathname.startsWith('/community') ? 'on' : ''}>
-						{t('Community')}
+						{t('nav.community')}
 					</Link>
 					{user?._id && (
 						<Link href={'/mypage'} className={router.pathname.startsWith('/mypage') ? 'on' : ''}>
-							{t('My Page')}
+							{t('nav.myPage')}
 						</Link>
 					)}
 					<Link href={'/cs'} className={router.pathname.startsWith('/cs') ? 'on' : ''}>
-						{t('CS')}
+						{t('nav.cs')}
 					</Link>
 				</nav>
 				<div className={'drawer-lang'}>
-					{['en', 'kr', 'ru'].map((code: string) => (
-						<button type={'button'} key={code} id={code} className={lang === code ? 'on' : ''} onClick={langChoice}>
-							<img src={`/img/flag/lang${code}.png`} alt={''} id={code} />
+					{LOCALES.map((code) => (
+						<button
+							type={'button'}
+							key={code}
+							className={lang === code ? 'on' : ''}
+							aria-label={t(`nav.languageName.${code}`)}
+							aria-pressed={lang === code}
+							onClick={() => langChoice(code)}
+						>
+							<img src={`/img/flag/lang${code}.png`} alt={''} />
 							{code.toUpperCase()}
 						</button>
 					))}
@@ -336,11 +308,11 @@ const Top = () => {
 					{user?._id ? (
 						<button type={'button'} className={'drawer-btn ghost'} onClick={() => logOut()}>
 							<Logout fontSize="small" />
-							{t('Logout')}
+							{t('nav.logout')}
 						</button>
 					) : (
 						<Link href={'/account/join'} className={'drawer-btn'}>
-							{t('Login')} / {t('Register')}
+							{t('nav.loginRegister')}
 						</Link>
 					)}
 				</div>

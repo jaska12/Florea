@@ -1,3 +1,4 @@
+import { useTranslation } from 'next-i18next';
 import React from 'react';
 import { Stack, Box, Typography } from '@mui/material';
 import Link from 'next/link';
@@ -15,6 +16,7 @@ interface AgentCardProps {
 }
 
 const AgentCard = (props: AgentCardProps) => {
+	const { t } = useTranslation('common');
 	const { agent, likeMemberHandler } = props;
 	const user = useReactiveVar(userVar);
 	const imagePath: string = agent?.memberImage
@@ -55,7 +57,7 @@ const AgentCard = (props: AgentCardProps) => {
 					>
 						<strong>{agent?.memberFullName ?? agent?.memberNick}</strong>
 					</Link>
-					<span>Florist</span>
+					<span>{t('floristCard.florist')}</span>
 				</Box>
 				<Box component={'div'} className={'buttons'}>
 					<IconButton color={'default'}>

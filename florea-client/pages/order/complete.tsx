@@ -1,3 +1,4 @@
+import { useTranslation } from 'next-i18next';
 import React from 'react';
 import { NextPage } from 'next';
 import Link from 'next/link';
@@ -21,6 +22,7 @@ export const getStaticProps = async ({ locale }: any) => ({
 
 // The page a buyer lands on right after placing an order: what was ordered, and where to follow it.
 const OrderComplete: NextPage = () => {
+	const { t } = useTranslation('order');
 	const router = useRouter();
 	const user = useReactiveVar(userVar);
 	const ids: string[] = typeof router.query.ids === 'string' ? router.query.ids.split(',').filter(Boolean) : [];
@@ -78,16 +80,16 @@ const OrderComplete: NextPage = () => {
 
 					{orders.length > 0 && (
 						<p className={'complete-total'}>
-							To pay on delivery: <strong>${formatterStr(total)}</strong>
+							{t('complete.toPayOnDelivery')} <strong>${formatterStr(total)}</strong>
 						</p>
 					)}
 
 					<div className={'complete-actions'}>
 						<Link href={'/mypage?category=myOrders'} className={'shop-btn'}>
-							Follow my orders
+							{t('complete.followMyOrders')}
 						</Link>
 						<Link href={'/product'} className={'shop-btn ghost'}>
-							Continue shopping
+							{t('complete.continueShopping')}
 						</Link>
 					</div>
 				</div>

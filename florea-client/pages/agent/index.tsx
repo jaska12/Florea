@@ -1,3 +1,4 @@
+import { useTranslation } from 'next-i18next';
 import React, { ChangeEvent, MouseEvent, useEffect, useState } from 'react';
 import { NextPage } from 'next';
 import withLayoutBasic from '../../libs/components/layout/LayoutBasic';
@@ -22,6 +23,7 @@ export const getStaticProps = async ({ locale }: any) => ({
 });
 
 const AgentList: NextPage = ({ initialInput, ...props }: any) => {
+	const { t } = useTranslation('agent');
 	const router = useRouter();
 	const [anchorEl2, setAnchorEl2] = useState<null | HTMLElement>(null);
 	const [filterSortName, setFilterSortName] = useState('Recent');
@@ -75,7 +77,7 @@ const AgentList: NextPage = ({ initialInput, ...props }: any) => {
 			});
 			await getAgentsRefetch({ input: searchFilter });
 
-			await sweetTopSmallSuccessAlert('success', 800);
+			await sweetTopSmallSuccessAlert(t('list.success'), 800);
 		} catch (err: any) {
 			console.log('ERROR, likeMemberHandler:', err.message);
 			sweetMixinErrorAlert(err.message).then();
@@ -100,7 +102,7 @@ const AgentList: NextPage = ({ initialInput, ...props }: any) => {
 				break;
 			case 'old':
 				setSearchFilter({ ...searchFilter, sort: 'createdAt', direction: 'ASC' });
-				setFilterSortName('Oldest order');
+				setFilterSortName(t('list.oldestOrder'));
 				break;
 			case 'likes':
 				setSearchFilter({ ...searchFilter, sort: 'memberLikes', direction: 'DESC' });
@@ -130,7 +132,7 @@ const AgentList: NextPage = ({ initialInput, ...props }: any) => {
 					<Box component={'div'} className={'left'}>
 						<input
 							type="text"
-							placeholder={'Search for a florist'}
+							placeholder={t('list.searchForAFlorist')}
 							value={searchText}
 							onChange={(e: any) => setSearchText(e.target.value)}
 							onKeyDown={(event: any) => {
@@ -144,23 +146,23 @@ const AgentList: NextPage = ({ initialInput, ...props }: any) => {
 						/>
 					</Box>
 					<Box component={'div'} className={'right'}>
-						<span>Sort by</span>
+						<span>{t('list.sortBy')}</span>
 						<div>
 							<Button onClick={sortingClickHandler} endIcon={<KeyboardArrowDownRoundedIcon />}>
 								{filterSortName}
 							</Button>
 							<Menu anchorEl={anchorEl} open={sortingOpen} onClose={sortingCloseHandler} sx={{ paddingTop: '5px' }}>
 								<MenuItem onClick={sortingHandler} id={'recent'} disableRipple>
-									Recent
+									{t('list.recent')}
 								</MenuItem>
 								<MenuItem onClick={sortingHandler} id={'old'} disableRipple>
-									Oldest
+									{t('list.oldest')}
 								</MenuItem>
 								<MenuItem onClick={sortingHandler} id={'likes'} disableRipple>
-									Likes
+									{t('list.likes')}
 								</MenuItem>
 								<MenuItem onClick={sortingHandler} id={'views'} disableRipple>
-									Views
+									{t('list.views')}
 								</MenuItem>
 							</Menu>
 						</div>
@@ -170,7 +172,7 @@ const AgentList: NextPage = ({ initialInput, ...props }: any) => {
 					{agents?.length === 0 ? (
 						<div className={'no-data'}>
 							<img src="/img/icons/icoAlert.svg" alt="" />
-							<p>No Agents found!</p>
+							<p>{t('list.noAgentsFound')}</p>
 						</div>
 					) : (
 						agents.map((agent: Member) => {

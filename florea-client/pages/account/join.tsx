@@ -1,3 +1,4 @@
+import { useTranslation } from 'next-i18next';
 import React, { useCallback, useState } from 'react';
 import { NextPage } from 'next';
 import withLayoutBasic from '../../libs/components/layout/LayoutBasic';
@@ -14,6 +15,7 @@ export const getStaticProps = async ({ locale }: any) => ({
 });
 
 const Join: NextPage = () => {
+	const { t } = useTranslation('account');
 	const router = useRouter();
 	const [input, setInput] = useState({ nick: '', password: '', phone: '', type: 'USER' });
 	const [loginView, setLoginView] = useState<boolean>(true);
@@ -77,10 +79,10 @@ const Join: NextPage = () => {
 						</Box>
 						<Box className={'input-wrap'}>
 							<div className={'input-box'}>
-								<span>Nickname</span>
+								<span>{t('join.nickname')}</span>
 								<input
 									type="text"
-									placeholder={'Enter Nickname'}
+									placeholder={t('join.enterNickname')}
 									onChange={(e) => handleInput('nick', e.target.value)}
 									required={true}
 									onKeyDown={(event) => {
@@ -90,11 +92,11 @@ const Join: NextPage = () => {
 								/>
 							</div>
 							<div className={'input-box'}>
-								<span>Password</span>
+								<span>{t('join.password')}</span>
 								<input
 									type="password"
 									autoComplete={loginView ? 'current-password' : 'new-password'}
-									placeholder={'Enter Password'}
+									placeholder={t('join.enterPassword')}
 									onChange={(e) => handleInput('password', e.target.value)}
 									required={true}
 									onKeyDown={(event) => {
@@ -105,10 +107,10 @@ const Join: NextPage = () => {
 							</div>
 							{!loginView && (
 								<div className={'input-box'}>
-									<span>Phone</span>
+									<span>{t('join.phone')}</span>
 									<input
 										type="text"
-										placeholder={'Enter Phone'}
+										placeholder={t('join.enterPhone')}
 										onChange={(e) => handleInput('phone', e.target.value)}
 										required={true}
 										onKeyDown={(event) => {
@@ -121,7 +123,7 @@ const Join: NextPage = () => {
 						<Box className={'register'}>
 							{!loginView && (
 								<div className={'type-option'}>
-									<span className={'text'}>I want to be registered as:</span>
+									<span className={'text'}>{t('join.iWantToBeRegistered')}</span>
 									<div>
 										<FormGroup>
 											<FormControlLabel
@@ -133,7 +135,7 @@ const Join: NextPage = () => {
 														checked={input?.type == 'USER'}
 													/>
 												}
-												label="User"
+												label={t('join.user')}
 											/>
 										</FormGroup>
 										<FormGroup>
@@ -146,7 +148,7 @@ const Join: NextPage = () => {
 														checked={input?.type == 'AGENT'}
 													/>
 												}
-												label="Agent"
+												label={t('join.agent')}
 											/>
 										</FormGroup>
 									</div>
@@ -156,9 +158,9 @@ const Join: NextPage = () => {
 							{loginView && (
 								<div className={'remember-info'}>
 									<FormGroup>
-										<FormControlLabel control={<Checkbox defaultChecked size="small" />} label="Remember me" />
+										<FormControlLabel control={<Checkbox defaultChecked size="small" />} label={t('join.rememberMe')} />
 									</FormGroup>
-									<a>Lost your password?</a>
+									<a>{t('join.lostYourPassword')}</a>
 								</div>
 							)}
 
@@ -169,7 +171,7 @@ const Join: NextPage = () => {
 									disabled={input.nick == '' || input.password == ''}
 									onClick={doLogin}
 								>
-									LOGIN
+									{t('join.login')}
 								</Button>
 							) : (
 								<Button
@@ -178,26 +180,26 @@ const Join: NextPage = () => {
 									onClick={doSignUp}
 									endIcon={<img src="/img/icons/rightup.svg" alt="" />}
 								>
-									SIGNUP
+									{t('join.signup')}
 								</Button>
 							)}
 						</Box>
 						<Box className={'ask-info'}>
 							{loginView ? (
 								<p>
-									Not registered yet?
+									{t('join.notRegisteredYet')}
 									<b
 										onClick={() => {
 											viewChangeHandler(false);
 										}}
 									>
-										SIGNUP
+										{t('join.signup')}
 									</b>
 								</p>
 							) : (
 								<p>
-									Have account?
-									<b onClick={() => viewChangeHandler(true)}> LOGIN</b>
+									{t('join.haveAccount')}
+									<b onClick={() => viewChangeHandler(true)}> {t('join.login')}</b>
 								</p>
 							)}
 						</Box>

@@ -1,0 +1,32 @@
+{
+  "cardHelper": {
+    "writeItForMe": "Write it for me",
+    "whoIsItFor": "Who is it for?",
+    "myMotherAColleagueWho": "my mother, a colleague who is leaving…",
+    "occasion": "Occasion",
+    "tone": "Tone",
+    "writing": "Writing…",
+    "suggestThreeMore": "Suggest three more",
+    "suggestThreeMessages": "Suggest three messages",
+    "suggestedMessages": "Suggested messages",
+    "chooseOneAndEditIt": "Choose one and edit it as you like."
+  },
+  "assistant": {
+    "findAGift": "Find a gift",
+    "giftAssistant": "Gift assistant",
+    "tellMeWhoItIs": "Tell me who it is for, and I will look through the shop.",
+    "close": "Close",
+    "logInToUseThe": "Log in to use the gift assistant. It looks through the products of Florea florists and suggests a few that fit.",
+    "logInOrSignUp": "Log in or sign up",
+    "helloWhoIsTheGift": "Hello! Who is the gift for, and what is the occasion? A budget helps too.",
+    "lookingThroughTheShop": "Looking through the shop…",
+    "hereIsOneIdea": "Here is one idea:",
+    "occasion": "Occasion",
+    "anyOccasion": "Any occasion",
+    "budgetInDollars": "Budget in dollars",
+    "budget": "Budget",
+    "describeTheGiftYouAre": "Describe the gift you are looking for",
+    "describeWhoTheGiftIs": "Describe who the gift is for…",
+    "askTheAssistant": "Ask the assistant"
+  }
+}
