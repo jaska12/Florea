@@ -541,7 +541,7 @@ const ProductDetail: NextPage = ({ initialComment, ...props }: any) => {
 							</Stack>
 							<Stack className={'info-box'}>
 								<Typography className={'sub-title'}>{t('detail.email')}</Typography>
-								<input type={'text'} placeholder={'creativelayers088'} />
+								<input type={'text'} placeholder={'name@example.com'} />
 							</Stack>
 							<Stack className={'info-box'}>
 								<Typography className={'sub-title'}>{t('detail.message')}</Typography>

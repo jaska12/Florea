@@ -194,7 +194,7 @@ body::-webkit-scrollbar {
 				font-weight: 600;
 				line-height: normal;
 				letter-spacing: 0.96px;
-				text-transform: capitalize;
+				text-transform: var(--title-case, capitalize);
 			}
 			span {
 				color: #fff;
@@ -600,7 +600,7 @@ body::-webkit-scrollbar {
 							font-size: 14px;
 							font-style: normal;
 							font-weight: 400;
-							text-transform: capitalize;
+							text-transform: var(--title-case, capitalize);
 						}
 						p {
 							color: #fff;
@@ -609,7 +609,7 @@ body::-webkit-scrollbar {
 							font-style: normal;
 							font-weight: 600;
 							line-height: normal;
-							text-transform: capitalize;
+							text-transform: var(--title-case, capitalize);
 						}
 						.media-box {
 							margin-top: 12px;
@@ -635,7 +635,7 @@ body::-webkit-scrollbar {
 							font-style: normal;
 							font-weight: 600;
 							line-height: normal;
-							text-transform: capitalize;
+							text-transform: var(--title-case, capitalize);
 						}
 						div {
 							padding: 20px 30px;
@@ -688,7 +688,7 @@ body::-webkit-scrollbar {
 								font-style: normal;
 								font-weight: 600;
 								line-height: normal;
-								text-transform: capitalize;
+								text-transform: var(--title-case, capitalize);
 							}
 							span {
 								margin-top: 25px;

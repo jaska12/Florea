@@ -176,7 +176,7 @@ const CommunityArticleList = (props: CommunityArticleListProps) => {
 									<TableCell align="left" className={'name'}>
 										<Link href={`/member?memberId=${article?.memberData?._id}`}>
 											<Avatar
-												alt="Remy Sharp"
+												alt={article?.memberData?.memberNick ?? ''}
 												src={
 													article?.memberData?.memberImage
 														? `${REACT_APP_API_URL}/${article?.memberData?.memberImage}`

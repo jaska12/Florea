@@ -2,6 +2,12 @@
 @import 'variables.scss';
 @import 'reset.scss';
 
+// "capitalize" gives every word a capital letter. That is an English habit: a Russian heading keeps the
+// capitals it was written with. Rules that capitalize use text-transform: var(--title-case, capitalize).
+html[lang='ru'] {
+	--title-case: none;
+}
+
 a {
 	white-space: nowrap;
 	text-decoration: none;

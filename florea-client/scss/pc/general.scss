@@ -118,7 +118,7 @@
 			font-style: normal;
 			font-weight: 600;
 			line-height: 26px;
-			text-transform: capitalize;
+			text-transform: var(--title-case, capitalize);
 		}
 		.buttons {
 			width: auto;

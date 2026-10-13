@@ -164,7 +164,7 @@ export const ProductPanelList = (props: ProductPanelListType) => {
 												<Stack direction={'row'}>
 													<Link href={`/product/detail?id=${product?._id}`}>
 														<div>
-															<Avatar alt="Remy Sharp" src={productImage} sx={{ ml: '2px', mr: '10px' }} />
+															<Avatar alt={product.productTitle} src={productImage} sx={{ ml: '2px', mr: '10px' }} />
 														</div>
 													</Link>
 													<Link href={`/product/detail?id=${product?._id}`}>
@@ -174,7 +174,7 @@ export const ProductPanelList = (props: ProductPanelListType) => {
 											) : (
 												<Stack direction={'row'}>
 													<div>
-														<Avatar alt="Remy Sharp" src={productImage} sx={{ ml: '2px', mr: '10px' }} />
+														<Avatar alt={product.productTitle} src={productImage} sx={{ ml: '2px', mr: '10px' }} />
 													</div>
 													<div style={{ marginTop: '10px' }}>{product.productTitle}</div>
 												</Stack>

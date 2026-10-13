@@ -23,7 +23,6 @@
     "floristsTotal_many": "{{count}} флористов на Florea",
     "floristsTotal_other": "{{count}} флориста на Florea",
     "success": "Готово",
-    "oldestOrder": "Сначала старые",
     "searchForAFlorist": "Найти флориста",
     "sortBy": "Сортировка",
     "recent": "Сначала новые",

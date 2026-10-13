@@ -33,6 +33,10 @@
       "writer": "WRITER",
       "date": "DATE",
       "status": "STATUS"
+    },
+    "searchBy": {
+      "nick": "Nickname",
+      "id": "Member ID"
     }
   },
   "orders": {

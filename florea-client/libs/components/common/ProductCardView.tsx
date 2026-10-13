@@ -25,12 +25,6 @@ interface ProductCardViewProps {
 	wholeCardOpens?: boolean;
 }
 
-/** BIRTHDAY -> birthday, FLOWER_BOX -> flower box (capitalized in CSS) **/
-export const formatLabel = (value: string): string => (value ?? '').replace(/_/g, ' ').toLowerCase();
-
-/** BIRTHDAY -> Birthday, FLOWER_BOX -> Flower Box **/
-export const prettyLabel = (value: string): string => formatLabel(value).replace(/\b[a-z]/g, (letter) => letter.toUpperCase());
-
 /**
  * The one product card of the site: photo, title, occasion and size, price, views and likes.
  * It only draws; the component that uses it keeps its own data and like logic.

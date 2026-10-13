@@ -57,10 +57,26 @@ The backend is already migrated to the product domain. Names in this client must
 - Do not add `device === 'mobile'` branches or a second markup for phones.
 - A new page or component needs its rules in `scss/mobile` too; check it at 375px and 768px.
 
+## Translations
+
+The site is in English (`en`, the default), Korean (`kr`) and Russian (`ru`). No text a visitor reads is written in a component.
+
+- Texts are in `public/locales/<language>/<namespace>.json`, one file per feature: `common` (navbar, footer, cards, alerts, enum labels, server messages), `ai`, `home`, `product`, `agent`, `community`, `order`, `mypage`, `member`, `account`, `cs`, `admin`.
+- In a component: `const { t } = useTranslation('<namespace>')`. Outside React (helpers, alerts): `tr('ns:key', 'English text')` from `libs/i18n/tr.ts`.
+- A page loads its files in `getStaticProps` with `pageTranslations(locale, ['<namespace>', …])` from `libs/i18n/server.ts`. `common` and `ai` are always loaded. A page has to list every namespace that it or anything it imports reads.
+- Enum values (`BOUQUET`, `PENDING`, …) are shown with `enumLabel('<group>', value)` from `useEnumLabel()`; the labels are under `enum.<group>` in `common.json`. The stored values and the GraphQL enums are not changed.
+- Dates, prices and numbers go through `useFormat()` (`libs/i18n/format.ts`), never `toLocaleString()` or a moment format with words.
+- Counts use plural keys (`key_one`, `key_other`; Russian also `key_few` and `key_many`; Korean only `key_other`).
+- Messages the API sends in English are mapped to keys in `libs/i18n/serverText.ts`. A new backend message needs a line there and a text under `serverError` in `common.json`.
+- Content from the database (product titles, descriptions, nicknames, articles, notices) is shown as it was written.
+- The address keeps `kr` for Korean; `libs/i18n/locale.ts` gives the real tag (`ko-KR`) for `Intl` and `<html lang>`.
+- After adding or changing a text, run `yarn i18n:check`. It fails when a key is missing in a language, a plural form is missing, or a page does not load a namespace it reads.
+
 ## Validation
 
 ```bash
 yarn tsc --noEmit
+yarn i18n:check
 yarn build
 ```
 

@@ -29,7 +29,7 @@
 							font-weight: 600;
 							line-height: normal;
 							letter-spacing: 0.6px;
-							text-transform: capitalize;
+							text-transform: var(--title-case, capitalize);
 						}
 						.top-box {
 							width: auto;
@@ -114,7 +114,7 @@
 								font-weight: 400;
 								line-height: normal;
 								letter-spacing: 0.52px;
-								text-transform: capitalize;
+								text-transform: var(--title-case, capitalize);
 							}
 							.button-box {
 								flex-direction: row;
@@ -140,7 +140,7 @@
 							font-weight: 600;
 							line-height: normal;
 							letter-spacing: 0.52px;
-							text-transform: capitalize;
+							text-transform: var(--title-case, capitalize);
 						}
 						span {
 							color: $florea-ink;
@@ -151,7 +151,7 @@
 							font-weight: 400;
 							line-height: normal;
 							letter-spacing: 0.3px;
-							text-transform: capitalize;
+							text-transform: var(--title-case, capitalize);
 						}
 					}
 				}
@@ -723,7 +723,7 @@
 							font-weight: 600;
 							line-height: normal;
 							letter-spacing: 0.6px;
-							text-transform: capitalize;
+							text-transform: var(--title-case, capitalize);
 						}
 						.sub-title {
 							color: $florea-ink;

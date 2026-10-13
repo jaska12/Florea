@@ -5,6 +5,7 @@ import { MotionConfig, motion, Variants } from 'framer-motion';
 import HeaderFilter from './HeaderFilter';
 import { ProductOccasion } from '../../enums/product.enum';
 import { productPriceCeiling } from '../../config';
+import { useEnumLabel } from '../../i18n/labels';
 
 // same curve as $logo-ease in scss/variables.scss
 const EASE: [number, number, number, number] = [0.22, 1, 0.36, 1];
@@ -40,6 +41,7 @@ const occasionHref = (occasion: ProductOccasion) => ({
 
 const HomeHero = () => {
 	const { t } = useTranslation('common');
+	const enumLabel = useEnumLabel();
 
 	return (
 		<section className={'home-hero'}>
@@ -67,7 +69,7 @@ const HomeHero = () => {
 						<span className={'shortcuts-label'}>{t('hero.popularOccasions')}</span>
 						{occasionShortcuts.map((occasion) => (
 							<Link className={'shortcut'} href={occasionHref(occasion)} key={occasion}>
-								{occasion.toLowerCase()}
+								{enumLabel('productOccasion', occasion)}
 							</Link>
 						))}
 					</motion.nav>

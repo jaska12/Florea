@@ -9,6 +9,9 @@ import { useRouter } from 'next/router';
 import axios from 'axios';
 import { T } from '../../types/common';
 import '@toast-ui/editor/dist/toastui-editor.css';
+import '@toast-ui/editor/dist/i18n/ko-kr';
+import '@toast-ui/editor/dist/i18n/ru-ru';
+import { languageTag } from '../../i18n/locale';
 import { useMutation } from '@apollo/client';
 import { CREATE_BOARD_ARTICLE } from '../../../apollo/user/mutation';
 import { sweetErrorHandling, sweetTopSmallSuccessAlert } from '../../sweetAlert';
@@ -151,6 +154,7 @@ const TuiEditor = () => {
 				initialValue={t('editor.typeHere')}
 				placeholder={t('editor.typeHere')}
 				previewStyle={'vertical'}
+				language={languageTag(router.locale)}
 				height={'640px'}
 				// @ts-ignore
 				initialEditType={'WYSIWYG'}

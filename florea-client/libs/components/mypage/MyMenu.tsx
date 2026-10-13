@@ -84,7 +84,7 @@ const MyMenu = () => {
 											<Typography className={'sub-title'} variant={'subtitle1'} component={'p'}>
 												{t('menu.addProduct')}
 											</Typography>
-											<IconButton aria-label="delete" sx={{ ml: '40px' }}>
+											<IconButton aria-hidden tabIndex={-1} sx={{ ml: '40px' }}>
 												<PortraitIcon style={{ color: 'red' }} />
 											</IconButton>
 										</div>
@@ -107,7 +107,7 @@ const MyMenu = () => {
 											<Typography className={'sub-title'} variant={'subtitle1'} component={'p'}>
 												{t('menu.myProducts')}
 											</Typography>
-											<IconButton aria-label="delete" sx={{ ml: '36px' }}>
+											<IconButton aria-hidden tabIndex={-1} sx={{ ml: '36px' }}>
 												<PortraitIcon style={{ color: 'red' }} />
 											</IconButton>
 										</div>

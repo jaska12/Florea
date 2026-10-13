@@ -157,7 +157,11 @@
     "blocked0": "차단 (0)",
     "deleted0": "삭제 (0)",
     "searchUserName": "회원 이름 검색",
-    "dataNotFound": "데이터가 없습니다."
+    "dataNotFound": "데이터가 없습니다.",
+    "searchBy": {
+      "nick": "닉네임",
+      "id": "회원 ID"
+    }
   },
   "layout": {
     "openMenu": "메뉴 열기",

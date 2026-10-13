@@ -71,8 +71,8 @@ const InquiryArticles: NextPage = (props: any) => {
 							<Divider />
 							<Stack className={'search-area'} sx={{ m: '24px' }}>
 								<Select sx={{ width: '160px', mr: '20px' }} value={'searchCategory'}>
-									<MenuItem value={'mb_nick'}>mb_nick</MenuItem>
-									<MenuItem value={'mb_id'}>mb_id</MenuItem>
+									<MenuItem value={'mb_nick'}>{t('inquiry.searchBy.nick')}</MenuItem>
+									<MenuItem value={'mb_id'}>{t('inquiry.searchBy.id')}</MenuItem>
 								</Select>
 
 								<OutlinedInput

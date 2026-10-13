@@ -157,7 +157,11 @@
     "blocked0": "Заблокированные (0)",
     "deleted0": "Удалённые (0)",
     "searchUserName": "Поиск по имени",
-    "dataNotFound": "Ничего не найдено."
+    "dataNotFound": "Ничего не найдено.",
+    "searchBy": {
+      "nick": "Никнейм",
+      "id": "ID пользователя"
+    }
   },
   "layout": {
     "openMenu": "Открыть меню",

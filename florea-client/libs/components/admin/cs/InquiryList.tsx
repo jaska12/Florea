@@ -153,7 +153,7 @@ export const InquiryList = (props: InquiryPanelListType) => {
 										<Stack direction={'row'}>
 											<Link href={`/_admin/users/detail?mb_id=$'{member._id'}`}>
 												<div>
-													<Avatar alt="Remy Sharp" src={member_image} sx={{ ml: '2px', mr: '10px' }} />
+													<Avatar alt="" src={member_image} sx={{ ml: '2px', mr: '10px' }} />
 												</div>
 											</Link>
 											<Link href={`/_admin/users/detail?mb_id=${'member._id'}`}>

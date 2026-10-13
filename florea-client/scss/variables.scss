@@ -173,7 +173,7 @@ $florea-line: rgba(180, 35, 95, 0.12); // hairlines and card borders
 			font-weight: 600;
 			line-height: 22px;
 			letter-spacing: 0.1px;
-			text-transform: capitalize;
+			text-transform: var(--title-case, capitalize);
 			cursor: pointer;
 			transition: color 240ms $logo-ease;
 			&:hover {
@@ -198,7 +198,7 @@ $florea-line: rgba(180, 35, 95, 0.12); // hairlines and card borders
 				font-weight: 500;
 				line-height: 18px;
 				letter-spacing: 0.2px;
-				text-transform: capitalize;
+				text-transform: var(--title-case, capitalize);
 			}
 		}
 		.bott {

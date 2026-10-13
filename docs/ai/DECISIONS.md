@@ -208,3 +208,14 @@ Important decisions made during the Nestar → Florea migration session, with th
 - **Reason:** the owner has an OpenAI account. The first version (task 45) was written for the Claude API, as the brief said, and was changed before it had made a real request.
 - **What made the change small:** only `components/ai/ai.client.ts` knows the provider. The service gives it a system text, a user text and a JSON schema, and gets parsed JSON or a failure back. Another provider means another client file.
 - **Privacy:** requests are sent with `store: false`. What is sent is the member's request text and public product data; no member name, id, address or order.
+
+## 32. Translations: one file per feature, and the client translates what the server sends
+
+- **Decision:** every text of the client is a key in `public/locales/<language>/<namespace>.json`, one namespace per feature (`common`, `ai`, `home`, `product`, `agent`, `community`, `order`, `mypage`, `member`, `account`, `cs`, `admin`). A page loads `common`, `ai` and the namespaces it reads. English is the fallback language.
+- **Server texts:** the API keeps answering in English. The client maps the messages it knows (errors, notification titles) to keys in `libs/i18n/serverText.ts`; a message that is not in the map is shown as it came. Enum values are stored and sent unchanged and get their label from `enum.<group>.<value>` in `common.json`.
+- **Formats:** dates, numbers and prices are formatted with `Intl` for the chosen language (`libs/i18n/format.ts`). The currency stays the dollar in all three languages; only the way the number is written changes.
+- **The address says `kr`, the browser is told `ko`:** `/kr/...` stays as it is, so no link breaks. `<html lang>` and `Intl` get the real tag (`ko`, `ko-KR`).
+- **Remembering the language:** the language is in the address, so a reload and every link keep it. The last choice is also stored in the browser, and an address without a language goes to it.
+- **What is not translated:** anything written by members or florists and stored in the database (titles, descriptions, nicknames, articles, comments, notices, chat messages), and the brand name.
+- **A check instead of a promise:** `yarn i18n:check` compares the code with the three languages and fails on a missing key, a missing plural form or a page that does not load a namespace it reads.
+- **Rejected:** one big `common.json` (every page would download every text, and 800 keys in one file are hard to keep in order); translating on the server (it would change the GraphQL answers, which the brief forbids); renaming the address to `/ko` (existing links and the stored choice would break); showing prices in won or roubles (the amounts are stored in dollars and there is no exchange rate in the project).

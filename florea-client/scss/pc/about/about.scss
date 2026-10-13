@@ -21,7 +21,7 @@
             font-weight: 600;
             line-height: normal;
             letter-spacing: 0.6px;
-            text-transform: capitalize;
+            text-transform: var(--title-case, capitalize);
           }
         }
         .right {
@@ -142,7 +142,7 @@
           font-weight: 600;
           line-height: normal;
           letter-spacing: 0.6px;
-          text-transform: capitalize;
+          text-transform: var(--title-case, capitalize);
         }
         .desc {
           color: $florea-ink;
@@ -189,7 +189,7 @@
           font-weight: 600;
           line-height: normal;
           letter-spacing: 0.6px;
-          text-transform: capitalize;
+          text-transform: var(--title-case, capitalize);
         }
         .box {
           margin-top: 40px;
@@ -304,7 +304,7 @@
             font-weight: 600;
             line-height: normal;
             letter-spacing: 0.6px;
-            text-transform: capitalize;
+            text-transform: var(--title-case, capitalize);
           }
           p {
             margin-top: 10px;

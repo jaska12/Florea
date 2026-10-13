@@ -87,7 +87,7 @@
 			font-size: 14px;
 			font-weight: 500;
 			line-height: 20px;
-			text-transform: capitalize;
+			text-transform: var(--title-case, capitalize);
 			white-space: nowrap;
 			transition:
 				background-color 240ms $logo-ease,
@@ -163,7 +163,7 @@
 					line-height: 26px;
 					letter-spacing: 0.2px;
 					text-overflow: ellipsis;
-					text-transform: capitalize;
+					text-transform: var(--title-case, capitalize);
 					white-space: nowrap;
 					transition: color 260ms $logo-ease;
 				}
@@ -279,7 +279,7 @@
 				line-height: 24px;
 				letter-spacing: 0.2px;
 				cursor: pointer;
-				text-transform: capitalize;
+				text-transform: var(--title-case, capitalize);
 				transition:
 					background-color 240ms $logo-ease,
 					border-color 240ms $logo-ease,

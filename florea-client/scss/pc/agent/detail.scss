@@ -35,7 +35,7 @@
 						font-style: normal;
 						font-weight: 600;
 						line-height: normal;
-						text-transform: capitalize;
+						text-transform: var(--title-case, capitalize);
 						cursor: pointer;
 					}
 					div {
@@ -169,7 +169,7 @@
 						font-weight: 600;
 						line-height: normal;
 						letter-spacing: 0.6px;
-						text-transform: capitalize;
+						text-transform: var(--title-case, capitalize);
 					}
 					p {
 						color: $florea-ink;

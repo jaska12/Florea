@@ -233,7 +233,7 @@
 												font-style: normal;
 												font-weight: 600;
 												line-height: normal;
-												text-transform: capitalize;
+												text-transform: var(--title-case, capitalize);
 											}
 										}
 										.address {

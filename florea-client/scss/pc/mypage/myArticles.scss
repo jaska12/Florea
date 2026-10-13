@@ -17,7 +17,7 @@
 					font-weight: 600;
 					line-height: normal;
 					letter-spacing: 0.6px;
-					text-transform: capitalize;
+					text-transform: var(--title-case, capitalize);
 				}
 				.sub-title {
 					color: $florea-ink;
