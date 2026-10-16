@@ -61,7 +61,7 @@
     "giftWrap": "선물 포장",
     "sameDayDelivery": "당일 배송",
     "priceRange": "가격대",
-    "min": "$ 최소",
-    "max": "$ 최대"
+    "min": "₩ 최소",
+    "max": "₩ 최대"
   }
 }

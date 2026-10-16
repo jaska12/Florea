@@ -84,7 +84,9 @@
     "dragAndDropImagesHere": "Перетащите фото сюда",
     "photosMustBeJpegOr": "Фото в формате JPEG или PNG, не меньше 2048×768",
     "browseFiles": "Выбрать файлы",
-    "save": "Сохранить"
+    "save": "Сохранить",
+    "pricePlaceholder": "Например, 59000",
+    "priceHint": "В вонах, целое число, не меньше ₩1,000."
   },
   "menu": {
     "doYouWantToLogout": "Выйти из аккаунта?",

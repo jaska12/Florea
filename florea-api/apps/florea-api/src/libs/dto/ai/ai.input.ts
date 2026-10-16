@@ -10,9 +10,10 @@ export class AiGiftRecommendInput {
 	@Field(() => String)
 	prompt: string;
 
+	// in won, like the prices
 	@IsOptional()
 	@Min(1)
-	@Max(100000)
+	@Max(100000000)
 	@Field(() => Float, { nullable: true })
 	budgetMax?: number;
 

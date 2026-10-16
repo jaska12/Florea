@@ -20,11 +20,11 @@
     "lookingThroughTheShop": "Смотрю каталог…",
     "occasion": "Повод",
     "anyOccasion": "Любой повод",
-    "budgetInDollars": "Бюджет в долларах",
     "budget": "Бюджет",
     "describeTheGiftYouAre": "Опишите, какой подарок вы ищете",
     "describeWhoTheGiftIs": "Напишите, для кого подарок…",
-    "askTheAssistant": "Спросить помощника"
+    "askTheAssistant": "Спросить помощника",
+    "budgetInWon": "Бюджет в вонах"
   },
   "shared": {
     "note": "Рекомендации ИИ могут быть неточными.",

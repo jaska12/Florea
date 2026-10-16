@@ -587,3 +587,15 @@
 		}
 	}
 }
+
+// the rule written under the price field of the product form; red while the typed price breaks it
+#pc-wrap #my-page #add-product-page .field-hint {
+	display: block;
+	margin-top: 6px;
+	color: $florea-muted;
+	font-size: 12px;
+	line-height: 16px;
+	&.wrong {
+		color: #c62828;
+	}
+}

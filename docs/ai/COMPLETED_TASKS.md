@@ -1163,3 +1163,42 @@ In the order they were done. State as of 2026-10-05, `main` at `5f5405e`.
 - On the live site, in English, Korean and Russian: a wrong password for `rosegarden` is answered with the reason in the language, nothing typed is printed to the console, no session is opened, notice dates have the whole year, `<html lang>` is `en`, `ko`, `ru`: 15 of 15.
 - Afterwards the old folder, the build log and the fallback image tag were removed from the server, and the password files of the session were deleted from the dev machine. Disk: 52% used.
 - Test data: the browser tests place and move orders on the dev database as they always did; the order placed for the order pages in task 49 (`aitester`) was cancelled. On the live site: one failed login attempt for `rosegarden` per language.
+
+## 51. Prices in Korean won (part 3 of "Broken elements, data validation and KRW currency")
+
+- The brief has three parts. The owner chose to start with the currency and the move of the live data; parts 1 (broken elements) and 2 (validation of passwords and phones) are not done yet. Only the price check of part 2 is here, because the won rules need it.
+
+**Backend** (`florea-api`)
+- `libs/config.ts`: `DELIVERY_FEE = 4000`, `FREE_DELIVERY_FROM = 50000`, `MIN_PRODUCT_PRICE = 1000`.
+- `ProductInput` and `ProductUpdate`: the price is a whole number (`@IsInt`) of at least ₩1,000. The GraphQL types are unchanged.
+- Order totals were already computed by the server; with the new constants they are in won.
+- Gift assistant (`components/ai/ai.service.ts`): the model is told that prices are won and how budgets are written; `budgetFromText` reads a budget written in the request ("5만원", "3만5천원", "50,000원", "₩50,000", "50 000 вон") and only products within it are sent to the model; "5만원 이상" sets no upper limit. `AiGiftRecommendInput.budgetMax` accepts won (up to 100,000,000).
+- `seed/demo-shop.json`: the 20 sample prices in won.
+- `seed/migrate-usd-to-krw.cjs` (new): the one-time move of stored prices (see `deploy/README.md`, "Moving the prices to won").
+
+**Frontend** (`florea-client`)
+- `libs/i18n/format.ts`: `formatPrice`, the one price formatter: `Intl.NumberFormat('ko-KR', { style: 'currency', currency: 'KRW' })`, `₩59,000` in all three languages. Product cards, product page, cart, checkout, orders, the seller's pages, the admin panel and the gift assistant all use it; the admin product list showed the bare number and now uses it too.
+- `libs/config.ts`: `deliveryFee = 4000`, `freeDeliveryFrom = 50000`, `minProductPrice = 1000`, `priceStep = 1000`; the default top of the price filter is ₩10,000,000 (it was 10,000, which would have hidden every product in won).
+- Price filter: steps of ₩1,000; the open ends are shown empty instead of 0 and 10,000,000.
+- Product form: a number field with steps of ₩1,000 and the rule under it ("In won, a whole number, at least ₩1,000."), red while the typed price breaks it; Save stays disabled until the price is valid.
+- Gift assistant: the budget field shows ₩ and steps of 1,000; its label "Budget in won".
+- Texts: `filter.min`/`filter.max` ("₩ min"), `assistant.budgetInWon`, `productForm.priceHint`, `productForm.pricePlaceholder` in three languages; `assistant.budgetInDollars` removed.
+
+**Data**
+- Dev database: moved with the script: 25 product prices, 52 orders with their items, 2 notices. The restore was tried (everything back), then the move was applied again; a second run changes nothing.
+- Production: dry run only, inside the API container (`NODE_ENV=production`, database `FloreaProd`). It would change 20 product prices (from $22 → ₩30,000 to $110 → ₩149,000), no orders (there are none), and 2 notices ("$5" → "₩4,000", "$100" → "₩50,000"). Nothing was changed on production.
+
+**Results**
+
+| Check | Result |
+|---|---|
+| `npx tsc` and `nest build` of the API and the batch | pass |
+| `npx jest` of the AI | 21 of 21 (three new: a budget in the request, the lower of field and request, the ways a budget is written) |
+| `yarn i18n:check`, `yarn tsc --noEmit`, `yarn build` | pass, 77 pages |
+| No "$" on 24 page states in three languages, including the FAQ answers and the gift assistant (production build on the dev machine) | pass |
+| Cart, checkout, thank-you page and the stored order for one ₩30,000 product: ₩30,000 + ₩4,000 = ₩34,000 everywhere; "₩20,000 more for free delivery" | pass |
+| The API refuses ₩500, ₩1,500.5 and an update to ₩999; the product form marks ₩500 and accepts ₩59,000, in three languages | pass |
+| The gift assistant with the real model, "친구 생일 선물로 5만원 이하 꽃": picks only products of ₩50,000 or less | pass (before `budgetFromText` it answered that nothing under 5만원 was found, although a ₩32,000 bouquet was there) |
+| The Korean and Russian shopping flows | 18 of 18 each |
+
+- Not deployed and not pushed. The live site still shows dollars; its data and the new code have to change in the same window (`deploy/README.md`).

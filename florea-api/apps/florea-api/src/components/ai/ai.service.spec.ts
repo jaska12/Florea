@@ -1,6 +1,6 @@
 import { HttpException, ServiceUnavailableException } from '@nestjs/common';
 import { ObjectId } from 'bson';
-import { AI_RATE_LIMIT, AI_RATE_WINDOW_MS, AiService } from './ai.service';
+import { AI_RATE_LIMIT, AI_RATE_WINDOW_MS, AiService, budgetFromText } from './ai.service';
 import { AiClient, AiFailure, AiJsonRequest } from './ai.client';
 import { ProductOccasion, ProductSize, ProductStatus, ProductType } from '../../libs/enums/product.enum';
 import { AiCardTone, AiLanguage } from '../../libs/enums/ai.enum';
@@ -49,6 +49,31 @@ describe('AiService', () => {
 				productOccasion: ProductOccasion.BIRTHDAY,
 				productSize: ProductSize.SMALL,
 			});
+		});
+
+		it('reads a budget in won from the request when the budget field is empty', async () => {
+			const { service, find } = setup();
+			await service.giftRecommend(memberId, { prompt: '친구 생일 선물로 5만원 이하 꽃 추천해 주세요' });
+			expect(find).toHaveBeenCalledWith(expect.objectContaining({ productPrice: { $lte: 50000 } }));
+		});
+
+		it('keeps the lower of the budget field and a budget in the request', async () => {
+			const { service, find } = setup();
+			await service.giftRecommend(memberId, { prompt: 'flowers up to 30,000 won', budgetMax: 80000 });
+			expect(find).toHaveBeenCalledWith(expect.objectContaining({ productPrice: { $lte: 30000 } }));
+		});
+
+		it('understands the ways a budget in won is written', () => {
+			expect(budgetFromText('5만원')).toBe(50000);
+			expect(budgetFromText('5만 원 정도')).toBe(50000);
+			expect(budgetFromText('3만5천원')).toBe(35000);
+			expect(budgetFromText('예산 50,000원')).toBe(50000);
+			expect(budgetFromText('about 70000 won')).toBe(70000);
+			expect(budgetFromText('₩45,000 max')).toBe(45000);
+			expect(budgetFromText('до 60 000 вон')).toBe(60000);
+			expect(budgetFromText('5만원 이상이면 좋아요')).toBeUndefined();
+			expect(budgetFromText('a gift for my mother')).toBeUndefined();
+			expect(budgetFromText('2 roses for 2 won')).toBeUndefined();
 		});
 
 		it('does not call the model when nothing matches', async () => {

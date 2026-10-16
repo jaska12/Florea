@@ -22,7 +22,6 @@
     "lookingThroughTheShop": "Looking through the shop…",
     "occasion": "Occasion",
     "anyOccasion": "Any occasion",
-    "budgetInDollars": "Budget in dollars",
     "budget": "Budget",
     "describeTheGiftYouAre": "Describe the gift you are looking for",
     "describeWhoTheGiftIs": "Describe who the gift is for…",
@@ -34,7 +33,8 @@
     },
     "upTo": "up to {{amount}}",
     "ideas_one": "Here is one idea:",
-    "ideas_other": "Here are {{count}} ideas:"
+    "ideas_other": "Here are {{count}} ideas:",
+    "budgetInWon": "Budget in won"
   },
   "shared": {
     "note": "AI suggestions may not be perfect.",

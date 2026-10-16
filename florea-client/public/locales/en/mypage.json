@@ -34,7 +34,9 @@
     "dragAndDropImagesHere": "Drag and drop images here",
     "photosMustBeJpegOr": "Photos must be JPEG or PNG, at least 2048×768",
     "browseFiles": "Browse files",
-    "save": "Save"
+    "save": "Save",
+    "pricePlaceholder": "For example 59000",
+    "priceHint": "In won, a whole number, at least ₩1,000."
   },
   "articles": {
     "success": "Done",

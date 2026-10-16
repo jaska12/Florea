@@ -70,6 +70,33 @@ node seed/seed-demo-shop.mjs http://SERVER:3001/graphql PASSWORD_FOR_THE_FLORIST
 
 The password (5 to 12 characters) is set on the five accounts and is not kept anywhere by the script. Running it again creates nothing twice. These shops are samples, not real businesses: an order placed with them reaches an account that you hold, and nobody delivers it.
 
+## Moving the prices to won (once)
+
+The prices used to be stored in dollars. `florea-api/seed/migrate-usd-to-krw.cjs` turns them into won (× 1,350, to the nearest 1,000), recomputes the orders and fixes the two delivery notices. It changes only prices under 1,000, so running it twice is harmless.
+
+The data and the code that shows won have to change together: old code with won data shows "$59,000", new code with dollar data shows "₩44". So the script runs in the same window as the update of the API and the client (both containers, see "Updating").
+
+On the dev machine, from `florea-api`:
+
+```bash
+node seed/migrate-usd-to-krw.cjs --env .env                                        # dry run: prints what would change
+node seed/migrate-usd-to-krw.cjs --env .env --apply --backup ../krw-backup.json    # change it; the old values go to the backup
+node seed/migrate-usd-to-krw.cjs --env .env --restore ../krw-backup.json           # put them back
+```
+
+On the server it runs inside the API container, which already has the production database setting (nothing of it leaves the container):
+
+```bash
+cd /root/apps/florea
+mkdir -p /root/backups
+docker cp florea-api/seed/migrate-usd-to-krw.cjs florea-api:/tmp/migrate-usd-to-krw.cjs
+docker exec -w /app florea-api node /tmp/migrate-usd-to-krw.cjs                                          # dry run
+docker exec -w /app florea-api node /tmp/migrate-usd-to-krw.cjs --apply --backup /tmp/krw-backup.json   # change it
+docker cp florea-api:/tmp/krw-backup.json /root/backups/krw-backup-$(date +%Y%m%d-%H%M).json             # keep the backup
+```
+
+To go back: copy the backup into the container and run the script with `--restore /tmp/krw-backup.json`, then start the images tagged `:prev`.
+
 ## Updating
 
 Do not unpack the new code over the old folder. `tar` adds and replaces files, and a file that was deleted in git stays on the server; the client build type-checks every `.ts` and `.tsx` file it finds, so one leftover file can fail it. The code goes into a fresh folder, the two settings files are carried over, and the folders are swapped after the build has passed.

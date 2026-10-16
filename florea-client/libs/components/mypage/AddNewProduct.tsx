@@ -4,7 +4,7 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/router';
 import { Button, Stack, Typography } from '@mui/material';
 import { ProductLocation, ProductOccasion, ProductSize, ProductType } from '../../enums/product.enum';
-import { REACT_APP_API_URL } from '../../config';
+import { minProductPrice, priceStep, REACT_APP_API_URL } from '../../config';
 import { ProductInput } from '../../types/product/product.input';
 import axios from 'axios';
 import { getJwtToken } from '../../auth';
@@ -16,6 +16,9 @@ import { sweetErrorHandling, sweetMixinErrorAlert, sweetMixinSuccessAlert } from
 import AutoAwesomeRoundedIcon from '@mui/icons-material/AutoAwesomeRounded';
 import AiNote from '../ai/AiNote';
 import { aiErrorMessage } from '../ai/aiError';
+
+/** a price is whole won, at least minProductPrice (the API checks the same) **/
+const priceIsValid = (price: number): boolean => Number.isInteger(price) && price >= minProductPrice;
 
 const AddProduct = ({ initialValues, ...props }: any) => {
 	const { t } = useTranslation('mypage');
@@ -166,7 +169,7 @@ const AddProduct = ({ initialValues, ...props }: any) => {
 	const doDisabledCheck = () => {
 		if (
 			insertProductData.productTitle === '' ||
-			insertProductData.productPrice === 0 ||
+			!priceIsValid(insertProductData.productPrice) ||
 			(insertProductData.productType as string) === '' ||
 			(insertProductData.productLocation as string) === '' ||
 			insertProductData.productAddress === '' ||
@@ -254,14 +257,22 @@ const AddProduct = ({ initialValues, ...props }: any) => {
 							<Stack className="price-year-after-price">
 								<Typography className="title">{t('productForm.price')}</Typography>
 								<input
-									type="text"
+									type="number"
+									inputMode="numeric"
+									min={minProductPrice}
+									step={priceStep}
 									className="description-input"
-									placeholder={t('productForm.price')}
-									value={insertProductData.productPrice}
+									placeholder={t('productForm.pricePlaceholder')}
+									value={insertProductData.productPrice || ''}
 									onChange={({ target: { value } }) =>
-										setInsertProductData({ ...insertProductData, productPrice: parseInt(value) })
+										setInsertProductData({ ...insertProductData, productPrice: Number(value) || 0 })
 									}
 								/>
+								<span
+									className={`field-hint ${insertProductData.productPrice && !priceIsValid(insertProductData.productPrice) ? 'wrong' : ''}`}
+								>
+									{t('productForm.priceHint')}
+								</span>
 							</Stack>
 							<Stack className="price-year-after-price">
 								<Typography className="title">{t('productForm.selectType')}</Typography>

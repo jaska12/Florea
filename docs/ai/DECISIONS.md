@@ -219,3 +219,11 @@ Important decisions made during the Nestar → Florea migration session, with th
 - **What is not translated:** anything written by members or florists and stored in the database (titles, descriptions, nicknames, articles, comments, notices, chat messages), and the brand name.
 - **A check instead of a promise:** `yarn i18n:check` compares the code with the three languages and fails on a missing key, a missing plural form or a page that does not load a namespace it reads.
 - **Rejected:** one big `common.json` (every page would download every text, and 800 keys in one file are hard to keep in order); translating on the server (it would change the GraphQL answers, which the brief forbids); renaming the address to `/ko` (existing links and the stored choice would break); showing prices in won or roubles (the amounts are stored in dollars and there is no exchange rate in the project).
+
+## 33. Prices are Korean won
+
+- **Decision:** every price is a whole number of Korean won, stored that way and shown as `₩59,000` in all three languages (`formatPrice` in `florea-client/libs/i18n/format.ts`, `Intl.NumberFormat('ko-KR', { currency: 'KRW' })`). This replaces the part of decision 32 that kept the dollar.
+- **Rules:** a product costs at least ₩1,000 and its price is a whole number (`MIN_PRODUCT_PRICE`, checked by the API and the product form); delivery is ₩4,000 for each order, free when that order's items come to ₩50,000 or more. The rule is in `florea-api/apps/florea-api/src/libs/config.ts`; the client repeats the two numbers in its own `libs/config.ts` to show the cart (the two apps cannot share a file). The server's sum is the one that counts.
+- **The gift assistant** reads a budget written in the request ("5만원", "50,000원", "₩50,000", "50 000 вон") on the server and gives the model only products within it.
+- **Moving the data:** `florea-api/seed/migrate-usd-to-krw.cjs` turns stored dollar prices into won (× 1,350, to the nearest 1,000), recomputes the orders and replaces "$5" and "$100" in the delivery notices. It only touches prices under 1,000, so a second run changes nothing; `--apply` needs `--backup`, and `--restore` puts the backup back.
+- **Rejected:** showing won while storing dollars (two prices to keep in step, rounding on every page); a live exchange rate (the florists set their prices in won); keeping cents (won has none).

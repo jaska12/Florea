@@ -64,7 +64,7 @@
     "giftWrap": "Gift wrap",
     "sameDayDelivery": "Same-day delivery",
     "priceRange": "Price range",
-    "min": "$ min",
-    "max": "$ max"
+    "min": "₩ min",
+    "max": "₩ max"
   }
 }

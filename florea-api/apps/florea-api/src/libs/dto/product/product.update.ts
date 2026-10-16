@@ -2,6 +2,7 @@ import { Field, InputType, Int } from '@nestjs/graphql';
 import { IsNotEmpty, IsOptional, Length, IsInt, Min } from 'class-validator';
 import { ProductLocation, ProductOccasion, ProductSize, ProductStatus, ProductType } from '../../enums/product.enum';
 import { ObjectId } from 'bson';
+import { MIN_PRODUCT_PRICE } from '../../config';
 
 @InputType()
 export class ProductUpdate {
@@ -31,7 +32,10 @@ export class ProductUpdate {
     @Field(() => String, { nullable: true })
     productTitle?: string;
 
+    // whole won
     @IsOptional()
+    @IsInt()
+    @Min(MIN_PRODUCT_PRICE)
     @Field(() => Number, { nullable: true })
     productPrice?: number;
 

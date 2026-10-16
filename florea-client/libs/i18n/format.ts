@@ -8,24 +8,22 @@ export type DateValue = Date | string | number | null | undefined;
 /** a date in digits with the whole year: "10/12/2026", "2026. 10. 12.", "12.10.2026" **/
 const NUMERIC_DATE: Intl.DateTimeFormatOptions = { year: 'numeric', month: '2-digit', day: '2-digit' };
 
+// Prices are whole Korean won. They are written the Korean way in every language of the site: ₩59,000.
+const WON = new Intl.NumberFormat('ko-KR', { style: 'currency', currency: 'KRW', maximumFractionDigits: 0 });
+
+/** a price in won: "₩59,000" (the one price formatter of the site) **/
+export const formatPrice = (value?: number | null): string => WON.format(Math.round(value ?? 0));
+
 /** numbers, prices and dates written the way the chosen language writes them **/
 export const formatters = (locale?: string) => {
 	const tag = languageTag(locale);
 	const whole = new Intl.NumberFormat(tag, { maximumFractionDigits: 2 });
-	// prices are in US dollars in every language; only the way the number is written changes
-	const money = new Intl.NumberFormat(tag, {
-		style: 'currency',
-		currency: 'USD',
-		currencyDisplay: 'narrowSymbol',
-		minimumFractionDigits: 0,
-		maximumFractionDigits: 2,
-	});
 	// a missing value becomes an invalid date, which every formatter below shows as an empty text
 	const toDate = (value: DateValue) => (value instanceof Date ? value : new Date(value ?? NaN));
 	const valid = (value: Date) => !Number.isNaN(value.getTime());
 	return {
 		number: (value?: number | null): string => whole.format(value ?? 0),
-		price: (value?: number | null): string => money.format(value ?? 0),
+		price: formatPrice,
 		date: (value: DateValue, style: DateStyle = 'medium'): string => {
 			const date = toDate(value);
 			if (!valid(date)) return '';

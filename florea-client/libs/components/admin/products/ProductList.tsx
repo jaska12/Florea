@@ -1,4 +1,5 @@
 import { useEnumLabel } from '../../../i18n/labels';
+import { useFormat } from '../../../i18n/format';
 import { useTranslation } from 'next-i18next';
 import React from 'react';
 import Link from 'next/link';
@@ -128,6 +129,7 @@ interface ProductPanelListType {
 export const ProductPanelList = (props: ProductPanelListType) => {
 	const { t } = useTranslation('admin');
 	const enumLabel = useEnumLabel();
+	const format = useFormat();
 	const {
 		products,
 		anchorEl,
@@ -180,7 +182,7 @@ export const ProductPanelList = (props: ProductPanelListType) => {
 												</Stack>
 											)}
 										</TableCell>
-										<TableCell align="center">{product.productPrice}</TableCell>
+										<TableCell align="center">{format.price(product.productPrice)}</TableCell>
 										<TableCell align="center">{product.memberData?.memberNick}</TableCell>
 										<TableCell align="center">{enumLabel('productLocation', product.productLocation)}</TableCell>
 										<TableCell align="center">{enumLabel('productType', product.productType)}</TableCell>

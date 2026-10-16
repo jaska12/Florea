@@ -72,7 +72,9 @@
     "dragAndDropImagesHere": "사진을 여기에 끌어다 놓으세요",
     "photosMustBeJpegOr": "JPEG 또는 PNG 형식, 2048×768 이상의 사진을 올려 주세요",
     "browseFiles": "파일 선택",
-    "save": "저장"
+    "save": "저장",
+    "pricePlaceholder": "예: 59000",
+    "priceHint": "원 단위 정수로, 1,000원 이상 입력해 주세요."
   },
   "menu": {
     "doYouWantToLogout": "로그아웃할까요?",

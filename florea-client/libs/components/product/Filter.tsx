@@ -16,7 +16,7 @@ import CancelRoundedIcon from '@mui/icons-material/CancelRounded';
 import RefreshIcon from '@mui/icons-material/Refresh';
 import { useEnumLabel } from '../../i18n/labels';
 import { sweetMixinErrorAlert } from '../../sweetAlert';
-import { Messages } from '../../config';
+import { Messages, priceStep, productPriceCeiling } from '../../config';
 
 interface FilterType {
 	searchFilter: ProductsInquiry;
@@ -561,7 +561,8 @@ const Filter = (props: FilterType) => {
 						type="number"
 						placeholder={t('filter.min')}
 						min={0}
-						value={searchFilter?.search?.pricesRange?.start ?? 0}
+						step={priceStep}
+						value={searchFilter?.search?.pricesRange?.start || ''}
 						onChange={(e: any) => {
 							if (e.target.value >= 0) {
 								productPriceHandler(e.target.value, 'start');
@@ -572,11 +573,17 @@ const Filter = (props: FilterType) => {
 					<input
 						type="number"
 						placeholder={t('filter.max')}
-						value={searchFilter?.search?.pricesRange?.end ?? 0}
+						min={0}
+						step={priceStep}
+						value={
+							(searchFilter?.search?.pricesRange?.end ?? productPriceCeiling) >= productPriceCeiling
+								? ''
+								: searchFilter?.search?.pricesRange?.end
+						}
 						onChange={(e: any) => {
-							if (e.target.value >= 0) {
-								productPriceHandler(e.target.value, 'end');
-							}
+							// an empty field means no upper limit
+							if (e.target.value === '') productPriceHandler(productPriceCeiling, 'end');
+							else if (e.target.value >= 0) productPriceHandler(e.target.value, 'end');
 						}}
 					/>
 				</Stack>

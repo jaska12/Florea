@@ -66,6 +66,7 @@ The site is in English (`en`, the default), Korean (`kr`) and Russian (`ru`). No
 - A page loads its files in `getStaticProps` with `pageTranslations(locale, ['<namespace>', …])` from `libs/i18n/server.ts`. `common` and `ai` are always loaded. A page has to list every namespace that it or anything it imports reads.
 - Enum values (`BOUQUET`, `PENDING`, …) are shown with `enumLabel('<group>', value)` from `useEnumLabel()`; the labels are under `enum.<group>` in `common.json`. The stored values and the GraphQL enums are not changed.
 - Dates, prices and numbers go through `useFormat()` (`libs/i18n/format.ts`), never `toLocaleString()` or a moment format with words.
+- Prices are whole Korean won and are always written with `format.price` (or `formatPrice` outside React): `₩59,000` in every language. Never write a currency sign in a component or a translation.
 - Counts use plural keys (`key_one`, `key_other`; Russian also `key_few` and `key_many`; Korean only `key_other`).
 - Messages the API sends in English are mapped to keys in `libs/i18n/serverText.ts`. A new backend message needs a line there and a text under `serverError` in `common.json`.
 - Content from the database (product titles, descriptions, nicknames, articles, notices) is shown as it was written.

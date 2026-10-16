@@ -18,6 +18,7 @@ import { useFormat } from '../../i18n/format';
 import AddToCartButton from '../common/AddToCartButton';
 import AiNote from './AiNote';
 import { aiErrorMessage } from './aiError';
+import { priceStep } from '../../config';
 
 const PROMPT_MIN = 2;
 const PROMPT_MAX = 300;
@@ -253,12 +254,13 @@ const GiftAssistant = () => {
 									</select>
 								</label>
 								<label className={'ga-budget'}>
-									<span className={'sr-only'}>{t('assistant.budgetInDollars')}</span>
-									<i aria-hidden={true}>$</i>
+									<span className={'sr-only'}>{t('assistant.budgetInWon')}</span>
+									<i aria-hidden={true}>₩</i>
 									<input
 										type={'number'}
 										inputMode={'numeric'}
 										min={1}
+										step={priceStep}
 										placeholder={t('assistant.budget')}
 										value={budget}
 										onChange={(e) => setBudget(e.target.value)}

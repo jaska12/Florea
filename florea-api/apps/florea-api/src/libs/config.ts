@@ -15,9 +15,12 @@ export const availableBoardArticleSorts = ['createdAt', 'updatedAt', 'articleLik
 export const availableCommentSorts = ['createdAt', 'updatedAt'];
 
 /** ORDER CONFIGURATION **/
+// Prices are whole Korean won (KRW). The client shows the same rule from its own libs/config.ts.
 // one fee for each order (each florist delivers separately); free when the items reach the second amount
-export const DELIVERY_FEE = 5;
-export const FREE_DELIVERY_FROM = 100;
+export const DELIVERY_FEE = 4000;
+export const FREE_DELIVERY_FROM = 50000;
+/** the lowest price a product may have, in won **/
+export const MIN_PRODUCT_PRICE = 1000;
 
 /** IMAGE CONFIGURATION **/
 import { v4 as uuidv4 } from 'uuid';
