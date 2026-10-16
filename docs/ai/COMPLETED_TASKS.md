@@ -1123,3 +1123,43 @@ In the order they were done. State as of 2026-10-05, `main` at `5f5405e`.
 - The three builds left about 9 GB of untagged images and build cache on the server disk (50% used, 49 GB free). They were not removed, because the cache is shared with the other projects.
 - Access: the owner said to use the server login given earlier in the conversation. No key-based login is set up yet.
 - Not verified on the live site: the pages behind a login (My page, checkout, orders, admin) in a browser. They were checked on the dev machine with the same code; on the server only their addresses were requested (200).
+
+## 50. A full retest after the translation, and the defects it found
+
+- Asked by the owner after task 49: "test again, so that no errors are left". Run on the dev machine against the dev API, then on the live site after the deploy.
+
+**What was run**
+
+| Test | Result |
+|---|---|
+| `yarn i18n:check`, `yarn tsc --noEmit`, `npx tsc` of the API | pass |
+| API flows: orders, notices and FAQ, article and profile notifications | 72 of 72 |
+| Backend AI unit tests | 18 of 18 |
+| Browser, in English: ordering (cart, checkout, order, cancel, every status, the bell), customer care and its admin screen, the bell, the live chat, the phone layout | 109 of 109 |
+| Browser, the whole way in Korean and in Russian (new test, `flow-lang`): wrong and right password, add to cart, cart, checkout errors, order, thank-you page, cancel, status tabs, the florist's buttons, the buyer's bell | 18 of 18 in each language |
+| The AI with the real model, in Korean and Russian | "Write it for me" gave three card messages in the language; the gift assistant answered in the language with four or five products and reasons in the language |
+| Every page in three languages (37 page states, guest, customer, florist, admin), looking for uncaught errors, console errors, React warnings, failed requests and GraphQL errors | 123 page loads: no uncaught error from the site, no failed request, no GraphQL error, no missing key, no hydration warning. Left: the two Apollo deprecation warnings and the product form warning below (27 loads had none of them) |
+
+- Some of the older browser tests failed at first because the tests had aged, not the site: they looked for English texts that were reworded in task 49 ("LOGIN" is now "LOG IN", "data not found!" is "Nothing found.", "For Florists" is "For florists"), and for a product on the first page of the list, where the sample shops now put other products. The tests were brought up to date and pass.
+
+**Defects found and fixed** (commit `a9f17df`)
+
+- **A failed login said only "We could not log you in."** `libs/auth/index.ts` waited for messages the API no longer sends ("Definer: login and password do not match"). It now passes on what the API answered, and the form shows it in the chosen language: wrong password, no member with this nickname, blocked, nickname or phone already used.
+- **The typed password was printed to the browser console**, twice: by the login form (`pages/account/join.tsx` logged the form state on every key press and on submit) and by the Apollo link, which logged every request with its variables (`apollo/client.ts`). Both logs are removed.
+- **Short dates had a two-digit year** ("10/12/26", "26. 10. 12."). `libs/i18n/format.ts` writes the whole year: "10/12/2026", "2026. 10. 12.", "12.10.2026"; date with time the same way.
+- **The admin header asked the API for the placeholder photo** (`localhost:3007//img/profile/defaultUser.svg`, refused), so an admin without a photo saw an empty circle. `LayoutAdmin.tsx` treats `/img/…` as a file of the site, as the navbar already did.
+- **Article page:** MUI warned on every load that the board tabs had no value before the address was read; it now gets `false` until then.
+- **Admin inquiry mock-up:** its select and pagination had values the components reject (console warnings); set to valid ones. The page is still a mock-up.
+
+**Known and left**
+
+- The exception with `code=403` that appears on every page in the test browser comes from a browser extension of the test profile (Monica); it appears on example.com too. Not the site.
+- Apollo warns that the `onCompleted` and `onError` options of `useQuery` are deprecated (Apollo 3.14). They still work; changing them touches every list page.
+- The product form's selects mix `value`, `defaultValue` and `selected` (React warns); inherited, and not visible to a member.
+
+**Deployed on 2026-10-14 (sixth deploy)**
+
+- Client only, with the steps of `deploy/README.md`; the API and the batch container were not restarted; the other projects' containers kept running. Build on the server: 77 pages.
+- On the live site, in English, Korean and Russian: a wrong password for `rosegarden` is answered with the reason in the language, nothing typed is printed to the console, no session is opened, notice dates have the whole year, `<html lang>` is `en`, `ko`, `ru`: 15 of 15.
+- Afterwards the old folder, the build log and the fallback image tag were removed from the server, and the password files of the session were deleted from the dev machine. Disk: 52% used.
+- Test data: the browser tests place and move orders on the dev database as they always did; the order placed for the order pages in task 49 (`aitester`) was cancelled. On the live site: one failed login attempt for `rosegarden` per language.
