@@ -34,7 +34,6 @@ export const socketVar = makeVar<any>(null);
 /** filled by libs/socket.ts **/
 export const chatMessagesVar = makeVar<ChatMessage[]>([]);
 export const chatOnlineVar = makeVar<number>(0);
-export const chatOpenVar = makeVar<boolean>(false);
 // goes up by one each time the server says the member has a new or removed notification
 export const notificationPingVar = makeVar<number>(0);
 
@@ -42,5 +41,9 @@ export const notificationPingVar = makeVar<number>(0);
 export const cartVar = makeVar<CartItem[]>([]);
 
 /** the gift assistant: kept here so the conversation is still there after a page change **/
-export const giftAssistantOpenVar = makeVar<boolean>(false);
 export const giftAssistantTurnsVar = makeVar<GiftTurn[]>([]);
+
+/** the help panel (libs/components/help/HelpHub.tsx): open or not, and which tab **/
+export type HelpHubTab = 'gift' | 'chat';
+export const helpHubOpenVar = makeVar<boolean>(false);
+export const helpHubTabVar = makeVar<HelpHubTab>('gift');

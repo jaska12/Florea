@@ -1209,3 +1209,48 @@ In the order they were done. State as of 2026-10-05, `main` at `5f5405e`.
 - Not checked on the live site: the pages behind a login (checkout, orders, the product form, the admin panel) and the gift assistant with the real model (all checked on the dev machine with the same code).
 - Afterwards: the old folder, the build log and the `:prev` tags were removed; the backup stays in `/root/backups`. The password files of the session were deleted from the dev machine.
 - On the server the containers of the `oasys-cctv` project no longer exist (they were there at the sixth deploy). They were removed by their owner in between; this deploy touched only the Florea containers.
+
+## 52. Help panel: one button, two tabs, and the gift assistant reworked
+
+- Before: "Find a gift" and the live chat were two floating buttons that overlapped (the gift button covered the chat's send button); the assistant still had an occasion select and a budget field; each recommendation was a full product card that filled the panel, with the reason in a box under it and views and likes counts; answers had no bubble; the send buttons looked disabled when they were not; the header had a sparkle icon.
+- No change to the backend, the GraphQL documents, the AI logic, the chat socket, the cart or the orders.
+
+**Phase 1: one button, one panel**
+- `libs/components/help/HelpHub.tsx` (new), in the three layouts in place of `<Chat />` and `<GiftAssistant />`:
+  - one round 56px button at the bottom right with the Florea flower mark; a badge with the number of chat messages that arrived while the chat was not on screen; open, it turns into a close button; gentle lift on hover; no motion with `prefers-reduced-motion`
+  - one panel, 400px wide, 16px from the screen edges, above the button; 24px corners, soft shadow, blush-to-white background; header with the flower mark, "Florea help" (serif) and a close button
+  - two tabs, "Find a gift" (first) and "Live chat"; the active one underlined in #B4235F; the arrow keys move between them; Esc closes the panel
+  - both tabs stay mounted while hidden, so switching tabs or closing and opening again keeps both conversations for the session (the gift conversation was already kept in `giftAssistantTurnsVar`, the chat in `chatMessagesVar`)
+  - a guest sees the panel too; each tab asks to log in, as before (the chat and the assistant are for members)
+  - on a phone (640px and below) the panel is a full-screen sheet with rounded top corners, the tabs on top and the field fixed at the bottom; the round button is hidden while the sheet is open, and the page does not scroll behind it
+  - the footer has room at the bottom, so the end of every page scrolls clear of the button
+- `apollo/store.ts`: `helpHubOpenVar` and `helpHubTabVar` replace `giftAssistantOpenVar` and `chatOpenVar`.
+- `libs/components/Chat.tsx` is now the body of the chat tab: the online count, the note "This chat is public. Do not share your address or phone number.", the messages as bubbles, and a field where Enter sends and Shift+Enter starts a new line. Sending is unchanged (`sendChatMessage`).
+
+**Phase 2: inside the tabs**
+- `libs/components/ai/GiftAssistant.tsx`: the occasion select and the budget field are gone; the request goes out as the member wrote it (the API reads occasion and budget from the text, task 51). A welcome message in an assistant bubble, the three example requests as chips, the placeholder "e.g. Birthday flowers for my mom, under 50,000 won". A typing indicator while the answer is on its way.
+- `libs/components/ai/GiftPickCard.tsx` (new): a compact row per recommendation: 72px photo, title as the seller wrote it, occasion and size, the reason in one line, the ₩ price, and the round cart button. The row opens the product; the button only adds it. No views or likes.
+- Bubbles: the assistant and other members in white with a thin blush border (the assistant with a small flower avatar), the member's own in wine #7A1F45 with white text, 18px corners.
+- Send buttons in both tabs: #B4235F with a white icon when there is something to send, muted when the field is empty or an answer is on its way.
+- `scss/theme/help-hub.scss` (new) has every rule of the panel; the old rules of the floating gift button, its drawer and the chat window were removed from `scss/theme/ai.scss`, `scss/pc/main.scss`, `scss/mobile/layout.scss` and `scss/mobile/ai.scss`.
+- Texts: `common:hub.*` and `common:chat.publicNote`, `ai:assistant.welcome` and `ai:assistant.placeholder` in three languages; thirteen keys that nothing read any more were removed.
+
+**Results**
+
+| Check | Result |
+|---|---|
+| `yarn i18n:check`, `yarn tsc --noEmit`, `yarn build` | pass (77 pages) |
+| Browser check on `yarn dev`, 1440px and 375px (26 checks) | 26 of 26 |
+| One button with the flower mark; the old two are gone | pass at both widths |
+| The button covers nothing: home, products, cart, checkout, customer care, My orders | pass at 1440px at the top and the bottom of each page; at 375px at the end of each page (while scrolling, content passes under it, as under any floating button) |
+| Opens on "Find a gift" with the welcome message, no select or budget field; desktop 400px, 16px from the edge; phone full-screen sheet | pass |
+| The assistant with the real model in English, Korean and Uzbek | answered in each language with 2–3 compact cards (photo 72px, card 100px high, reason and ₩ price inside, no counts, titles not transformed) |
+| A card's cart button adds the product and the panel stays open | pass |
+| Live chat: the public note; Enter sends, Shift+Enter does not | pass |
+| Send buttons: muted when empty, #B4235F with text, in both tabs | pass |
+| Esc closes; after opening again both conversations are there | pass |
+| The arrow keys move between the tabs | pass (at first the panel moved the focus to the text field when the tab changed, which broke this; it now does that only when the panel opens) |
+| A chat message from another member while the panel is closed shows a badge, which goes when the chat is opened | pass |
+| Errors | none from the site; the test browser's extension reports "Receiving end does not exist", as on any page |
+
+- Not checked: a real iPhone (the sheet uses the safe-area insets but was seen only in an emulated 375px screen); the live site (not deployed, not pushed).

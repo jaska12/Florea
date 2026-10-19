@@ -5,10 +5,7 @@ import Top from '../Top';
 import Footer from '../Footer';
 import { Stack } from '@mui/material';
 import { getJwtToken, updateUserInfo } from '../../auth';
-import Chat from '../Chat';
-import GiftAssistant from '../ai/GiftAssistant';
-import { useReactiveVar } from '@apollo/client';
-import { userVar } from '../../../apollo/store';
+import HelpHub from '../help/HelpHub';
 import { useTranslation } from 'next-i18next';
 import 'swiper/css';
 import 'swiper/css/pagination';
@@ -36,7 +33,6 @@ const withLayoutBasic = (Component: any) => {
 		const router = useRouter();
 		const { t, i18n } = useTranslation('common');
 		const [authHeader, setAuthHeader] = useState<boolean>(false);
-		const user = useReactiveVar(userVar);
 
 		// the header of each page: title and one line under it, from common.json (page.header)
 		const headerKey = PAGE_HEADERS[router.pathname];
@@ -91,8 +87,7 @@ const withLayoutBasic = (Component: any) => {
 						<Component {...props} />
 					</Stack>
 
-					{user?._id && <Chat />}
-					<GiftAssistant />
+					<HelpHub />
 
 					<Stack id={'footer'}>
 						<Footer />

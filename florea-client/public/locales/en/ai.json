@@ -12,29 +12,20 @@
     "chooseOneAndEditIt": "Choose one and edit it as you like."
   },
   "assistant": {
-    "findAGift": "Find a gift",
-    "giftAssistant": "Gift assistant",
-    "tellMeWhoItIs": "Tell me who it is for, and I will look through the shop.",
-    "close": "Close",
     "logInToUseThe": "Log in to use the gift assistant. It looks through the products of Florea florists and suggests a few that fit.",
     "logInOrSignUp": "Log in or sign up",
-    "helloWhoIsTheGift": "Hello! Who is the gift for, and what is the occasion? A budget helps too.",
     "lookingThroughTheShop": "Looking through the shop…",
-    "occasion": "Occasion",
-    "anyOccasion": "Any occasion",
-    "budget": "Budget",
     "describeTheGiftYouAre": "Describe the gift you are looking for",
-    "describeWhoTheGiftIs": "Describe who the gift is for…",
     "askTheAssistant": "Ask the assistant",
     "example": {
       "mother": "A birthday gift for my mother who loves tulips",
       "colleague": "Something small to say thank you to a colleague",
       "newHome": "A plant for a friend who just moved house"
     },
-    "upTo": "up to {{amount}}",
     "ideas_one": "Here is one idea:",
     "ideas_other": "Here are {{count}} ideas:",
-    "budgetInWon": "Budget in won"
+    "welcome": "Hi! Tell me who the gift is for, the occasion and your budget, and I will find something from our florists.",
+    "placeholder": "e.g. Birthday flowers for my mom, under 50,000 won"
   },
   "shared": {
     "note": "AI suggestions may not be perfect.",

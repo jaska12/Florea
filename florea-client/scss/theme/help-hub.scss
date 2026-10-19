@@ -1,0 +1,667 @@
+/** THE HELP PANEL **/
+// One round button at the bottom right and one panel with two tabs: the gift assistant and the live chat
+// (libs/components/help/HelpHub.tsx, libs/components/ai/GiftAssistant.tsx, libs/components/Chat.tsx).
+// Desktop and phone rules are both here; on a phone the panel is a full-screen sheet.
+@import '/scss/variables.scss';
+
+$hub-ease: cubic-bezier(0.22, 1, 0.36, 1);
+$hub-edge: 16px; // the distance from the screen edges
+$hub-button: 56px;
+$hub-radius: 24px;
+$hub-bubble-radius: 18px;
+
+@mixin hub-focus {
+	outline: 2px solid rgba($florea-rose, 0.55);
+	outline-offset: 2px;
+}
+
+/** the round button **/
+.help-hub-button {
+	position: fixed;
+	right: $hub-edge;
+	bottom: calc(#{$hub-edge} + env(safe-area-inset-bottom));
+	z-index: 1250;
+	width: $hub-button;
+	height: $hub-button;
+	padding: 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	border: 1px solid $florea-line;
+	border-radius: 50%;
+	background: #ffffff;
+	box-shadow: 0 10px 26px rgba(122, 31, 69, 0.18);
+	color: $florea-wine;
+	cursor: pointer;
+	transition: transform 0.2s $hub-ease, box-shadow 0.2s $hub-ease, background-color 0.2s ease;
+	img {
+		width: 30px;
+		height: 30px;
+	}
+	svg {
+		font-size: 26px;
+	}
+	&:hover {
+		transform: translateY(-2px);
+		box-shadow: 0 14px 30px rgba(122, 31, 69, 0.24);
+	}
+	&:focus-visible {
+		@include hub-focus;
+	}
+	&.open {
+		background: $florea-wine;
+		border-color: $florea-wine;
+		color: #ffffff;
+	}
+	.help-hub-badge {
+		position: absolute;
+		top: -2px;
+		right: -2px;
+		min-width: 20px;
+		height: 20px;
+		padding: 0 5px;
+		border: 2px solid #ffffff;
+		border-radius: 999px;
+		background: $florea-rose;
+		color: #ffffff;
+		font-family: $font;
+		font-size: 11px;
+		font-weight: 700;
+		line-height: 16px;
+		text-align: center;
+	}
+}
+
+/** the panel **/
+.help-hub {
+	position: fixed;
+	right: $hub-edge;
+	bottom: calc(#{$hub-edge * 2 + $hub-button} + env(safe-area-inset-bottom));
+	z-index: 1250;
+	width: 400px;
+	max-width: calc(100vw - #{$hub-edge * 2});
+	height: min(660px, calc(100vh - #{$hub-edge * 3 + $hub-button}));
+	display: flex;
+	flex-direction: column;
+	overflow: hidden;
+	border: 1px solid $florea-line;
+	border-radius: $hub-radius;
+	background: linear-gradient(180deg, $florea-mist 0%, #ffffff 34%);
+	box-shadow: 0 24px 60px rgba(43, 20, 32, 0.18);
+	font-family: $font;
+	color: $florea-ink;
+	// closed: out of sight and out of the tab order, but still mounted so the conversations stay
+	visibility: hidden;
+	opacity: 0;
+	transform: translateY(12px) scale(0.98);
+	transform-origin: bottom right;
+	transition: opacity 0.22s ease, transform 0.26s $hub-ease, visibility 0s linear 0.26s;
+	&.open {
+		visibility: visible;
+		opacity: 1;
+		transform: none;
+		transition: opacity 0.22s ease, transform 0.26s $hub-ease, visibility 0s;
+	}
+	button,
+	textarea {
+		font-family: $font;
+	}
+	button:focus-visible,
+	a:focus-visible,
+	textarea:focus-visible {
+		@include hub-focus;
+	}
+	.sr-only {
+		position: absolute;
+		width: 1px;
+		height: 1px;
+		margin: -1px;
+		overflow: hidden;
+		clip: rect(0, 0, 0, 0);
+		white-space: nowrap;
+	}
+
+	/** header **/
+	.hub-head {
+		flex-shrink: 0;
+		display: flex;
+		align-items: center;
+		gap: 10px;
+		padding: 16px 12px 6px 18px;
+		.hub-mark {
+			width: 30px;
+			height: 30px;
+		}
+		strong {
+			flex: 1;
+			font-family: $font-display;
+			font-size: 20px;
+			font-weight: 600;
+			line-height: 26px;
+			color: $florea-wine;
+		}
+		.hub-close {
+			width: 36px;
+			height: 36px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			border: 0;
+			border-radius: 50%;
+			background: transparent;
+			color: $florea-muted;
+			cursor: pointer;
+			&:hover {
+				background: rgba($florea-rose, 0.08);
+				color: $florea-wine;
+			}
+		}
+	}
+
+	/** tabs **/
+	.hub-tabs {
+		flex-shrink: 0;
+		display: flex;
+		gap: 4px;
+		padding: 0 14px;
+		border-bottom: 1px solid $florea-hairline;
+		button {
+			position: relative;
+			flex: 1;
+			padding: 12px 8px 11px;
+			border: 0;
+			// the focus ring follows the top corners
+			border-radius: 10px 10px 0 0;
+			background: transparent;
+			color: $florea-muted;
+			font-size: 14.5px;
+			font-weight: 600;
+			line-height: 20px;
+			cursor: pointer;
+			&::after {
+				content: '';
+				position: absolute;
+				left: 12px;
+				right: 12px;
+				bottom: -1px;
+				height: 3px;
+				border-radius: 3px 3px 0 0;
+				background: transparent;
+				transition: background-color 0.2s ease;
+			}
+			&:hover {
+				color: $florea-wine;
+			}
+			&.on {
+				color: #b4235f;
+				&::after {
+					background: #b4235f;
+				}
+			}
+			.hub-tab-dot {
+				display: inline-block;
+				width: 7px;
+				height: 7px;
+				margin-left: 6px;
+				border-radius: 50%;
+				background: $florea-rose;
+				vertical-align: 2px;
+			}
+		}
+	}
+
+	/** a tab: messages on top, the field at the bottom **/
+	.hub-body {
+		flex: 1;
+		min-height: 0;
+		display: flex;
+		flex-direction: column;
+		&[hidden] {
+			display: none;
+		}
+	}
+	.hub-thread {
+		flex: 1;
+		min-height: 0;
+		overflow-y: auto;
+		overscroll-behavior: contain;
+		padding: 16px 16px 8px;
+		display: flex;
+		flex-direction: column;
+		gap: 10px;
+	}
+
+	/** messages **/
+	.hub-row {
+		display: flex;
+		align-items: flex-end;
+		gap: 8px;
+		max-width: 100%;
+		animation: hub-in 0.28s $hub-ease both;
+		&.right {
+			justify-content: flex-end;
+		}
+	}
+	.hub-avatar {
+		flex-shrink: 0;
+		width: 28px;
+		height: 28px;
+		padding: 4px;
+		border: 1px solid $florea-hairline;
+		border-radius: 50%;
+		background: #ffffff;
+	}
+	.MuiAvatar-root.hub-avatar {
+		padding: 0;
+	}
+	.hub-message {
+		display: flex;
+		flex-direction: column;
+		gap: 3px;
+		min-width: 0;
+		max-width: 82%;
+		.hub-name {
+			padding-left: 4px;
+			font-size: 12px;
+			color: $florea-muted;
+		}
+		.hub-bubble {
+			max-width: 100%;
+		}
+	}
+	.hub-bubble {
+		max-width: 82%;
+		padding: 10px 14px;
+		border-radius: $hub-bubble-radius;
+		font-size: 14.5px;
+		line-height: 21px;
+		white-space: pre-wrap;
+		overflow-wrap: anywhere;
+		p {
+			margin: 0;
+		}
+		&.assistant,
+		&.other {
+			border: 1px solid $florea-petal;
+			border-bottom-left-radius: 6px;
+			background: #ffffff;
+			color: $florea-ink;
+		}
+		&.mine {
+			border-bottom-right-radius: 6px;
+			background: $florea-wine;
+			color: #ffffff;
+		}
+	}
+	.hub-row.error .hub-bubble {
+		border-color: rgba(198, 40, 40, 0.35);
+		color: #8e1c1c;
+	}
+
+	/** the assistant is writing **/
+	.hub-typing {
+		display: inline-flex;
+		gap: 4px;
+		padding: 4px 2px;
+		i {
+			width: 7px;
+			height: 7px;
+			border-radius: 50%;
+			background: $florea-blush;
+			animation: hub-dot 1.2s infinite ease-in-out;
+			&:nth-child(2) {
+				animation-delay: 0.15s;
+			}
+			&:nth-child(3) {
+				animation-delay: 0.3s;
+			}
+		}
+	}
+
+	/** requests to start from **/
+	.gift-examples {
+		margin: 0 0 0 36px;
+		padding: 0;
+		list-style: none;
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+		gap: 6px;
+		button {
+			padding: 7px 12px;
+			border: 1px solid $florea-line;
+			border-radius: 999px;
+			background: #ffffff;
+			color: $florea-wine;
+			font-size: 13px;
+			line-height: 18px;
+			text-align: left;
+			cursor: pointer;
+			&:hover {
+				border-color: $florea-blush;
+				background: $florea-mist;
+			}
+		}
+	}
+
+	/** recommendations: compact rows **/
+	.gift-picks {
+		margin: 0 0 0 36px;
+		padding: 0;
+		list-style: none;
+		display: flex;
+		flex-direction: column;
+		gap: 8px;
+		animation: hub-in 0.32s $hub-ease both;
+	}
+	.gift-pick {
+		position: relative;
+		border: 1px solid $florea-hairline;
+		border-radius: 16px;
+		background: #ffffff;
+		transition: border-color 0.2s ease, box-shadow 0.2s ease;
+		&:hover {
+			border-color: $florea-petal;
+			box-shadow: 0 8px 20px rgba(122, 31, 69, 0.08);
+		}
+		.gift-pick-link {
+			display: flex;
+			gap: 12px;
+			padding: 10px 52px 10px 10px;
+			color: inherit;
+			text-decoration: none;
+			white-space: normal;
+			border-radius: 16px;
+		}
+		.gift-pick-photo {
+			flex-shrink: 0;
+			width: 72px;
+			height: 72px;
+			border-radius: 12px;
+			background: $florea-mist center / cover no-repeat;
+		}
+		.gift-pick-body {
+			min-width: 0;
+			display: flex;
+			flex-direction: column;
+			gap: 2px;
+		}
+		.gift-pick-title {
+			font-size: 14px;
+			font-weight: 600;
+			line-height: 19px;
+			color: $florea-ink;
+			// as the seller wrote it
+			text-transform: none;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+		}
+		.gift-pick-tags {
+			font-size: 12px;
+			line-height: 16px;
+			color: $florea-muted;
+		}
+		.gift-pick-reason {
+			font-size: 12.5px;
+			line-height: 17px;
+			color: $florea-ink;
+			display: -webkit-box;
+			-webkit-line-clamp: 1;
+			-webkit-box-orient: vertical;
+			overflow: hidden;
+		}
+		.gift-pick-price {
+			margin-top: 2px;
+			font-size: 14px;
+			font-weight: 700;
+			line-height: 18px;
+			color: $florea-wine;
+		}
+		.gift-pick-cart {
+			position: absolute;
+			right: 10px;
+			top: 50%;
+			transform: translateY(-50%);
+			.add-to-cart.icon {
+				position: static;
+				width: 36px;
+				height: 36px;
+			}
+			.card-soldout {
+				position: static;
+				font-size: 11px;
+			}
+		}
+	}
+
+	/** the field and the send button **/
+	.hub-form {
+		flex-shrink: 0;
+		padding: 10px 14px 12px;
+		border-top: 1px solid $florea-hairline-soft;
+		background: #ffffff;
+		.ai-note {
+			margin: 8px 4px 0;
+		}
+	}
+	.hub-input {
+		display: flex;
+		align-items: flex-end;
+		gap: 8px;
+		padding: 6px 6px 6px 16px;
+		border: 1px solid $florea-hairline;
+		border-radius: 999px;
+		background: #ffffff;
+		transition: border-color 0.2s ease, box-shadow 0.2s ease;
+		&:focus-within {
+			border-color: $florea-blush;
+			box-shadow: 0 0 0 3px rgba($florea-rose, 0.08);
+		}
+		textarea {
+			flex: 1;
+			min-width: 0;
+			max-height: 96px;
+			padding: 9px 0;
+			border: 0;
+			outline: none;
+			resize: none;
+			background: transparent;
+			color: $florea-ink;
+			font-size: 14.5px;
+			line-height: 20px;
+			field-sizing: content;
+			&::placeholder {
+				color: rgba($florea-muted, 0.8);
+			}
+			&:focus-visible {
+				outline: none;
+			}
+		}
+	}
+	.hub-send {
+		flex-shrink: 0;
+		width: 38px;
+		height: 38px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		border: 0;
+		border-radius: 50%;
+		// muted while there is nothing to send, or while waiting
+		background: $florea-hairline;
+		color: rgba($florea-muted, 0.75);
+		cursor: default;
+		transition: background-color 0.2s ease, transform 0.15s ease;
+		svg {
+			font-size: 20px;
+		}
+		&.ready {
+			background: #b4235f;
+			color: #ffffff;
+			cursor: pointer;
+			&:hover {
+				background: $florea-wine;
+			}
+			&:active {
+				transform: scale(0.94);
+			}
+		}
+	}
+
+	/** the live chat **/
+	.chat-status {
+		flex-shrink: 0;
+		display: flex;
+		flex-direction: column;
+		gap: 4px;
+		padding: 10px 16px 0;
+		.chat-online {
+			font-size: 12px;
+			color: #2e7d32;
+			&::before {
+				content: '';
+				display: inline-block;
+				width: 7px;
+				height: 7px;
+				margin-right: 6px;
+				border-radius: 50%;
+				background: #43a047;
+				vertical-align: 1px;
+			}
+			&.offline {
+				color: $florea-muted;
+				&::before {
+					background: $florea-muted;
+				}
+			}
+		}
+		.chat-public {
+			padding: 8px 12px;
+			border-radius: 12px;
+			background: $florea-mist;
+			color: $florea-wine;
+			font-size: 12.5px;
+			line-height: 17px;
+		}
+	}
+	.chat-note {
+		margin: 0 auto 4px;
+		font-size: 12px;
+		color: $florea-muted;
+		text-align: center;
+	}
+
+	/** a guest **/
+	.hub-login {
+		flex: 1;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		gap: 16px;
+		padding: 24px 28px;
+		text-align: center;
+		p {
+			margin: 0;
+			font-size: 14.5px;
+			line-height: 22px;
+			color: $florea-ink;
+		}
+		.hub-login-btn {
+			padding: 11px 22px;
+			border-radius: 999px;
+			background: #b4235f;
+			color: #ffffff;
+			font-size: 14px;
+			font-weight: 600;
+			text-decoration: none;
+			&:hover {
+				background: $florea-wine;
+			}
+		}
+	}
+}
+
+// the last line of the page can scroll clear of the round button
+.footer-container {
+	padding-bottom: calc(#{$hub-button + $hub-edge * 2} + env(safe-area-inset-bottom)) !important;
+}
+
+@keyframes hub-in {
+	from {
+		opacity: 0;
+		transform: translateY(6px);
+	}
+	to {
+		opacity: 1;
+		transform: none;
+	}
+}
+
+@keyframes hub-dot {
+	0%,
+	80%,
+	100% {
+		opacity: 0.35;
+		transform: translateY(0);
+	}
+	40% {
+		opacity: 1;
+		transform: translateY(-3px);
+	}
+}
+
+/** a phone: the panel is a full-screen sheet with rounded top corners **/
+@include phone {
+	.help-hub {
+		top: calc(10px + env(safe-area-inset-top));
+		right: 0;
+		bottom: 0;
+		left: 0;
+		width: 100%;
+		max-width: none;
+		height: auto;
+		border-bottom: 0;
+		border-radius: $hub-radius $hub-radius 0 0;
+		transform: translateY(24px);
+		transform-origin: bottom center;
+		.hub-form {
+			padding-bottom: calc(12px + env(safe-area-inset-bottom));
+		}
+		.gift-picks,
+		.gift-examples {
+			margin-left: 0;
+		}
+		// 16px keeps iOS from zooming in when the field is focused
+		.hub-input textarea {
+			font-size: 16px;
+		}
+	}
+	// the sheet has its own close button; the round one would sit on the field
+	.help-hub-button.open {
+		display: none;
+	}
+	html.help-hub-open,
+	html.help-hub-open body {
+		overflow: hidden;
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.help-hub-button,
+	.help-hub,
+	.help-hub .hub-row,
+	.help-hub .gift-picks,
+	.help-hub .hub-send {
+		transition: none !important;
+		animation: none !important;
+	}
+	.help-hub-button:hover {
+		transform: none;
+	}
+	.help-hub .hub-typing i {
+		animation: none;
+		opacity: 0.7;
+	}
+}

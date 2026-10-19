@@ -72,14 +72,13 @@
     }
   },
   "chat": {
-    "title": "Live chat",
-    "close": "Close chat",
     "online": "{{count}} online",
     "connecting": "Connecting…",
     "welcome": "Welcome to the live chat!",
     "typeMessage": "Type a message",
     "send": "Send",
-    "guest": "Guest"
+    "guest": "Guest",
+    "publicNote": "This chat is public. Do not share your address or phone number."
   },
   "cartIcon": {
     "cart": "Cart",
@@ -305,5 +304,18 @@
         "desc": "Their products, followers and articles."
       }
     }
+  },
+  "hub": {
+    "title": "Florea help",
+    "open": "Open help: gift finder and live chat",
+    "close": "Close help",
+    "tab": {
+      "gift": "Find a gift",
+      "chat": "Live chat"
+    },
+    "logInToChat": "Log in to talk with other Florea members in the live chat.",
+    "logInOrSignUp": "Log in or sign up",
+    "openWithUnread_one": "Open help: {{count}} new chat message",
+    "openWithUnread_other": "Open help: {{count}} new chat messages"
   }
 }

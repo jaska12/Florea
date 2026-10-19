@@ -26,14 +26,13 @@
     "size": "사이즈"
   },
   "chat": {
-    "title": "실시간 채팅",
-    "close": "채팅 닫기",
     "online": "{{count}}명 접속 중",
     "connecting": "연결 중…",
     "welcome": "실시간 채팅에 오신 것을 환영합니다!",
     "typeMessage": "메시지를 입력하세요",
     "send": "보내기",
-    "guest": "게스트"
+    "guest": "게스트",
+    "publicNote": "공개 채팅입니다. 주소나 전화번호는 공유하지 마세요."
   },
   "cartIcon": {
     "cart": "장바구니",
@@ -304,5 +303,17 @@
     "giftWrap": "선물 포장",
     "removeFromFavorites": "찜 해제",
     "addToFavorites": "찜하기"
+  },
+  "hub": {
+    "title": "Florea 도우미",
+    "open": "도우미 열기: 선물 찾기와 실시간 채팅",
+    "close": "도우미 닫기",
+    "tab": {
+      "gift": "선물 찾기",
+      "chat": "실시간 채팅"
+    },
+    "logInToChat": "로그인하면 Florea 회원들과 실시간으로 채팅할 수 있어요.",
+    "logInOrSignUp": "로그인 또는 회원가입",
+    "openWithUnread_other": "도우미 열기: 새 채팅 메시지 {{count}}개"
   }
 }

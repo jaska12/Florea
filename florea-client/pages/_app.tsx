@@ -18,6 +18,7 @@ import '../scss/theme/notifications.scss';
 import '../scss/home/home.scss';
 import '../scss/theme/order.scss';
 import '../scss/theme/ai.scss';
+import '../scss/theme/help-hub.scss';
 import '../scss/mobile/main.scss';
 
 /** the texts MUI components bring with them (pagination, rows per page), per site language **/

@@ -1,68 +1,53 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Avatar, Box, Stack } from '@mui/material';
-import SendIcon from '@mui/icons-material/Send';
-import CloseFullscreenIcon from '@mui/icons-material/CloseFullscreen';
-import ChatBubbleOutlineRoundedIcon from '@mui/icons-material/ChatBubbleOutlineRounded';
-import { useRouter } from 'next/router';
+import { Avatar } from '@mui/material';
+import SendRoundedIcon from '@mui/icons-material/SendRounded';
 import { useTranslation } from 'next-i18next';
 import { useReactiveVar } from '@apollo/client';
-import ScrollableFeed from 'react-scrollable-feed';
-import { chatMessagesVar, chatOnlineVar, chatOpenVar, socketVar, userVar } from '../../apollo/store';
+import { chatMessagesVar, chatOnlineVar, socketVar, userVar } from '../../apollo/store';
 import { sendChatMessage } from '../socket';
 import { ChatMessage } from '../types/chat/chat';
 import { REACT_APP_API_URL } from '../config';
 
 const MAX_LENGTH = 300;
 
-const Chat = () => {
-	const chatContentRef = useRef<HTMLDivElement>(null);
+interface LiveChatProps {
+	/** the tab is on screen: the newest message is brought into view **/
+	active: boolean;
+}
+
+// The live chat, the second tab of the help panel (libs/components/help/HelpHub.tsx): one public room for the
+// members who are logged in. The messages come and go through libs/socket.ts; they are not stored.
+const LiveChat = ({ active }: LiveChatProps) => {
 	const { t } = useTranslation('common');
 	const user = useReactiveVar(userVar);
 	const socket = useReactiveVar(socketVar);
 	const messagesList: ChatMessage[] = useReactiveVar(chatMessagesVar);
 	const onlineUsers: number = useReactiveVar(chatOnlineVar);
-	const open: boolean = useReactiveVar(chatOpenVar);
 	const [message, setMessage] = useState<string>('');
-	const [openButton, setOpenButton] = useState(false);
-	// how many messages had arrived when the window was last open: anything after that is unread
-	const [seenCount, setSeenCount] = useState<number>(messagesList.length);
-	const router = useRouter();
+	const threadRef = useRef<HTMLDivElement>(null);
 	const connected = Boolean(socket) && onlineUsers > 0;
-	const unread = !open && messagesList.length > seenCount;
+	const ready = connected && Boolean(message.trim());
 
 	/** LIFECYCLES **/
 	useEffect(() => {
-		const timeoutId = setTimeout(() => {
-			setOpenButton(true);
-		}, 100);
-		return () => clearTimeout(timeoutId);
-	}, []);
-
-	useEffect(() => {
-		setOpenButton(false);
-	}, [router.pathname]);
-
-	useEffect(() => {
-		if (open) setSeenCount(messagesList.length);
-	}, [open, messagesList.length]);
+		const thread = threadRef.current;
+		if (active && thread) thread.scrollTo({ top: thread.scrollHeight });
+	}, [active, messagesList.length]);
 
 	/** HANDLERS **/
-	const handleOpenChat = () => {
-		chatOpenVar(!open);
-	};
-
-	const getInputMessageHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-		setMessage(e.target.value);
-	};
-
-	const getKeyHandler = (e: React.KeyboardEvent<HTMLInputElement>) => {
-		if (e.key == 'Enter') onClickHandler();
-	};
-
-	const onClickHandler = () => {
+	const sendHandler = (e?: React.FormEvent) => {
+		e?.preventDefault();
 		const text = message.trim();
-		if (!text) return;
+		if (!text || !connected) return;
 		if (sendChatMessage(text)) setMessage('');
+	};
+
+	const keyHandler = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+		// Enter sends, Shift+Enter starts a new line
+		if (e.key === 'Enter' && !e.shiftKey) {
+			e.preventDefault();
+			sendHandler();
+		}
 	};
 
 	const imageOf = (ele: ChatMessage): string => {
@@ -71,73 +56,57 @@ const Chat = () => {
 	};
 
 	return (
-		<Stack className="chatting">
-			{openButton ? (
-				<button
-					className={`chat-button ${unread ? 'unread' : ''}`}
-					onClick={handleOpenChat}
-					aria-label={open ? t('chat.close') : t('chat.title')}
-					aria-expanded={open}
-				>
-					{open ? <CloseFullscreenIcon /> : <ChatBubbleOutlineRoundedIcon />}
-				</button>
-			) : null}
-			<Stack className={`chat-frame ${open ? 'open' : ''}`} aria-hidden={!open}>
-				<Box className={'chat-top'} component={'div'}>
-					<strong>{t('chat.title')}</strong>
-					<span className={`chat-online ${connected ? '' : 'offline'}`}>
-						{connected ? t('chat.online', { count: onlineUsers }) : t('chat.connecting')}
-					</span>
-				</Box>
-				<Box className={'chat-content'} id="chat-content" ref={chatContentRef} component={'div'}>
-					<ScrollableFeed>
-						<Stack className={'chat-main'}>
-							<div className={'chat-note'}>{t('chat.welcome')}</div>
-							{messagesList.map((ele: ChatMessage, index: number) => {
-								const mine = Boolean(ele.memberData?._id) && ele.memberData?._id === user?._id;
-								return mine ? (
-									<Box className={'msg-row right'} component={'div'} key={index}>
-										<div className={'msg-right'}>{ele.text}</div>
-									</Box>
-								) : (
-									<Box className={'msg-row left'} component={'div'} key={index}>
-										<Avatar alt={ele.memberData?.memberNick ?? t('chat.guest')} src={imageOf(ele)} />
-										<div className={'msg-body'}>
-											<span className={'msg-name'}>{ele.memberData?.memberNick ?? t('chat.guest')}</span>
-											<div className={'msg-left'}>{ele.text}</div>
-										</div>
-									</Box>
-								);
-							})}
-						</Stack>
-					</ScrollableFeed>
-				</Box>
-				<Box className={'chat-bott'} component={'div'}>
-					<input
-						type={'text'}
-						name={'message'}
-						className={'msg-input'}
+		<>
+			<div className={'chat-status'}>
+				<span className={`chat-online ${connected ? '' : 'offline'}`}>
+					{connected ? t('chat.online', { count: onlineUsers }) : t('chat.connecting')}
+				</span>
+				<span className={'chat-public'}>{t('chat.publicNote')}</span>
+			</div>
+
+			<div className={'hub-thread'} ref={threadRef} aria-live={'polite'}>
+				<p className={'chat-note'}>{t('chat.welcome')}</p>
+				{messagesList.map((ele: ChatMessage, index: number) => {
+					const mine = Boolean(ele.memberData?._id) && ele.memberData?._id === user?._id;
+					return mine ? (
+						<div className={'hub-row right'} key={index}>
+							<div className={'hub-bubble mine'}>{ele.text}</div>
+						</div>
+					) : (
+						<div className={'hub-row left'} key={index}>
+							<Avatar className={'hub-avatar'} alt={ele.memberData?.memberNick ?? t('chat.guest')} src={imageOf(ele)} />
+							<div className={'hub-message'}>
+								<span className={'hub-name'}>{ele.memberData?.memberNick ?? t('chat.guest')}</span>
+								<div className={'hub-bubble other'}>{ele.text}</div>
+							</div>
+						</div>
+					);
+				})}
+			</div>
+
+			<form className={'hub-form'} onSubmit={sendHandler}>
+				<div className={'hub-input'}>
+					<label className={'sr-only'} htmlFor={'live-chat-message'}>
+						{t('chat.typeMessage')}
+					</label>
+					<textarea
+						id={'live-chat-message'}
+						data-hub-input
+						rows={1}
 						placeholder={t('chat.typeMessage')}
 						value={message}
 						maxLength={MAX_LENGTH}
 						autoComplete={'off'}
-						tabIndex={open ? 0 : -1}
-						onChange={getInputMessageHandler}
-						onKeyDown={getKeyHandler}
+						onChange={(e) => setMessage(e.target.value)}
+						onKeyDown={keyHandler}
 					/>
-					<button
-						className={'send-msg-btn'}
-						onClick={onClickHandler}
-						disabled={!connected || !message.trim()}
-						aria-label={t('chat.send')}
-						tabIndex={open ? 0 : -1}
-					>
-						<SendIcon />
+					<button type={'submit'} className={`hub-send ${ready ? 'ready' : ''}`} disabled={!ready} aria-label={t('chat.send')}>
+						<SendRoundedIcon />
 					</button>
-				</Box>
-			</Stack>
-		</Stack>
+				</div>
+			</form>
+		</>
 	);
 };
 
-export default Chat;
+export default LiveChat;

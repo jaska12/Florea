@@ -1,43 +1,35 @@
 import { useTranslation } from 'next-i18next';
 import React, { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
 import { useMutation, useReactiveVar } from '@apollo/client';
-import Drawer from '@mui/material/Drawer';
-import AutoAwesomeRoundedIcon from '@mui/icons-material/AutoAwesomeRounded';
-import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
 import ArrowUpwardRoundedIcon from '@mui/icons-material/ArrowUpwardRounded';
-import { giftAssistantOpenVar, giftAssistantTurnsVar, userVar } from '../../../apollo/store';
+import { giftAssistantTurnsVar, userVar } from '../../../apollo/store';
 import { AI_GIFT_RECOMMEND } from '../../../apollo/user/mutation';
-import { ProductOccasion } from '../../enums/product.enum';
 import { AiGiftRecommendation, GiftTurn } from '../../types/ai/ai';
 import { AiGiftRecommendInput } from '../../types/ai/ai.input';
-import ProductCardView from '../common/ProductCardView';
-import { useEnumLabel } from '../../i18n/labels';
-import { useFormat } from '../../i18n/format';
-import AddToCartButton from '../common/AddToCartButton';
 import AiNote from './AiNote';
+import GiftPickCard from './GiftPickCard';
 import { aiErrorMessage } from './aiError';
-import { priceStep } from '../../config';
 
 const PROMPT_MIN = 2;
 const PROMPT_MAX = 300;
+const MARK = '/img/logo/florea/florea-mark.svg';
 /** requests to start from: the keys of their texts in ai.json **/
 const EXAMPLES = ['assistant.example.mother', 'assistant.example.colleague', 'assistant.example.newHome'];
 
-// The gift assistant: a floating button that opens a panel where a member describes who the gift is for
-// and gets products of the shop back, each with the assistant's reason.
-const GiftAssistant = () => {
+interface GiftAssistantProps {
+	/** the tab is on screen: the newest message is brought into view **/
+	active: boolean;
+}
+
+// The gift assistant, the first tab of the help panel (libs/components/help/HelpHub.tsx). A member describes
+// who the gift is for, the occasion and the budget in their own words; the API reads the budget from the text
+// and answers with products of the shop, each with a short reason.
+const GiftAssistant = ({ active }: GiftAssistantProps) => {
 	const { t } = useTranslation('ai');
-	const enumLabel = useEnumLabel();
-	const format = useFormat();
-	const router = useRouter();
 	const user = useReactiveVar(userVar);
-	const open = useReactiveVar(giftAssistantOpenVar);
 	const turns = useReactiveVar(giftAssistantTurnsVar);
 	const [prompt, setPrompt] = useState<string>('');
-	const [budget, setBudget] = useState<string>('');
-	const [occasion, setOccasion] = useState<string>('');
 	const threadRef = useRef<HTMLDivElement>(null);
 	const loggedIn = Boolean(user?._id);
 	const busy = turns.some((turn) => turn.status === 'loading');
@@ -52,17 +44,10 @@ const GiftAssistant = () => {
 
 	/** LIFECYCLES **/
 	useEffect(() => {
-		// opening a product leaves the panel; the conversation is still there when it is opened again
-		const close = () => giftAssistantOpenVar(false);
-		router.events.on('routeChangeStart', close);
-		return () => router.events.off('routeChangeStart', close);
-	}, [router.events]);
-
-	useEffect(() => {
-		// the newest request is brought into view
+		// the newest message is brought into view
 		const thread = threadRef.current;
-		if (open && thread) thread.scrollTo({ top: thread.scrollHeight });
-	}, [open, turns]);
+		if (active && thread) thread.scrollTo({ top: thread.scrollHeight });
+	}, [active, turns]);
 
 	/** HANDLERS **/
 	const setTurn = (id: number, patch: Partial<GiftTurn>) => {
@@ -72,14 +57,7 @@ const GiftAssistant = () => {
 	const askHandler = async (e?: React.FormEvent) => {
 		e?.preventDefault();
 		if (!ready) return;
-		const budgetMax = Number(budget) > 0 ? Number(budget) : undefined;
-		const turn: GiftTurn = {
-			id: Date.now(),
-			prompt: prompt.trim(),
-			budgetMax,
-			occasion: (occasion || undefined) as ProductOccasion | undefined,
-			status: 'loading',
-		};
+		const turn: GiftTurn = { id: Date.now(), prompt: prompt.trim(), status: 'loading' };
 		// what was written before in this conversation goes along, so that a follow-up is understood
 		const history = giftAssistantTurnsVar()
 			.map((earlier) => earlier.prompt)
@@ -89,14 +67,7 @@ const GiftAssistant = () => {
 
 		try {
 			const result = await recommend({
-				variables: {
-					input: {
-						prompt: turn.prompt,
-						budgetMax: turn.budgetMax,
-						occasion: turn.occasion,
-						...(history.length > 0 ? { history } : {}),
-					},
-				},
+				variables: { input: { prompt: turn.prompt, ...(history.length > 0 ? { history } : {}) } },
 			});
 			if (!result.data) throw new Error();
 			setTurn(turn.id, { status: 'done', result: result.data.aiGiftRecommend });
@@ -113,182 +84,96 @@ const GiftAssistant = () => {
 		}
 	};
 
-	const openProductHandler = async (id: string) => {
-		await router.push({ pathname: '/product/detail', query: { id } });
-	};
+	if (!loggedIn) {
+		return (
+			<div className={'hub-login'}>
+				<p>{t('assistant.logInToUseThe')}</p>
+				<Link className={'hub-login-btn'} href={'/account/join'}>
+					{t('assistant.logInOrSignUp')}
+				</Link>
+			</div>
+		);
+	}
+
+	const assistantSays = (content: React.ReactNode, extra = '', role?: 'status' | 'alert') => (
+		<div className={`hub-row left ${extra}`} role={role}>
+			<img className={'hub-avatar'} src={MARK} alt={''} />
+			<div className={'hub-bubble assistant'}>{content}</div>
+		</div>
+	);
 
 	return (
 		<>
-			<button
-				type={'button'}
-				className={loggedIn ? 'gift-assistant-button above-chat' : 'gift-assistant-button'}
-				onClick={() => giftAssistantOpenVar(true)}
-				aria-haspopup={'dialog'}
-			>
-				<AutoAwesomeRoundedIcon />
-				<span>{t('assistant.findAGift')}</span>
-			</button>
+			<div className={'hub-thread'} ref={threadRef} aria-live={'polite'}>
+				{assistantSays(<p>{t('assistant.welcome')}</p>)}
+				{turns.length === 0 && (
+					<ul className={'gift-examples'}>
+						{EXAMPLES.map((example) => (
+							<li key={example}>
+								<button type={'button'} onClick={() => setPrompt(t(example))}>
+									{t(example)}
+								</button>
+							</li>
+						))}
+					</ul>
+				)}
 
-			<Drawer
-				anchor={'right'}
-				open={open}
-				onClose={() => giftAssistantOpenVar(false)}
-				PaperProps={{ className: 'gift-assistant', 'aria-label': t('assistant.giftAssistant') } as object}
-			>
-				<header className={'ga-head'}>
-					<span className={'ga-mark'}>
-						<AutoAwesomeRoundedIcon />
-					</span>
-					<div className={'ga-heading'}>
-						<strong>{t('assistant.giftAssistant')}</strong>
-						<span>{t('assistant.tellMeWhoItIs')}</span>
-					</div>
-					<button type={'button'} className={'ga-close'} onClick={() => giftAssistantOpenVar(false)} aria-label={t('assistant.close')}>
-						<CloseRoundedIcon />
-					</button>
-				</header>
-
-				{!loggedIn ? (
-					<div className={'ga-login'}>
-						<p>{t('assistant.logInToUseThe')}</p>
-						<Link className={'ga-login-btn'} href={'/account/join'}>
-							{t('assistant.logInOrSignUp')}
-						</Link>
-					</div>
-				) : (
-					<>
-						<div className={'ga-thread'} ref={threadRef} aria-live={'polite'}>
-							{turns.length === 0 && (
-								<div className={'ga-welcome'}>
-									<p>{t('assistant.helloWhoIsTheGift')}</p>
-									<ul>
-										{EXAMPLES.map((example) => (
-											<li key={example}>
-												<button type={'button'} onClick={() => setPrompt(t(example))}>
-													{t(example)}
-												</button>
-											</li>
-										))}
-									</ul>
-								</div>
-							)}
-
-							{turns.map((turn) => (
-								<div className={'ga-turn'} key={turn.id}>
-									<div className={'ga-ask'}>
-										<p>{turn.prompt}</p>
-										{(turn.budgetMax || turn.occasion) && (
-											<span className={'ga-ask-meta'}>
-												{[
-													turn.occasion && enumLabel('productOccasion', turn.occasion),
-													turn.budgetMax && t('assistant.upTo', { amount: format.price(turn.budgetMax) }),
-												]
-													.filter(Boolean)
-													.join(' · ')}
-											</span>
-										)}
-									</div>
-
-									{turn.status === 'loading' && (
-										<div className={'ga-answer loading'} role={'status'}>
-											<span className={'ga-dots'} aria-hidden={true}>
-												<i />
-												<i />
-												<i />
-											</span>
-											{t('assistant.lookingThroughTheShop')}
-										</div>
-									)}
-
-									{turn.status === 'error' && (
-										<div className={'ga-answer error'} role={'alert'}>
-											{turn.error}
-										</div>
-									)}
-
-									{turn.status === 'done' && turn.result && (
-										<div className={'ga-answer'}>
-											{turn.result.message ? (
-												<p className={'ga-line'}>{turn.result.message}</p>
-											) : (
-												<p className={'ga-line'}>
-													{t('assistant.ideas', { count: turn.result.list.length })}
-												</p>
-											)}
-											<ul className={'ga-picks'}>
-												{turn.result.list.map((pick) => (
-													<li key={pick.product._id}>
-														<ProductCardView
-															className="ga-card"
-															product={pick.product}
-															liked={false}
-															onOpen={() => openProductHandler(pick.product._id)}
-														/>
-														{pick.reason && (
-															<p className={'ga-reason'}>
-																<AutoAwesomeRoundedIcon />
-																{pick.reason}
-															</p>
-														)}
-														<AddToCartButton product={pick.product} variant={'full'} />
-													</li>
-												))}
-											</ul>
-										</div>
-									)}
-								</div>
-							))}
+				{turns.map((turn) => (
+					<React.Fragment key={turn.id}>
+						<div className={'hub-row right'}>
+							<div className={'hub-bubble mine'}>{turn.prompt}</div>
 						</div>
 
-						<form className={'ga-form'} onSubmit={askHandler}>
-							<div className={'ga-filters'}>
-								<label>
-									<span className={'sr-only'}>{t('assistant.occasion')}</span>
-									<select value={occasion} onChange={(e) => setOccasion(e.target.value)}>
-										<option value={''}>{t('assistant.anyOccasion')}</option>
-										{Object.values(ProductOccasion).map((value) => (
-											<option value={value} key={value}>
-												{enumLabel('productOccasion', value)}
-											</option>
+						{turn.status === 'loading' &&
+							assistantSays(
+								<span className={'hub-typing'} aria-label={t('assistant.lookingThroughTheShop')}>
+									<i />
+									<i />
+									<i />
+								</span>,
+								'',
+								'status',
+							)}
+
+						{turn.status === 'error' && assistantSays(<p>{turn.error}</p>, 'error', 'alert')}
+
+						{turn.status === 'done' && turn.result && (
+							<>
+								{assistantSays(<p>{turn.result.message || t('assistant.ideas', { count: turn.result.list.length })}</p>)}
+								{turn.result.list.length > 0 && (
+									<ul className={'gift-picks'}>
+										{turn.result.list.map((pick) => (
+											<GiftPickCard key={pick.product._id} pick={pick} />
 										))}
-									</select>
-								</label>
-								<label className={'ga-budget'}>
-									<span className={'sr-only'}>{t('assistant.budgetInWon')}</span>
-									<i aria-hidden={true}>₩</i>
-									<input
-										type={'number'}
-										inputMode={'numeric'}
-										min={1}
-										step={priceStep}
-										placeholder={t('assistant.budget')}
-										value={budget}
-										onChange={(e) => setBudget(e.target.value)}
-									/>
-								</label>
-							</div>
-							<div className={'ga-input'}>
-								<label className={'sr-only'} htmlFor={'gift-assistant-prompt'}>
-									{t('assistant.describeTheGiftYouAre')}
-								</label>
-								<textarea
-									id={'gift-assistant-prompt'}
-									rows={2}
-									maxLength={PROMPT_MAX}
-									placeholder={t('assistant.describeWhoTheGiftIs')}
-									value={prompt}
-									onChange={(e) => setPrompt(e.target.value)}
-									onKeyDown={keyHandler}
-								/>
-								<button type={'submit'} disabled={!ready} aria-label={t('assistant.askTheAssistant')}>
-									<ArrowUpwardRoundedIcon />
-								</button>
-							</div>
-							<AiNote />
-						</form>
-					</>
-				)}
-			</Drawer>
+									</ul>
+								)}
+							</>
+						)}
+					</React.Fragment>
+				))}
+			</div>
+
+			<form className={'hub-form'} onSubmit={askHandler}>
+				<div className={'hub-input'}>
+					<label className={'sr-only'} htmlFor={'gift-assistant-prompt'}>
+						{t('assistant.describeTheGiftYouAre')}
+					</label>
+					<textarea
+						id={'gift-assistant-prompt'}
+						data-hub-input
+						rows={1}
+						maxLength={PROMPT_MAX}
+						placeholder={t('assistant.placeholder')}
+						value={prompt}
+						onChange={(e) => setPrompt(e.target.value)}
+						onKeyDown={keyHandler}
+					/>
+					<button type={'submit'} className={`hub-send ${ready ? 'ready' : ''}`} disabled={!ready} aria-label={t('assistant.askTheAssistant')}>
+						<ArrowUpwardRoundedIcon />
+					</button>
+				</div>
+				<AiNote />
+			</form>
 		</>
 	);
 };

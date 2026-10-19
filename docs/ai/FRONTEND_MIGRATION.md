@@ -79,6 +79,7 @@ Not renamed: the agent pages and components (`pages/agent`, `AgentCard`, `TopAge
 - **Orders:** cash on delivery only; the delivery fee does not depend on the address; products without a photo show the blush placeholder in the cart and in orders.
 
 - **Chat:** one public room for all logged-in members; messages are not stored in the database.
+- **Help panel (task 52):** the gift assistant and the live chat are the two tabs of one panel opened by one round button (`libs/components/help/HelpHub.tsx`, styles in `scss/theme/help-hub.scss`); it is in the three layouts. Both tabs stay mounted, so the conversations last for the session.
 - **Screen widths:** phones and tablets are covered (COMPLETED_TASKS.md, 34). Between 1025 and 1339px the 1300px desktop layout still scrolls sideways.
 
 

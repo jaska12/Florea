@@ -5,23 +5,14 @@
       "colleague": "동료에게 고마움을 전할 작은 선물",
       "newHome": "이사한 친구에게 선물할 식물"
     },
-    "upTo": "{{amount}} 이하",
     "ideas_other": "추천 상품 {{count}}개를 골랐어요:",
-    "findAGift": "선물 찾기",
-    "giftAssistant": "선물 도우미",
-    "tellMeWhoItIs": "누구에게 줄 선물인지 알려 주시면 가게를 둘러볼게요.",
-    "close": "닫기",
     "logInToUseThe": "선물 도우미를 이용하려면 로그인해 주세요. Florea 플로리스트의 상품을 살펴보고 어울리는 몇 가지를 추천해 드립니다.",
     "logInOrSignUp": "로그인 또는 회원가입",
-    "helloWhoIsTheGift": "안녕하세요! 누구에게, 어떤 날에 드릴 선물인가요? 예산을 알려 주시면 더 좋아요.",
     "lookingThroughTheShop": "가게를 둘러보는 중…",
-    "occasion": "기념일",
-    "anyOccasion": "모든 기념일",
-    "budget": "예산",
     "describeTheGiftYouAre": "찾으시는 선물을 설명해 주세요",
-    "describeWhoTheGiftIs": "누구에게 줄 선물인지 적어 주세요…",
     "askTheAssistant": "도우미에게 물어보기",
-    "budgetInWon": "예산(원)"
+    "welcome": "안녕하세요! 누구에게 줄 선물인지, 어떤 날인지, 예산은 얼마인지 알려 주시면 플로리스트들의 상품 중에서 찾아 드릴게요.",
+    "placeholder": "예: 엄마 생신 꽃, 5만원 이하"
   },
   "shared": {
     "note": "AI 추천은 완벽하지 않을 수 있습니다.",
