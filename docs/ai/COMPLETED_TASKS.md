@@ -1201,4 +1201,11 @@ In the order they were done. State as of 2026-10-05, `main` at `5f5405e`.
 | The gift assistant with the real model, "친구 생일 선물로 5만원 이하 꽃": picks only products of ₩50,000 or less | pass (before `budgetFromText` it answered that nothing under 5만원 was found, although a ₩32,000 bouquet was there) |
 | The Korean and Russian shopping flows | 18 of 18 each |
 
-- Not deployed and not pushed. The live site still shows dollars; its data and the new code have to change in the same window (`deploy/README.md`).
+**Deployed on 2026-10-16 (seventh deploy), with the move of the live data**
+
+- Steps of `deploy/README.md` ("Moving the prices to won" and "Updating"), with the owner's go-ahead: code pushed (`c22eda3`) and sent to a side folder; the images of the running containers tagged `:prev`; all images built there while the site ran (client 77 pages); then, in one go: the script with `--apply --backup` inside the API container, the backup copied to `/root/backups/krw-backup-20261016-0238.json`, the folders swapped, all three Florea containers replaced. A second run of the script changed nothing.
+- Changed on production: 20 product prices ($22 → ₩30,000 … $110 → ₩149,000) and the two delivery notices. There were no orders.
+- On the live site afterwards, as a guest: every product is whole won from ₩1,000; no "$" on the home page, product list, a product page, the florists and customer care in English, Korean and Russian; prices are written with ₩ (23 on those pages in each language); the FAQ answer says ₩4,000 and ₩50,000; a guest cart with the ₩30,000 product shows ₩30,000 + ₩4,000 = ₩34,000.
+- Not checked on the live site: the pages behind a login (checkout, orders, the product form, the admin panel) and the gift assistant with the real model (all checked on the dev machine with the same code).
+- Afterwards: the old folder, the build log and the `:prev` tags were removed; the backup stays in `/root/backups`. The password files of the session were deleted from the dev machine.
+- On the server the containers of the `oasys-cctv` project no longer exist (they were there at the sixth deploy). They were removed by their owner in between; this deploy touched only the Florea containers.
