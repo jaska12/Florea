@@ -1275,4 +1275,10 @@ In the order they were done. State as of 2026-10-05, `main` at `5f5405e`.
 | Both new CSS rules are served (`/cart`) | pass |
 | Page errors | only the `code 403` promise errors that the home page also shows without this change |
 
-- Not checked: `yarn build` (the dev server was running and both write to `.next`); a real phone; the live site (not deployed).
+- Not checked: a real phone.
+
+**Deployed on 2026-10-20 (ninth deploy), client only**
+
+- Same steps as the eighth deploy: `03ae5e8` pushed and sent to `/root/apps/florea.new`, the settings copied in, `florea-next:prev` tagged, `florea-next` built there (77 pages; the build prints Apollo's notice 17, "Apollo Client 4.0 will require a `link` option", a deprecation notice and not an error), the folders swapped, only `florea-next` replaced.
+- On the live site afterwards, as a guest: the same 38 scroll checks on home and products at 1440px and 375px, 38 of 38; both new CSS rules served on `/cart`. The only page errors are the `code 403` promise errors, which the test browser also throws on example.com.
+- Afterwards: `florea.old`, the build log and the `:prev` tag were removed; disk at 34%. The password file of the session was deleted.
