@@ -24,7 +24,11 @@
     "deliveryFromFlorists_one": "Delivery ({{count}} florist)",
     "deliveryFromFlorists_other": "Delivery ({{count}} florists)",
     "separateOrdersNote_one": "Your cart has products from {{count}} florist, so this becomes {{count}} order.",
-    "separateOrdersNote_other": "Your cart has products from {{count}} florists. Each florist delivers separately, so this becomes {{count}} orders."
+    "separateOrdersNote_other": "Your cart has products from {{count}} florists. Each florist delivers separately, so this becomes {{count}} orders.",
+    "pricesUpdated": "Some prices have changed since you added these items. The cart now shows the current prices.",
+    "noLongerAvailable": "No longer available",
+    "removeUnavailable_one": "{{count}} item can no longer be bought. Remove it to go on to checkout.",
+    "removeUnavailable_other": "{{count}} items can no longer be bought. Remove them to go on to checkout."
   },
   "checkout": {
     "theOrderCouldNotBe": "The order could not be placed. Please try again.",
@@ -67,7 +71,9 @@
     "thisFlorist": "this florist",
     "delivery": "Delivery",
     "deliveryFromFlorists_one": "Delivery ({{count}} florist)",
-    "deliveryFromFlorists_other": "Delivery ({{count}} florists)"
+    "deliveryFromFlorists_other": "Delivery ({{count}} florists)",
+    "pricesUpdated": "Some prices have changed since you added these items. The summary shows the current prices.",
+    "someItemsUnavailable": "Some items can no longer be bought."
   },
   "complete": {
     "toPayOnDelivery": "To pay on delivery:",

@@ -12,7 +12,8 @@ import DeleteOutlineRoundedIcon from '@mui/icons-material/DeleteOutlineRounded';
 import ShoppingBagOutlinedIcon from '@mui/icons-material/ShoppingBagOutlined';
 import withLayoutBasic from '../../libs/components/layout/LayoutBasic';
 import { cartVar } from '../../apollo/store';
-import { cartGroups, cartTotals, MAX_QUANTITY, removeFromCart, setCartQuantity } from '../../libs/cart';
+import { buyableItems, cartGroups, cartTotals, MAX_QUANTITY, removeFromCart, setCartQuantity } from '../../libs/cart';
+import { useCartSync } from '../../libs/hooks/useCartSync';
 import { CartGroup, CartItem } from '../../libs/types/cart/cart';
 import { freeDeliveryFrom, REACT_APP_API_URL } from '../../libs/config';
 
@@ -31,6 +32,11 @@ const Cart: NextPage = () => {
 	const [ready, setReady] = useState<boolean>(false);
 	const groups: CartGroup[] = cartGroups(items);
 	const totals = cartTotals(items);
+	// the florists that will get an order: a florist whose products can all no longer be bought is left out
+	const orderCount = groups.filter((group) => buyableItems(group.items).length > 0).length;
+	// prices, stock and availability are compared with the products as they are now
+	const sync = useCartSync();
+	const unavailableCount = items.length - buyableItems(items).length;
 
 	/** LIFECYCLES **/
 	useEffect(() => {
@@ -63,6 +69,11 @@ const Cart: NextPage = () => {
 			<div className={'container'}>
 				<div className={'shop-columns'}>
 					<div className={'shop-main'}>
+						{sync.priceChanged && (
+							<p className={'shop-note cart-notice'} role={'status'}>
+								{t('cart.pricesUpdated')}
+							</p>
+						)}
 						{groups.map((group: CartGroup) => (
 							<section className={'shop-panel cart-group'} key={group.agentId}>
 								<header>
@@ -75,7 +86,9 @@ const Cart: NextPage = () => {
 										/>
 									</span>
 									<em>
-										{group.delivery
+										{buyableItems(group.items).length === 0
+											? ''
+											: group.delivery
 											? t('cart.addMoreForFreeDelivery', { amount: format.price(freeDeliveryFrom - group.subtotal) })
 											: t('cart.freeDelivery')}
 									</em>
@@ -83,7 +96,7 @@ const Cart: NextPage = () => {
 								{group.items.map((item: CartItem) => {
 									const limit = Math.min(item.productStock, MAX_QUANTITY);
 									return (
-										<div className={'cart-row'} key={item.productId}>
+										<div className={`cart-row ${item.unavailable ? 'unavailable' : ''}`} key={item.productId}>
 											<Link
 												href={`/product/detail?id=${item.productId}`}
 												className={'thumb'}
@@ -92,13 +105,17 @@ const Cart: NextPage = () => {
 											/>
 											<div className={'cart-name'}>
 												<Link href={`/product/detail?id=${item.productId}`}>{item.productTitle}</Link>
-												<span>{t('cart.priceEach', { price: format.price(item.productPrice) })}</span>
+												{item.unavailable ? (
+													<span className={'cart-unavailable'}>{t('cart.noLongerAvailable')}</span>
+												) : (
+													<span>{t('cart.priceEach', { price: format.price(item.productPrice) })}</span>
+												)}
 											</div>
 											<div className={'qty'} role={'group'} aria-label={t('cart.quantityOf', { title: item.productTitle })}>
 												<button
 													type={'button'}
 													aria-label={t('cart.oneLess')}
-													disabled={item.quantity <= 1}
+													disabled={item.unavailable || item.quantity <= 1}
 													onClick={() => setCartQuantity(item.productId, item.quantity - 1)}
 												>
 													<RemoveRoundedIcon />
@@ -107,13 +124,13 @@ const Cart: NextPage = () => {
 												<button
 													type={'button'}
 													aria-label={t('cart.oneMore')}
-													disabled={item.quantity >= limit}
+													disabled={item.unavailable || item.quantity >= limit}
 													onClick={() => setCartQuantity(item.productId, item.quantity + 1)}
 												>
 													<AddRoundedIcon />
 												</button>
 											</div>
-											<strong className={'cart-sum'}>{format.price(item.productPrice * item.quantity)}</strong>
+											<strong className={'cart-sum'}>{item.unavailable ? '' : format.price(item.productPrice * item.quantity)}</strong>
 											<button
 												type={'button'}
 												className={'cart-remove'}
@@ -143,7 +160,7 @@ const Cart: NextPage = () => {
 									<dd>{format.price(totals.subtotal)}</dd>
 								</div>
 								<div>
-									<dt>{groups.length > 1 ? t('cart.deliveryFromFlorists', { count: groups.length }) : t('cart.delivery')}</dt>
+									<dt>{orderCount > 1 ? t('cart.deliveryFromFlorists', { count: orderCount }) : t('cart.delivery')}</dt>
 									<dd>{totals.delivery ? format.price(totals.delivery) : t('cart.free')}</dd>
 								</div>
 								<div className={'total'}>
@@ -151,12 +168,22 @@ const Cart: NextPage = () => {
 									<dd>{format.price(totals.total)}</dd>
 								</div>
 							</dl>
-							{groups.length > 1 && (
+							{orderCount > 1 && (
 								<p className={'shop-note'}>
-									{t('cart.separateOrdersNote', { count: groups.length })}
+									{t('cart.separateOrdersNote', { count: orderCount })}
 								</p>
 							)}
-							<button type={'button'} className={'shop-btn'} onClick={() => router.push('/checkout')}>
+							{unavailableCount > 0 && (
+								<p className={'shop-error'} role={'alert'}>
+									{t('cart.removeUnavailable', { count: unavailableCount })}
+								</p>
+							)}
+							<button
+								type={'button'}
+								className={'shop-btn'}
+								disabled={unavailableCount > 0 || totals.count === 0 || !sync.checked}
+								onClick={() => router.push('/checkout')}
+							>
 								{t('cart.checkout')}
 							</button>
 							<p className={'shop-pay'}>{t('cart.cashOnDeliveryYouPay')}</p>

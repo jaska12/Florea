@@ -82,6 +82,25 @@ query GetMember($input: String!) {
  *        PRODUCT        *
  *************************/
 
+// the current state of the products in the cart (every status comes back; no view is recorded)
+export const GET_CART_PRODUCTS = gql`
+	query GetCartProducts($input: [String!]!) {
+		getCartProducts(productIds: $input) {
+			_id
+			productStatus
+			productTitle
+			productPrice
+			productStock
+			productImages
+			memberId
+			memberData {
+				_id
+				memberNick
+			}
+		}
+	}
+`;
+
 export const GET_PRODUCT = gql`
 	query GetProduct($input: String!) {
 		getProduct(productId: $input) {

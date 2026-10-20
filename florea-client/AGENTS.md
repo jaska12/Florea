@@ -39,9 +39,9 @@ yarn
 
 The backend is already migrated to the product domain. Names in this client must match it exactly:
 
-- Operations: `createProduct`, `getProduct`, `updateProduct`, `getProducts`, `getAgentProducts`, `likeTargetProduct`, `getFavorites`, `getVisited`, `getAllProductsByAdmin`, `updateProductByAdmin`, `removeProductByAdmin`.
+- Operations: `createProduct`, `getProduct`, `updateProduct`, `getProducts`, `getCartProducts` (public; the current price, stock and status of the products in the cart, every status, no view recorded), `getAgentProducts`, `likeTargetProduct`, `getFavorites`, `getVisited`, `getAllProductsByAdmin`, `updateProductByAdmin`, `removeProductByAdmin`.
 - Notification operations: `getNotifications`, `readNotification`, `readAllNotifications` (type `NotificationsInquiry`).
-- Order operations: `createOrder`, `updateOrder`, `updateOrderByAgent`, `updateOrderByAdmin`, `getMyOrders`, `getAgentOrders`, `getOrder`, `getAllOrdersByAdmin` (types `OrderInput`, `OrderUpdate`, `OrdersInquiry`). `OrderStatus`: `PENDING`, `CONFIRMED`, `PREPARING`, `OUT_FOR_DELIVERY`, `DELIVERED`, `CANCELLED`.
+- Order operations (an `OrderItemInput` carries `itemPrice`, the unit price the buyer saw; the API refuses the order with "The price of a product in your cart has changed!" when it differs): `createOrder`, `updateOrder`, `updateOrderByAgent`, `updateOrderByAdmin`, `getMyOrders`, `getAgentOrders`, `getOrder`, `getAllOrdersByAdmin` (types `OrderInput`, `OrderUpdate`, `OrdersInquiry`). `OrderStatus`: `PENDING`, `CONFIRMED`, `PREPARING`, `OUT_FOR_DELIVERY`, `DELIVERED`, `CANCELLED`.
 - Notice operations: `getNotices` (public), `createNoticeByAdmin`, `updateNoticeByAdmin`, `removeNoticeByAdmin`, `getAllNoticesByAdmin`. `NoticeCategory`: `NOTICE`, `FAQ`, `TERMS`, `INQUIRY`. `NoticeTopic`: `PRODUCT`, `PAYMENT`, `ORDER`, `FLORIST`, `ACCOUNT`, `COMMUNITY`, `OTHER`.
 - AI operations (all need a login): `aiGiftRecommend`, `aiCardMessage`, `aiProductDescription` (florists only). Types `AiGiftRecommendInput`, `AiCardMessageInput`, `AiProductDescriptionInput`. `AiCardTone`: `WARM`, `ROMANTIC`, `PLAYFUL`, `FORMAL`. `AiLanguage`: `ENGLISH`, `KOREAN`, `RUSSIAN`, `UZBEK`. The client never calls the AI provider and holds no key.
 - Types: `Product`, `Products`, `ProductInput`, `ProductUpdate`, `ProductsInquiry`, `AgentProductsInquiry`, `AllProductsInquiry`.

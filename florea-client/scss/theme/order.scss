@@ -372,6 +372,8 @@ $order-thumb: linear-gradient(135deg, #fcf1f5 0%, $florea-petal 100%);
 				font-weight: 600;
 				line-height: 22px;
 				text-decoration: none;
+				// every link of the site is kept on one line (app.scss); a product title wraps
+				white-space: normal;
 				overflow-wrap: anywhere;
 				&:hover {
 					color: $florea-rose;
@@ -380,6 +382,18 @@ $order-thumb: linear-gradient(135deg, #fcf1f5 0%, $florea-petal 100%);
 			span {
 				color: $florea-muted;
 				font-size: 14px;
+			}
+			.cart-unavailable {
+				color: $florea-wine;
+				font-weight: 600;
+			}
+		}
+		// a product that can no longer be bought: shown faded until the buyer removes it
+		&.unavailable {
+			.thumb,
+			.cart-name a,
+			.qty {
+				opacity: 0.5;
 			}
 		}
 		.cart-sum {
@@ -410,6 +424,17 @@ $order-thumb: linear-gradient(135deg, #fcf1f5 0%, $florea-petal 100%);
 				@include order-focus;
 			}
 		}
+	}
+
+	// above the cart: the prices were brought up to date (the same look as the notes of the summary)
+	.cart-notice {
+		margin: 0;
+		padding: 12px 14px;
+		border-radius: 12px;
+		background: $florea-mist;
+		color: $florea-wine;
+		font-size: 13.5px;
+		line-height: 20px;
 	}
 
 	/** summary box of the cart and of checkout **/
@@ -518,6 +543,18 @@ $order-thumb: linear-gradient(135deg, #fcf1f5 0%, $florea-petal 100%);
 				.sum {
 					font-size: 14.5px;
 					font-weight: 600;
+				}
+				&.unavailable {
+					.thumb {
+						opacity: 0.5;
+					}
+					.name {
+						color: $florea-muted;
+						small {
+							color: $florea-wine;
+							font-weight: 600;
+						}
+					}
 				}
 			}
 		}
@@ -1284,7 +1321,8 @@ $order-thumb: linear-gradient(135deg, #fcf1f5 0%, $florea-petal 100%);
 		}
 		// photo and name on the first line; quantity, sum and remove on the second
 		.cart-row {
-			grid-template-columns: 64px minmax(0, 1fr) 44px;
+			// the last column takes the width of the sum (₩118,000 is wider than the 44px remove button)
+			grid-template-columns: 64px minmax(0, 1fr) minmax(44px, auto);
 			grid-template-areas:
 				'thumb name remove'
 				'qty qty sum';
@@ -1304,10 +1342,12 @@ $order-thumb: linear-gradient(135deg, #fcf1f5 0%, $florea-petal 100%);
 			.cart-sum {
 				grid-area: sum;
 				align-self: center;
+				white-space: nowrap;
 			}
 			.cart-remove {
 				grid-area: remove;
 				align-self: start;
+				justify-self: end;
 			}
 		}
 		.field-row {

@@ -141,6 +141,7 @@
     "selfSubscription": "You cannot follow yourself.",
     "productNotAvailable": "One of the products is no longer available.",
     "ownProductOrder": "You cannot order your own product.",
+    "priceChanged": "The price of a product in your cart has changed. Check the new price in the summary and place the order again.",
     "deliveryDatePassed": "The delivery date cannot be in the past.",
     "orderCannotBeCancelled": "This order can no longer be cancelled.",
     "orderStatusNotAllowed": "This status change is not allowed.",

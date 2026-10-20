@@ -9,6 +9,8 @@ export interface CartItem {
 	agentId: string;
 	agentNick?: string;
 	quantity: number;
+	// set when the product was checked and can no longer be bought (sold, removed or out of stock)
+	unavailable?: boolean;
 }
 
 export interface CartGroup {

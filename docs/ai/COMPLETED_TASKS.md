@@ -1294,3 +1294,31 @@ In the order they were done. State as of 2026-10-05, `main` at `5f5405e`.
 - Same steps as the eighth deploy: `bc51d39` pushed and sent to `/root/apps/florea.new`, the settings copied in, `florea-next:prev` tagged, `florea-next` built there (77 pages), the folders swapped, only `florea-next` replaced.
 - On the live site afterwards: home, My page and products answer 200, and the served stylesheet of My page carries `img[src$="defaultUser.svg"]{object-fit:contain;padding:14px;box-sizing:border-box}`. The page itself was not looked at on the live site (it needs a login and there is no test member on production).
 - Afterwards: `florea.old`, the build log and the `:prev` tag were removed. The password file of the session was deleted.
+
+## 55. The cart: current prices, products that can no longer be bought, and titles that wrap on phones
+
+- Found on a phone (owner's screenshot of the live cart): the prices were the old dollar amounts written in won (₩88, ₩66; "Add ₩49,758 more for free delivery"), and a long product title ran past the remove button and out of the card.
+- Causes: the cart is a copy kept in `localStorage` (`floreaCart`) that was never compared with the products again, and the checkout summary showed that copy while the API priced the order from the database; every link of the site has `white-space: nowrap` (`scss/app.scss`), the title in the cart is a link.
+
+**API**
+- `getCartProducts(productIds: [String!]!): [Product!]!` (public): the products with these ids whatever their status, with `memberData`; ids that are not ids and repeated ids are dropped, at most 30 are looked at, no view is recorded (`product.service.ts`, `product.resolver.ts`).
+- `OrderItemInput.itemPrice` (optional Int): when it is sent and differs from the product's price, `createOrder` refuses with `Message.PRICE_CHANGED` "The price of a product in your cart has changed!" before any stock is taken.
+- Tests: `product.service.spec.ts` (5) and `order.service.spec.ts` (3). Both mock `uuid`, which jest cannot load from `libs/config.ts`.
+
+**Client**
+- `libs/cart.ts`: `syncCart(products)` brings each line up to date (price, title, picture, stock, florist, quantity within the stock) or marks it `unavailable`; `buyableItems`; totals, delivery and the item count leave out unavailable lines; a florist whose lines are all unavailable has no delivery and is not counted as an order.
+- `libs/hooks/useCartSync.ts`: compares the cart when the page opens and when its products change; `checked`, `priceChanged`, `recheck`.
+- Cart page: a notice when prices were updated; unavailable lines faded with "No longer available", their quantity buttons disabled and no sum; checkout disabled with "1 item can no longer be bought. Remove it to go on to checkout." until they are removed, and until the check is done.
+- Checkout: the same check; the place-order button waits for it and is disabled while an unavailable line is in the cart; items are sent with `itemPrice`; a refused order shows the API's message in the visitor's language (it was shown in English before) and the cart is checked again.
+- Styles (`scss/theme/order.scss`): the title in the cart wraps (`white-space: normal`); unavailable lines; the notice box; on phones the last column of a cart line takes the width of the sum, which ran out of the card for amounts like ₩118,000.
+- Texts in three languages: `order:cart.pricesUpdated`, `cart.noLongerAvailable`, `cart.removeUnavailable_*`, `checkout.pricesUpdated`, `checkout.someItemsUnavailable`, `common:serverError.priceChanged`.
+
+| Check | Result |
+|---|---|
+| `npx tsc` (api and batch), `yarn tsc --noEmit`, `yarn i18n:check` | pass |
+| `npx jest --runInBand` | 29 passed; the 3 suites that fail are Nest's untouched scaffold specs (`app.controller`, `florea-batch.controller`, `product.resolver`), which fail the same way without this change |
+| The API on the dev machine refuses an order at ₩88 for a ₩59,000 product, and the stock stays at 10 | pass |
+| Browser check on `yarn dev`, a cart saved with the old ₩88 price and a long title plus a product that does not exist, at 393px and 1440px, and checkout as the test member (29 checks) | 29 of 29: the stored line takes ₩59,000, the current title and florist; the notice shows; the missing product is "No longer available" and not counted; one delivery, no "2 orders" note; checkout is blocked with the reason and opens once it is removed; a long title wraps (3 lines at 393px) clear of the remove button; the sum stays inside the card; no sideways scroll; the checkout summary shows ₩59,000 with its notice and the button is ready |
+
+- Not checked: `yarn build` and `npm run build` (run on the server at deploy); a real phone; a placed order with the new client (the refusal was checked through the API; the accepted case by the unit test).
+- On the way: the dev client's `.next` folder was found broken after the dev server stopped (`Cannot find module .next/server/pages/_document.js`, every page 500); it was deleted and rebuilt by `yarn dev`.

@@ -10,7 +10,9 @@ import moment from 'moment';
 import withLayoutBasic from '../../libs/components/layout/LayoutBasic';
 import { cartVar, userVar } from '../../apollo/store';
 import { CREATE_ORDER } from '../../apollo/user/mutation';
-import { cartGroups, cartTotals, clearCart } from '../../libs/cart';
+import { buyableItems, cartGroups, cartTotals, clearCart } from '../../libs/cart';
+import { useCartSync } from '../../libs/hooks/useCartSync';
+import { serverText } from '../../libs/i18n/serverText';
 import { CartGroup, CartItem } from '../../libs/types/cart/cart';
 import { OrderInput } from '../../libs/types/order/order.input';
 import { deliveryTimeSlots, REACT_APP_API_URL } from '../../libs/config';
@@ -62,6 +64,11 @@ const Checkout: NextPage = () => {
 	const items: CartItem[] = useReactiveVar(cartVar);
 	const groups: CartGroup[] = cartGroups(items);
 	const totals = cartTotals(items);
+	// the florists that will get an order: a florist whose products can all no longer be bought is left out
+	const orderCount = groups.filter((group) => buyableItems(group.items).length > 0).length;
+	// the order goes out only with the prices and stock as they are now
+	const sync = useCartSync();
+	const hasUnavailable = items.some((item) => item.unavailable);
 	const [ready, setReady] = useState<boolean>(false);
 	const [form, setForm] = useState<CheckoutForm>({
 		recipientName: '',
@@ -100,7 +107,7 @@ const Checkout: NextPage = () => {
 
 	const placeOrderHandler = async (e: React.FormEvent) => {
 		e.preventDefault();
-		if (placing) return;
+		if (placing || !sync.checked || hasUnavailable) return;
 
 		const found = validate(form, t);
 		setErrors(found);
@@ -114,7 +121,11 @@ const Checkout: NextPage = () => {
 		try {
 			setPlacing(true);
 			const input: OrderInput = {
-				items: items.map((item) => ({ productId: item.productId, itemQuantity: item.quantity })),
+				items: buyableItems(items).map((item) => ({
+					productId: item.productId,
+					itemQuantity: item.quantity,
+					itemPrice: item.productPrice,
+				})),
 				recipientName: form.recipientName.trim(),
 				recipientPhone: form.recipientPhone.trim(),
 				deliveryAddress: form.deliveryAddress.trim(),
@@ -131,8 +142,11 @@ const Checkout: NextPage = () => {
 			await router.push(`/order/complete?ids=${ids.join(',')}`);
 			clearCart();
 		} catch (err: any) {
-			setServerError(err?.graphQLErrors?.[0]?.message ?? t('checkout.theOrderCouldNotBe'));
+			const message: string | undefined = err?.graphQLErrors?.[0]?.message;
+			setServerError(message ? serverText(message) : t('checkout.theOrderCouldNotBe'));
 			setPlacing(false);
+			// a price or the stock changed meanwhile: the summary is brought up to date before the next try
+			await sync.recheck();
 		}
 	};
 
@@ -293,7 +307,7 @@ const Checkout: NextPage = () => {
 								<div className={'summary-group'} key={group.agentId}>
 									<span className={'summary-shop'}>{t('checkout.fromFlorist', { name: group.agentNick ?? t('checkout.thisFlorist') })}</span>
 									{group.items.map((item: CartItem) => (
-										<div className={'summary-item'} key={item.productId}>
+										<div className={`summary-item ${item.unavailable ? 'unavailable' : ''}`} key={item.productId}>
 											<span
 												className={'thumb'}
 												style={item.productImage ? { backgroundImage: `url(${REACT_APP_API_URL}/${item.productImage})` } : undefined}
@@ -301,10 +315,12 @@ const Checkout: NextPage = () => {
 											<span className={'name'}>
 												{item.productTitle}
 												<small>
-													{item.quantity} × {format.price(item.productPrice)}
+													{item.unavailable
+														? t('cart.noLongerAvailable')
+														: `${item.quantity} × ${format.price(item.productPrice)}`}
 												</small>
 											</span>
-											<span className={'sum'}>{format.price(item.productPrice * item.quantity)}</span>
+											<span className={'sum'}>{item.unavailable ? '' : format.price(item.productPrice * item.quantity)}</span>
 										</div>
 									))}
 								</div>
@@ -315,7 +331,7 @@ const Checkout: NextPage = () => {
 									<dd>{format.price(totals.subtotal)}</dd>
 								</div>
 								<div>
-									<dt>{groups.length > 1 ? t('checkout.deliveryFromFlorists', { count: groups.length }) : t('checkout.delivery')}</dt>
+									<dt>{orderCount > 1 ? t('checkout.deliveryFromFlorists', { count: orderCount }) : t('checkout.delivery')}</dt>
 									<dd>{totals.delivery ? format.price(totals.delivery) : t('checkout.free')}</dd>
 								</div>
 								<div className={'total'}>
@@ -323,12 +339,22 @@ const Checkout: NextPage = () => {
 									<dd>{format.price(totals.total)}</dd>
 								</div>
 							</dl>
+							{sync.priceChanged && !serverError && (
+								<p className={'shop-note'} role={'status'}>
+									{t('checkout.pricesUpdated')}
+								</p>
+							)}
+							{hasUnavailable && (
+								<p className={'shop-error'} role={'alert'}>
+									{t('checkout.someItemsUnavailable')} <Link href={'/cart'}>{t('checkout.editTheCart')}</Link>
+								</p>
+							)}
 							{serverError && (
 								<p className={'shop-error'} role={'alert'}>
 									{serverError} <Link href={'/cart'}>{t('checkout.editTheCart')}</Link>
 								</p>
 							)}
-							<button type={'submit'} className={'shop-btn'} disabled={placing}>
+							<button type={'submit'} className={'shop-btn'} disabled={placing || !sync.checked || hasUnavailable}>
 								{placing ? t('checkout.placingYourOrder') : t('checkout.placeOrder')}
 							</button>
 							<p className={'shop-pay'}>{t('checkout.cashOnDeliveryYouPay')}</p>

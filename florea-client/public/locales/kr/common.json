@@ -95,6 +95,7 @@
     "selfSubscription": "자기 자신은 팔로우할 수 없습니다.",
     "productNotAvailable": "상품 중 하나를 더 이상 구매할 수 없습니다.",
     "ownProductOrder": "본인의 상품은 주문할 수 없습니다.",
+    "priceChanged": "장바구니 상품의 가격이 변경되었습니다. 주문 요약에서 바뀐 가격을 확인한 뒤 다시 주문해 주세요.",
     "deliveryDatePassed": "배송일은 지난 날짜로 지정할 수 없습니다.",
     "orderCannotBeCancelled": "이 주문은 더 이상 취소할 수 없습니다.",
     "orderStatusNotAllowed": "이 상태로는 변경할 수 없습니다.",

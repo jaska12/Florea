@@ -3,6 +3,8 @@ import { OrderStatus } from '../../enums/order.enum';
 export interface OrderItemInput {
 	productId: string;
 	itemQuantity: number;
+	// the unit price on the buyer's screen; the API refuses the order if the product now costs something else
+	itemPrice?: number;
 }
 
 export interface OrderInput {

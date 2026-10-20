@@ -75,11 +75,49 @@ export const addToCart = (product: Product, quantity: number = 1): { added: bool
 export const setCartQuantity = (productId: string, quantity: number) => {
 	save(
 		cartVar().map((item: CartItem) =>
-			item.productId === productId
+			item.productId === productId && !item.unavailable
 				? { ...item, quantity: Math.max(1, Math.min(quantity, limitOf(item.productStock) || 1)) }
 				: item,
 		),
 	);
+};
+
+/** The lines that can be ordered: the ones the last check did not mark as unavailable. */
+export const buyableItems = (items: CartItem[]): CartItem[] => items.filter((item) => !item.unavailable);
+
+/**
+ * Brings each line up to date with the product as it is now (`products` from getCartProducts): price, title,
+ * picture, stock and florist. A product that did not come back, or can no longer be bought, is marked unavailable.
+ * Returns what changed, so the page can tell the buyer.
+ */
+export const syncCart = (products: Product[]): { priceChanged: boolean; becameUnavailable: boolean } => {
+	const byId = new Map(products.map((product) => [String(product._id), product]));
+	let priceChanged = false;
+	let becameUnavailable = false;
+
+	const items: CartItem[] = cartVar().map((item: CartItem) => {
+		const product = byId.get(item.productId);
+		if (!product || !canBuy(product)) {
+			if (!item.unavailable) becameUnavailable = true;
+			return { ...item, unavailable: true };
+		}
+		if (product.productPrice !== item.productPrice) priceChanged = true;
+		const limit = limitOf(product.productStock);
+		return {
+			...item,
+			productTitle: product.productTitle,
+			productPrice: product.productPrice,
+			productImage: product.productImages?.[0] ?? item.productImage,
+			productStock: product.productStock,
+			agentId: String(product.memberId),
+			agentNick: product.memberData?.memberNick ?? item.agentNick,
+			quantity: Math.max(1, Math.min(item.quantity, limit)),
+			unavailable: false,
+		};
+	});
+
+	if (JSON.stringify(items) !== JSON.stringify(cartVar())) save(items);
+	return { priceChanged, becameUnavailable };
 };
 
 export const removeFromCart = (productId: string) => {
@@ -94,8 +132,10 @@ export const cartGroups = (items: CartItem[]): CartGroup[] => {
 	for (const item of items) groups.set(item.agentId, [...(groups.get(item.agentId) ?? []), item]);
 
 	return Array.from(groups.entries()).map(([agentId, list]: [string, CartItem[]]) => {
-		const subtotal = list.reduce((sum, item) => sum + item.productPrice * item.quantity, 0);
-		const delivery = subtotal >= freeDeliveryFrom ? 0 : deliveryFee;
+		// a line that can no longer be bought is shown, but not counted
+		const buyable = buyableItems(list);
+		const subtotal = buyable.reduce((sum, item) => sum + item.productPrice * item.quantity, 0);
+		const delivery = buyable.length === 0 || subtotal >= freeDeliveryFrom ? 0 : deliveryFee;
 		return {
 			agentId: agentId,
 			agentNick: list.find((item) => item.agentNick)?.agentNick,
@@ -110,7 +150,7 @@ export const cartGroups = (items: CartItem[]): CartGroup[] => {
 export const cartTotals = (items: CartItem[]): CartTotals => {
 	const groups = cartGroups(items);
 	return {
-		count: items.reduce((sum, item) => sum + item.quantity, 0),
+		count: buyableItems(items).reduce((sum, item) => sum + item.quantity, 0),
 		subtotal: groups.reduce((sum, group) => sum + group.subtotal, 0),
 		delivery: groups.reduce((sum, group) => sum + group.delivery, 0),
 		total: groups.reduce((sum, group) => sum + group.total, 0),

@@ -29,6 +29,7 @@ const MESSAGES: Record<string, string> = {
 	'Self subscription is denied!': 'selfSubscription',
 	'One of the products is no longer available!': 'productNotAvailable',
 	'You cannot order your own product!': 'ownProductOrder',
+	'The price of a product in your cart has changed!': 'priceChanged',
 	'The delivery date cannot be in the past!': 'deliveryDatePassed',
 	'This order can no longer be cancelled!': 'orderCannotBeCancelled',
 	'This status change is not allowed!': 'orderStatusNotAllowed',

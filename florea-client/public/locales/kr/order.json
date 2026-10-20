@@ -21,7 +21,10 @@
     "free": "무료",
     "total": "합계",
     "checkout": "주문하기",
-    "cashOnDeliveryYouPay": "수령 시 결제. 주문이 도착하면 결제하시면 됩니다."
+    "cashOnDeliveryYouPay": "수령 시 결제. 주문이 도착하면 결제하시면 됩니다.",
+    "pricesUpdated": "장바구니에 담은 뒤 가격이 바뀐 상품이 있습니다. 현재 가격으로 표시합니다.",
+    "noLongerAvailable": "더 이상 구매할 수 없음",
+    "removeUnavailable_other": "구매할 수 없는 상품이 {{count}}개 있습니다. 삭제한 뒤 주문해 주세요."
   },
   "checkout": {
     "error": {
@@ -63,7 +66,9 @@
     "editTheCart": "장바구니 수정",
     "placingYourOrder": "주문 처리 중…",
     "placeOrder": "주문 완료하기",
-    "cashOnDeliveryYouPay": "수령 시 결제. 주문이 도착하면 결제하시면 됩니다."
+    "cashOnDeliveryYouPay": "수령 시 결제. 주문이 도착하면 결제하시면 됩니다.",
+    "pricesUpdated": "장바구니에 담은 뒤 가격이 바뀐 상품이 있습니다. 주문 요약에 현재 가격을 표시합니다.",
+    "someItemsUnavailable": "구매할 수 없는 상품이 있습니다."
   },
   "complete": {
     "title_other": "주문이 완료되었습니다",
