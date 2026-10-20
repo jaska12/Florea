@@ -22,6 +22,7 @@ export enum Message {
 
     PRODUCT_NOT_AVAILABLE = 'One of the products is no longer available!',
     OWN_PRODUCT_ORDER_DENIED = 'You cannot order your own product!',
+    PRICE_CHANGED = 'The price of a product in your cart has changed!',
     DELIVERY_DATE_PASSED = 'The delivery date cannot be in the past!',
     ORDER_CANNOT_BE_CANCELLED = 'This order can no longer be cancelled!',
     ORDER_STATUS_NOT_ALLOWED = 'This status change is not allowed!',

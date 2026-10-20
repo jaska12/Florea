@@ -19,6 +19,9 @@ import moment from 'moment';
 import { NotificationService } from '../notification/notification.service';
 import { NotificationGroup, NotificationType } from '../../libs/enums/notification.enum';
 
+// a cart holds at most this many different products (the same limit as the items of one order request)
+const CART_PRODUCTS_LIMIT = 30;
+
 @Injectable()
 export class ProductService {
     constructor(
@@ -68,6 +71,23 @@ export class ProductService {
 
         targetProduct.memberData = await this.memberService.getMember(null, shapeIntoMongoObjectId(targetProduct.memberId));
         return targetProduct;
+    }
+
+    // The cart keeps a copy of each product in the browser; this gives it the current price, stock and status.
+    // Products of every status come back, so the cart can tell what can no longer be bought; no view is recorded.
+    public async getCartProducts(productIds: string[]): Promise<Product[]> {
+        const ids = [...new Set(productIds.slice(0, CART_PRODUCTS_LIMIT))].filter(
+            (id) => typeof id === 'string' && /^[0-9a-f]{24}$/i.test(id),
+        );
+        if (!ids.length) return [];
+
+        return (await this.productModel
+            .aggregate([
+                { $match: { _id: { $in: ids.map((id) => shapeIntoMongoObjectId(id)) } } },
+                lookupMember,
+                { $unwind: '$memberData' },
+            ])
+            .exec()) as Product[];
     }
 
     public async productStatsEditor(input: StatisticModifier): Promise<Product> {

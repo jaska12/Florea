@@ -45,9 +45,12 @@ export class OrderService {
 	public async createOrder(memberId: ObjectId, input: OrderInput): Promise<Order[]> {
 		// the same product sent twice counts once, with the quantities added
 		const wanted = new Map<string, number>();
+		// the unit prices the buyer saw, when the client sent them
+		const seenPrice = new Map<string, number>();
 		for (const item of input.items) {
 			const key = String(item.productId);
 			wanted.set(key, (wanted.get(key) ?? 0) + item.itemQuantity);
+			if (item.itemPrice !== undefined && item.itemPrice !== null) seenPrice.set(key, item.itemPrice);
 		}
 
 		// a day of slack covers the time zones between the buyer and the server
@@ -64,6 +67,9 @@ export class OrderService {
 		for (const product of products) {
 			if (String(product.memberId) === String(memberId))
 				throw new BadRequestException(Message.OWN_PRODUCT_ORDER_DENIED);
+			// the order is never placed for a sum other than the one on the buyer's screen
+			const seen = seenPrice.get(String(product._id));
+			if (seen !== undefined && seen !== product.productPrice) throw new BadRequestException(Message.PRICE_CHANGED);
 			if (product.productStock < (wanted.get(String(product._id)) ?? 0)) {
 				throw new BadRequestException(this.stockMessage(product));
 			}

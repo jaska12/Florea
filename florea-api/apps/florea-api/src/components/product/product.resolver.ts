@@ -40,6 +40,15 @@ export class ProductResolver {
         return await this.productService.getProduct(memberId, productId);
     }
 
+    // public: a guest's cart is checked too
+    @Query((returns) => [Product])
+    public async getCartProducts(
+        @Args('productIds', { type: () => [String] }) productIds: string[],
+    ): Promise<Product[]> {
+        console.log('Query: getCartProducts');
+        return await this.productService.getCartProducts(productIds);
+    }
+
     @Roles(MemberType.AGENT)
     @UseGuards(RolesGuard)
     @Mutation((returns) => Product)

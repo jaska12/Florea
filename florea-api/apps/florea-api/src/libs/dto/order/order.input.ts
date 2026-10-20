@@ -26,6 +26,13 @@ export class OrderItemInput {
 	@Max(50)
 	@Field(() => Int)
 	itemQuantity: number;
+
+	// the unit price the buyer saw; when it is sent and the product now costs something else, the order is refused
+	@IsOptional()
+	@IsInt()
+	@Min(0)
+	@Field(() => Int, { nullable: true })
+	itemPrice?: number;
 }
 
 @InputType()
