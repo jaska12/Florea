@@ -1253,4 +1253,11 @@ In the order they were done. State as of 2026-10-05, `main` at `5f5405e`.
 | A chat message from another member while the panel is closed shows a badge, which goes when the chat is opened | pass |
 | Errors | none from the site; the test browser's extension reports "Receiving end does not exist", as on any page |
 
-- Not checked: a real iPhone (the sheet uses the safe-area insets but was seen only in an emulated 375px screen); the live site (not deployed, not pushed).
+- Not checked: a real iPhone (the sheet uses the safe-area insets but was seen only in an emulated 375px screen).
+
+**Deployed on 2026-10-20 (eighth deploy), client only**
+
+- Steps of `deploy/README.md` ("Updating", client only): `fa39453` sent to `/root/apps/florea.new`, the two settings files copied in, the running image tagged `florea-next:prev`, `florea-next` built there while the site ran (77 pages), the folders swapped, only `florea-next` replaced. `florea-api` and `florea-batch` were not restarted.
+- On the live site afterwards, as a guest (headless Edge, 1440px and 375px, English, Korean and Russian; 26 of 26): one help button and no old gift button; it opens on "Find a gift" with two tabs; the chat tab switches; Esc closes; no "$" on the home page; no page errors apart from the test browser's own "Receiving end does not exist". Home, products, cart and customer care all carry the new panel in their HTML.
+- Not checked on the live site: the tabs as a member (the assistant with the real model, sending a chat message, the unread badge); checked on the dev machine with the same code.
+- Afterwards: `florea.old`, the build log and the `:prev` tag were removed; disk at 32%. The password file of the session was deleted from the dev machine.
