@@ -20,7 +20,14 @@ body {
 		border-top: none;
 		transition:
 			background-color 320ms $logo-ease,
-			box-shadow 320ms $logo-ease;
+			box-shadow 320ms $logo-ease,
+			transform 280ms $logo-ease;
+		will-change: transform;
+		// scrolled down: the navbar slides up out of view (Top.tsx); a scroll up brings it back
+		&.nav-hidden {
+			transform: translateY(-100%);
+			box-shadow: none;
+		}
 		// the state the navbar takes once the page is scrolled, and on pages without a photo behind it
 		&.transparent {
 			background-color: rgba(58, 16, 36, 0.8);

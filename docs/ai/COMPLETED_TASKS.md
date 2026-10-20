@@ -1261,3 +1261,18 @@ In the order they were done. State as of 2026-10-05, `main` at `5f5405e`.
 - On the live site afterwards, as a guest (headless Edge, 1440px and 375px, English, Korean and Russian; 26 of 26): one help button and no old gift button; it opens on "Find a gift" with two tabs; the chat tab switches; Esc closes; no "$" on the home page; no page errors apart from the test browser's own "Receiving end does not exist". Home, products, cart and customer care all carry the new panel in their HTML.
 - Not checked on the live site: the tabs as a member (the assistant with the real model, sending a chat message, the unread badge); checked on the dev machine with the same code.
 - Afterwards: `florea.old`, the build log and the `:prev` tag were removed; disk at 32%. The password file of the session was deleted from the dev machine.
+
+## 53. The navbar hides on a scroll down and comes back on a scroll up
+
+- `libs/components/Top.tsx`: one passive scroll listener (one update per frame) in a `useEffect` with a cleanup, in place of the listener that was added on every render and never removed. It keeps the old colour change at 50px and adds `navHidden`: below 87px (the navbar's height) a scroll down of 6px or more hides the navbar, a scroll up of 6px or more brings it back; at the top it is always shown. It is shown again on every page change, while the phone menu (drawer) is open, and when the keyboard focus moves into it.
+- `scss/theme/florea.scss`: `.navbar-main.nav-hidden` slides up with `translateY(-100%)` in 280ms (the logo easing); no animation with `prefers-reduced-motion`.
+- `scss/theme/order.scss`: the sticky summary on the cart and checkout pages (desktop) moves from 108px to 24px from the top while the navbar is hidden, so no empty band is left above it.
+
+| Check | Result |
+|---|---|
+| `yarn tsc --noEmit` | pass |
+| Browser check on `yarn dev`, home and products, 1440px and 375px (38 checks) | 38 of 38: shown at the top and after a small scroll; hidden (fully out of view) on a scroll down and while going on down; back on a scroll up, with the scrolled background; back on keyboard focus; kept while the phone menu is open; shown at the top again |
+| Both new CSS rules are served (`/cart`) | pass |
+| Page errors | only the `code 403` promise errors that the home page also shows without this change |
+
+- Not checked: `yarn build` (the dev server was running and both write to `.next`); a real phone; the live site (not deployed).

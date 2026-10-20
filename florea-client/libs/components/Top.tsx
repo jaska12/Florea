@@ -40,6 +40,8 @@ const Top = () => {
 	const logoutOpen = Boolean(logoutAnchor);
 	// the slide-in menu that replaces the row of links on phones and tablets
 	const [drawerOpen, setDrawerOpen] = useState<boolean>(false);
+	// the navbar slides away while the page is scrolled down and comes back on the first scroll up
+	const [navHidden, setNavHidden] = useState<boolean>(false);
 
 	/** LIFECYCLES **/
 	useEffect(() => {
@@ -64,7 +66,38 @@ const Top = () => {
 
 	useEffect(() => {
 		setDrawerOpen(false);
+		setNavHidden(false);
 	}, [router.asPath]);
+
+	useEffect(() => {
+		// below the navbar's own height a scroll down hides it; a few pixels up are enough to bring it back
+		const HIDE_AFTER = 87;
+		const MIN_DELTA = 6;
+		let lastY = window.scrollY;
+		let frame = 0;
+		const onScroll = () => {
+			if (frame) return;
+			frame = window.requestAnimationFrame(() => {
+				frame = 0;
+				const y = Math.max(window.scrollY, 0);
+				setColorChange(y >= 50);
+				if (y <= HIDE_AFTER) {
+					setNavHidden(false);
+				} else if (Math.abs(y - lastY) >= MIN_DELTA) {
+					setNavHidden(y > lastY);
+				} else {
+					return;
+				}
+				lastY = y;
+			});
+		};
+		onScroll();
+		window.addEventListener('scroll', onScroll, { passive: true });
+		return () => {
+			window.removeEventListener('scroll', onScroll);
+			if (frame) window.cancelAnimationFrame(frame);
+		};
+	}, []);
 
 	/** HANDLERS **/
 	const langClick = (e: any) => {
@@ -83,14 +116,6 @@ const Top = () => {
 		},
 		[router],
 	);
-
-	const changeNavbarColor = () => {
-		if (window.scrollY >= 50) {
-			setColorChange(true);
-		} else {
-			setColorChange(false);
-		}
-	};
 
 	const handleClose = () => {
 		setAnchorEl(null);
@@ -142,13 +167,14 @@ const Top = () => {
 		},
 	}));
 
-	if (typeof window !== 'undefined') {
-		window.addEventListener('scroll', changeNavbarColor);
-	}
-
 	return (
 		<Stack className={'navbar'}>
-			<Stack className={`navbar-main ${colorChange ? 'transparent' : ''} ${bgColor ? 'transparent' : ''}`}>
+			<Stack
+				className={`navbar-main ${colorChange ? 'transparent' : ''} ${bgColor ? 'transparent' : ''} ${
+					navHidden && !drawerOpen ? 'nav-hidden' : ''
+				}`}
+				onFocus={() => setNavHidden(false)}
+			>
 				<Stack className={'container'}>
 					<button
 						type={'button'}

@@ -282,6 +282,7 @@ $order-thumb: linear-gradient(135deg, #fcf1f5 0%, $florea-petal 100%);
 	.shop-side {
 		position: sticky;
 		top: 108px;
+		transition: top 280ms $logo-ease;
 	}
 	.shop-panel {
 		margin: 0;
@@ -784,6 +785,11 @@ $order-thumb: linear-gradient(135deg, #fcf1f5 0%, $florea-petal 100%);
 			gap: 12px;
 		}
 	}
+}
+
+// the navbar slides away on a scroll down (Top.tsx); the sticky summary then moves up into its place
+#pc-wrap:has(#top .navbar-main.nav-hidden) .shop-page .shop-side {
+	top: 24px;
 }
 
 /** ORDERS: tabs, cards, timeline **/
