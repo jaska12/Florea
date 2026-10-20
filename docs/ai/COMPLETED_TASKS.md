@@ -1288,3 +1288,9 @@ In the order they were done. State as of 2026-10-05, `main` at `5f5405e`.
 - Before: the photo box on My page > My profile is 194×157 and the picture had `object-fit: cover`. The default avatar (`/img/profile/defaultUser.svg`) is a whole circle in a square file, so it was scaled to the width and about 18px were cut off at the top and the bottom; its white figure also ran into the white card, so the circle had no visible lower edge.
 - `scss/pc/mypage/myProfile.scss`: the box keeps its size and 15px corners and gets a 1px `$florea-hairline` border and a soft blush gradient behind the picture (the same one the product cards use on phones). The default avatar alone is shown whole (`object-fit: contain`, 14px padding, matched by `img[src$='defaultUser.svg']`); an uploaded photo still fills the box (`cover`). No change to the component.
 - Checked on `yarn dev` as the test member without a photo, 1440px and 375px: the whole circle shows on the blush background inside the border. Not checked: a member with an uploaded photo (the rule for it is unchanged apart from the border).
+
+**Deployed on 2026-10-20 (tenth deploy), client only**
+
+- Same steps as the eighth deploy: `bc51d39` pushed and sent to `/root/apps/florea.new`, the settings copied in, `florea-next:prev` tagged, `florea-next` built there (77 pages), the folders swapped, only `florea-next` replaced.
+- On the live site afterwards: home, My page and products answer 200, and the served stylesheet of My page carries `img[src$="defaultUser.svg"]{object-fit:contain;padding:14px;box-sizing:border-box}`. The page itself was not looked at on the live site (it needs a login and there is no test member on production).
+- Afterwards: `florea.old`, the build log and the `:prev` tag were removed. The password file of the session was deleted.
