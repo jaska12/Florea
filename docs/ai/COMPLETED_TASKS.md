@@ -1322,3 +1322,10 @@ In the order they were done. State as of 2026-10-05, `main` at `5f5405e`.
 
 - Not checked: `yarn build` and `npm run build` (run on the server at deploy); a real phone; a placed order with the new client (the refusal was checked through the API; the accepted case by the unit test).
 - On the way: the dev client's `.next` folder was found broken after the dev server stopped (`Cannot find module .next/server/pages/_document.js`, every page 500); it was deleted and rebuilt by `yarn dev`.
+
+**Deployed on 2026-10-20 (eleventh deploy), API and client**
+
+- Steps of `deploy/README.md` ("Updating", API changed): `55fac21` and `d59022d` pushed, the code sent to `/root/apps/florea.new`, the settings copied in, `florea-next:prev` and `florea-server:prev` tagged, all images built there while the site ran (client 77 pages; no lock file trouble, no package changed), the folders swapped, all three containers replaced. The API was away for a few seconds; it and the batch server started cleanly.
+- On the live site afterwards: `getCartProducts` answers for a real product (₩59,000, its florist) and ignores an id that is not one; home, cart, checkout and products answer 200; the same browser check as a guest with a cart saved at ₩88 and a product that does not exist, at 393px and 1440px, 26 of 26 (the checkout part needs a login and was left out: there is no test member on production).
+- Not checked on the live site: the refusal of an order at an old price (checked on the dev machine through the API; no order was placed on production).
+- Afterwards: `florea.old`, the build log and both `:prev` tags were removed; disk at 38%. The password file of the session was deleted.
