@@ -1282,3 +1282,9 @@ In the order they were done. State as of 2026-10-05, `main` at `5f5405e`.
 - Same steps as the eighth deploy: `03ae5e8` pushed and sent to `/root/apps/florea.new`, the settings copied in, `florea-next:prev` tagged, `florea-next` built there (77 pages; the build prints Apollo's notice 17, "Apollo Client 4.0 will require a `link` option", a deprecation notice and not an error), the folders swapped, only `florea-next` replaced.
 - On the live site afterwards, as a guest: the same 38 scroll checks on home and products at 1440px and 375px, 38 of 38; both new CSS rules served on `/cart`. The only page errors are the `code 403` promise errors, which the test browser also throws on example.com.
 - Afterwards: `florea.old`, the build log and the `:prev` tag were removed; disk at 34%. The password file of the session was deleted.
+
+## 54. My profile: the default avatar is no longer cut off
+
+- Before: the photo box on My page > My profile is 194×157 and the picture had `object-fit: cover`. The default avatar (`/img/profile/defaultUser.svg`) is a whole circle in a square file, so it was scaled to the width and about 18px were cut off at the top and the bottom; its white figure also ran into the white card, so the circle had no visible lower edge.
+- `scss/pc/mypage/myProfile.scss`: the box keeps its size and 15px corners and gets a 1px `$florea-hairline` border and a soft blush gradient behind the picture (the same one the product cards use on phones). The default avatar alone is shown whole (`object-fit: contain`, 14px padding, matched by `img[src$='defaultUser.svg']`); an uploaded photo still fills the box (`cover`). No change to the component.
+- Checked on `yarn dev` as the test member without a photo, 1440px and 375px: the whole circle shows on the blush background inside the border. Not checked: a member with an uploaded photo (the rule for it is unchanged apart from the border).

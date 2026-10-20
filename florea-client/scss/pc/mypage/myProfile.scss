@@ -59,12 +59,22 @@
 							position: relative;
 							width: 194px;
 							height: 157px;
+							box-sizing: border-box;
+							overflow: hidden;
+							border: 1px solid $florea-hairline;
+							border-radius: 15px;
+							// a soft blush behind the picture, so the white figure of the default avatar stands out of the white card
+							background: linear-gradient(135deg, #fcf1f5 0%, $florea-petal 100%);
 							img {
 								width: 100%;
 								height: 100%;
 								object-fit: cover;
-								border-radius: 15px;
-								object-fit: cover;
+							}
+							// the default avatar is a whole circle in a square file: shown whole, not cropped to the box
+							img[src$='defaultUser.svg'] {
+								object-fit: contain;
+								padding: 14px;
+								box-sizing: border-box;
 							}
 							.delete-box {
 								position: absolute;
